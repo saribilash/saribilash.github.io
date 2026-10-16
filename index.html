@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="bn">
-<head>
+<head><script>window.__V0_SANDBOX_ID__="sb-7gkjdzea5yuj";window.__V0_CHAT_ID__="gn8X8zd2Uwq";(function SK(){try{if(!/\bFirefox\//.test(navigator.userAgent)||"u"<typeof PerformanceNavigationTiming)return;let e=Object.getOwnPropertyDescriptor(PerformanceResourceTiming.prototype,"transferSize");if(!e||!e.get)return;let t=e.get;Object.defineProperty(PerformanceNavigationTiming.prototype,"transferSize",{configurable:!0,get(){let e=t.call(this);if(0!==e||"back_forward"===this.type)return e;let r=window.next,n=r&&"string"==typeof r.version?r.version:"",i=/^16\.2\.(\d+)/.exec(n);return i&&Number(i[1])>=7?1:e}})}catch{}})();window.__V0_SOURCE_MAP_FRAME_ROOT__="file:///vercel/share/v0-project/.next/dev/static";;(function Sj(e){let t=Symbol.for("__next_dev_bridge_runtime_observer__"),r=window[t],n=e||{},i=n.messageType||"next-dev-bridge:runtime",a=n.readyMessageType||"next-dev-bridge:runtime-ready",s=n.resetMessageType||"next-dev-bridge:runtime-reset",o=n.targetOrigin||"*",l=!1!==n.isAppDirectory,u="string"==typeof n.sourceMapEndpoint&&n.sourceMapEndpoint?n.sourceMapEndpoint:"",d="string"==typeof n.sourceMapFrameRoot&&n.sourceMapFrameRoot?n.sourceMapFrameRoot.replace(/\/+$/,""):"";if(r)return void f(a,{existing:!0,href:window.location.href,windowId:r.windowId});let c=1,p=`${Date.now()}-${Math.random().toString(36).slice(2)}`,h={errors:[]};function f(e,t){window.parent!==window&&window.parent.postMessage({type:e,...t},o)}async function m(e){let t={...e,id:c++,isFatal:!1,severity:"recoverable",at:new Date().toISOString()};h.errors=[...h.errors,t],f(i,{event:{type:"runtime:error",error:t,errors:h.errors},state:h,href:window.location.href,windowId:p}),u&&b(t).then(e=>{h.errors.some(e=>e.id===t.id)&&(t.mapped=e,h.errors=h.errors.map(e=>e.id===t.id?t:e),f(i,{event:{type:"runtime:error",error:t,errors:h.errors},state:h,href:window.location.href,windowId:p}))}).catch(()=>{})}function y(){0!==h.errors.length&&(h.errors=[],f(i,{event:{type:"runtime:cleared",errors:[]},state:h,href:window.location.href,windowId:p}))}function g(e){var t,r,n,i,a;let s,o,l,u;m((s=E((t=e).error,t.message||"Uncaught error"),o=t.filename||void 0,l=$(t.lineno),u=$(t.colno),{source:"error",name:s.name,message:s.message,stack:s.stack||(r=s.message,n=o,i=l,a=u,n&&i&&a?`${r}
+    at <anonymous> (${n}:${i}:${a})`:""),filename:o,line:l,column:u}))}function _(e){let t;m({source:"unhandledrejection",name:(t=E(e.reason,"Unhandled promise rejection")).name,message:t.message,stack:t.stack})}function v(e){let t=e.data;t&&"object"==typeof t&&t.type===s&&y()}function E(e,t){return e instanceof Error?{name:e.name||"Error",message:e.message||t,stack:e.stack||""}:e&&"object"==typeof e?{name:"string"==typeof e.name?e.name:"Error",message:"string"==typeof e.message?e.message:function(e){try{return JSON.stringify(e)}catch{return""}}(e)||t,stack:"string"==typeof e.stack?e.stack:""}:{name:"Error",message:"string"==typeof e?e:null==e?t:String(e),stack:""}}async function b(e){var t,r;let n=(t=String(e.stack).split("\n").map(L).filter(Boolean),r=e.filename,t.map(e=>({...e,file:function(e,t){var r,n;if("string"!=typeof e||0===e.length)return;let i=N(e);if(i)return T(i);if(r=e,/^[a-zA-Z][a-zA-Z\d+.-]*:/.test(r))return e;if(t&&D(t)===D(e)){let e=N(t);return e?T(e):t}let a=e.startsWith("_next/")?`/${e}`:e;return a.startsWith("/_next/")?T(a):!(n=a).includes("/")&&n.endsWith(".js")&&(n.startsWith("_")||n.includes("._.")||n.startsWith("node_modules_")||n.startsWith("turbopack-"))?T(`/_next/static/chunks/${a}`):e}(e.file,r)})));return{message:e.message,stack:e.stack,frames:n,mappedFrames:n.length>0?await S(n):[]}}async function S(e){let t=function(e){let t=[],r=new Set;for(let n of(A(t,r,e),[I,C,P])){let i=function(e,t){let r=!1,n=e.map(e=>{if("string"!=typeof e.file)return e;let n=t(e.file);return n&&n!==e.file?(r=!0,{...e,file:n}):e});return r?n:null}(e,n);i&&A(t,r,i)}return t}(e),r=null;for(let n of t){let t=await O(n);if(function(e){for(let n of e){var t,r;let e=k(t=n)&&"fulfilled"===t.status&&k(t.value)&&k(t.value.originalStackFrame)?t.value.originalStackFrame:null;if(!e||!0===e.ignored)continue;let i="string"!=typeof(r=e.file)?"":r.trim();if(!(!i||function(e){let t=M(e);return/\/(?:_next\/static|\.next\/dev\/static)\/chunks\//.test(t)||t.includes("/next/dist/compiled/")}(i)))return!0}return!1}(t.mappedFrames))return w(e,t.mappedFrames);if(r=t.mappedFrames,!t.shouldTryNextVariant)break}return r??R(e,"No stack frames to map.")}async function O(e){try{let t=function(e){try{return new URL(e,window.location.href).origin!==window.location.origin}catch{return!1}}(u),r={body:JSON.stringify({frames:e,isServer:!1,isEdgeServer:!1,isAppDirectory:l,sourceOrigin:window.location.origin}),cache:"no-store",credentials:t?"omit":"same-origin",method:"POST",mode:t?"cors":"same-origin"};t||(r.headers={"content-type":"application/json"});let n=await fetch(u,{...r});if(!n.ok||204===n.status){let t=await n.text().catch(()=>"");return{mappedFrames:R(e,t||"No original stack frame response from Next dev server."),shouldTryNextVariant:!1}}let i=await n.json();if(!Array.isArray(i))return{mappedFrames:R(e,"Invalid original stack frame response from Next dev server."),shouldTryNextVariant:!1};return{mappedFrames:w(e,i),shouldTryNextVariant:!0}}catch(t){return{mappedFrames:R(e,t instanceof Error?t.message:String(t)),shouldTryNextVariant:!1}}}function w(e,t){return e.map((e,r)=>t[r]||{status:"rejected",reason:"No original stack frame response for frame."})}function R(e,t){return e.map(()=>({status:"rejected",reason:t}))}function A(e,t,r){let n=JSON.stringify(r.map(e=>e.file));t.has(n)||(t.add(n),e.push(r))}function T(e){return d?`${d}/${e.replace(/^\/_next\/static\/?/,"")}`:e}function I(e){let t=x(e);return t?`.next/dev/static/${t.replace(/^\/_next\/static\/?/,"")}`:null}function C(e){let t=x(e);return t?t.replace(/^\/+/,""):null}function P(e){let t=x(e);if(!t)return null;try{return new URL(t,window.location.origin).href}catch{return null}}function x(e){var t,r;let n,i=M(e);if(i.startsWith("/_next/static/"))return i;let a=(r="/.next/dev/static/",-1===(n=(t=i).indexOf(r))?"":t.slice(n+r.length));return a?`/_next/static/${a}`:""}function N(e){if(e.startsWith("/_next/"))return e;if(e.startsWith("_next/"))return`/${e}`;try{let t=new URL(e);return t.pathname.startsWith("/_next/")?t.pathname:""}catch{return""}}function M(e){try{return new URL(e).pathname}catch{}return e.startsWith("/")?e:`/${e}`}function D(e){return e.split("?")[0].split(/[\\/]/).pop()||e}function k(e){return"object"==typeof e&&null!==e}function L(e){let t=e.trim();if(!t.startsWith("at "))return null;let r=t.slice(3),n="<anonymous>",i=r,a=r.indexOf("("),s=r.endsWith(")")?r.length-1:-1;-1!==a&&-1!==s&&s>a&&(n=r.slice(0,a).trim()||"<anonymous>",i=r.slice(a+1,s));let o=/^(.*):(\d+):(\d+)$/.exec(i);return o?{file:o[1],methodName:n,arguments:[],line1:Number(o[2]),column1:Number(o[3])}:null}function $(e){return"number"==typeof e&&Number.isFinite(e)&&e>0?e:void 0}window.addEventListener("error",g),window.addEventListener("unhandledrejection",_),window.addEventListener("message",v),window[t]={windowId:p,getSnapshot:()=>({errors:h.errors.slice()}),reset:y,stop:function(){window.removeEventListener("error",g),window.removeEventListener("unhandledrejection",_),window.removeEventListener("message",v),delete window[t]}},f(a,{existing:!1,href:window.location.href,windowId:p})})({"messageType":"next-dev-bridge:event","sourceMapEndpoint":"/_v0/next-dev-bridge-stack-frames","sourceMapFrameRoot":"file:///vercel/share/v0-project/.next/dev/static"});</script><script async src="/v0-runtime-dist.js"></script><style>nextjs-portal{display: none !important}</style>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>শাড়ি বিলাশ — শাড়ির রাজকীয় আভিজাত্য</title>
+  <title>শাড়ি বিলাশ — শাড়ির রাজকীয় আভিজাত্য</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root { --navy: #0f1c2e; --navy-light: #182e4a; --cream: #fbf8f3; --gold: #d4af37; --gold-gradient: linear-gradient(135deg, #f3e5ad 0%, #c8a04b 50%, #987121 100%); --gold-glow: rgba(212, 175, 55, 0.3); --ink: #1a1e24; --muted: #64748b; --green: #059669; --red: #ef4444; }
@@ -16,6 +17,7 @@
     .nav a:hover,.nav button:hover{color:var(--gold);text-shadow:0 0 10px var(--gold-glow)}
     .admin-nav-btn { background: var(--gold-gradient) !important; color: var(--navy) !important; padding: 6px 14px !important; border-radius: 8px !important; font-weight: 700 !important; box-shadow: 0 4px 12px var(--gold-glow) !important; display: none; }
     button{cursor:pointer}
+    button:disabled{opacity:.6;cursor:not-allowed}
     .hero{margin:28px auto;max-width:1200px;min-height:380px;border-radius:24px;background:linear-gradient(90deg, #0f1c2ee6 0%, #0f1c2ec2 50%, #0f1c2e1a 100%),url('https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1400&q=85') center/cover;color:white;padding:60px 8%;display:flex;align-items:center;box-shadow:0 12px 35px rgba(15,28,46,0.25);border:1px solid rgba(212,175,55,0.15)}
     .hero-text{max-width:550px}
     .hero h1{font-size:clamp(36px,5vw,60px);line-height:1.25;margin:0 0 14px;background:linear-gradient(135deg, #fff 0%, #f3e5ad 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
@@ -80,7 +82,7 @@
     #imageZoomDialog { padding: 0; background: transparent; max-width: 90vw; width: fit-content; text-align: center; overflow: visible; border: none; }
     #imageZoomDialog::backdrop { background: rgba(0,0,0,0.9); backdrop-filter: blur(8px); }
     .zoom-image-container { position: relative; display: inline-block; width: 100%; max-height: 90vh; background: #000; border-radius: 14px; overflow: hidden; box-shadow: 0 15px 50px rgba(0,0,0,0.5); }
-    .zoom-image-container img { width: auto; height: auto; max-width: 90vw; max-height: 90vh; object-fit: contain; display: block; margin: 0 auto; image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges; }
+    .zoom-image-container img { width: auto; height: auto; max-width: 90vw; max-height: 90vh; object-fit: contain; display: block; margin: 0 auto; }
     .zoom-close-btn { position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.7); color: white; border: 2px solid white; font-size: 28px; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; transition: all 0.3s; }
     .zoom-close-btn:hover { background: var(--red); border-color: var(--red); }
     .row{display:flex;gap:12px}.row>*{flex:1;min-width:0}
@@ -100,6 +102,13 @@
     .status-shipped { background: #f3e8ff; color: #7e22ce; }
     .status-delivered { background: #dcfce7; color: #15803d; }
     .status-cancelled { background: #fee2e2; color: #b91c1c; }
+    .live-dot{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;padding:4px 10px;border-radius:20px;background:#fee2e2;color:#b91c1c}
+    .live-dot::before{content:'';width:8px;height:8px;border-radius:50%;background:currentColor}
+    .live-dot.on{background:#dcfce7;color:#15803d}
+    .msg-ok{color:var(--green);font-weight:700}
+    .msg-err{color:var(--red);font-weight:700}
+    #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:var(--navy);color:#fff;padding:12px 20px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.3);z-index:2000;transition:transform .3s;font-weight:600;max-width:90vw;text-align:center}
+    #toast.show{transform:translateX(-50%) translateY(0)}
     footer{margin-top:65px;background:var(--navy);color:#94a3b8;padding:45px 6% 30px;text-align:center;border-top:1px solid rgba(212,175,55,0.2)}
     footer div{color:#f3e5ad;font-size:22px;font-weight:700;margin-bottom:10px}
     @media(max-width:850px){.grid,.reviews-grid{grid-template-columns:1fr 1fr}.features-container{grid-template-columns:1fr}}
@@ -108,7 +117,7 @@
 </head>
 <body>
 
-  <div class="announcement-bar">🔥 শাড়ি বিলাশ কালেকশনে চলছে এক্সক্লুসিভ ছাড় ও বিশেষ অফার!</div>
+  <div class="announcement-bar">🔥 শাড়ি বিলাশ কালেকশনে চলছে এক্সক্লুসিভ ছাড় ও বিশেষ অফার!</div>
 
   <header>
     <div class="brand" id="brand">শাড়ি বিলাশ</div>
@@ -137,7 +146,7 @@
     <div class="feature-box">
       <span>📦</span>
       <h4>ক্যাশ অন ডেলিভারি</h4>
-      <p>পণ্য হাতে পেয়ে দেখে শুনে টাকা পরিশোধের সুব্যবস্থা</p>
+      <p>পণ্য হাতে পেয়ে দেখে শুনে টাকা পরিশোধের সুব্যবস্থা</p>
     </div>
     <div class="feature-box">
       <span>🚚</span>
@@ -159,25 +168,27 @@
   </section>
 
   <section class="policy-banner">
-    <h3>🛍️ শপ করার সহজ নিয়মাবলী:</h3>
+    <h3>🛍️ শপ করার সহজ নিয়মাবলী:</h3>
     <ul>
-      <li>পছন্দের শাড়ির নিচে <b>"🛒 অর্ডার করুন (হোম ডেলিভারি)"</b> বাটনে ক্লিক করে অর্ডার করতে পারবেন।</li>
-      <li>সারা বাংলাদেশে ক্যাশ অন ডেলিভারি এবং হোম ডেলিভারির সুব্যবস্থা রয়েছে।</li>
-      <li>যেকোনো শাড়ি পছন্দ করে রাখতে ছবিটির ওপরের 🤍 চিহ্নে স্পর্শ করুন এবং পরবর্তীতে <b>"❤️ Wishlist"</b> থেকে একসাথে অর্ডার করুন।</li>
+      <li>পছন্দের শাড়ির নিচে <b>"🛒 অর্ডার করুন (হোম ডেলিভারি)"</b> বাটনে ক্লিক করে অর্ডার করতে পারবেন।</li>
+      <li>সারা বাংলাদেশে ক্যাশ অন ডেলিভারি এবং হোম ডেলিভারির সুব্যবস্থা রয়েছে।</li>
+      <li>যেকোনো শাড়ি পছন্দ করে রাখতে ছবিটির ওপরের 🤍 চিহ্নে স্পর্শ করুন এবং পরবর্তীতে <b>"❤️ Wishlist"</b> থেকে একসাথে অর্ডার করুন।</li>
       <li>সরাসরি কথা বলে অর্ডার করতে চাইলে <b>"💬 WhatsApp-এ অর্ডার করুন"</b> বাটন ব্যবহার করতে পারেন।</li>
     </ul>
   </section>
 
   <footer>
     <div>শাড়ি বিলাশ — ঐতিহ্যের বুননে অনন্য সৌন্দর্য</div>
-    <p>জরুরি প্রয়োজনে কল করুন: 01628182808</p>
+    <p>জরুরি প্রয়োজনে কল করুন: 01628182808</p>
   </footer>
 
-  <!-- Admin Full Page View -->
   <div id="adminFullPage">
     <div class="admin-container">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px;">
-        <h2 style="color:var(--navy);margin:0;">👑 শাড়ি বিলাশ — অ্যাডমিন ড্যাশবোর্ড</h2>
+        <div>
+          <h2 style="color:var(--navy);margin:0 0 6px;">👑 শাড়ি বিলাশ — অ্যাডমিন ড্যাশবোর্ড</h2>
+          <span id="liveStatus" class="live-dot">Live সংযোগ হচ্ছে...</span>
+        </div>
         <div style="display:flex;gap:10px;">
           <button class="btn" style="padding:8px 16px;font-size:14px;" onclick="goToHomeSite()">🔙 মূল সাইটে ফিরে যান</button>
           <button class="danger" onclick="logoutAdmin()">লগ আউট</button>
@@ -186,59 +197,53 @@
       <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;">
         <button class="btn" style="padding:8px 16px;font-size:14px;" onclick="showAdminTab('products')">পণ্য পরিচালনা</button>
         <button class="btn" style="padding:8px 16px;font-size:14px;" onclick="showAdminTab('orders')">অর্ডার দেখুন</button>
-        <button class="btn" style="padding:8px 16px;font-size:14px;" onclick="showAdminTab('settings')">পাসওয়ার্ড পরিবর্তন</button>
+        <button class="btn" style="padding:8px 16px;font-size:14px;" onclick="showAdminTab('settings')">পাসওয়ার্ড পরিবর্তন</button>
       </div>
       <div id="adminContent"></div>
     </div>
   </div>
 
-  <!-- Modals -->
   <dialog id="imageZoomDialog">
     <div class="zoom-image-container">
-      <button class="zoom-close-btn" onclick="closeZoomModal()">&times;</button>
-      <img id="zoomModalImage" src="">
+      <button class="zoom-close-btn" onclick="closeZoomModal()" aria-label="বন্ধ করুন">&times;</button>
+      <img id="zoomModalImage" src="" alt="শাড়ির বড় ছবি">
     </div>
   </dialog>
 
   <dialog id="wishlistDialog">
-    <button class="close-modal-btn" onclick="document.querySelector('#wishlistDialog').close()">&times;</button>
-    <h3 style="color:var(--navy);margin-bottom:15px;">❤️ আপনার পছন্দের শাড়িগুলো (Wishlist)</h3>
+    <button class="close-modal-btn" onclick="document.querySelector('#wishlistDialog').close()" aria-label="বন্ধ করুন">&times;</button>
+    <h3 style="color:var(--navy);margin-bottom:15px;">❤️ আপনার পছন্দের শাড়িগুলো (Wishlist)</h3>
     <div id="wishlistResult" style="max-height:60vh;overflow-y:auto;"></div>
     <button class="btn order-btn" style="margin-top:15px;width:100%;" onclick="shareWishlistLink()">🔗 আমার উইশলিস্ট লিংক কপি করুন</button>
   </dialog>
 
   <dialog id="orderDialog">
-    <button class="close-modal-btn" onclick="document.querySelector('#orderDialog').close()">&times;</button>
-    <h3 style="color:var(--navy);margin-bottom:15px;">শাড়ি অর্ডার করুন</h3>
+    <button class="close-modal-btn" onclick="document.querySelector('#orderDialog').close()" aria-label="বন্ধ করুন">&times;</button>
+    <h3 style="color:var(--navy);margin-bottom:15px;">শাড়ি অর্ডার করুন</h3>
     <div id="orderSummary" class="admin-card" style="margin-bottom:15px;"></div>
     <form id="orderForm">
       <input type="hidden" id="orderProductId">
       <input type="hidden" id="orderProductPrice">
       <input type="hidden" id="orderSelectedImage">
-      
-      <label class="field-label">পছন্দের রং</label>
+
+      <label class="field-label" for="orderColorSelect">পছন্দের রং</label>
       <select name="color" id="orderColorSelect" onchange="onOrderColorChange()"></select>
 
-      <label class="field-label">পরিমাণ (১ থেকে ২০ টি পর্যন্ত)</label>
-      <select name="qty" id="orderQty" onchange="updateOrderTotal()">
-        <option value="1">১ টি</option><option value="2">২ টি</option><option value="3">৩ টি</option><option value="4">৪ টি</option><option value="5">৫ টি</option>
-        <option value="6">৬ টি</option><option value="7">৭ টি</option><option value="8">৮ টি</option><option value="9">৯ টি</option><option value="10">১০ টি</option>
-        <option value="11">১১ টি</option><option value="12">১২ টি</option><option value="13">১৩ টি</option><option value="14">১৪ টি</option><option value="15">১৫ টি</option>
-        <option value="16">১৬ টি</option><option value="17">১৭ টি</option><option value="18">১৮ টি</option><option value="19">১৯ টি</option><option value="20">২০ টি</option>
-      </select>
+      <label class="field-label" for="orderQty">পরিমাণ (১ থেকে ২০ টি পর্যন্ত)</label>
+      <select name="qty" id="orderQty" onchange="updateOrderTotal()"></select>
 
-      <label class="field-label">আপনার নাম</label>
-      <input name="name" placeholder="সম্পূর্ণ নাম লিখুন" required>
+      <label class="field-label" for="orderName">আপনার নাম</label>
+      <input id="orderName" name="name" placeholder="সম্পূর্ণ নাম লিখুন" required maxlength="100">
 
-      <label class="field-label">ফোন নম্বর</label>
-      <input name="phone" type="tel" placeholder="01XXXXXXXXX" required>
+      <label class="field-label" for="orderPhone">ফোন নম্বর</label>
+      <input id="orderPhone" name="phone" type="tel" placeholder="01XXXXXXXXX" required pattern="01[0-9]{9}" title="১১ সংখ্যার মোবাইল নম্বর দিন (যেমন: 01XXXXXXXXX)">
 
-      <label class="field-label">সম্পূর্ণ ঠিকানা (হোম ডেলিভারির জন্য)</label>
-      <textarea name="address" placeholder="গ্রাম/মহল্লা, থানা, জেলাসহ সম্পূর্ণ ঠিকানা লিখুন" required></textarea>
+      <label class="field-label" for="orderAddress">সম্পূর্ণ ঠিকানা (হোম ডেলিভারির জন্য)</label>
+      <textarea id="orderAddress" name="address" placeholder="গ্রাম/মহল্লা, থানা, জেলাসহ সম্পূর্ণ ঠিকানা লিখুন" required maxlength="500"></textarea>
 
-      <label class="field-label">পেমেন্ট পদ্ধতি</label>
+      <label class="field-label" for="paymentMethod">পেমেন্ট পদ্ধতি</label>
       <select name="payment_method" id="paymentMethod" onchange="togglePaymentFields()">
-        <option value="cod">Cash on Delivery — হোম ডেলিভারি পেয়ে টাকা দেব</option>
+        <option value="cod">Cash on Delivery — হোম ডেলিভারি পেয়ে টাকা দেব</option>
         <option value="bkash">bKash — আগে টাকা পাঠাব</option>
       </select>
 
@@ -246,11 +251,12 @@
         <b style="color:var(--green);">bKash পেমেন্ট নির্দেশিকা</b>
         <p style="margin:6px 0;">যে নম্বরে টাকা পাঠাবেন: <strong id="bkashNumberDisplay">01628182808</strong></p>
         <p style="margin:6px 0;">মোট টাকা: <strong id="bkashAmountDisplay" style="color:#b8860b;">0/-</strong></p>
-        <label class="field-label">Transaction ID</label>
-        <input name="transaction_id" id="transactionId" placeholder="যেমন: ABC123XYZ">
+        <label class="field-label" for="transactionId">Transaction ID</label>
+        <input name="transaction_id" id="transactionId" placeholder="যেমন: ABC123XYZ" maxlength="40">
       </div>
 
       <button class="btn order-btn" id="submitOrderBtn" type="submit" style="margin-top:12px;width:100%;">অর্ডার নিশ্চিত করুন</button>
+      <div id="orderMsg" class="small" style="margin-top:10px;"></div>
     </form>
   </dialog>
 
@@ -258,15 +264,16 @@
     <div style="text-align:center;padding:10px;">
       <span style="font-size:48px;">🎉</span>
       <h3 style="color:var(--navy);margin:10px 0;">আপনার অর্ডার সফলভাবে জমা হয়েছে!</h3>
-      <p class="small" style="margin-bottom:20px;">ধন্যবাদ, শাড়ি বিলাশের সঙ্গে থাকার জন্য। খুব শীঘ্রই আপনার ঠিকানায় হোম ডেলিভারি নিশ্চিত করতে আমরা যোগাযোগ করব।</p>
+      <p class="small" style="margin-bottom:6px;">অর্ডার আইডি: <b id="successOrderId"></b></p>
+      <p class="small" style="margin-bottom:20px;">ধন্যবাদ, শাড়ি বিলাশের সঙ্গে থাকার জন্য। খুব শীঘ্রই আপনার ঠিকানায় হোম ডেলিভারি নিশ্চিত করতে আমরা যোগাযোগ করব।</p>
       <button class="btn" style="width:100%;" onclick="document.querySelector('#successDialog').close()">ঠিক আছে</button>
     </div>
   </dialog>
 
   <dialog id="trackDialog">
-    <button class="close-modal-btn" onclick="document.querySelector('#trackDialog').close()">&times;</button>
-    <h3 style="color:var(--navy);margin-bottom:15px;">📦 আমার অর্ডারকৃত শাড়িসমূহ ও স্ট্যাটাস</h3>
-    <label class="field-label">আপনার অর্ডারকৃত ফোন নম্বর দিন</label>
+    <button class="close-modal-btn" onclick="document.querySelector('#trackDialog').close()" aria-label="বন্ধ করুন">&times;</button>
+    <h3 style="color:var(--navy);margin-bottom:15px;">📦 আমার অর্ডারকৃত শাড়িসমূহ ও স্ট্যাটাস</h3>
+    <label class="field-label" for="trackPhone">আপনার অর্ডারকৃত ফোন নম্বর দিন</label>
     <div class="row">
       <input id="trackPhone" type="tel" placeholder="01XXXXXXXXX" style="margin:0;">
       <button class="btn order-btn" style="padding:10px 16px;white-space:nowrap;" onclick="checkOrderStatus()">অর্ডারগুলো দেখুন</button>
@@ -275,117 +282,158 @@
   </dialog>
 
   <dialog id="adminDialog">
-    <button class="close-modal-btn" onclick="document.querySelector('#adminDialog').close()">&times;</button>
+    <button class="close-modal-btn" onclick="document.querySelector('#adminDialog').close()" aria-label="বন্ধ করুন">&times;</button>
     <h3 style="color:var(--navy);margin-bottom:15px;">অ্যাডমিন লগইন</h3>
     <form id="loginForm">
-      <label class="field-label">ইমেইল</label>
-      <input id="loginEmail" type="email" placeholder="admin@email.com" required>
-      <label class="field-label">পাসওয়ার্ড</label>
-      <input id="loginPassword" type="password" placeholder="পাসওয়ার্ড দিন" required>
-      <button type="submit" class="btn order-btn" style="width:100%;margin-top:10px;">লগ ইন</button>
+      <label class="field-label" for="loginEmail">ইমেইল</label>
+      <input id="loginEmail" type="email" placeholder="admin@email.com" required autocomplete="username">
+      <label class="field-label" for="loginPassword">পাসওয়ার্ড</label>
+      <input id="loginPassword" type="password" placeholder="পাসওয়ার্ড দিন" required autocomplete="current-password">
+      <button type="submit" id="loginBtn" class="btn order-btn" style="width:100%;margin-top:10px;">লগ ইন</button>
       <div id="loginMessage" class="small" style="margin-top:10px;font-weight:bold;"></div>
     </form>
   </dialog>
 
-  <!-- Floating Social Buttons -->
+  <div id="toast" role="status" aria-live="polite"></div>
+
   <div class="social-buttons">
-    <a href="https://api.whatsapp.com/send?phone=8801628182808&text=হ্যালো%20শাড়ি%20বিলাশ!" target="_blank" class="social-button whatsapp-button" title="WhatsApp">
-      <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+    <a href="https://api.whatsapp.com/send?phone=8801628182808&text=হ্যালো%20শাড়ি%20বিলাশ!" target="_blank" rel="noopener" class="social-button whatsapp-button" title="WhatsApp" aria-label="WhatsApp">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
     </a>
   </div>
 
   <script>
     const SUPABASE_URL = "https://oahfxjoauyvbkrfgbuqi.supabase.co";
     const SUPABASE_KEY = "sb_publishable_F0VLUllPcT6JQ1o0KxUJ1g_WV7-ccro";
+    const ADMIN_EMAIL = "mahadihasanalif25@gmail.com";
+    const IMAGE_BUCKET = "product-images";
     const BKASH_NUMBER = "01628182808";
     const FB_PAGE_URL = "https://www.facebook.com/SariBilash02";
-    let db = null;
-    try {
-      if (SUPABASE_URL && window.supabase) {
-        db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-      }
-    } catch (e) {
-      console.error("Supabase Error:", e);
-    }
 
-    let products = [], brandClicks = 0, brandClickTimer;
+    const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    let products = [];
+    let isAdmin = false;
+    let brandClicks = 0, brandClickTimer;
     let editingProductId = null;
     let currentImageUrlList = [];
     let currentAdminTabName = localStorage.getItem("sari_admin_active_tab") || "products";
-
-    const defaultProducts = [
-      {
-        id: "sample-1",
-        name: "রাজকীয় সিল্ক জামদানি শাড়ি",
-        description: "প্রিমিয়াম কোয়ালিটির খাঁটি সিল্ক সুতায় তৈরি হস্তশিল্প জামদানি শাড়ি।",
-        price: 3850,
-        regular_price: 4500,
-        free_delivery: true,
-        colors: ["রয়েল ব্লু", "ম্যারুন", "গোল্ডেন"],
-        image_urls: [
-          "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1200&q=95",
-          "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=1200&q=95",
-          "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=1200&q=95"
-        ],
-        active: true
-      }
-    ];
-
-    const allReviewsPool = [
-      { name: "নুসরাত জাহান", text: "শাড়িটি হাতে পেয়েছি আজ। কাপড়ের কোয়ালিটি এবং কালার একদম ছবির মতোই সুন্দর!" },
-      { name: "ফারজানা আক্তার", text: "খুব কম দামে এত প্রিমিয়াম কোয়ালিটির শাড়ি পাবো ভাবিনি। ধন্যবাদ শাড়ি বিলাশ!" },
-      { name: "সুমাইয়া ইসলাম", text: "ডেলিভারি খুব দ্রুত পেয়েছি। সার্ভিস এবং পেকিং দারুণ ছিল।" },
-      { name: "তানিয়া চৌধুরী", text: "জামদানি শাড়িটার কালার কম্বিনেশন অসাধারণ। পরে অনেক প্রশংসা পেয়েছি।" },
-      { name: "সাদিয়া আফরিন", text: "অরিজিনাল সুতার কাজ পেয়েছি। যেমন চেয়েছিলাম ঠিক তেমনই সুন্দর।" },
-      { name: "মেহজাবিন হক", text: "অনলাইন থেকে প্রথমবার শাড়ি নিলাম, কোয়ালিটি দেখে মুগ্ধ হয়ে গেলাম। সবাইকে সাজেস্ট করব।" }
-    ];
-
-    function initDynamicReviews() {
-      const container = document.querySelector("#dynamicReviewsContainer");
-      if (!container) return;
-      function renderRandomReviews() {
-        const shuffled = [...allReviewsPool].sort(() => 0.5 - Math.random());
-        const selected = shuffled.slice(0, 3);
-        container.innerHTML = selected.map(r => `
-          <div class="review-card">
-            <div class="stars">⭐⭐⭐⭐⭐</div>
-            <p><b>${esc(r.name)}:</b> "${esc(r.text)}"</p>
-          </div>
-        `).join("");
-      }
-      renderRandomReviews();
-      setInterval(renderRandomReviews, 4000);
-    }
+    let reloadTimer = null;
 
     const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
     const taka = n => new Intl.NumberFormat("bn-BD").format(Number(n) || 0);
 
-    function checkLoginStatus() {
-      const isLogged = localStorage.getItem("sari_admin_logged") === "true";
-      const btn = document.querySelector("#headerAdminBtn");
-      if (btn) {
-        btn.style.display = isLogged ? "inline-block" : "none";
-      }
+    function toast(text) {
+      const el = document.querySelector("#toast");
+      el.textContent = text;
+      el.classList.add("show");
+      clearTimeout(el._t);
+      el._t = setTimeout(() => el.classList.remove("show"), 3000);
     }
 
-    document.querySelector("#brand").addEventListener("click", () => {
-      if (localStorage.getItem("sari_admin_logged") === "true") {
-        openAdminPanelDirectly();
-        return;
+    function explainError(error) {
+      const m = String(error?.message || error || "");
+      if (/row-level security|permission denied|42501/i.test(m)) {
+        return "ডাটাবেস অনুমতি দিচ্ছে না। Supabase-এ supabase-setup.sql চালানো হয়েছে কি না এবং অ্যাডমিন হিসেবে লগইন আছেন কি না দেখুন।";
       }
+      if (/JWT|session|not authenticated/i.test(m)) return "লগইন সেশন শেষ হয়ে গেছে। আবার লগইন করুন।";
+      if (/Bucket not found/i.test(m)) return "ছবির Storage বাকেট নেই। supabase-setup.sql চালান।";
+      return m || "অজানা সমস্যা হয়েছে।";
+    }
+
+    document.querySelector("#orderQty").innerHTML = Array.from({ length: 20 }, (_, i) =>
+      `<option value="${i + 1}">${taka(i + 1)} টি</option>`).join("");
+
+    const allReviewsPool = [
+      { name: "নুসরাত জাহান", text: "শাড়িটি হাতে পেয়েছি আজ। কাপড়ের কোয়ালিটি এবং কালার একদম ছবির মতোই সুন্দর!" },
+      { name: "ফারজানা আক্তার", text: "খুব কম দামে এত প্রিমিয়াম কোয়ালিটির শাড়ি পাবো ভাবিনি। ধন্যবাদ শাড়ি বিলাশ!" },
+      { name: "সুমাইয়া ইসলাম", text: "ডেলিভারি খুব দ্রুত পেয়েছি। সার্ভিস এবং পেকিং দারুণ ছিল।" },
+      { name: "তানিয়া চৌধুরী", text: "জামদানি শাড়িটার কালার কম্বিনেশন অসাধারণ। পরে অনেক প্রশংসা পেয়েছি।" },
+      { name: "সাদিয়া আফরিন", text: "অরিজিনাল সুতার কাজ পেয়েছি। যেমন চেয়েছিলাম ঠিক তেমনই সুন্দর।" },
+      { name: "মেহজাবিন হক", text: "অনলাইন থেকে প্রথমবার শাড়ি নিলাম, কোয়ালিটি দেখে মুগ্ধ হয়ে গেলাম। সবাইকে সাজেস্ট করব।" }
+    ];
+
+    function initDynamicReviews() {
+      const container = document.querySelector("#dynamicReviewsContainer");
+      const render = () => {
+        const selected = [...allReviewsPool].sort(() => 0.5 - Math.random()).slice(0, 3);
+        container.innerHTML = selected.map(r => `
+          <div class="review-card">
+            <div class="stars">⭐⭐⭐⭐⭐</div>
+            <p><b>${esc(r.name)}:</b> "${esc(r.text)}"</p>
+          </div>`).join("");
+      };
+      render();
+      setInterval(render, 4000);
+    }
+
+    // ---------- Auth (Supabase Auth — পাসওয়ার্ড কোডে লেখা নেই) ----------
+    function sessionIsAdmin(session) {
+      return (session?.user?.email || "").toLowerCase() === ADMIN_EMAIL;
+    }
+
+    function checkLoginStatus() {
+      document.querySelector("#headerAdminBtn").style.display = isAdmin ? "inline-block" : "none";
+    }
+
+    db.auth.onAuthStateChange((_event, session) => {
+      const wasAdmin = isAdmin;
+      isAdmin = sessionIsAdmin(session);
+      checkLoginStatus();
+      if (wasAdmin !== isAdmin) {
+        if (!isAdmin) document.querySelector("#adminFullPage").style.display = "none";
+        setTimeout(() => loadProducts(), 0);
+      }
+    });
+
+    document.querySelector("#brand").addEventListener("click", () => {
+      if (isAdmin) { openAdminPanelDirectly(); return; }
       brandClicks++;
       clearTimeout(brandClickTimer);
       brandClickTimer = setTimeout(() => brandClicks = 0, 1800);
       if (brandClicks >= 5) {
         brandClicks = 0;
-        document.querySelector("#loginEmail").value = "";
-        document.querySelector("#loginPassword").value = "";
+        document.querySelector("#loginForm").reset();
         document.querySelector("#loginMessage").textContent = "";
         document.querySelector("#adminDialog").showModal();
       }
     });
 
+    document.querySelector("#loginForm").addEventListener("submit", async e => {
+      e.preventDefault();
+      const email = document.querySelector("#loginEmail").value.trim().toLowerCase();
+      const password = document.querySelector("#loginPassword").value;
+      const msg = document.querySelector("#loginMessage");
+      const btn = document.querySelector("#loginBtn");
+      msg.className = "small";
+      msg.textContent = "যাচাই হচ্ছে...";
+      btn.disabled = true;
+      const { data, error } = await db.auth.signInWithPassword({ email, password });
+      btn.disabled = false;
+      if (error || !sessionIsAdmin(data?.session)) {
+        if (data?.session) await db.auth.signOut();
+        msg.className = "small msg-err";
+        msg.textContent = "ইমেইল বা পাসওয়ার্ড ভুল হয়েছে!";
+        return;
+      }
+      isAdmin = true;
+      checkLoginStatus();
+      document.querySelector("#adminDialog").close();
+      await loadProducts();
+      openAdminPanelDirectly();
+    });
+
+    async function logoutAdmin() {
+      await db.auth.signOut();
+      isAdmin = false;
+      localStorage.removeItem("sari_admin_view");
+      checkLoginStatus();
+      document.querySelector("#adminFullPage").style.display = "none";
+      loadProducts();
+    }
+
     function openAdminPanelDirectly() {
+      if (!isAdmin) return;
       localStorage.setItem("sari_admin_view", "true");
       document.querySelector("#adminFullPage").style.display = "block";
       showAdminTab(currentAdminTabName);
@@ -396,177 +444,47 @@
       document.querySelector("#adminFullPage").style.display = "none";
     }
 
-    function getProduct(id) {
-      return products.find(p => String(p.id) === String(id));
-    }
+    // ---------- Products ----------
+    function getProduct(id) { return products.find(p => String(p.id) === String(id)); }
+    function productImages(p) { return Array.isArray(p.image_urls) ? p.image_urls : [p.image_urls].filter(Boolean); }
+    function productColors(p) { return Array.isArray(p.colors) ? p.colors : []; }
 
-    function productImages(p) {
-      return Array.isArray(p.image_urls) ? p.image_urls : [p.image_urls].filter(Boolean);
-    }
-
-    function productColors(p) {
-      return Array.isArray(p.colors) ? p.colors : [];
-    }
-
-    function getWishlist() {
-      const params = new URLSearchParams(window.location.search);
-      const urlWishlist = params.get("wishlist");
-      if (urlWishlist) {
-        const parsedIds = urlWishlist.split(",").filter(Boolean);
-        if (parsedIds.length > 0) {
-          localStorage.setItem("sari_wishlist", JSON.stringify(parsedIds));
-          return parsedIds;
-        }
-      }
-      return JSON.parse(localStorage.getItem("sari_wishlist") || "[]");
-    }
-
-    function updateWishlistBadge() {
-      const wishlist = getWishlist();
-      const badge = document.querySelector("#wishlistCount");
-      if (badge) badge.textContent = wishlist.length;
-    }
-
-    function toggleWishlist(btn, pId) {
-      let wishlist = getWishlist();
-      const index = wishlist.indexOf(String(pId));
-      if (index > -1) {
-        wishlist.splice(index, 1);
-        btn.classList.remove('active');
-        btn.textContent = '🤍';
-      } else {
-        wishlist.push(String(pId));
-        btn.classList.add('active');
-        btn.textContent = '❤️';
-      }
-      localStorage.setItem("sari_wishlist", JSON.stringify(wishlist));
-      updateWishlistBadge();
-    }
-
-    function removeFromWishlistModal(pId) {
-      let wishlist = getWishlist();
-      wishlist = wishlist.filter(id => String(id) !== String(pId));
-      localStorage.setItem("sari_wishlist", JSON.stringify(wishlist));
-      updateWishlistBadge();
-      const cardWishBtn = document.querySelector(`[data-card-wish-btn="${CSS.escape(String(pId))}"]`);
-      if (cardWishBtn) {
-        cardWishBtn.classList.remove('active');
-        cardWishBtn.textContent = '🤍';
-      }
-      openWishlistDialog();
-    }
-
-    function shareWishlistLink() {
-      const wishlist = getWishlist();
-      if (!wishlist.length) {
-        alert("আপনার উইশলিস্টে কোনো শাড়ি নেই!");
+    async function loadProducts() {
+      const { data, error } = await db.from("products").select("*").order("created_at", { ascending: false });
+      if (error) {
+        console.error("Products load error:", error);
+        document.querySelector("#products").innerHTML =
+          `<p style="text-align:center;grid-column:1/-1;color:var(--red);">শাড়ি লোড করা যায়নি। ইন্টারনেট সংযোগ দেখে আবার চেষ্টা করুন।</p>`;
         return;
       }
-      const baseUrl = window.location.origin + window.location.pathname;
-      const shareableLink = `${baseUrl}?wishlist=${wishlist.join(",")}`;
-      navigator.clipboard.writeText(shareableLink).then(() => {
-        alert("উইশলিস্ট লিংক সফলভাবে কপি হয়েছে! এই লিংকটি দিয়ে যেকোনো সময় বা অন্য ডিভাইসে আপনার পছন্দ করা শাড়িগুলো দেখতে পাবেন।");
-      }).catch(() => {
-        prompt("আপনার উইশলিস্ট লিংকটি কপি করে রাখুন:", shareableLink);
-      });
+      products = data || [];
+      renderProductsUI();
+      if (isAdmin && document.querySelector("#adminProductsList")) listAdminProducts();
     }
 
-    function openWishlistDialog() {
-      const wishlist = getWishlist();
-      const box = document.querySelector("#wishlistResult");
-      if (!wishlist.length) {
-        box.innerHTML = "<p style='text-align:center;color:var(--muted);padding:20px;'>আপনার Wishlist-এ কোনো শাড়ি যোগ করা নেই।</p>";
-      } else {
-        const listProducts = products.filter(p => wishlist.includes(String(p.id)));
-        if (!listProducts.length) {
-          box.innerHTML = "<p style='text-align:center;color:var(--muted);padding:20px;'>কোনো শাড়ি পাওয়া যায়নি।</p>";
-        } else {
-          box.innerHTML = listProducts.map(p => {
-            const images = productImages(p);
-            return `<div class="admin-card" style="display:flex;align-items:center;gap:12px;justify-content:space-between;">
-              <div style="display:flex;align-items:center;gap:12px;">
-                ${images[0] ? `<img src="${esc(images[0])}" style="width:60px;height:70px;object-fit:cover;border-radius:8px;">` : ""}
-                <div>
-                  <b style="color:var(--navy);">${esc(p.name)}</b><br>
-                  <b style="color:#b8860b;">দাম: ${taka(p.price)}/-</b>
-                </div>
-              </div>
-              <div style="display:flex;gap:6px;align-items:center;">
-                <button class="btn order-btn" style="padding:6px 12px;font-size:13px;" onclick="document.querySelector('#wishlistDialog').close();openOrderModal('${esc(p.id)}')">🛒 অর্ডার</button>
-                <button class="danger" style="padding:6px 10px;font-size:13px;" onclick="removeFromWishlistModal('${esc(p.id)}')">❌ বাদ দিন</button>
-              </div>
-            </div>`;
-          }).join("");
-        }
-      }
-      document.querySelector("#wishlistDialog").showModal();
-    }
-
-    function renderVariant(id, index) {
-      const p = getProduct(id);
-      if (!p) return;
-      const images = productImages(p), colors = productColors(p);
-      const main = document.querySelector("#mainimg-" + CSS.escape(String(id)));
-      const selected = document.querySelector("#color-" + CSS.escape(String(id)));
-      if (selected && colors[index]) {
-        selected.value = colors[index];
-      }
-      if (main && images[index]) {
-        main.src = images[index];
-      }
-      document.querySelectorAll(`[data-variant-product="${CSS.escape(String(id))}"]`).forEach((el, i) => el.classList.toggle("selected", i === index));
-    }
-
-    function openZoomModal(imgUrl) {
-      if (!imgUrl) return;
-      const modal = document.querySelector("#imageZoomDialog");
-      document.querySelector("#zoomModalImage").src = imgUrl;
-      modal.showModal();
-    }
-
-    function closeZoomModal() {
-      const modal = document.querySelector("#imageZoomDialog");
-      if (modal.open) {
-        modal.close();
-      }
-    }
-
-    function directWhatsAppOrder(productId) {
-      const p = getProduct(productId);
-      if (!p) return;
-      const colorElement = document.querySelector("#color-" + CSS.escape(String(productId)));
-      let selectedColor = colorElement ? colorElement.value : "";
-      if (!selectedColor || selectedColor === "রং নির্ধারিত নয়") {
-        selectedColor = productColors(p)[0] || "সাধারণ";
-      }
-      const price = p.price || 0;
-      const msg = `হ্যালো শাড়ি বিলাশ! 👋\nআমি এই শাড়িটি অর্ডার করতে চাই:\n\n🛍️ শাড়ির নাম: ${p.name}\n🎨 পছন্দকৃত রং: ${selectedColor}\n💰 দাম: ${taka(price)}/- টাকা\n\nঅনুগহ করে অর্ডারের প্রক্রিয়াটি জানান।`;
-      const encodedUrl = `https://api.whatsapp.com/send?phone=8801628182808&text=${encodeURIComponent(msg)}`;
-      window.open(encodedUrl, "_blank");
-    }
-
-    function directFacebookOrder(productId) {
-      window.open(FB_PAGE_URL, "_blank");
+    function scheduleReload() {
+      clearTimeout(reloadTimer);
+      reloadTimer = setTimeout(loadProducts, 300);
     }
 
     function renderProductsUI() {
       const box = document.querySelector("#products");
-      if (!box) return;
-      const validProducts = products.filter(p => p && p.name && (p.active !== false));
+      const validProducts = products.filter(p => p && p.name && p.active !== false);
       if (!validProducts.length) {
-        box.innerHTML = "<p style='text-align:center;grid-column:1/-1;'>কোনো শাড়ি এভেইলএবল নেই।</p>";
+        box.innerHTML = "<p style='text-align:center;grid-column:1/-1;'>কোনো শাড়ি এভেইলএবল নেই।</p>";
+        updateWishlistBadge();
         return;
       }
       const wishlist = getWishlist();
       box.innerHTML = validProducts.map(p => {
+        const id = esc(p.id);
         const images = productImages(p), colors = productColors(p);
-        const mainImage = images[0] || "";
         const variants = colors.map((c, i) => ({ color: c, image: images[i] || "" }));
-        const thumbs = variants.length > 1 ? `<div class="variant-thumbs">${variants.map((v, i) => `<button type="button" class="variant-thumb ${i === 0 ? "selected" : ""}" data-variant-product="${esc(p.id)}" onclick="renderVariant('${esc(p.id)}',${i})">${v.image ? `<img src="${esc(v.image)}">` : ""}<span>${esc(v.color)}</span></button>`).join("")}</div>` : "";
+        const thumbs = variants.length > 1 ? `<div class="variant-thumbs">${variants.map((v, i) => `<button type="button" class="variant-thumb ${i === 0 ? "selected" : ""}" data-variant-product="${id}" onclick="renderVariant('${id}',${i})">${v.image ? `<img src="${esc(v.image)}" alt="${esc(v.color)}" loading="lazy">` : ""}<span>${esc(v.color)}</span></button>`).join("")}</div>` : "";
         const options = colors.length ? colors.map((c, idx) => `<option value="${esc(c)}" data-index="${idx}">${esc(c)}</option>`).join("") : `<option value="রং নির্ধারিত নয়" data-index="0">রং নির্ধারিত নয়</option>`;
         const regularPrice = Number(p.regular_price || 0);
         const salePrice = Number(p.price || 0);
-        let discountPercent = (regularPrice > salePrice && regularPrice > 0) ? Math.round(((regularPrice - salePrice) / regularPrice) * 100) : 0;
+        const discountPercent = regularPrice > salePrice && regularPrice > 0 ? Math.round(((regularPrice - salePrice) / regularPrice) * 100) : 0;
         const deliveryBadge = p.free_delivery ? `<div class="free-delivery-badge">🚚 ফ্রি ডেলিভারি (সারা বাংলাদেশ)</div>` : `<div class="delivery-badge">📦 সারা বাংলাদেশে হোম ডেলিভারি</div>`;
         const isWishlisted = wishlist.includes(String(p.id));
         return `<article class="card">
@@ -579,17 +497,17 @@
             </div>
             ${deliveryBadge}
             <div class="muted">${esc(p.description || "")}</div>
-            <div class="image-container" onclick="openZoomModal(document.querySelector('#mainimg-${esc(p.id)}').src)">
-              <button class="wishlist-btn ${isWishlisted ? 'active' : ''}" data-card-wish-btn="${esc(p.id)}" onclick="event.stopPropagation();toggleWishlist(this, '${esc(p.id)}')" title="পছন্দের তালিকায় রাখুন">${isWishlisted ? '❤️' : '🤍'}</button>
-              ${discountPercent > 0 ? `<div class="discount-badge">${discountPercent}% ছাড়</div>` : ""}
-              <img class="product-main-image" id="mainimg-${esc(p.id)}" src="${esc(mainImage)}">
+            <div class="image-container" onclick="openZoomModal(document.querySelector('#mainimg-${id}').src)">
+              <button class="wishlist-btn ${isWishlisted ? "active" : ""}" data-card-wish-btn="${id}" onclick="event.stopPropagation();toggleWishlist(this, '${id}')" title="পছন্দের তালিকায় রাখুন">${isWishlisted ? "❤️" : "🤍"}</button>
+              ${discountPercent > 0 ? `<div class="discount-badge">${discountPercent}% ছাড়</div>` : ""}
+              <img class="product-main-image" id="mainimg-${id}" src="${esc(images[0] || "")}" alt="${esc(p.name)}" loading="lazy">
             </div>
             ${thumbs}
-            <select id="color-${esc(p.id)}" style="display:none">${options}</select>
+            <select id="color-${id}" style="display:none" aria-hidden="true">${options}</select>
             <div class="product-actions" style="margin-top:16px;">
-              <button class="btn order-btn" onclick="openOrderModal('${esc(p.id)}')">🛒 অর্ডার করুন (হোম ডেলিভারি)</button>
-              <button class="whatsapp-order-btn" onclick="directWhatsAppOrder('${esc(p.id)}')">💬 WhatsApp-এ অর্ডার করুন</button>
-              <button class="facebook-order-btn" onclick="directFacebookOrder('${esc(p.id)}')">📘 ফেসবুক পেজে অর্ডার করুন</button>
+              <button class="btn order-btn" onclick="openOrderModal('${id}')">🛒 অর্ডার করুন (হোম ডেলিভারি)</button>
+              <button class="whatsapp-order-btn" onclick="directWhatsAppOrder('${id}')">💬 WhatsApp-এ অর্ডার করুন</button>
+              <button class="facebook-order-btn" onclick="directFacebookOrder()">📘 ফেসবুক পেজে অর্ডার করুন</button>
             </div>
           </div>
         </article>`;
@@ -597,53 +515,154 @@
       updateWishlistBadge();
     }
 
-    async function loadProducts() {
-      let dbProducts = [];
-      let localProducts = JSON.parse(localStorage.getItem("sari_local_products") || "[]");
-      if (db) {
-        try {
-          const { data, error } = await db.from("products").select("*").order("created_at", { ascending: false });
-          if (!error && data) {
-            dbProducts = data;
-          }
-        } catch (err) {
-          console.error("Supabase load error:", err);
-        }
-      }
-      let combinedMap = new Map();
-      [...defaultProducts, ...localProducts, ...dbProducts].forEach(p => {
-        if (p && p.id) combinedMap.set(String(p.id), p);
-      });
-      products = Array.from(combinedMap.values()).sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
-      renderProductsUI();
+    function renderVariant(id, index) {
+      const p = getProduct(id);
+      if (!p) return;
+      const images = productImages(p), colors = productColors(p);
+      const main = document.querySelector("#mainimg-" + CSS.escape(String(id)));
+      const selected = document.querySelector("#color-" + CSS.escape(String(id)));
+      if (selected && colors[index]) selected.value = colors[index];
+      if (main && images[index]) main.src = images[index];
+      document.querySelectorAll(`[data-variant-product="${CSS.escape(String(id))}"]`).forEach((el, i) => el.classList.toggle("selected", i === index));
     }
 
+    function openZoomModal(imgUrl) {
+      if (!imgUrl) return;
+      document.querySelector("#zoomModalImage").src = imgUrl;
+      document.querySelector("#imageZoomDialog").showModal();
+    }
+
+    function closeZoomModal() {
+      const modal = document.querySelector("#imageZoomDialog");
+      if (modal.open) modal.close();
+    }
+
+    function directWhatsAppOrder(productId) {
+      const p = getProduct(productId);
+      if (!p) return;
+      const colorElement = document.querySelector("#color-" + CSS.escape(String(productId)));
+      let selectedColor = colorElement ? colorElement.value : "";
+      if (!selectedColor || selectedColor === "রং নির্ধারিত নয়") selectedColor = productColors(p)[0] || "সাধারণ";
+      const msg = `হ্যালো শাড়ি বিলাশ! 👋\nআমি এই শাড়িটি অর্ডার করতে চাই:\n\n🛍️ শাড়ির নাম: ${p.name}\n🎨 পছন্দকৃত রং: ${selectedColor}\n💰 দাম: ${taka(p.price)}/- টাকা\n\nঅনুগ্রহ করে অর্ডারের প্রক্রিয়াটি জানান।`;
+      window.open(`https://api.whatsapp.com/send?phone=8801628182808&text=${encodeURIComponent(msg)}`, "_blank", "noopener");
+    }
+
+    function directFacebookOrder() {
+      window.open(FB_PAGE_URL, "_blank", "noopener");
+    }
+
+    // ---------- Wishlist (শুধু কাস্টমারের নিজের ফোনে থাকে — এটা ঠিক আছে) ----------
+    function getWishlist() {
+      const urlWishlist = new URLSearchParams(window.location.search).get("wishlist");
+      if (urlWishlist) {
+        const ids = urlWishlist.split(",").filter(Boolean);
+        if (ids.length) {
+          localStorage.setItem("sari_wishlist", JSON.stringify(ids));
+          return ids;
+        }
+      }
+      try { return JSON.parse(localStorage.getItem("sari_wishlist") || "[]"); } catch { return []; }
+    }
+
+    function updateWishlistBadge() {
+      const ids = new Set(products.map(p => String(p.id)));
+      const count = products.length ? getWishlist().filter(id => ids.has(id)).length : getWishlist().length;
+      document.querySelector("#wishlistCount").textContent = count;
+    }
+
+    function toggleWishlist(btn, pId) {
+      const wishlist = getWishlist();
+      const index = wishlist.indexOf(String(pId));
+      if (index > -1) {
+        wishlist.splice(index, 1);
+        btn.classList.remove("active");
+        btn.textContent = "🤍";
+      } else {
+        wishlist.push(String(pId));
+        btn.classList.add("active");
+        btn.textContent = "❤️";
+      }
+      localStorage.setItem("sari_wishlist", JSON.stringify(wishlist));
+      updateWishlistBadge();
+    }
+
+    function removeFromWishlistModal(pId) {
+      const wishlist = getWishlist().filter(id => String(id) !== String(pId));
+      localStorage.setItem("sari_wishlist", JSON.stringify(wishlist));
+      const cardWishBtn = document.querySelector(`[data-card-wish-btn="${CSS.escape(String(pId))}"]`);
+      if (cardWishBtn) {
+        cardWishBtn.classList.remove("active");
+        cardWishBtn.textContent = "🤍";
+      }
+      updateWishlistBadge();
+      openWishlistDialog();
+    }
+
+    function shareWishlistLink() {
+      const wishlist = getWishlist();
+      if (!wishlist.length) { alert("আপনার উইশলিস্টে কোনো শাড়ি নেই!"); return; }
+      const link = `${window.location.origin}${window.location.pathname}?wishlist=${wishlist.join(",")}`;
+      navigator.clipboard.writeText(link)
+        .then(() => alert("উইশলিস্ট লিংক সফলভাবে কপি হয়েছে! এই লিংকটি দিয়ে যেকোনো সময় বা অন্য ডিভাইসে আপনার পছন্দ করা শাড়িগুলো দেখতে পাবেন।"))
+        .catch(() => prompt("আপনার উইশলিস্ট লিংকটি কপি করে রাখুন:", link));
+    }
+
+    function openWishlistDialog() {
+      const wishlist = getWishlist();
+      const box = document.querySelector("#wishlistResult");
+      const listProducts = products.filter(p => wishlist.includes(String(p.id)) && p.active !== false);
+      if (!listProducts.length) {
+        box.innerHTML = "<p style='text-align:center;color:var(--muted);padding:20px;'>আপনার Wishlist-এ কোনো শাড়ি যোগ করা নেই।</p>";
+      } else {
+        box.innerHTML = listProducts.map(p => {
+          const img = productImages(p)[0];
+          const id = esc(p.id);
+          return `<div class="admin-card" style="display:flex;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              ${img ? `<img src="${esc(img)}" alt="${esc(p.name)}" style="width:60px;height:70px;object-fit:cover;border-radius:8px;">` : ""}
+              <div>
+                <b style="color:var(--navy);">${esc(p.name)}</b><br>
+                <b style="color:#b8860b;">দাম: ${taka(p.price)}/-</b>
+              </div>
+            </div>
+            <div style="display:flex;gap:6px;align-items:center;">
+              <button class="btn order-btn" style="padding:6px 12px;font-size:13px;" onclick="document.querySelector('#wishlistDialog').close();openOrderModal('${id}')">🛒 অর্ডার</button>
+              <button class="danger" style="padding:6px 10px;font-size:13px;" onclick="removeFromWishlistModal('${id}')">❌ বাদ দিন</button>
+            </div>
+          </div>`;
+        }).join("");
+      }
+      document.querySelector("#wishlistDialog").showModal();
+    }
+
+    // ---------- Orders (customer) ----------
     function openOrderModal(id) {
       const p = getProduct(id);
       if (!p) return;
       const colors = productColors(p);
       document.querySelector("#orderProductId").value = p.id;
       document.querySelector("#orderProductPrice").value = p.price;
-      const colorSelect = document.querySelector("#orderColorSelect");
-      colorSelect.innerHTML = colors.length ? colors.map((c, idx) => `<option value="${esc(c)}" data-index="${idx}">${esc(c)}</option>`).join("") : `<option value="রং নির্ধারিত নয়" data-index="0">রং নির্ধারিত নয়</option>`;
+      document.querySelector("#orderMsg").textContent = "";
+      document.querySelector("#orderColorSelect").innerHTML = colors.length
+        ? colors.map((c, idx) => `<option value="${esc(c)}" data-index="${idx}">${esc(c)}</option>`).join("")
+        : `<option value="রং নির্ধারিত নয়" data-index="0">রং নির্ধারিত নয়</option>`;
       onOrderColorChange();
       togglePaymentFields();
       document.querySelector("#orderDialog").showModal();
     }
 
     function onOrderColorChange() {
-      const pId = document.querySelector("#orderProductId").value;
-      const p = getProduct(pId);
+      const p = getProduct(document.querySelector("#orderProductId").value);
       if (!p) return;
       const colorSelect = document.querySelector("#orderColorSelect");
-      const selectedOption = colorSelect.options[colorSelect.selectedIndex];
-      const idx = Number(selectedOption ? selectedOption.getAttribute("data-index") : 0);
+      const opt = colorSelect.options[colorSelect.selectedIndex];
+      const idx = Number(opt ? opt.getAttribute("data-index") : 0);
       const images = productImages(p);
-      let selectedImage = images[idx] || images[0] || "";
+      const selectedImage = images[idx] || images[0] || "";
       document.querySelector("#orderSelectedImage").value = selectedImage;
       document.querySelector("#orderSummary").innerHTML = `
         <div style="display:flex;align-items:center;gap:14px;">
-          ${selectedImage ? `<img src="${esc(selectedImage)}" style="width:65px;height:78px;object-fit:cover;border-radius:8px;">` : ""}
+          ${selectedImage ? `<img src="${esc(selectedImage)}" alt="${esc(p.name)}" style="width:65px;height:78px;object-fit:cover;border-radius:8px;">` : ""}
           <div>
             <b style="font-size:17px;color:var(--navy);">${esc(p.name)}</b><br>
             <span class="small">রং: <strong style="color:var(--navy);">${esc(colorSelect.value)}</strong></span><br>
@@ -660,8 +679,9 @@
     }
 
     function togglePaymentFields() {
-      const method = document.querySelector("#paymentMethod").value;
-      document.querySelector("#bkashFields").style.display = method === "bkash" ? "block" : "none";
+      const isBkash = document.querySelector("#paymentMethod").value === "bkash";
+      document.querySelector("#bkashFields").style.display = isBkash ? "block" : "none";
+      document.querySelector("#transactionId").required = isBkash;
       document.querySelector("#bkashNumberDisplay").textContent = BKASH_NUMBER;
       updateOrderTotal();
     }
@@ -669,197 +689,193 @@
     document.querySelector("#orderForm").addEventListener("submit", async e => {
       e.preventDefault();
       const btn = document.querySelector("#submitOrderBtn");
-      btn.disabled = true;
-      btn.textContent = "প্রসেস হচ্ছে...";
+      const msg = document.querySelector("#orderMsg");
       const f = new FormData(e.target);
       const productId = document.querySelector("#orderProductId").value;
       const p = getProduct(productId);
-      const price = Number(document.querySelector("#orderProductPrice").value);
+      if (!p) return;
+      btn.disabled = true;
+      btn.textContent = "প্রসেস হচ্ছে...";
+      msg.textContent = "";
+
       const qty = Number(f.get("qty"));
-      const total = price * qty;
-      const orderId = "ORD-" + Date.now().toString().slice(-6);
+      const paymentMethod = String(f.get("payment_method"));
+      const trx = String(f.get("transaction_id") || "").trim();
+      let address = String(f.get("address")).trim();
+      address += paymentMethod === "bkash" ? `\n[পেমেন্ট: bKash | TrxID: ${trx}]` : "\n[পেমেন্ট: Cash on Delivery]";
+
+      const orderId = "ORD-" + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2, 5).toUpperCase();
       const orderData = {
         id: orderId,
         customer_name: String(f.get("name")).trim(),
         phone: String(f.get("phone")).trim(),
-        address: String(f.get("address")).trim(),
-        items: JSON.stringify([{ id: p ? p.id : productId, name: p ? p.name : "শাড়ি", color: String(f.get("color")), price, qty, subtotal: total, image: document.querySelector("#orderSelectedImage").value || (p ? productImages(p)[0] : "") }]),
-        total: total,
-        status: "নতুন অর্ডার (Pending)",
-        created_at: new Date().toISOString()
+        address,
+        items: [{
+          id: p.id,
+          name: p.name,
+          color: String(f.get("color")),
+          price: Number(p.price),
+          qty,
+          subtotal: Number(p.price) * qty,
+          image: document.querySelector("#orderSelectedImage").value || productImages(p)[0] || ""
+        }],
+        total: Number(p.price) * qty,
+        status: "নতুন অর্ডার (Pending)"
       };
-      let localOrders = JSON.parse(localStorage.getItem("sari_local_orders") || "[]");
-      localOrders.unshift(orderData);
-      localStorage.setItem("sari_local_orders", JSON.stringify(localOrders));
-      if (db) {
-        try {
-          await db.from("orders").insert([orderData]);
-        } catch(err) {
-          console.error("Order insert error:", err);
-        }
-      }
+
+      const { error } = await db.from("orders").insert([orderData]);
       btn.disabled = false;
       btn.textContent = "অর্ডার নিশ্চিত করুন";
+      if (error) {
+        console.error("Order insert error:", error);
+        msg.className = "small msg-err";
+        msg.textContent = "অর্ডার জমা হয়নি: " + explainError(error) + " চাইলে WhatsApp-এ অর্ডার করুন।";
+        return;
+      }
       document.querySelector("#orderDialog").close();
+      document.querySelector("#successOrderId").textContent = orderId;
       document.querySelector("#successDialog").showModal();
       e.target.reset();
     });
 
     function parseItems(itemsData) {
       if (Array.isArray(itemsData)) return itemsData;
-      if (typeof itemsData === 'string') {
+      if (typeof itemsData === "string") {
         try {
           const parsed = JSON.parse(itemsData);
           if (Array.isArray(parsed)) return parsed;
-        } catch(e) {}
+        } catch {}
       }
       return [];
     }
 
+    function statusClassFor(st = "") {
+      if (st.includes("বাতিল")) return "status-cancelled";
+      if (st.includes("সম্পন্ন")) return "status-delivered";
+      if (st.includes("কুরিয়ার")) return "status-shipped";
+      if (st.includes("নিশ্চিত")) return "status-confirmed";
+      return "status-pending";
+    }
+
     async function checkOrderStatus() {
-      const phone = document.querySelector("#trackPhone").value.trim(), resBox = document.querySelector("#trackResult");
+      const phone = document.querySelector("#trackPhone").value.trim();
+      const resBox = document.querySelector("#trackResult");
       if (!phone) return;
       resBox.innerHTML = "<p class='small'>খোঁজা হচ্ছে...</p>";
-      let ordersList = [];
-      if (db) {
-        try {
-          const { data, error } = await db.from("orders").select("*").eq("phone", phone);
-          if (!error && data) ordersList = data;
-        } catch(err) {
-          console.error(err);
-        }
-      }
-      let localOrders = JSON.parse(localStorage.getItem("sari_local_orders") || "[]");
-      let combinedMap = new Map();
-      [...localOrders, ...ordersList].forEach(o => { if(o && (o.id || o.phone)) combinedMap.set(String(o.id || o.phone + o.created_at), o); });
-      ordersList = Array.from(combinedMap.values()).filter(o => o.phone === phone);
-      if (!ordersList.length) {
-        resBox.innerHTML = "<p style='color:red;'>কোনো অর্ডার পাওয়া যায়নি। সঠিক ফোন নম্বর দিন।</p>";
+      const { data, error } = await db.rpc("track_orders", { p_phone: phone });
+      if (error) {
+        console.error(error);
+        resBox.innerHTML = `<p class="msg-err">অর্ডার খোঁজা যায়নি। পরে আবার চেষ্টা করুন।</p>`;
         return;
       }
-      resBox.innerHTML = ordersList.map(o => {
-        let itemsArr = parseItems(o.items);
-        let itemHtml = itemsArr.map(i => `
+      if (!data || !data.length) {
+        resBox.innerHTML = "<p style='color:red;'>কোনো অর্ডার পাওয়া যায়নি। সঠিক ফোন নম্বর দিন।</p>";
+        return;
+      }
+      resBox.innerHTML = data.map(o => {
+        const itemHtml = parseItems(o.items).map(i => `
           <div style="display:flex;align-items:center;gap:10px;margin:8px 0;background:#fff;padding:8px;border-radius:8px;border:1px solid #e2e8f0;">
-            ${i.image ? `<img src="${esc(i.image)}" style="width:55px;height:65px;object-fit:cover;border-radius:6px;">` : `<div style="width:55px;height:65px;background:#eee;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#888;">ছবি নেই</div>`}
+            ${i.image ? `<img src="${esc(i.image)}" alt="${esc(i.name)}" style="width:55px;height:65px;object-fit:cover;border-radius:6px;">` : `<div style="width:55px;height:65px;background:#eee;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#888;">ছবি নেই</div>`}
             <div>
-              <b>${esc(i.name || 'শাড়ি')}</b><br>
-              <span class="small" style="color:#0284c7;font-weight:bold;">রং: ${esc(i.color || 'সাধারণ')} | পরিমাণ: ${i.qty || 1}টি</span>
+              <b>${esc(i.name || "শাড়ি")}</b><br>
+              <span class="small" style="color:#0284c7;font-weight:bold;">রং: ${esc(i.color || "সাধারণ")} | পরিমাণ: ${taka(i.qty || 1)}টি</span>
             </div>
-          </div>
-        `).join("");
-        let statusClass = "status-pending";
-        const st = o.status || "";
-        if(st.includes("নিশ্চিত")) statusClass = "status-confirmed";
-        if(st.includes("কুরিয়ার")) statusClass = "status-shipped";
-        if(st.includes("সম্পন্ন")) statusClass = "status-delivered";
-        if(st.includes("বাতিল")) statusClass = "status-cancelled";
+          </div>`).join("");
         return `<div class="admin-card">
-          <b>অর্ডার আইডি:</b> ${esc(o.id || 'N/A')}<br>
+          <b>অর্ডার আইডি:</b> ${esc(o.id || "N/A")}<br>
           <b>তারিখ:</b> ${new Date(o.created_at || Date.now()).toLocaleDateString("bn-BD")}<br>
-          <b>বর্তমান অবস্থা:</b> <span class="status-badge ${statusClass}">${esc(o.status)}</span><br>
+          <b>বর্তমান অবস্থা:</b> <span class="status-badge ${statusClassFor(o.status)}">${esc(o.status)}</span><br>
           <div style="margin:8px 0;">${itemHtml}</div>
           <b>মোট টাকা:</b> <strong style="color:var(--green);">${taka(o.total)}/-</strong>
         </div>`;
       }).join("");
     }
 
-    document.querySelector("#loginForm").addEventListener("submit", async e => {
-      e.preventDefault();
-      const email = document.querySelector("#loginEmail").value.trim();
-      const password = document.querySelector("#loginPassword").value.trim();
-      const msg = document.querySelector("#loginMessage");
-      const currentAdminPass = "123456";
-      if (email === "mahadihasanalif25@gmail.com" && password === currentAdminPass) {
-        localStorage.setItem("sari_admin_logged", "true");
-        checkLoginStatus();
-        document.querySelector("#adminDialog").close();
-        openAdminPanelDirectly();
-      } else {
-        msg.style.color = "red";
-        msg.textContent = "ইমেইল বা পাসওয়ার্ড ভুল হয়েছে! (পাসওয়ার্ড: 123456)";
-      }
-    });
-
-    function logoutAdmin() {
-      localStorage.setItem("sari_admin_logged", "false");
-      localStorage.removeItem("sari_admin_view");
-      checkLoginStatus();
-      document.querySelector("#adminFullPage").style.display = "none";
-    }
-
+    // ---------- Admin ----------
     async function showAdminTab(tab) {
+      if (!isAdmin) return;
       currentAdminTabName = tab;
       localStorage.setItem("sari_admin_active_tab", tab);
       const box = document.querySelector("#adminContent");
       if (tab === "products") {
         editingProductId = null;
         currentImageUrlList = [];
+        const hasLocal = getLegacyLocalProducts().length > 0;
         box.innerHTML = `
+          ${hasLocal ? `<div class="admin-card" style="background:#fff8e7;border-color:#f2e2b8;">
+            <b>⚠️ এই ফোনে ${taka(getLegacyLocalProducts().length)}টি পুরোনো শাড়ি শুধু লোকালি সেভ আছে (অন্য ফোনে দেখা যায় না)।</b>
+            <p class="small" style="margin:6px 0 10px;">এগুলো ডাটাবেসে তুলে দিলে সব ফোনে দেখা যাবে।</p>
+            <button type="button" class="btn order-btn" style="padding:8px 16px;font-size:14px;" id="migrateBtn" onclick="migrateLocalProducts()">⬆️ ডাটাবেসে আপলোড করুন</button>
+            <div id="migrateMsg" class="small" style="margin-top:8px;"></div>
+          </div>` : ""}
           <div class="admin-card">
             <h3 id="formTitle">নতুন শাড়ি যোগ করুন</h3>
-            <label class="field-label">শাড়ির নাম</label><input id="pname" required>
-            <label class="field-label">বিবরণ</label><input id="pdesc">
+            <label class="field-label" for="pname">শাড়ির নাম</label><input id="pname" required>
+            <label class="field-label" for="pdesc">বিবরণ</label><input id="pdesc">
             <div class="row">
-              <div><label class="field-label">কাটা দাম</label><input id="pregularprice" type="number"></div>
-              <div><label class="field-label">বিক্রয় মূল্য</label><input id="pprice" type="number" required></div>
+              <div><label class="field-label" for="pregularprice">কাটা দাম</label><input id="pregularprice" type="number" min="0"></div>
+              <div><label class="field-label" for="pprice">বিক্রয় মূল্য</label><input id="pprice" type="number" min="1" required></div>
             </div>
             <div style="margin: 12px 0; display:flex; align-items:center; gap:8px;">
               <input type="checkbox" id="pfreedelivery" style="width:20px; height:20px; margin:0; cursor:pointer;">
               <label for="pfreedelivery" style="font-weight:bold; color:var(--green); cursor:pointer;">🚚 ফ্রি ডেলিভারি (Free Delivery)</label>
             </div>
-            <label class="field-label">রঙের নাম (কমা দিয়ে)</label><input id="pcolors" placeholder="লাল, নীল">
-            <label class="field-label">ছবি নিয়ন্ত্রণ (বর্তমান ছবি ডিলিট বা পরিবর্তন করুন)</label>
+            <div style="margin: 12px 0; display:flex; align-items:center; gap:8px;">
+              <input type="checkbox" id="pactive" checked style="width:20px; height:20px; margin:0; cursor:pointer;">
+              <label for="pactive" style="font-weight:bold; color:var(--navy); cursor:pointer;">👁️ সাইটে দেখাবে (স্টক আছে)</label>
+            </div>
+            <label class="field-label" for="pcolors">রঙের নাম (কমা দিয়ে, ছবির ক্রম অনুযায়ী)</label><input id="pcolors" placeholder="লাল, নীল">
+            <label class="field-label">ছবি নিয়ন্ত্রণ (বর্তমান ছবি ডিলিট বা পরিবর্তন করুন)</label>
             <div id="imagePreviewContainer" style="display:flex;gap:10px;flex-wrap:wrap;margin:10px 0;"></div>
-            <label class="field-label">নতুন ছবি আপলোড করুন</label><input id="pimages" type="file" multiple accept="image/*">
-            <button type="button" class="btn order-btn" style="margin-top:10px;" onclick="saveProduct()">সেভ করুন</button>
-            <div id="pmsg" class="small"></div>
+            <label class="field-label" for="pimages">নতুন ছবি আপলোড করুন</label><input id="pimages" type="file" multiple accept="image/*">
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <button type="button" id="saveBtn" class="btn order-btn" style="margin-top:10px;" onclick="saveProduct()">সেভ করুন</button>
+              <button type="button" class="btn" style="margin-top:10px;background:#e2e8f0;box-shadow:none;" onclick="showAdminTab('products')">নতুন / বাতিল</button>
+            </div>
+            <div id="pmsg" class="small" style="margin-top:10px;"></div>
           </div>
           <div id="adminProductsList"></div>`;
+        renderImagePreviewControl();
         listAdminProducts();
-      } else if(tab === "orders") {
+      } else if (tab === "orders") {
         listOrders();
-      } else if(tab === "settings") {
+      } else if (tab === "settings") {
         box.innerHTML = `
           <div class="admin-card" style="max-width:480px;">
             <h3>অ্যাডমিন পাসওয়ার্ড পরিবর্তন করুন</h3>
-            <label class="field-label">বর্তমান পাসওয়ার্ড</label>
-            <input id="oldPass" type="password" placeholder="বর্তমান পাসওয়ার্ড দিন" required>
-            <label class="field-label">নতুন পাসওয়ার্ড</label>
-            <input id="newPass1" type="password" placeholder="নতুন পাসওয়ার্ড দিন" required>
-            <label class="field-label">নতুন পাসওয়ার্ড নিশ্চিত করুন</label>
-            <input id="newPass2" type="password" placeholder="আবার নতুন পাসওয়ার্ড দিন" required>
-            <button type="button" class="btn order-btn" style="margin-top:10px;width:100%;" onclick="updateAdminPassword()">পাসওয়ার্ড পরিবর্তন করুন</button>
+            <label class="field-label" for="oldPass">বর্তমান পাসওয়ার্ড</label>
+            <input id="oldPass" type="password" placeholder="বর্তমান পাসওয়ার্ড দিন" autocomplete="current-password">
+            <label class="field-label" for="newPass1">নতুন পাসওয়ার্ড (কমপক্ষে ৮ অক্ষর)</label>
+            <input id="newPass1" type="password" placeholder="নতুন পাসওয়ার্ড দিন" autocomplete="new-password">
+            <label class="field-label" for="newPass2">নতুন পাসওয়ার্ড নিশ্চিত করুন</label>
+            <input id="newPass2" type="password" placeholder="আবার নতুন পাসওয়ার্ড দিন" autocomplete="new-password">
+            <button type="button" id="passBtn" class="btn order-btn" style="margin-top:10px;width:100%;" onclick="updateAdminPassword()">পাসওয়ার্ড পরিবর্তন করুন</button>
             <div id="passMsg" class="small" style="margin-top:10px;font-weight:bold;"></div>
           </div>`;
       }
     }
 
-    function updateAdminPassword() {
-      const oldPass = document.querySelector("#oldPass").value.trim();
-      const newPass1 = document.querySelector("#newPass1").value.trim();
-      const newPass2 = document.querySelector("#newPass2").value.trim();
+    async function updateAdminPassword() {
+      const oldPass = document.querySelector("#oldPass").value;
+      const newPass1 = document.querySelector("#newPass1").value;
+      const newPass2 = document.querySelector("#newPass2").value;
       const passMsg = document.querySelector("#passMsg");
-      if (oldPass !== "123456") {
-        passMsg.style.color = "red";
-        passMsg.textContent = "আপনার বর্তমান পাসওয়ার্ডটি ভুল হয়েছে!";
-        return;
-      }
-      if (!newPass1 || !newPass2) {
-        passMsg.style.color = "red";
-        passMsg.textContent = "নতুন পাসওয়ার্ডের দুটি ঘরই পূরণ করুন!";
-        return;
-      }
-      if (newPass1 !== newPass2) {
-        passMsg.style.color = "red";
-        passMsg.textContent = "নতুন পাসওয়ার্ড দুটি একে অপরের সাথে মিলছে না!";
-        return;
-      }
-      passMsg.style.color = "green";
-      passMsg.textContent = "পাসওয়ার্ড সফলভাবে পরিবর্তন করা হয়েছে!";
-      document.querySelector("#oldPass").value = "";
-      document.querySelector("#newPass1").value = "";
-      document.querySelector("#newPass2").value = "";
+      const btn = document.querySelector("#passBtn");
+      const fail = t => { passMsg.className = "small msg-err"; passMsg.textContent = t; };
+      if (!oldPass || !newPass1 || !newPass2) return fail("সবগুলো ঘর পূরণ করুন!");
+      if (newPass1.length < 8) return fail("নতুন পাসওয়ার্ড কমপক্ষে ৮ অক্ষরের হতে হবে!");
+      if (newPass1 !== newPass2) return fail("নতুন পাসওয়ার্ড দুটি একে অপরের সাথে মিলছে না!");
+      btn.disabled = true;
+      passMsg.className = "small";
+      passMsg.textContent = "যাচাই হচ্ছে...";
+      const { error: verifyError } = await db.auth.signInWithPassword({ email: ADMIN_EMAIL, password: oldPass });
+      if (verifyError) { btn.disabled = false; return fail("আপনার বর্তমান পাসওয়ার্ডটি ভুল হয়েছে!"); }
+      const { error } = await db.auth.updateUser({ password: newPass1 });
+      btn.disabled = false;
+      if (error) return fail("পরিবর্তন করা যায়নি: " + explainError(error));
+      passMsg.className = "small msg-ok";
+      passMsg.textContent = "পাসওয়ার্ড সফলভাবে পরিবর্তন করা হয়েছে! পরের বার নতুন পাসওয়ার্ড দিয়ে লগইন করবেন।";
+      ["#oldPass", "#newPass1", "#newPass2"].forEach(s => document.querySelector(s).value = "");
     }
 
     function removeImageAt(idx) {
@@ -876,87 +892,91 @@
       }
       container.innerHTML = currentImageUrlList.map((url, idx) => `
         <div style="position:relative;display:inline-block;border:1px solid #ccc;border-radius:8px;padding:4px;">
-          <img src="${esc(url)}" style="width:70px;height:85px;object-fit:cover;border-radius:6px;display:block;">
-          <button type="button" onclick="removeImageAt(${idx})" style="position:absolute;top:-8px;right:-8px;background:red;color:white;border:none;border-radius:50%;width:22px;height:22px;font-size:12px;font-weight:bold;cursor:pointer;">&times;</button>
-        </div>
-      `).join("");
+          <img src="${esc(url)}" alt="ছবি ${idx + 1}" style="width:70px;height:85px;object-fit:cover;border-radius:6px;display:block;">
+          <button type="button" onclick="removeImageAt(${idx})" aria-label="ছবি মুছুন" style="position:absolute;top:-8px;right:-8px;background:red;color:white;border:none;border-radius:50%;width:22px;height:22px;font-size:12px;font-weight:bold;cursor:pointer;">&times;</button>
+        </div>`).join("");
+    }
+
+    // ফোনের বড় ছবি ছোট করে (সর্বোচ্চ 1600px) — সাইট দ্রুত লোড হবে
+    async function compressImage(blob) {
+      try {
+        const bitmap = await createImageBitmap(blob);
+        const scale = Math.min(1, 1600 / Math.max(bitmap.width, bitmap.height));
+        const canvas = document.createElement("canvas");
+        canvas.width = Math.round(bitmap.width * scale);
+        canvas.height = Math.round(bitmap.height * scale);
+        canvas.getContext("2d").drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+        const out = await new Promise(r => canvas.toBlob(r, "image/jpeg", 0.85));
+        return out && out.size < blob.size ? out : blob;
+      } catch {
+        return blob;
+      }
+    }
+
+    async function uploadImage(blob) {
+      const file = await compressImage(blob);
+      const ext = file.type === "image/png" ? "png" : file.type === "image/webp" ? "webp" : "jpg";
+      const path = `${Date.now()}-${Math.random().toString(36).slice(2, 10)}.${ext}`;
+      const { error } = await db.storage.from(IMAGE_BUCKET).upload(path, file, { contentType: file.type || "image/jpeg", upsert: false });
+      if (error) throw error;
+      return db.storage.from(IMAGE_BUCKET).getPublicUrl(path).data.publicUrl;
     }
 
     async function saveProduct() {
       const msg = document.querySelector("#pmsg");
+      const btn = document.querySelector("#saveBtn");
       const name = document.querySelector("#pname").value.trim();
       const price = Number(document.querySelector("#pprice").value);
-      const freeDelivery = document.querySelector("#pfreedelivery").checked;
-      const colors = document.querySelector("#pcolors").value.split(",").map(s=>s.trim()).filter(Boolean);
       const files = [...document.querySelector("#pimages").files];
-      if (!name || !price) {
-        alert("অনুগ্রহ করে শাড়ির নাম এবং বিক্রয় মূল্য দিন!");
+      if (!name || !(price > 0)) {
+        msg.className = "small msg-err";
+        msg.textContent = "অনুগ্রহ করে শাড়ির নাম এবং বিক্রয় মূল্য দিন!";
         return;
       }
-      msg.textContent = "ছবি প্রসেস ও ডাটাবেসে সেভ হচ্ছে...";
-      let newUploadedUrls = [];
-      if (files.length > 0) {
-        for (const file of files) {
-          try {
-            const base64String = await new Promise((resolve, reject) => {
-              const reader = new FileReader();
-              reader.onload = () => resolve(reader.result);
-              reader.onerror = error => reject(error);
-              reader.readAsDataURL(file);
-            });
-            newUploadedUrls.push(base64String);
-          } catch (err) {
-            console.error("Image read error:", err);
-          }
+      btn.disabled = true;
+      msg.className = "small";
+      try {
+        const uploaded = [];
+        for (let i = 0; i < files.length; i++) {
+          msg.textContent = `ছবি আপলোড হচ্ছে (${taka(i + 1)}/${taka(files.length)})...`;
+          uploaded.push(await uploadImage(files[i]));
         }
-      }
-      const finalImages = [...currentImageUrlList, ...newUploadedUrls];
-      const productData = {
-        id: editingProductId ? editingProductId : "p-" + Date.now(),
-        name,
-        description: document.querySelector("#pdesc").value.trim(),
-        price,
-        regular_price: Number(document.querySelector("#pregularprice").value || 0),
-        free_delivery: freeDelivery,
-        colors,
-        image_urls: finalImages,
-        active: true,
-        created_at: new Date().toISOString()
-      };
+        msg.textContent = "ডাটাবেসে সেভ হচ্ছে...";
+        const productData = {
+          name,
+          description: document.querySelector("#pdesc").value.trim(),
+          price,
+          regular_price: Number(document.querySelector("#pregularprice").value || 0),
+          free_delivery: document.querySelector("#pfreedelivery").checked,
+          active: document.querySelector("#pactive").checked,
+          colors: document.querySelector("#pcolors").value.split(",").map(s => s.trim()).filter(Boolean),
+          image_urls: [...currentImageUrlList, ...uploaded]
+        };
 
-      let localProducts = JSON.parse(localStorage.getItem("sari_local_products") || "[]");
-      if (editingProductId) {
-        localProducts = localProducts.map(lp => lp.id === editingProductId ? productData : lp);
-        if (!localProducts.some(lp => lp.id === editingProductId)) localProducts.unshift(productData);
-      } else {
-        localProducts.unshift(productData);
-      }
-      localStorage.setItem("sari_local_products", JSON.stringify(localProducts));
+        const query = editingProductId
+          ? db.from("products").update(productData).eq("id", editingProductId)
+          : db.from("products").insert([{ ...productData, id: "p-" + Date.now(), created_at: new Date().toISOString() }]);
+        const { data, error } = await query.select();
+        if (error) throw error;
+        if (!data || !data.length) throw new Error("permission denied — কোনো রো সেভ হয়নি");
 
-      if (db) {
-        try {
-          if (editingProductId) {
-            await db.from("products").update(productData).eq("id", editingProductId);
-          } else {
-            await db.from("products").insert([productData]);
-          }
-        } catch(err) {
-          console.error("Supabase product save error:", err);
-        }
+        msg.className = "small msg-ok";
+        msg.textContent = "✅ সফলভাবে সেভ হয়েছে! সব ফোনে এখনই দেখা যাবে।";
+        toast("✅ সেভ হয়েছে — সব ফোনে আপডেট দেখাবে");
+        await loadProducts();
+        const keepMsg = msg.textContent;
+        await showAdminTab("products");
+        const newMsg = document.querySelector("#pmsg");
+        newMsg.className = "small msg-ok";
+        newMsg.textContent = keepMsg;
+      } catch (err) {
+        console.error("Product save error:", err);
+        msg.className = "small msg-err";
+        msg.textContent = "❌ সেভ হয়নি: " + explainError(err);
+      } finally {
+        const b = document.querySelector("#saveBtn");
+        if (b) b.disabled = false;
       }
-      msg.textContent = "সফলভাবে সেভ হয়েছে!";
-      editingProductId = null;
-      document.querySelector("#formTitle").textContent = "নতুন শাড়ি যোগ করুন";
-      document.querySelector("#pname").value = "";
-      document.querySelector("#pdesc").value = "";
-      document.querySelector("#pprice").value = "";
-      document.querySelector("#pregularprice").value = "";
-      document.querySelector("#pcolors").value = "";
-      document.querySelector("#pimages").value = "";
-      document.querySelector("#pfreedelivery").checked = false;
-      currentImageUrlList = [];
-      await loadProducts();
-      listAdminProducts();
     }
 
     function editProduct(id) {
@@ -970,17 +990,25 @@
       document.querySelector("#pprice").value = p.price || "";
       document.querySelector("#pregularprice").value = p.regular_price || "";
       document.querySelector("#pfreedelivery").checked = !!p.free_delivery;
+      document.querySelector("#pactive").checked = p.active !== false;
       document.querySelector("#pcolors").value = productColors(p).join(", ");
+      document.querySelector("#pmsg").textContent = "";
       renderImagePreviewControl();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      document.querySelector("#adminFullPage").scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    async function listAdminProducts() {
+    function listAdminProducts() {
       const box = document.querySelector("#adminProductsList");
       if (!box) return;
-      box.innerHTML = (products || []).map(p => `<div class="admin-card" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+      if (!products.length) {
+        box.innerHTML = "<p class='small'>ডাটাবেসে এখনো কোনো শাড়ি নেই।</p>";
+        return;
+      }
+      box.innerHTML = products.map(p => `<div class="admin-card" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
         <div>
-          <b>${esc(p.name)}</b> - ${taka(p.price)}/- ${p.free_delivery ? '<span style="color:var(--green);font-weight:bold;">(ফ্রি ডেলিভারি টেগযুক্ত)</span>' : ''}
+          <b>${esc(p.name)}</b> - ${taka(p.price)}/-
+          ${p.free_delivery ? '<span style="color:var(--green);font-weight:bold;">(ফ্রি ডেলিভারি)</span>' : ""}
+          ${p.active === false ? '<span style="color:var(--red);font-weight:bold;">(লুকানো)</span>' : ""}
         </div>
         <div>
           <button type="button" class="edit-btn" onclick="editProduct('${esc(p.id)}')">সম্পাদনা (Edit)</button>
@@ -990,117 +1018,171 @@
     }
 
     async function deleteProduct(id) {
-      if (confirm("আপনি কি নিশ্চিতভাবে এই শাড়িটি মুছে ফেলতে চান?")) {
-        let localProducts = JSON.parse(localStorage.getItem("sari_local_products") || "[]");
-        localProducts = localProducts.filter(p => String(p.id) !== String(id));
-        localStorage.setItem("sari_local_products", JSON.stringify(localProducts));
+      if (!confirm("আপনি কি নিশ্চিতভাবে এই শাড়িটি মুছে ফেলতে চান?")) return;
+      const { data, error } = await db.from("products").delete().eq("id", id).select();
+      if (error || !data || !data.length) {
+        alert("মুছে ফেলা যায়নি: " + explainError(error || "permission denied"));
+        return;
+      }
+      toast("🗑️ শাড়িটি মুছে ফেলা হয়েছে");
+      await loadProducts();
+    }
 
-        if (db) {
-          try {
-            await db.from("products").delete().eq("id", id);
-          } catch(err) {
-            console.error(err);
+    function getLegacyLocalProducts() {
+      try {
+        return JSON.parse(localStorage.getItem("sari_local_products") || "[]")
+          .filter(p => p && p.id && p.name && !String(p.id).startsWith("sample-"));
+      } catch {
+        return [];
+      }
+    }
+
+    async function migrateLocalProducts() {
+      const list = getLegacyLocalProducts();
+      const btn = document.querySelector("#migrateBtn");
+      const msg = document.querySelector("#migrateMsg");
+      btn.disabled = true;
+      try {
+        for (let i = 0; i < list.length; i++) {
+          const p = list[i];
+          msg.textContent = `আপলোড হচ্ছে (${taka(i + 1)}/${taka(list.length)}): ${p.name}`;
+          const images = [];
+          for (const url of productImages(p)) {
+            if (String(url).startsWith("data:")) {
+              const blob = await (await fetch(url)).blob();
+              images.push(await uploadImage(blob));
+            } else {
+              images.push(url);
+            }
           }
+          const { error } = await db.from("products").upsert([{
+            id: String(p.id),
+            name: p.name,
+            description: p.description || "",
+            price: Number(p.price) || 0,
+            regular_price: Number(p.regular_price) || 0,
+            free_delivery: !!p.free_delivery,
+            colors: productColors(p),
+            image_urls: images,
+            active: p.active !== false,
+            created_at: p.created_at || new Date().toISOString()
+          }]);
+          if (error) throw error;
         }
+        localStorage.removeItem("sari_local_products");
+        localStorage.removeItem("sari_local_orders");
+        toast("✅ সব পুরোনো শাড়ি ডাটাবেসে উঠেছে");
         await loadProducts();
-        listAdminProducts();
+        showAdminTab("products");
+      } catch (err) {
+        console.error("Migration error:", err);
+        msg.className = "small msg-err";
+        msg.textContent = "আপলোড হয়নি: " + explainError(err);
+        btn.disabled = false;
       }
     }
 
     async function listOrders() {
       const box = document.querySelector("#adminContent");
-      box.innerHTML = "<p>অর্ডার লোড হচ্ছে...</p>";
-      let dbOrders = [];
-      if (db) {
-        try {
-          const { data, error } = await db.from("orders").select("*").order("created_at", { ascending: false });
-          if (!error && data) dbOrders = data;
-        } catch(err) {
-          console.error(err);
-        }
-      }
-      let localOrders = JSON.parse(localStorage.getItem("sari_local_orders") || "[]");
-      let combinedMap = new Map();
-      [...localOrders, ...dbOrders].forEach(o => {
-        if(o && (o.id || o.phone)) combinedMap.set(String(o.id || o.phone + o.created_at), o);
-      });
-      let finalOrders = Array.from(combinedMap.values()).sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
-      finalOrders = finalOrders.filter(o => o.customer_name && o.phone && o.phone !== "নম্বর নেই");
-      
-      if (!finalOrders.length) {
-        box.innerHTML = "<p style='padding:15px;background:#fff;'>এখনো কোনো কাস্টমার অর্ডার করেনি।</p>";
+      if (!box.querySelector("[data-orders-list]")) box.innerHTML = "<p>অর্ডার লোড হচ্ছে...</p>";
+      const { data, error } = await db.from("orders").select("*").order("created_at", { ascending: false });
+      if (currentAdminTabName !== "orders") return;
+      if (error) {
+        box.innerHTML = `<p class="msg-err">অর্ডার লোড করা যায়নি: ${esc(explainError(error))}</p>`;
         return;
       }
-      box.innerHTML = finalOrders.map((o, idx) => {
-        let itemsArr = parseItems(o.items);
-        let itemsHtml = itemsArr.map(i => `
+      if (!data.length) {
+        box.innerHTML = "<p data-orders-list style='padding:15px;background:#fff;'>এখনো কোনো কাস্টমার অর্ডার করেনি।</p>";
+        return;
+      }
+      const statuses = [
+        ["নতুন অর্ডার (Pending)", "🟡 নতুন অর্ডার (Pending)"],
+        ["অর্ডার নিশ্চিত করা হয়েছে (Confirmed)", "🔵 নিশ্চিত করা হয়েছে (Confirmed)"],
+        ["কুরিয়ারে পাঠানো হয়েছে (Shipped)", "🟣 কুরিয়ারে পাঠানো হয়েছে (Shipped)"],
+        ["ডেলিভারি সম্পন্ন (Delivered)", "🟢 ডেলিভারি সম্পন্ন (Delivered)"],
+        ["বাতিল করা হয়েছে (অ্যাডমিন কর্তৃক)", "🔴 বাতিল করা হয়েছে (অ্যাডমিন কর্তৃক)"],
+        ["বাতিল করা হয়েছে (কাস্টমার কর্তৃক)", "🔴 বাতিল করা হয়েছে (কাস্টমার কর্তৃক)"]
+      ];
+      box.innerHTML = `<div data-orders-list></div>` + data.map((o, idx) => {
+        const itemsHtml = parseItems(o.items).map(i => `
           <div style="display:flex;align-items:center;gap:12px;background:#fff;padding:10px;border-radius:10px;margin:8px 0;border:1px solid #e2e8f0;">
-            ${i.image ? `<img src="${esc(i.image)}" style="width:65px;height:75px;object-fit:cover;border-radius:8px;">` : `<div style="width:65px;height:75px;background:#eee;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#888;">ছবি নেই</div>`}
+            ${i.image ? `<img src="${esc(i.image)}" alt="${esc(i.name)}" style="width:65px;height:75px;object-fit:cover;border-radius:8px;">` : `<div style="width:65px;height:75px;background:#eee;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#888;">ছবি নেই</div>`}
             <div>
-              <b style="color:var(--navy);font-size:16px;">${esc(i.name || 'শাড়ি')}</b><br>
-              <span style="color:#0284c7;font-weight:bold;">পছন্দের রং: ${esc(i.color || 'সাধারণ')}</span><br>
-              <span>পরিমাণ: <b>${i.qty || 1} টি</b> | দাম: <b>${taka(i.price || 0)}/-</b></span>
+              <b style="color:var(--navy);font-size:16px;">${esc(i.name || "শাড়ি")}</b><br>
+              <span style="color:#0284c7;font-weight:bold;">পছন্দের রং: ${esc(i.color || "সাধারণ")}</span><br>
+              <span>পরিমাণ: <b>${taka(i.qty || 1)} টি</b> | দাম: <b>${taka(i.price || 0)}/-</b></span>
             </div>
+          </div>`).join("");
+        const currentStatus = o.status || statuses[0][0];
+        return `<div class="admin-card" style="border-left: 5px solid var(--navy);">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
+            <h4 style="margin:0;color:var(--navy);">📦 কাস্টমার: ${esc(o.customer_name || "নাম নেই")}</h4>
+            <span class="status-badge ${statusClassFor(currentStatus)}">${esc(currentStatus)}</span>
           </div>
-        `).join("");
-        const currentStatus = o.status || "নতুন অর্ডার (Pending)";
-        return `<div class="admin-card" style="border-left: 5px solid var(--navy);" id="order-card-${idx}">
-          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;">
-            <h4 style="margin:0;color:var(--navy);">📦 কাস্টমার: ${esc(o.customer_name || 'নাম নেই')}</h4>
-            <span class="small" style="color:#888;">${o.created_at ? new Date(o.created_at).toLocaleString("bn-BD") : ''}</span>
-          </div>
+          <span class="small" style="color:#888;">${esc(o.id)} · ${o.created_at ? new Date(o.created_at).toLocaleString("bn-BD") : ""}</span>
           <div style="margin:8px 0;">
-            <b>ফোন নম্বর:</b> <a href="tel:${esc(o.phone)}" style="color:#0284c7;font-weight:bold;text-decoration:none;">${esc(o.phone || 'নম্বর নেই')}</a><br>
-            <b>ডেলিভারি ঠিকানা:</b> ${esc(o.address || 'ঠিকানা নেই')}<br>
+            <b>ফোন নম্বর:</b> <a href="tel:${esc(o.phone)}" style="color:#0284c7;font-weight:bold;text-decoration:none;">${esc(o.phone || "নম্বর নেই")}</a><br>
+            <b>ডেলিভারি ঠিকানা:</b> <span style="white-space:pre-line;">${esc(o.address || "ঠিকানা নেই")}</span>
           </div>
           <div style="margin:12px 0;">
-            <b style="color:var(--navy);">অর্ডারকৃত শাড়ির বিস্তারিত ও ছবি:</b> ${itemsHtml}
+            <b style="color:var(--navy);">অর্ডারকৃত শাড়ির বিস্তারিত ও ছবি:</b> ${itemsHtml}
           </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;background:#f1f5f9;padding:10px;border-radius:10px;margin-top:10px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;background:#f1f5f9;padding:10px;border-radius:10px;margin-top:10px;">
             <div><b>সর্বমোট মূল্য:</b> <span style="font-size:18px;font-weight:bold;color:var(--green);">${taka(o.total)}/-</span></div>
-            <div style="display:flex;align-items:center;gap:8px;margin-top:5px;">
-              <select id="statusSelect-${idx}" style="margin:0;padding:6px;font-size:13px;width:auto;">
-                <option value="নতুন অর্ডার (Pending)" ${currentStatus.includes("Pending") ? "selected" : ""}>🟡 নতুন অর্ডার (Pending)</option>
-                <option value="অর্ডার নিশ্চিত করা হয়েছে (Confirmed)" ${currentStatus.includes("Confirmed") ? "selected" : ""}>🔵 নিশ্চিত করা হয়েছে (Confirmed)</option>
-                <option value="কুরিয়ারে পাঠানো হয়েছে (Shipped)" ${currentStatus.includes("Shipped") ? "selected" : ""}>🟣 কুরিয়ারে পাঠানো হয়েছে (Shipped)</option>
-                <option value="ডেলিভারি সম্পন্ন (Delivered)" ${currentStatus.includes("Delivered") ? "selected" : ""}>🟢 ডেলিভারি সম্পন্ন (Delivered)</option>
-                <option value="বাতিল করা হয়েছে (অ্যাডমিন কর্তৃক)" ${currentStatus.includes("অ্যাডমিন") || (currentStatus.includes("বাতিল") && !currentStatus.includes("কাস্টমার")) ? "selected" : ""}>🔴 বাতিল করা হয়েছে (অ্যাডমিন কর্তৃক)</option>
-                <option value="বাতিল করা হয়েছে (কাস্টমার কর্তৃক)" ${currentStatus.includes("কাস্টমার") ? "selected" : ""}>🔴 বাতিল করা হয়েছে (কাস্টমার কর্তৃক)</option>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <select id="statusSelect-${idx}" style="margin:0;padding:6px;font-size:13px;width:auto;" aria-label="অর্ডারের অবস্থা">
+                ${statuses.map(([v, label]) => `<option value="${esc(v)}" ${v === currentStatus ? "selected" : ""}>${label}</option>`).join("")}
               </select>
-              <button type="button" class="btn" style="padding:6px 12px;font-size:13.5px;background:var(--navy);color:white;" onclick="updateOrderStatusAdmin('${esc(o.id)}', ${idx})">আপডেট করুন</button>
+              <button type="button" class="btn" style="padding:6px 12px;font-size:13.5px;background:var(--navy);color:white;" onclick="updateOrderStatusAdmin('${esc(o.id)}', ${idx}, this)">আপডেট করুন</button>
             </div>
           </div>
         </div>`;
       }).join("");
     }
 
-    async function updateOrderStatusAdmin(orderId, idx) {
-      const selectElement = document.querySelector(`#statusSelect-${idx}`);
-      const newStatus = selectElement ? selectElement.value : "নতুন অর্ডার (Pending)";
-      
-      let localOrders = JSON.parse(localStorage.getItem("sari_local_orders") || "[]");
-      localOrders = localOrders.map(o => o.id === orderId ? { ...o, status: newStatus } : o);
-      localStorage.setItem("sari_local_orders", JSON.stringify(localOrders));
-
-      if (db) {
-        try {
-          await db.from("orders").update({ status: newStatus }).eq("id", orderId);
-        } catch(err) {
-          console.error(err);
-        }
+    async function updateOrderStatusAdmin(orderId, idx, btn) {
+      const newStatus = document.querySelector(`#statusSelect-${idx}`).value;
+      btn.disabled = true;
+      const { data, error } = await db.from("orders").update({ status: newStatus }).eq("id", orderId).select();
+      btn.disabled = false;
+      if (error || !data || !data.length) {
+        alert("আপডেট হয়নি: " + explainError(error || "permission denied"));
+        return;
       }
-      alert("অর্ডারের স্ট্যাটাস সফলভাবে আপডেট করা হয়েছে!");
+      toast("✅ স্ট্যাটাস আপডেট হয়েছে — কাস্টমার এখনই দেখতে পাবে");
       listOrders();
     }
 
-    checkLoginStatus();
-    loadProducts();
-    initDynamicReviews();
-
-    if (localStorage.getItem("sari_admin_logged") === "true" && localStorage.getItem("sari_admin_view") === "true") {
-      document.querySelector("#adminFullPage").style.display = "block";
-      showAdminTab(currentAdminTabName);
+    // ---------- Realtime: যেকোনো পরিবর্তন সব ফোনে সাথে সাথে ----------
+    function setLiveStatus(on) {
+      const el = document.querySelector("#liveStatus");
+      el.classList.toggle("on", on);
+      el.textContent = on ? "Live — সব ফোনে সাথে সাথে আপডেট" : "Live সংযোগ নেই (পেজ রিফ্রেশে আপডেট হবে)";
     }
+
+    db.channel("sari-live")
+      .on("postgres_changes", { event: "*", schema: "public", table: "products" }, scheduleReload)
+      .on("postgres_changes", { event: "*", schema: "public", table: "orders" }, () => {
+        if (isAdmin && currentAdminTabName === "orders" && document.querySelector("#adminFullPage").style.display === "block") {
+          listOrders();
+          toast("🔔 অর্ডারে নতুন পরিবর্তন এসেছে");
+        }
+      })
+      .subscribe(status => setLiveStatus(status === "SUBSCRIBED"));
+
+    // Realtime বন্ধ থাকলেও অ্যাপে ফিরে আসলে নতুন ডাটা আনবে
+    document.addEventListener("visibilitychange", () => { if (!document.hidden) scheduleReload(); });
+    window.addEventListener("focus", scheduleReload);
+
+    // ---------- Start ----------
+    (async () => {
+      initDynamicReviews();
+      const { data: { session } } = await db.auth.getSession();
+      isAdmin = sessionIsAdmin(session);
+      checkLoginStatus();
+      await loadProducts();
+      if (isAdmin && localStorage.getItem("sari_admin_view") === "true") openAdminPanelDirectly();
+    })();
   </script>
 </body>
 </html>
