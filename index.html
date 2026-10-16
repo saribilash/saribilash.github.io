@@ -56,6 +56,8 @@
     .order-btn:hover{background:linear-gradient(135deg, #182e4a 0%, #203e65 100%);color:var(--gold)}
     .whatsapp-order-btn{background:#25D366;color:white;text-decoration:none;font-weight:700;border-radius:10px;padding:12px;display:block;text-align:center;box-shadow:0 4px 15px rgba(37, 211, 102, 0.3);transition:all .3s;border:none;cursor:pointer}
     .whatsapp-order-btn:hover{background:#20ba5a;transform:translateY(-2px)}
+    .facebook-order-btn{background:#1877F2;color:white;text-decoration:none;font-weight:700;border-radius:10px;padding:12px;display:block;text-align:center;box-shadow:0 4px 15px rgba(24, 119, 242, 0.3);transition:all .3s;border:none;cursor:pointer}
+    .facebook-order-btn:hover{background:#145dbf;transform:translateY(-2px)}
     .variant-thumbs{display:flex;gap:10px;overflow-x:auto;padding:10px 2px 6px;margin-top:8px}
     .variant-thumb{flex:0 0 68px;width:68px;border:2px solid #e2e8f0;border-radius:10px;padding:3px;background:#fff;text-align:center;color:#333;font:inherit;cursor:pointer;transition:all .25s}
     .variant-thumb.selected{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold-glow);transform:scale(1.05)}
@@ -296,6 +298,7 @@
     const SUPABASE_URL = "https://oahfxjoauyvbkrfgbuqi.supabase.co";
     const SUPABASE_KEY = "sb_publishable_F0VLUllPcT6JQ1o0KxUJ1g_WV7-ccro";
     const BKASH_NUMBER = "01628182808";
+    const FB_PAGE_URL = "https://www.facebook.com/SariBilash02";
     let db = null;
     try {
       if (SUPABASE_URL && window.supabase) {
@@ -383,11 +386,13 @@
     });
 
     function openAdminPanelDirectly() {
+      localStorage.setItem("sari_admin_view", "true");
       document.querySelector("#adminFullPage").style.display = "block";
-      showAdminTab("products");
+      showAdminTab(currentAdminTabName);
     }
 
     function goToHomeSite() {
+      localStorage.removeItem("sari_admin_view");
       document.querySelector("#adminFullPage").style.display = "none";
     }
 
@@ -540,6 +545,10 @@
       window.open(encodedUrl, "_blank");
     }
 
+    function directFacebookOrder(productId) {
+      window.open(FB_PAGE_URL, "_blank");
+    }
+
     function renderProductsUI() {
       const box = document.querySelector("#products");
       if (!box) return;
@@ -580,6 +589,7 @@
             <div class="product-actions" style="margin-top:16px;">
               <button class="btn order-btn" onclick="openOrderModal('${esc(p.id)}')">🛒 অর্ডার করুন (হোম ডেলিভারি)</button>
               <button class="whatsapp-order-btn" onclick="directWhatsAppOrder('${esc(p.id)}')">💬 WhatsApp-এ অর্ডার করুন</button>
+              <button class="facebook-order-btn" onclick="directFacebookOrder('${esc(p.id)}')">📘 ফেসবুক পেজে অর্ডার করুন</button>
             </div>
           </div>
         </article>`;
@@ -772,6 +782,7 @@
 
     function logoutAdmin() {
       localStorage.setItem("sari_admin_logged", "false");
+      localStorage.removeItem("sari_admin_view");
       checkLoginStatus();
       document.querySelector("#adminFullPage").style.display = "none";
     }
@@ -983,16 +994,23 @@
     async function listOrders() {
       const box = document.querySelector("#adminContent");
       box.innerHTML = "<p>অর্ডার লোড হচ্ছে...</p>";
-      let finalOrders = [];
+      let dbOrders = [];
       if (db) {
         try {
           const { data, error } = await db.from("orders").select("*").order("created_at", { ascending: false });
-          if (!error && data) finalOrders = data;
+          if (!error && data) dbOrders = data;
         } catch(err) {
           console.error(err);
         }
       }
+      let localOrders = JSON.parse(localStorage.getItem("sari_local_orders") || "[]");
+      let combinedMap = new Map();
+      [...localOrders, ...dbOrders].forEach(o => {
+        if(o && (o.id || o.phone)) combinedMap.set(String(o.id || o.phone + o.created_at), o);
+      });
+      let finalOrders = Array.from(combinedMap.values()).sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
       finalOrders = finalOrders.filter(o => o.customer_name && o.phone && o.phone !== "নম্বর নেই");
+      
       if (!finalOrders.length) {
         box.innerHTML = "<p style='padding:15px;background:#fff;'>এখনো কোনো কাস্টমার অর্ডার করেনি।</p>";
         return;
@@ -1057,6 +1075,11 @@
     checkLoginStatus();
     loadProducts();
     initDynamicReviews();
+
+    if (localStorage.getItem("sari_admin_logged") === "true" && localStorage.getItem("sari_admin_view") === "true") {
+      document.querySelector("#adminFullPage").style.display = "block";
+      showAdminTab(currentAdminTabName);
+    }
   </script>
 </body>
 </html>
