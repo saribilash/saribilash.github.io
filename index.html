@@ -311,7 +311,7 @@
     let products = [], brandClicks = 0, brandClickTimer;
     let editingProductId = null;
     let currentImageUrlList = [];
-    let currentAdminTabName = "products";
+    let currentAdminTabName = localStorage.getItem("sari_admin_active_tab") || "products";
 
     const defaultProducts = [
       {
@@ -599,6 +599,7 @@
 
     async function loadProducts() {
       let dbProducts = [];
+      let localProducts = JSON.parse(localStorage.getItem("sari_local_products") || "[]");
       if (db) {
         try {
           const { data, error } = await db.from("products").select("*").order("created_at", { ascending: false });
@@ -610,7 +611,7 @@
         }
       }
       let combinedMap = new Map();
-      [...defaultProducts, ...dbProducts].forEach(p => {
+      [...defaultProducts, ...localProducts, ...dbProducts].forEach(p => {
         if (p && p.id) combinedMap.set(String(p.id), p);
       });
       products = Array.from(combinedMap.values()).sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
@@ -682,7 +683,7 @@
         customer_name: String(f.get("name")).trim(),
         phone: String(f.get("phone")).trim(),
         address: String(f.get("address")).trim(),
-        items: [{ id: p ? p.id : productId, name: p ? p.name : "শাড়ি", color: String(f.get("color")), price, qty, subtotal: total, image: document.querySelector("#orderSelectedImage").value || (p ? productImages(p)[0] : "") }],
+        items: JSON.stringify([{ id: p ? p.id : productId, name: p ? p.name : "শাড়ি", color: String(f.get("color")), price, qty, subtotal: total, image: document.querySelector("#orderSelectedImage").value || (p ? productImages(p)[0] : "") }]),
         total: total,
         status: "নতুন অর্ডার (Pending)",
         created_at: new Date().toISOString()
@@ -730,7 +731,7 @@
       }
       let localOrders = JSON.parse(localStorage.getItem("sari_local_orders") || "[]");
       let combinedMap = new Map();
-      [...localOrders, ...ordersList].forEach(o => { if(o && o.id) combinedMap.set(String(o.id), o); });
+      [...localOrders, ...ordersList].forEach(o => { if(o && (o.id || o.phone)) combinedMap.set(String(o.id || o.phone + o.created_at), o); });
       ordersList = Array.from(combinedMap.values()).filter(o => o.phone === phone);
       if (!ordersList.length) {
         resBox.innerHTML = "<p style='color:red;'>কোনো অর্ডার পাওয়া যায়নি। সঠিক ফোন নম্বর দিন।</p>";
@@ -789,6 +790,7 @@
 
     async function showAdminTab(tab) {
       currentAdminTabName = tab;
+      localStorage.setItem("sari_admin_active_tab", tab);
       const box = document.querySelector("#adminContent");
       if (tab === "products") {
         editingProductId = null;
@@ -921,6 +923,16 @@
         active: true,
         created_at: new Date().toISOString()
       };
+
+      let localProducts = JSON.parse(localStorage.getItem("sari_local_products") || "[]");
+      if (editingProductId) {
+        localProducts = localProducts.map(lp => lp.id === editingProductId ? productData : lp);
+        if (!localProducts.some(lp => lp.id === editingProductId)) localProducts.unshift(productData);
+      } else {
+        localProducts.unshift(productData);
+      }
+      localStorage.setItem("sari_local_products", JSON.stringify(localProducts));
+
       if (db) {
         try {
           if (editingProductId) {
@@ -943,7 +955,7 @@
       document.querySelector("#pimages").value = "";
       document.querySelector("#pfreedelivery").checked = false;
       currentImageUrlList = [];
-      loadProducts();
+      await loadProducts();
       listAdminProducts();
     }
 
@@ -979,6 +991,10 @@
 
     async function deleteProduct(id) {
       if (confirm("আপনি কি নিশ্চিতভাবে এই শাড়িটি মুছে ফেলতে চান?")) {
+        let localProducts = JSON.parse(localStorage.getItem("sari_local_products") || "[]");
+        localProducts = localProducts.filter(p => String(p.id) !== String(id));
+        localStorage.setItem("sari_local_products", JSON.stringify(localProducts));
+
         if (db) {
           try {
             await db.from("products").delete().eq("id", id);
@@ -986,7 +1002,7 @@
             console.error(err);
           }
         }
-        loadProducts();
+        await loadProducts();
         listAdminProducts();
       }
     }
@@ -1061,6 +1077,11 @@
     async function updateOrderStatusAdmin(orderId, idx) {
       const selectElement = document.querySelector(`#statusSelect-${idx}`);
       const newStatus = selectElement ? selectElement.value : "নতুন অর্ডার (Pending)";
+      
+      let localOrders = JSON.parse(localStorage.getItem("sari_local_orders") || "[]");
+      localOrders = localOrders.map(o => o.id === orderId ? { ...o, status: newStatus } : o);
+      localStorage.setItem("sari_local_orders", JSON.stringify(localOrders));
+
       if (db) {
         try {
           await db.from("orders").update({ status: newStatus }).eq("id", orderId);
