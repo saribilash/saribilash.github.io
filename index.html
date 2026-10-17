@@ -129,6 +129,16 @@
     .free-note{background:#ecfdf5;color:#047857;border-radius:8px;padding:8px 10px;font-size:13.5px;margin-top:8px;font-weight:600}
     .need-note{background:#fffbeb;color:#92400e;border-radius:8px;padding:8px 10px;font-size:13.5px;margin-top:8px;font-weight:600}
 
+    .spec-tags:empty{display:none}
+    .color-chips{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
+    .color-chip{display:flex;align-items:center;gap:8px;border:2.5px solid #e2e8f0;background:#fff;border-radius:12px;padding:5px 12px 5px 5px;font:inherit;font-size:15px;font-weight:700;color:var(--navy);transition:all .2s}
+    .color-chip img{width:42px;height:50px;object-fit:cover;border-radius:8px;background:#eee}
+    .color-chip.sel{border-color:var(--gold);background:#fff8e7;box-shadow:0 0 0 3px var(--gold-glow)}
+    .color-dot{width:18px;height:18px;border-radius:50%;border:1px solid rgba(0,0,0,.3);display:inline-block;flex:none}
+    .color-big{display:inline-flex;align-items:center;gap:8px;background:#fff8e7;border:2px solid var(--gold);color:var(--navy);font-weight:700;font-size:17px;padding:6px 14px;border-radius:30px;margin:6px 0}
+    .stock-ctl{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+    .stock-ctl input{width:90px;margin:0;padding:6px}
+    .stock-ctl .edit-btn{margin:0}
     /* অ্যাডমিন */
     #adminFullPage{display:none;position:fixed;inset:0;background:#f1f5f9;z-index:1000;overflow-y:auto;padding:25px 5%}
     .admin-container{max-width:1000px;margin:0 auto;background:#fff;padding:30px;border-radius:20px;box-shadow:0 10px 40px rgba(0,0,0,.1)}
@@ -326,6 +336,7 @@
       <p class="small" style="margin-bottom:6px;">অর্ডার আইডি: <b id="successOrderId"></b></p>
       <p class="small" style="margin-bottom:6px;">সর্বমোট: <b id="successTotal"></b></p>
       <p class="small" style="margin-bottom:20px;">ধন্যবাদ, শাড়ি বিলাশের সঙ্গে থাকার জন্য। খুব শীঘ্রই ডেলিভারি নিশ্চিত করতে আমরা যোগাযোগ করব। ফোন নম্বর দিয়ে "আমার অর্ডার" থেকে স্ট্যাটাস দেখতে পারবেন।</p>
+      <a id="successWa" class="whatsapp-order-btn" style="margin-bottom:8px;padding:12px;" href="#" target="_blank" rel="noopener">💬 WhatsApp-এ অর্ডার আইডি পাঠিয়ে দিন</a>
       <button class="btn" style="width:100%;" onclick="document.querySelector('#successDialog').close()">ঠিক আছে</button>
     </div>
   </dialog>
@@ -388,7 +399,7 @@
     const $ = s => document.querySelector(s);
 
     let products = [];
-    let settings = { dhaka_charge: 70, outside_charge: 130, free_delivery_min: 3000 };
+    let settings = { dhaka_charge: null, dhaka_extra: null, outside_charge: null, outside_extra: null, free_delivery_min: null, default_weight_g: null };
     let isAdmin = false;
     let brandClicks = 0, brandClickTimer;
     let editingProductId = null;
@@ -513,24 +524,30 @@
       $("#adminFullPage").style.display = "none";
     }
 
-    // ---------- সেটিং (ডেলিভারি চার্জ) ----------
+    // ---------- সেটিং (ডেলিভারি চার্জ — ফাঁকা থাকলে সাইটে দেখায় না) ----------
+    const numOrNull = v => (v === null || v === undefined || v === "" || isNaN(Number(v))) ? null : Number(v);
     async function loadSettings() {
       try {
         const { data } = await db.from("store_settings").select("*").eq("id", 1).maybeSingle();
         if (data) {
           settings = {
-            dhaka_charge: Number(data.dhaka_charge) || 0,
-            outside_charge: Number(data.outside_charge) || 0,
-            free_delivery_min: Number(data.free_delivery_min) || 0
+            dhaka_charge: numOrNull(data.dhaka_charge), dhaka_extra: numOrNull(data.dhaka_extra),
+            outside_charge: numOrNull(data.outside_charge), outside_extra: numOrNull(data.outside_extra),
+            free_delivery_min: numOrNull(data.free_delivery_min), default_weight_g: numOrNull(data.default_weight_g)
           };
         }
       } catch {}
       applyDeliveryInfo();
+      if ($("#cartDialog").open && cart.length) renderCartSummary();
     }
     function applyDeliveryInfo() {
-      let t = `ঢাকার ভিতরে ${taka(settings.dhaka_charge)}/-, ঢাকার বাইরে ${taka(settings.outside_charge)}/-`;
-      if (settings.free_delivery_min > 0) t += ` • ${taka(settings.free_delivery_min)}/- বা বেশি অর্ডারে ফ্রি ডেলিভারি`;
-      $("#deliveryInfo").textContent = t;
+      const s = settings, parts = [];
+      if (s.dhaka_charge !== null) parts.push(`ঢাকার ভিতরে ${taka(s.dhaka_charge)}/-`);
+      if (s.outside_charge !== null) parts.push(`ঢাকার বাইরে ${taka(s.outside_charge)}/-`);
+      let t = parts.join(", ");
+      if (t && (s.dhaka_extra || s.outside_extra)) t += " (১ কেজি পর্যন্ত; ওজন বেশি হলে চার্জ বাড়বে)";
+      if (s.free_delivery_min > 0) t += (t ? " • " : "") + `${taka(s.free_delivery_min)}/- বা বেশি অর্ডারে ফ্রি ডেলিভারি`;
+      $("#deliveryInfo").textContent = t || "সারা বাংলাদেশে নিরাপদ হোম ডেলিভারি সুবিধা";
       $("#bkashNumberDisplay").textContent = BKASH_NUMBER;
     }
 
@@ -596,13 +613,20 @@
       return out;
     }
 
+    function specTags(p) {
+      const t = [];
+      if (p.blouse_free) t.push("ব্লাউজ পিস ফ্রি");
+      if (p.length_text && String(p.length_text).trim()) t.push(String(p.length_text).trim());
+      [p.category, p.fabric].forEach(x => { if (x && String(x).trim()) t.push(String(x).trim()); });
+      return t.map(x => `<span class="spec-tag">${esc(x)}</span>`).join("");
+    }
     function badgesHtml(p) {
       const d = discountPercent(p);
       return `<div class="badges">${isSoldOut(p) ? '<span class="badge b-sold">স্টক শেষ</span>' : ""}${d > 0 ? `<span class="badge b-disc">${taka(d)}% ছাড়</span>` : ""}${isNew(p) ? '<span class="badge b-new">🆕 নতুন</span>' : ""}</div>`;
     }
     function pillsHtml(p) {
       const s = stockOf(p);
-      const stock = s <= 0 ? '<span class="pill p-out">❌ স্টক শেষ</span>' : (s <= 5 ? `<span class="pill p-low">⚡ মাত্র ${taka(s)} টি বাকি</span>` : '<span class="pill p-stock">✅ স্টকে আছে</span>');
+      const stock = s <= 0 ? '<span class="pill p-out">❌ স্টক শেষ</span>' : (s <= 5 ? `<span class="pill p-low">⚡ মাত্র ${taka(s)} টি বাকি</span>` : `<span class="pill p-stock">✅ স্টকে আছে${s === Infinity ? "" : " (" + taka(s) + " টি)"}</span>`);
       const del = p.free_delivery ? '<span class="pill p-free">🚚 ফ্রি ডেলিভারি</span>' : '<span class="pill p-home">📦 হোম ডেলিভারি</span>';
       return stock + del;
     }
@@ -642,7 +666,7 @@
           ${thumbs}
           <div class="card-body">
             <h3 onclick="openProduct('${id}')">${esc(p.name)}</h3>
-            <div class="spec-tags"><span class="spec-tag">ব্লাউজ পিস ফ্রি</span><span class="spec-tag">১২ হাত দৈর্ঘ্য</span>${tags}</div>
+            <div class="spec-tags">${specTags(p)}</div>
             ${priceHtml(p)}
             <div>${pillsHtml(p)}</div>
             <div class="muted">${esc(p.description || "")}</div>
@@ -710,11 +734,11 @@
         </div>
         <div>
           <h2>${esc(p.name)}</h2>
-          <div class="spec-tags"><span class="spec-tag">ব্লাউজ পিস ফ্রি</span><span class="spec-tag">১২ হাত দৈর্ঘ্য</span>${tags}</div>
+          <div class="spec-tags">${specTags(p)}</div>
           ${priceHtml(p)}
           <div>${pillsHtml(p)}</div>
           <div class="muted" style="white-space:pre-line;">${esc(p.description || "")}</div>
-          ${colors.length ? `<div class="small" style="margin-bottom:6px;">রং: <b style="color:var(--navy);">${esc(colors[det.idx] || colors[0])}</b></div>` : ""}
+          ${colors.length ? `<div class="color-big">${colorDot(colors[det.idx] || colors[0])}🎨 রং: ${esc(colors[det.idx] || colors[0])}</div>` : ""}
           <div style="display:flex;align-items:center;gap:12px;margin:10px 0 14px;flex-wrap:wrap;">
             <span class="small">পরিমাণ:</span>
             <div class="qty-box"><button onclick="detailQty(-1)" aria-label="কমান">−</button><b>${taka(det.qty)}</b><button onclick="detailQty(1)" aria-label="বাড়ান">+</button></div>
@@ -913,7 +937,7 @@
       if ($("#cartDialog").open) renderCart();
     }
 
-    function openCart() { pruneCart(); renderCart(); togglePaymentFields(); $("#orderMsg").textContent = ""; if (!$("#cartDialog").open) $("#cartDialog").showModal(); }
+    function openCart() { pruneCart(); renderCart(); prefillCustomer(); togglePaymentFields(); $("#orderMsg").textContent = ""; if (!$("#cartDialog").open) $("#cartDialog").showModal(); }
 
     function renderCart() {
       const box = $("#cartItems");
@@ -928,7 +952,7 @@
         const colors = productColors(p), images = productImages(p);
         const ci = Math.max(0, colors.indexOf(i.color));
         const img = images[ci] || images[0] || "";
-        const colorSel = colors.length > 1 ? `<select onchange="changeCartColor(${idx},this.value)" aria-label="রং">${colors.map(c => `<option value="${esc(c)}" ${c === i.color ? "selected" : ""}>${esc(c)}</option>`).join("")}</select>` : (i.color !== NO_COLOR ? `<div class="small">রং: ${esc(i.color)}</div>` : "");
+        const colorSel = (i.color !== NO_COLOR ? `<div class="color-big">${colorDot(i.color)}🎨 রং: ${esc(i.color)}</div>` : "") + (colors.length > 1 ? `<div class="color-chips">${colors.map((c, k) => `<button type="button" class="color-chip ${c === i.color ? "sel" : ""}" onclick="pickCartColor(${idx},${k})">${images[k] ? `<img src="${esc(images[k])}" alt="">` : colorDot(c)}${esc(c)}</button>`).join("")}</div>` : "");
         return `<div class="cart-line">
           ${img ? `<img src="${esc(img)}" alt="${esc(p.name)}">` : `<div style="width:70px;height:84px;background:#eee;border-radius:8px;"></div>`}
           <div>
@@ -961,25 +985,52 @@
     }
     function removeCartItem(idx) { cart.splice(idx, 1); saveCart(); renderCart(); }
 
+    const COLOR_MAP = [["মেরুন","#800000"],["maroon","#800000"],["লাল","#d62828"],["red","#d62828"],["গোলাপি","#ff69b4"],["pink","#ff69b4"],["কমলা","#f77f00"],["orange","#f77f00"],["হলুদ","#f4c20d"],["yellow","#f4c20d"],["সোনালি","#d4af37"],["gold","#d4af37"],["আকাশি","#87ceeb"],["sky","#87ceeb"],["ফিরোজা","#30d5c8"],["turquoise","#30d5c8"],["নীল","#1d4ed8"],["blue","#1d4ed8"],["সবুজ","#16a34a"],["green","#16a34a"],["বেগুনি","#7e22ce"],["purple","#7e22ce"],["কালো","#111827"],["black","#111827"],["সাদা","#f8fafc"],["white","#f8fafc"],["ধূসর","#9ca3af"],["grey","#9ca3af"],["gray","#9ca3af"],["বাদামি","#8b5a2b"],["brown","#8b5a2b"],["অফ","#f5f0e1"]];
+    function colorDot(name) {
+      const n = String(name || "").toLowerCase();
+      const m = COLOR_MAP.find(([k]) => n.includes(k));
+      return m ? `<span class="color-dot" style="background:${m[1]}"></span>` : "";
+    }
+    function pickCartColor(idx, ci) {
+      const it = cart[idx]; if (!it) return;
+      const p = getProduct(it.pid); if (!p) return;
+      const c = productColors(p)[ci]; if (c) changeCartColor(idx, c);
+    }
+
     function calcTotals() {
-      let subtotal = 0, allFree = true, n = 0;
-      cart.forEach(i => { const p = getProduct(i.pid); if (!p) return; subtotal += Number(p.price) * i.qty; n++; if (!p.free_delivery) allFree = false; });
-      const base = $("#zoneSelect").value === "inside" ? settings.dhaka_charge : settings.outside_charge;
+      let subtotal = 0, allFree = true, n = 0, grams = 0;
+      cart.forEach(i => {
+        const p = getProduct(i.pid); if (!p) return;
+        subtotal += Number(p.price) * i.qty; n++;
+        if (!p.free_delivery) allFree = false;
+        grams += (numOrNull(p.weight_g) ?? settings.default_weight_g ?? 0) * i.qty;
+      });
+      const inside = $("#zoneSelect").value === "inside";
+      const base = inside ? settings.dhaka_charge : settings.outside_charge;
+      const extra = (inside ? settings.dhaka_extra : settings.outside_extra) || 0;
       const min = settings.free_delivery_min;
       const free = n > 0 && (allFree || (min > 0 && subtotal >= min));
-      const charge = n === 0 ? 0 : (free ? 0 : base);
-      return { subtotal, charge, total: subtotal + charge, free, base, allFree, min };
+      let charge = 0, unknown = false;
+      if (n && !free) {
+        if (base === null) unknown = true;
+        else charge = base + Math.max(0, Math.ceil(grams / 1000) - 1) * extra;
+      }
+      return { subtotal, charge, total: subtotal + charge, free, unknown, grams, min };
     }
 
     function renderCartSummary() {
       const t = calcTotals();
+      const inside = $("#zoneSelect").value === "inside";
       let note = "";
       if (t.free) note = `<div class="free-note">🎉 আপনার অর্ডারে ডেলিভারি ফ্রি!</div>`;
       else if (t.min > 0 && t.subtotal < t.min) note = `<div class="need-note">আরও ${taka(t.min - t.subtotal)}/- টাকার শাড়ি নিলে ডেলিভারি ফ্রি!</div>`;
+      const delRow = t.unknown ? "" : `<div class="sum-row"><span>ডেলিভারি চার্জ (${inside ? "ঢাকার ভিতরে" : "ঢাকার বাইরে"})</span><b>${t.free ? "ফ্রি" : taka(t.charge) + "/-"}</b></div>`;
+      const wt = (!t.free && !t.unknown && t.grams > 0) ? `<div class="small">আনুমানিক ওজন: ${taka(Math.round(t.grams / 100) / 10)} কেজি</div>` : "";
       $("#cartSummary").innerHTML = `
         <div class="sum-row"><span>শাড়ির দাম</span><b>${taka(t.subtotal)}/-</b></div>
-        <div class="sum-row"><span>ডেলিভারি চার্জ (${$("#zoneSelect").value === "inside" ? "ঢাকার ভিতরে" : "ঢাকার বাইরে"})</span><b>${t.free ? "ফ্রি" : taka(t.charge) + "/-"}</b></div>
-        <div class="sum-row sum-total"><span>সর্বমোট</span><span>${taka(t.total)}/-</span></div>${note}
+        ${delRow}
+        <div class="sum-row sum-total"><span>${t.unknown ? "সর্বমোট (ডেলিভারি চার্জ ছাড়া)" : "সর্বমোট"}</span><span>${taka(t.total)}/-</span></div>
+        ${t.unknown ? `<div class="need-note">ডেলিভারি চার্জ অর্ডার কনফার্মের সময় আপনাকে জানানো হবে।</div>` : ""}${wt}${note}
         <div class="small" style="margin-top:6px;">চূড়ান্ত দাম, ছাড় ও ডেলিভারি চার্জ অর্ডারের সময় সার্ভার ঠিক করে দেবে।</div>`;
       $("#bkashAmountDisplay").textContent = taka(t.total) + "/-";
     }
@@ -1003,6 +1054,18 @@
     }
 
     const isMissingFn = e => e && (e.code === "PGRST202" || e.code === "42883" || /could not find the function/i.test(e.message || ""));
+    const isPermErr = e => e && (e.code === "42501" || /permission denied|row-level security/i.test(e.message || ""));
+    const errText = e => explainError(e) + (e && e.code ? ` [কোড: ${e.code}]` : "");
+
+    function prefillCustomer() {
+      try {
+        const c = JSON.parse(localStorage.getItem("sari_customer") || "{}");
+        if (c.name && !$("#orderName").value) $("#orderName").value = c.name;
+        if (c.phone && !$("#orderPhone").value) $("#orderPhone").value = c.phone;
+        if (c.address && !$("#orderAddress").value) $("#orderAddress").value = c.address;
+        if (c.zone) $("#zoneSelect").value = c.zone;
+      } catch {}
+    }
 
     $("#checkoutForm").addEventListener("submit", async e => {
       e.preventDefault();
@@ -1019,40 +1082,54 @@
         const ci = Math.max(0, productColors(p).indexOf(i.color));
         return { id: p.id, color: i.color, qty: i.qty, image: productImages(p)[ci] || productImages(p)[0] || "" };
       });
+      const done = () => { btn.disabled = false; btn.textContent = "অর্ডার নিশ্চিত করুন"; };
 
       let result = null;
       const { data, error } = await db.rpc("place_order", { p_name: name, p_phone: phone, p_address: addr, p_zone: zone, p_payment: payment, p_trx: trx, p_items: items });
       if (!error) {
         result = data;
-      } else if (isMissingFn(error)) {
-        // supabase-upgrade.sql এখনো চালানো হয়নি — পুরোনো পদ্ধতিতে অর্ডার জমা হবে
+      } else if (isMissingFn(error) || isPermErr(error)) {
+        // সার্ভার ফাংশন কাজ না করলে পুরোনো পদ্ধতিতে অর্ডার জমা হবে যাতে অর্ডার হারিয়ে না যায়
+        console.warn("place_order কাজ করেনি, সরাসরি জমা দেওয়া হচ্ছে:", error);
         const t = calcTotals();
         const orderId = "ORD-" + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2, 5).toUpperCase();
-        const address = addr + (payment === "bkash" ? `\n[পেমেন্ট: bKash | TrxID: ${trx}]` : "\n[পেমেন্ট: Cash on Delivery]") + `\n[এলাকা: ${zone === "inside" ? "ঢাকার ভিতরে" : "ঢাকার বাইরে"} | ডেলিভারি চার্জ: ${t.charge}/-]`;
+        const delText = t.free ? "ফ্রি" : (t.unknown ? "কনফার্মের সময় জানানো হবে" : t.charge + "/-");
+        const address = addr + (payment === "bkash" ? `\n[পেমেন্ট: bKash | TrxID: ${trx}]` : "\n[পেমেন্ট: Cash on Delivery]") + `\n[এলাকা: ${zone === "inside" ? "ঢাকার ভিতরে" : "ঢাকার বাইরে"} | ডেলিভারি চার্জ: ${delText}]`;
         const { error: insErr } = await db.from("orders").insert([{
           id: orderId, customer_name: name, phone, address,
-          items: lines.map(({ i, p }) => ({ id: p.id, name: p.name, color: i.color, price: Number(p.price), qty: i.qty, subtotal: Number(p.price) * i.qty, image: items.find(x => x.id === p.id && x.color === i.color)?.image || "" })),
+          items: lines.map(({ i, p }, k) => ({ id: p.id, name: p.name, color: i.color, price: Number(p.price), qty: i.qty, subtotal: Number(p.price) * i.qty, image: items[k].image })),
           total: t.total, status: "নতুন অর্ডার (Pending)"
         }]);
-        if (insErr) { btn.disabled = false; btn.textContent = "অর্ডার নিশ্চিত করুন"; msg.className = "small msg-err"; msg.textContent = "অর্ডার জমা হয়নি: " + explainError(insErr) + " চাইলে WhatsApp-এ অর্ডার করুন।"; return; }
-        result = { id: orderId, total: t.total };
+        if (insErr) { done(); msg.className = "small msg-err"; msg.textContent = "অর্ডার জমা হয়নি: " + errText(insErr) + " চাইলে WhatsApp-এ অর্ডার করুন।"; return; }
+        result = { id: orderId, total: t.total, delivery_charge: t.unknown ? null : t.charge };
       } else {
-        btn.disabled = false; btn.textContent = "অর্ডার নিশ্চিত করুন";
+        done();
         msg.className = "small msg-err";
-        msg.textContent = "অর্ডার জমা হয়নি: " + explainError(error);
+        msg.textContent = "অর্ডার জমা হয়নি: " + errText(error);
         if (/স্টক|শাড়ি আর পাওয়া/.test(error.message || "")) loadProducts();
         return;
       }
 
-      btn.disabled = false; btn.textContent = "অর্ডার নিশ্চিত করুন";
+      done();
+      try { localStorage.setItem("sari_customer", JSON.stringify({ name, phone, address: addr, zone })); } catch {}
       cart = []; saveCart();
       $("#cartDialog").close();
       $("#successOrderId").textContent = result.id;
-      $("#successTotal").textContent = taka(result.total) + "/-";
+      $("#successTotal").textContent = taka(result.total) + "/-" + (result.delivery_charge === null ? " (ডেলিভারি চার্জ আলাদা — কনফার্মের সময় জানানো হবে)" : "");
+      $("#successWa").href = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=` + encodeURIComponent(`হ্যালো শাড়ি বিলাশ! আমি ওয়েবসাইটে অর্ডার করেছি।\nঅর্ডার আইডি: ${result.id}\nনাম: ${name}\nফোন: ${phone}`);
       $("#successDialog").showModal();
       e.target.reset();
       loadProducts();
     });
+
+    async function cancelMyOrder(id) {
+      if (!confirm("আপনি কি এই অর্ডারটি বাতিল করতে চান?")) return;
+      const { data, error } = await db.rpc("cancel_order", { p_id: id, p_phone: $("#trackPhone").value.trim() });
+      if (error) { alert("বাতিল করা যায়নি: " + errText(error)); return; }
+      if (!data) { alert("এই অর্ডার আর বাতিল করা যাবে না (অ্যাডমিন কনফার্ম করে ফেলেছেন)। অনুগ্রহ করে WhatsApp-এ জানান।"); }
+      else toast("অর্ডার বাতিল হয়েছে");
+      checkOrderStatus();
+    }
 
     // ---------- অর্ডার ট্র্যাক ----------
     function parseItems(itemsData) {
@@ -1087,6 +1164,7 @@
           <b>বর্তমান অবস্থা:</b> <span class="status-badge ${statusClassFor(o.status)}">${esc(o.status)}</span>
           <div style="margin:8px 0;">${itemHtml}</div>
           <b>মোট টাকা:</b> <strong style="color:var(--green);">${taka(o.total)}/-</strong>
+          ${String(o.status || "").startsWith("নতুন অর্ডার") ? `<div style="margin-top:8px;"><button class="danger" onclick="cancelMyOrder('${esc(o.id)}')">❌ অর্ডার বাতিল করুন</button></div>` : ""}
         </div>`;
       }).join("");
     }
@@ -1121,6 +1199,14 @@
             </div>
             <datalist id="catList">${cats.map(c => `<option value="${esc(c)}">`).join("")}</datalist>
             <div class="row">
+              <div><label class="field-label" for="plength">দৈর্ঘ্য (ফাঁকা রাখলে সাইটে দেখাবে না)</label><input id="plength" placeholder="যেমন: ১২ হাত"></div>
+              <div><label class="field-label" for="pweight">ওজন (গ্রাম) — ডেলিভারি চার্জের জন্য</label><input id="pweight" type="number" min="0" placeholder="যেমন: 800"></div>
+            </div>
+            <div style="margin:12px 0;display:flex;align-items:center;gap:8px;">
+              <input type="checkbox" id="pblouse" style="width:20px;height:20px;margin:0;cursor:pointer;">
+              <label for="pblouse" style="font-weight:bold;color:var(--navy);cursor:pointer;">👚 ব্লাউজ পিস ফ্রি (টিক দিলে সাইটে দেখাবে)</label>
+            </div>
+            <div class="row">
               <div><label class="field-label" for="pregularprice">কাটা দাম</label><input id="pregularprice" type="number" min="0"></div>
               <div><label class="field-label" for="pprice">বিক্রয় মূল্য</label><input id="pprice" type="number" min="1" required></div>
               <div><label class="field-label" for="pstock">স্টক (ফাঁকা = সীমা নেই)</label><input id="pstock" type="number" min="0" placeholder="যেমন: 10"></div>
@@ -1131,7 +1217,7 @@
             </div>
             <div style="margin:12px 0;display:flex;align-items:center;gap:8px;">
               <input type="checkbox" id="pactive" checked style="width:20px;height:20px;margin:0;cursor:pointer;">
-              <label for="pactive" style="font-weight:bold;color:var(--navy);cursor:pointer;">👁️ সাইটে দেখাবে</label>
+              <label for="pactive" style="font-weight:bold;color:var(--navy);cursor:pointer;">👁️ সাইটে দেখাবে (বন্ধ করলে শাড়ি কাস্টমারের কাছে লুকানো থাকবে, মুছে যাবে না)</label>
             </div>
             <label class="field-label" for="pcolors">রঙের নাম (কমা দিয়ে, ছবির ক্রম অনুযায়ী)</label><input id="pcolors" placeholder="লাল, নীল">
             <label class="field-label">বর্তমান ছবি (ডিলিট করতে ✕ চাপুন)</label>
@@ -1149,15 +1235,23 @@
       } else if (tab === "orders") {
         listOrders();
       } else if (tab === "delivery") {
+        const v = x => (x === null || x === undefined) ? "" : Number(x);
         box.innerHTML = `
-          <div class="admin-card" style="max-width:480px;">
-            <h3>🚚 ডেলিভারি চার্জ সেটিং</h3>
-            <label class="field-label" for="setDhaka">ঢাকার ভিতরে চার্জ (টাকা)</label>
-            <input id="setDhaka" type="number" min="0" value="${Number(settings.dhaka_charge)}">
-            <label class="field-label" for="setOutside">ঢাকার বাইরে চার্জ (টাকা)</label>
-            <input id="setOutside" type="number" min="0" value="${Number(settings.outside_charge)}">
-            <label class="field-label" for="setFreeMin">এত টাকা বা বেশি অর্ডারে ফ্রি ডেলিভারি (০ দিলে বন্ধ)</label>
-            <input id="setFreeMin" type="number" min="0" value="${Number(settings.free_delivery_min)}">
+          <div class="admin-card" style="max-width:560px;">
+            <h3>🚚 ডেলিভারি চার্জ (ওজন অনুযায়ী)</h3>
+            <p class="small">হিসাব: <b>প্রথম ১ কেজির চার্জ + (বাকি প্রতি অতিরিক্ত কেজি × অতিরিক্ত চার্জ)</b>। শাড়ির ওজন প্রতিটা শাড়ির "ওজন (গ্রাম)" ঘর থেকে আসে; না দিলে নিচের ডিফল্ট ওজন ধরা হয়।<br><b>যে ঘর ফাঁকা রাখবেন সেটা সাইটে দেখাবে না।</b> ঢাকার ভিতরে/বাইরের চার্জ ফাঁকা থাকলে কাস্টমারকে বলা হবে "কনফার্মের সময় জানানো হবে"।</p>
+            <div class="row">
+              <div><label class="field-label" for="setDhaka">ঢাকার ভিতরে: প্রথম ১ কেজি</label><input id="setDhaka" type="number" min="0" value="${v(settings.dhaka_charge)}" placeholder="যেমন: 70"></div>
+              <div><label class="field-label" for="setDhakaX">ঢাকার ভিতরে: প্রতি অতিরিক্ত কেজি</label><input id="setDhakaX" type="number" min="0" value="${v(settings.dhaka_extra)}" placeholder="যেমন: 20"></div>
+            </div>
+            <div class="row">
+              <div><label class="field-label" for="setOutside">ঢাকার বাইরে: প্রথম ১ কেজি</label><input id="setOutside" type="number" min="0" value="${v(settings.outside_charge)}" placeholder="যেমন: 130"></div>
+              <div><label class="field-label" for="setOutsideX">ঢাকার বাইরে: প্রতি অতিরিক্ত কেজি</label><input id="setOutsideX" type="number" min="0" value="${v(settings.outside_extra)}" placeholder="যেমন: 30"></div>
+            </div>
+            <label class="field-label" for="setDefW">ডিফল্ট ওজন প্রতি শাড়ি (গ্রাম, শাড়িতে ওজন না দিলে এটা ধরা হবে)</label>
+            <input id="setDefW" type="number" min="0" value="${v(settings.default_weight_g)}" placeholder="যেমন: 700">
+            <label class="field-label" for="setFreeMin">এত টাকা বা বেশি অর্ডারে ফ্রি ডেলিভারি (ফাঁকা = বন্ধ)</label>
+            <input id="setFreeMin" type="number" min="0" value="${v(settings.free_delivery_min)}" placeholder="যেমন: 3000">
             <button type="button" id="saveSettingsBtn" class="btn order-btn" style="margin-top:6px;width:100%;" onclick="saveDeliverySettings()">সেভ করুন</button>
             <div id="setMsg" class="small" style="margin-top:10px;font-weight:bold;"></div>
           </div>`;
@@ -1207,14 +1301,26 @@
 
     async function saveDeliverySettings() {
       const msg = $("#setMsg"), btn = $("#saveSettingsBtn");
-      const row = { id: 1, dhaka_charge: Math.max(0, Number($("#setDhaka").value) || 0), outside_charge: Math.max(0, Number($("#setOutside").value) || 0), free_delivery_min: Math.max(0, Number($("#setFreeMin").value) || 0) };
+      const g = sel => { const n = numOrNull($(sel).value); return n === null ? null : Math.max(0, n); };
+      const row = { id: 1, dhaka_charge: g("#setDhaka"), dhaka_extra: g("#setDhakaX"), outside_charge: g("#setOutside"), outside_extra: g("#setOutsideX"), free_delivery_min: g("#setFreeMin"), default_weight_g: g("#setDefW") };
       btn.disabled = true; msg.className = "small"; msg.textContent = "সেভ হচ্ছে...";
       const { data, error } = await db.from("store_settings").upsert([row]).select();
       btn.disabled = false;
-      if (error || !data || !data.length) { msg.className = "small msg-err"; msg.textContent = "❌ সেভ হয়নি: " + explainError(error || "permission denied"); return; }
-      settings = { dhaka_charge: row.dhaka_charge, outside_charge: row.outside_charge, free_delivery_min: row.free_delivery_min };
+      if (error || !data || !data.length) { msg.className = "small msg-err"; msg.textContent = "❌ সেভ হয়নি: " + errText(error || "permission denied"); return; }
+      const { id, ...rest } = row;
+      settings = rest;
       applyDeliveryInfo();
-      msg.className = "small msg-ok"; msg.textContent = "✅ ডেলিভারি সেটিং সেভ হয়েছে";
+      msg.className = "small msg-ok"; msg.textContent = "✅ ডেলিভারি সেটিং সেভ হয়েছে — সবার সাইটে এখনই আপডেট হবে";
+    }
+
+    async function setOrderDelivery(id, subtotal) {
+      const inp = document.querySelector(`[data-del-for="${CSS.escape(id)}"]`);
+      const v = inp ? numOrNull(inp.value) : null;
+      if (v === null || v < 0) { toast("সঠিক চার্জ লিখুন"); return; }
+      const { data, error } = await db.from("orders").update({ delivery_charge: v, total: Number(subtotal) + v }).eq("id", id).select();
+      if (error || !data || !data.length) { alert("আপডেট হয়নি: " + errText(error || "permission denied")); return; }
+      toast("✅ ডেলিভারি চার্জ বসানো হয়েছে");
+      listOrders();
     }
 
     async function updateAdminPassword() {
@@ -1288,6 +1394,9 @@
           description: $("#pdesc").value.trim(),
           category: $("#pcategory").value.trim() || null,
           fabric: $("#pfabric").value.trim() || null,
+          length_text: $("#plength").value.trim() || null,
+          weight_g: numOrNull($("#pweight").value),
+          blouse_free: $("#pblouse").checked,
           price,
           regular_price: Number($("#pregularprice").value || 0),
           stock: stockRaw === "" ? null : Math.max(0, parseInt(stockRaw, 10) || 0),
@@ -1327,6 +1436,9 @@
       $("#pdesc").value = p.description || "";
       $("#pcategory").value = p.category || "";
       $("#pfabric").value = p.fabric || "";
+      $("#plength").value = p.length_text || "";
+      $("#pweight").value = (p.weight_g === null || p.weight_g === undefined) ? "" : p.weight_g;
+      $("#pblouse").checked = !!p.blouse_free;
       $("#pprice").value = p.price || "";
       $("#pregularprice").value = p.regular_price || "";
       $("#pstock").value = (p.stock === null || p.stock === undefined) ? "" : p.stock;
@@ -1342,19 +1454,46 @@
       const box = $("#adminProductsList");
       if (!box) return;
       if (!products.length) { box.innerHTML = "<p class='small'>ডাটাবেসে এখনো কোনো শাড়ি নেই।</p>"; return; }
-      box.innerHTML = products.map(p => `<div class="admin-card" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
-        <div>
-          <b>${esc(p.name)}</b> - ${taka(p.price)}/-
-          ${p.category ? `<span class="small">[${esc(p.category)}]</span>` : ""}
-          ${p.stock !== null && p.stock !== undefined ? `<span class="small" style="color:${Number(p.stock) <= 0 ? "var(--red)" : "var(--navy)"};font-weight:bold;">(স্টক: ${taka(p.stock)})</span>` : ""}
-          ${p.free_delivery ? '<span style="color:var(--green);font-weight:bold;">(ফ্রি ডেলিভারি)</span>' : ""}
-          ${p.active === false ? '<span style="color:var(--red);font-weight:bold;">(লুকানো)</span>' : ""}
-        </div>
-        <div>
-          <button type="button" class="edit-btn" onclick="editProduct('${esc(p.id)}')">সম্পাদনা</button>
-          <button type="button" class="danger" onclick="deleteProduct('${esc(p.id)}')">মুছুন</button>
-        </div>
-      </div>`).join("");
+      box.innerHTML = products.map(p => {
+        const id = esc(p.id), unl = p.stock === null || p.stock === undefined;
+        return `<div class="admin-card" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+          <div style="flex:1;min-width:200px;">
+            <b>${esc(p.name)}</b> - ${taka(p.price)}/-
+            ${p.category ? `<span class="small">[${esc(p.category)}]</span>` : ""}
+            ${p.free_delivery ? '<span style="color:var(--green);font-weight:bold;">(ফ্রি ডেলিভারি)</span>' : ""}
+            ${p.active === false ? '<span style="color:var(--red);font-weight:bold;">(লুকানো)</span>' : ""}
+          </div>
+          <div class="stock-ctl">
+            <span class="small">স্টক:</span>
+            <button type="button" class="edit-btn" onclick="adjustStock('${id}',-1)" aria-label="১ কমান">−১</button>
+            <input id="stk-${id}" type="number" min="0" placeholder="সীমা নেই" value="${unl ? "" : Number(p.stock)}">
+            <button type="button" class="edit-btn" onclick="adjustStock('${id}',1)" aria-label="১ বাড়ান">+১</button>
+            <button type="button" class="edit-btn" style="background:#0f1c2e;" onclick="setStock('${id}')">সেট</button>
+          </div>
+          <div>
+            <button type="button" class="edit-btn" onclick="editProduct('${id}')">সম্পাদনা</button>
+            <button type="button" class="danger" onclick="deleteProduct('${id}')">মুছুন</button>
+          </div>
+        </div>`;
+      }).join("");
+    }
+
+    // WhatsApp/ফোনে অর্ডার এলে হাতে স্টক মিলিয়ে নেওয়ার জন্য
+    async function writeStock(id, stock) {
+      const { data, error } = await db.from("products").update({ stock }).eq("id", id).select();
+      if (error || !data || !data.length) { alert("স্টক বদলানো যায়নি: " + errText(error || "permission denied")); return; }
+      toast("✅ স্টক আপডেট হয়েছে");
+      await loadProducts();
+    }
+    function adjustStock(id, d) {
+      const p = getProduct(id); if (!p) return;
+      if (p.stock === null || p.stock === undefined) { toast("আগে স্টকের সংখ্যা লিখে 'সেট' চাপুন"); return; }
+      writeStock(id, Math.max(0, Number(p.stock) + d));
+    }
+    function setStock(id) {
+      const el = document.getElementById("stk-" + id); if (!el) return;
+      const v = el.value.trim();
+      writeStock(id, v === "" ? null : Math.max(0, parseInt(v, 10) || 0));
     }
 
     async function deleteProduct(id) {
@@ -1410,108 +1549,4 @@
         box.innerHTML = `
           <div class="admin-card"><div class="row">
             <input id="orderSearch" placeholder="নাম / ফোন / অর্ডার আইডি দিয়ে খুঁজুন" value="${esc(orderFilter.q)}" oninput="orderFilter.q=this.value;renderOrders()" style="margin:0;">
-            <select id="orderStatusFilter" onchange="orderFilter.status=this.value;renderOrders()" style="margin:0;">
-              <option value="">সব স্ট্যাটাস</option>
-              ${ORDER_STATUSES.map(([v, l]) => `<option value="${esc(v)}" ${v === orderFilter.status ? "selected" : ""}>${l}</option>`).join("")}
-            </select>
-          </div></div>
-          <div id="ordersList"><p>অর্ডার লোড হচ্ছে...</p></div>`;
-      }
-      const { data, error } = await db.from("orders").select("*").order("created_at", { ascending: false });
-      if (currentAdminTabName !== "orders") return;
-      if (error) { $("#ordersList").innerHTML = `<p class="msg-err">অর্ডার লোড করা যায়নি: ${esc(explainError(error))}</p>`; return; }
-      adminOrders = data || [];
-      renderOrders();
-    }
-
-    function renderOrders() {
-      const box = $("#ordersList");
-      if (!box) return;
-      const q = orderFilter.q.trim().toLowerCase();
-      const list = adminOrders.filter(o =>
-        (!orderFilter.status || o.status === orderFilter.status) &&
-        (!q || [o.customer_name, o.phone, o.id].join(" ").toLowerCase().includes(q)));
-      if (!adminOrders.length) { box.innerHTML = "<p style='padding:15px;background:#fff;'>এখনো কোনো কাস্টমার অর্ডার করেনি।</p>"; return; }
-      if (!list.length) { box.innerHTML = "<p style='padding:15px;'>এই ফিল্টারে কোনো অর্ডার নেই।</p>"; return; }
-      box.innerHTML = list.map(o => {
-        const itemsHtml = parseItems(o.items).map(i => `
-          <div style="display:flex;align-items:center;gap:12px;background:#fff;padding:10px;border-radius:10px;margin:8px 0;border:1px solid #e2e8f0;">
-            ${i.image ? `<img src="${esc(i.image)}" alt="${esc(i.name)}" style="width:65px;height:75px;object-fit:cover;border-radius:8px;">` : `<div style="width:65px;height:75px;background:#eee;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#888;">ছবি নেই</div>`}
-            <div><b style="color:var(--navy);font-size:16px;">${esc(i.name || "শাড়ি")}</b><br>
-              <span style="color:#0284c7;font-weight:bold;">রং: ${esc(i.color || "সাধারণ")}</span><br>
-              <span>পরিমাণ: <b>${taka(i.qty || 1)} টি</b> | দাম: <b>${taka(i.price || 0)}/-</b></span></div>
-          </div>`).join("");
-        const cur = o.status || ORDER_STATUSES[0][0];
-        const wa = o.phone ? `https://wa.me/880${String(o.phone).replace(/^0/, "")}` : "";
-        const extra = o.delivery_charge !== undefined && o.delivery_charge !== null
-          ? `<div class="small" style="margin-top:4px;">শাড়ির দাম: ${taka(o.subtotal)}/- + ডেলিভারি: ${Number(o.delivery_charge) ? taka(o.delivery_charge) + "/-" : "ফ্রি"}${o.payment_method ? " | " + (o.payment_method === "bkash" ? "bKash" : "COD") : ""}</div>` : "";
-        return `<div class="admin-card" style="border-left:5px solid var(--navy);">
-          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
-            <h4 style="margin:0;color:var(--navy);">📦 কাস্টমার: ${esc(o.customer_name || "নাম নেই")}</h4>
-            <span class="status-badge ${statusClassFor(cur)}">${esc(cur)}</span>
-          </div>
-          <span class="small" style="color:#888;">${esc(o.id)} · ${o.created_at ? new Date(o.created_at).toLocaleString("bn-BD") : ""}</span>
-          <div style="margin:8px 0;">
-            <b>ফোন:</b> <a href="tel:${esc(o.phone)}" style="color:#0284c7;font-weight:bold;text-decoration:none;">${esc(o.phone || "নম্বর নেই")}</a>
-            ${wa ? ` &nbsp;<a href="${esc(wa)}" target="_blank" rel="noopener" style="color:#16a34a;font-weight:bold;text-decoration:none;">💬 WhatsApp</a>` : ""}<br>
-            <b>ঠিকানা:</b> <span style="white-space:pre-line;">${esc(o.address || "ঠিকানা নেই")}</span>
-          </div>
-          <div style="margin:12px 0;"><b style="color:var(--navy);">অর্ডারকৃত শাড়ি:</b> ${itemsHtml}</div>
-          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;background:#f1f5f9;padding:10px;border-radius:10px;margin-top:10px;">
-            <div><b>সর্বমোট:</b> <span style="font-size:18px;font-weight:bold;color:var(--green);">${taka(o.total)}/-</span>${extra}</div>
-            <div style="display:flex;align-items:center;gap:8px;">
-              <select data-status-for="${esc(o.id)}" style="margin:0;padding:6px;font-size:13px;width:auto;" aria-label="অর্ডারের অবস্থা">
-                ${ORDER_STATUSES.map(([v, l]) => `<option value="${esc(v)}" ${v === cur ? "selected" : ""}>${l}</option>`).join("")}
-              </select>
-              <button type="button" class="btn" style="padding:6px 12px;font-size:13.5px;background:var(--navy);color:#fff;" onclick="updateOrderStatusAdmin('${esc(o.id)}', this)">আপডেট</button>
-            </div>
-          </div>
-        </div>`;
-      }).join("");
-    }
-
-    async function updateOrderStatusAdmin(orderId, btn) {
-      const sel = document.querySelector(`[data-status-for="${CSS.escape(orderId)}"]`);
-      if (!sel) return;
-      btn.disabled = true;
-      const { data, error } = await db.from("orders").update({ status: sel.value }).eq("id", orderId).select();
-      btn.disabled = false;
-      if (error || !data || !data.length) { alert("আপডেট হয়নি: " + explainError(error || "permission denied")); return; }
-      toast("✅ স্ট্যাটাস আপডেট হয়েছে — কাস্টমার এখনই দেখতে পাবে");
-      listOrders();
-    }
-
-    // ---------- Realtime ----------
-    function setLiveStatus(on) {
-      const el = $("#liveStatus");
-      el.classList.toggle("on", on);
-      el.textContent = on ? "Live — সব ফোনে সাথে সাথে আপডেট" : "Live সংযোগ নেই (পেজ রিফ্রেশে আপডেট হবে)";
-    }
-    db.channel("sari-live")
-      .on("postgres_changes", { event: "*", schema: "public", table: "products" }, scheduleReload)
-      .on("postgres_changes", { event: "*", schema: "public", table: "orders" }, () => {
-        if (isAdmin && $("#adminFullPage").style.display === "block") {
-          if (currentAdminTabName === "orders") { listOrders(); toast("🔔 অর্ডারে নতুন পরিবর্তন এসেছে"); }
-          else if (currentAdminTabName === "dashboard") renderDashboard();
-        }
-      })
-      .subscribe(status => setLiveStatus(status === "SUBSCRIBED"));
-
-    document.addEventListener("visibilitychange", () => { if (!document.hidden) scheduleReload(); });
-    window.addEventListener("focus", scheduleReload);
-
-    // ---------- শুরু ----------
-    (async () => {
-      initDynamicReviews();
-      updateCartBadge();
-      applyDeliveryInfo();
-      loadSettings();
-      const { data: { session } } = await db.auth.getSession();
-      isAdmin = sessionIsAdmin(session);
-      checkLoginStatus();
-      await loadProducts();
-      if (isAdmin && localStorage.getItem("sari_admin_view") === "true") openAdminPanelDirectly();
-    })();
-  </script>
-</body>
-</html>
+            <select id="orderStatusFilter" onch
