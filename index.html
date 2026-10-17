@@ -449,6 +449,7 @@
     ];
     function initDynamicReviews() {
       const container = $("#dynamicReviewsContainer");
+      if (!container) return;
       const render = () => {
         const selected = [...allReviewsPool].sort(() => 0.5 - Math.random()).slice(0, 3);
         container.innerHTML = selected.map(r => `<div class="review-card"><div class="stars">⭐⭐⭐⭐⭐</div><p><b>${esc(r.name)}:</b> "${esc(r.text)}"</p></div>`).join("");
@@ -577,7 +578,6 @@
       if (isAdmin && $("#adminProductsList")) listAdminProducts();
       if (!deepLinkDone) { deepLinkDone = true; handleDeepLinks(); }
     }
-    function scheduleReload() { clearTimeout(reloadTimer); reloadTimer = setTimeout(loadProducts, 300); }
 
     function handleDeepLinks() {
       const pid = new URLSearchParams(location.search).get("p");
@@ -634,11 +634,6 @@
       const reg = Number(p.regular_price || 0), sale = Number(p.price || 0);
       return `<div class="price-container"><p class="price">মূল্য: ${taka(sale)}/-</p>${reg > sale ? `<span class="original-price">আসল দাম: ${taka(reg)}/-</span>` : ""}</div>`;
     }
-    function thumbsHtml(p, selIdx, handler) {
-      const images = productImages(p), colors = productColors(p);
-      if (colors.length < 2) return "";
-      return `<div class="variant-thumbs">${colors.map((c, i) => `<button type="button" class="variant-thumb ${i === selIdx ? "selected" : ""}" onclick="${handler}(${i}${handler === "renderVariant" ? "" : ""})" data-vt="${esc(p.id)}">${images[i] ? `<img src="${esc(images[i])}" alt="${esc(c)}" loading="lazy">` : ""}<span>${esc(c)}</span></button>`).join("")}</div>`;
-    }
 
     function renderProductsUI() {
       const box = $("#products");
@@ -655,7 +650,6 @@
         const thumbs = colors.length > 1 ? `<div class="variant-thumbs">${colors.map((c, i) => `<button type="button" class="variant-thumb ${i === sel ? "selected" : ""}" data-vt="${id}" onclick="renderVariant('${id}',${i})">${images[i] ? `<img src="${esc(images[i])}" alt="${esc(c)}" loading="lazy">` : ""}<span>${esc(c)}</span></button>`).join("")}</div>` : "";
         const sold = isSoldOut(p);
         const isW = wl.includes(String(p.id));
-        const tags = [p.category, p.fabric].filter(Boolean).map(t => `<span class="spec-tag">${esc(t)}</span>`).join("");
         return `<article class="card">
           <div class="image-container" onclick="openProduct('${id}')">
             ${badgesHtml(p)}
@@ -722,7 +716,6 @@
       det.qty = Math.min(Math.max(1, det.qty), maxq);
       const id = esc(p.id);
       const isW = getWishlist().includes(String(p.id));
-      const tags = [p.category, p.fabric].filter(Boolean).map(t => `<span class="spec-tag">${esc(t)}</span>`).join("");
       $("#productDetail").innerHTML = `<div class="detail">
         <div>
           <div style="position:relative;">
@@ -796,6 +789,7 @@
     function closeZoomModal() { const m = $("#imageZoomDialog"); if (m.open) m.close(); }
     (function initZoom() {
       const img = $("#zoomModalImage");
+      if (!img) return;
       const setOrigin = e => {
         const r = img.parentElement.getBoundingClientRect();
         const ir = { left: r.left, top: r.top, width: r.width, height: r.height };
@@ -824,7 +818,6 @@
     function writeWishlist(ids) { try { localStorage.setItem("sari_wishlist", JSON.stringify(ids)); } catch {} }
     function getWishlist() { return readWishlist(); }
 
-    // শেয়ার করা লিংক থেকে আসা তালিকা একবারই মিলিয়ে নেওয়া হয় (আগের কোডে বাদ দিলেও আবার ফিরে আসত)
     (function importWishlistParam() {
       const u = new URL(location.href);
       const w = u.searchParams.get("wishlist");
@@ -921,7 +914,6 @@
       return true;
     }
 
-    // স্টক শেষ / মুছে ফেলা শাড়ি কার্ট থেকে বাদ, পরিমাণ স্টকের মধ্যে রাখা
     function pruneCart() {
       if (!products.length) return;
       let changed = false;
@@ -1089,7 +1081,6 @@
       if (!error) {
         result = data;
       } else if (isMissingFn(error) || isPermErr(error)) {
-        // সার্ভার ফাংশন কাজ না করলে পুরোনো পদ্ধতিতে অর্ডার জমা হবে যাতে অর্ডার হারিয়ে না যায়
         console.warn("place_order কাজ করেনি, সরাসরি জমা দেওয়া হচ্ছে:", error);
         const t = calcTotals();
         const orderId = "ORD-" + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2, 5).toUpperCase();
@@ -1415,8 +1406,10 @@
         await loadProducts();
         await showAdminTab("products");
         const m = $("#pmsg");
-        m.className = "small msg-ok";
-        m.textContent = "✅ সফলভাবে সেভ হয়েছে! সব ফোনে এখনই দেখা যাবে।";
+        if (m) {
+          m.className = "small msg-ok";
+          m.textContent = "✅ সফলভাবে সেভ হয়েছে! সব ফোনে এখনই দেখা যাবে।";
+        }
       } catch (err) {
         console.error("Product save error:", err);
         msg.className = "small msg-err";
@@ -1478,7 +1471,6 @@
       }).join("");
     }
 
-    // WhatsApp/ফোনে অর্ডার এলে হাতে স্টক মিলিয়ে নেওয়ার জন্য
     async function writeStock(id, stock) {
       const { data, error } = await db.from("products").update({ stock }).eq("id", id).select();
       if (error || !data || !data.length) { alert("স্টক বদলানো যায়নি: " + errText(error || "permission denied")); return; }
@@ -1545,8 +1537,105 @@
     // ---------- অ্যাডমিন: অর্ডার ----------
     async function listOrders() {
       const box = $("#adminContent");
-      if (!$("#ordersList")) {
-        box.innerHTML = `
-          <div class="admin-card"><div class="row">
+      box.innerHTML = "<p>অর্ডার লোড হচ্ছে...</p>";
+      const { data, error } = await db.from("orders").select("*").order("created_at", { ascending: false });
+      if (currentAdminTabName !== "orders") return;
+      if (error) {
+        box.innerHTML = `<p class="msg-err">অর্ডার লোড করা যায়নি: ${esc(explainError(error))}</p>`;
+        return;
+      }
+      adminOrders = data || [];
+      renderOrders();
+    }
+
+    function renderOrders() {
+      const box = $("#adminContent");
+      let list = adminOrders;
+      const q = (orderFilter.q || "").toLowerCase().trim();
+      const st = orderFilter.status || "";
+
+      if (q) {
+        list = list.filter(o => 
+          String(o.id || "").toLowerCase().includes(q) ||
+          String(o.customer_name || "").toLowerCase().includes(q) ||
+          String(o.phone || "").toLowerCase().includes(q)
+        );
+      }
+      if (st) {
+        list = list.filter(o => String(o.status || "") === st);
+      }
+
+      box.innerHTML = `
+        <div class="admin-card">
+          <h3 style="margin-top:0;">📦 সব অর্ডার (${taka(adminOrders.length)})</h3>
+          <div class="row" style="margin-bottom:14px;">
             <input id="orderSearch" placeholder="নাম / ফোন / অর্ডার আইডি দিয়ে খুঁজুন" value="${esc(orderFilter.q)}" oninput="orderFilter.q=this.value;renderOrders()" style="margin:0;">
-            <select id="orderStatusFilter" onch
+            <select id="orderStatusFilter" onchange="orderFilter.status=this.value;renderOrders()" style="margin:0;" aria-label="অর্ডার স্ট্যাটাস ফিল্টার">
+              <option value="">সব স্ট্যাটাস</option>
+              ${ORDER_STATUSES.map(([val, label]) => `<option value="${esc(val)}" ${orderFilter.status === val ? "selected" : ""}>${esc(label)}</option>`).join("")}
+            </select>
+          </div>
+          <div class="small" style="margin-bottom:10px;">ফলাফল: ${taka(list.length)} টি অর্ডার</div>
+          ${list.length ? list.map(o => {
+            const items = parseItems(o.items);
+            const itemsHtml = items.map(i => `
+              <div style="display:flex;align-items:center;gap:8px;margin:6px 0;background:#fff;padding:6px;border-radius:6px;border:1px solid #e2e8f0;">
+                ${i.image ? `<img src="${esc(i.image)}" alt="" style="width:40px;height:50px;object-fit:cover;border-radius:4px;">` : ""}
+                <div style="font-size:13px;"><b>${esc(i.name \vert{}\vert{} "শাড়ি")}</b> — রং: ${esc(i.color || "সাধারণ")} | পরিমাণ: ${taka(i.qty \vert{}\vert{} 1)}টি \vert{} দাম: ${taka(i.subtotal || Number(i.price || 0) * Number(i.qty || 1))}/-</div>
+              </div>`).join("");
+            return `<div class="admin-card" style="background:#f8fafc;margin-bottom:14px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px;">
+                <div><b>অর্ডার আইডি:</b> ${esc(o.id)} \vert{} <b>নাম:</b> ${esc(o.customer_name)} | <b>ফোন:</b> <a href="tel:${esc(o.phone)}">${esc(o.phone)}</a></div>
+                <span class="status-badge ${statusClassFor(o.status)}">${esc(o.status)}</span>
+              </div>
+              <div class="small" style="margin-bottom:8px;"><b>ঠিকানা:</b> ${esc(o.address)}</div>
+              <div style="margin-bottom:8px;">${itemsHtml}</div>
+              <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+                <div>
+                  <b>সর্বমোট:</b> <span style="color:var(--green);font-weight:bold;">${taka(o.total)}/-</span>${o.delivery_charge !== null && o.delivery_charge !== undefined ? `<span class="small">(ডেলিভারি চার্জ: ${taka(o.delivery_charge)}/-)</span>` : `
+                    <div style="display:flex;gap:6px;align-items:center;margin-top:6px;">
+                      <input type="number" min="0" placeholder="ডেলিভারি চার্জ" data-del-for="${esc(o.id)}" style="width:120px;margin:0;padding:4px;" value="">
+                      <button class="edit-btn" style="padding:4px 10px;font-size:13px;" onclick="setOrderDelivery('${esc(o.id)}', ${Number(o.total) - Number(o.delivery_charge || 0)})">সেট চার্জ</button>
+                    </div>`}
+                </div>
+                <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
+                  <select onchange="updateOrderStatus('${esc(o.id)}', this.value)" style="margin:0;padding:6px;width:auto;" aria-label="স্ট্যাটাস পরিবর্তন">
+                    ${ORDER_STATUSES.map(([val, label]) => `<option value="${esc(val)}" ${o.status === val ? "selected" : ""}>${esc(label)}</option>`).join("")}
+                  </select>
+                  <button class="danger" style="padding:6px 10px;font-size:13px;" onclick="deleteOrder('${esc(o.id)}')">মুছুন</button>
+                </div>
+              </div>
+            </div>`;
+          }).join("") : "<p class='small'>কোনো অর্ডার পাওয়া যায়নি।</p>"}
+        </div>`;
+    }
+
+    async function updateOrderStatus(id, status) {
+      const { error } = await db.from("orders").update({ status }).eq("id", id);
+      if (error) { alert("স্ট্যাটাস আপডেট করা যায়নি: " + errText(error)); return; }
+      toast("✅ অর্ডার স্ট্যাটাস আপডেট হয়েছে");
+      listOrders();
+    }
+
+    async function deleteOrder(id) {
+      if (!confirm("আপনি কি নিশ্চিতভাবে এই অর্ডারটি মুছে ফেলতে চান?")) return;
+      const { error } = await db.from("orders").delete().eq("id", id);
+      if (error) { alert("মুছে ফেলা যায়নি: " + errText(error)); return; }
+      toast("🗑️ অর্ডার মুছে ফেলা হয়েছে");
+      listOrders();
+    }
+
+    // Initial Load
+    document.addEventListener("DOMContentLoaded", () => {
+      initDynamicReviews();
+      loadSettings();
+      loadProducts();
+      updateCartBadge();
+      updateWishlistBadge();
+      if (localStorage.getItem("sari_admin_view") === "true") {
+        openAdminPanelDirectly();
+      }
+    });
+  </script>
+</body>
+</html>
