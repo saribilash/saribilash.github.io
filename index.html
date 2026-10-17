@@ -179,7 +179,7 @@
       <a href="#productsSection">শাড়ির কালেকশন</a>
       <button onclick="openWishlistDialog()">❤️ Wishlist (<span id="wishlistCount">0</span>)</button>
       <button onclick="openCart()">🛒 কার্ট (<span id="cartCount">0</span>)</button>
-      <button onclick="document.querySelector('#trackDialog').showModal()">📦 আমার অর্ডার</button>
+      <button onclick="openDialogSafely('#trackDialog')">📦 আমার অর্ডার</button>
       <button class="admin-nav-btn" id="headerAdminBtn" onclick="openAdminPanelDirectly()">👑 অ্যাডমিন</button>
     </nav>
   </header>
@@ -244,7 +244,7 @@
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px;">
         <div>
           <h2 style="color:var(--navy);margin:0 0 6px;">👑 শাড়ি বিলাশ — অ্যাডমিন ড্যাশবোর্ড</h2>
-          <span id="liveStatus" class="live-dot">Live সংযোগ হচ্ছে...</span>
+          <span id="liveStatus" class="live-dot on">Live সক্রিয়</span>
         </div>
         <div style="display:flex;gap:10px;">
           <button class="btn" style="padding:8px 16px;font-size:14px;" onclick="goToHomeSite()">🔙 মূল সাইটে ফিরে যান</button>
@@ -265,7 +265,7 @@
   <!-- ছবি জুম -->
   <dialog id="imageZoomDialog">
     <div class="zoom-wrap" id="zoomWrap">
-      <button class="zoom-close-btn" onclick="closeZoomModal()" aria-label="বন্ধ করুন">&times;</button>
+      <button class="zoom-close-btn" onclick="closeDialogSafely('#imageZoomDialog')" aria-label="বন্ধ করুন">&times;</button>
       <img id="zoomModalImage" src="" alt="শাড়ির বড় ছবি">
       <div class="zoom-hint">ছবিতে ট্যাপ করলে জুম হবে, আবার ট্যাপ করলে ছোট হবে</div>
     </div>
@@ -273,13 +273,13 @@
 
   <!-- পণ্যের বিস্তারিত পেজ -->
   <dialog id="productDialog">
-    <button class="close-modal-btn" onclick="document.querySelector('#productDialog').close()" aria-label="বন্ধ করুন">&times;</button>
+    <button class="close-modal-btn" onclick="closeDialogSafely('#productDialog')" aria-label="বন্ধ করুন">&times;</button>
     <div id="productDetail"></div>
   </dialog>
 
   <!-- উইশলিস্ট -->
   <dialog id="wishlistDialog">
-    <button class="close-modal-btn" onclick="document.querySelector('#wishlistDialog').close()" aria-label="বন্ধ করুন">&times;</button>
+    <button class="close-modal-btn" onclick="closeDialogSafely('#wishlistDialog')" aria-label="বন্ধ করুন">&times;</button>
     <h3 style="color:var(--navy);margin:0 40px 15px 0;">❤️ আপনার পছন্দের শাড়িগুলো</h3>
     <div id="wishlistResult"></div>
     <button class="btn order-btn" style="margin-top:15px;width:100%;" onclick="shareWishlistLink()">🔗 আমার উইশলিস্ট লিংক কপি করুন</button>
@@ -287,7 +287,7 @@
 
   <!-- কার্ট ও চেকআউট -->
   <dialog id="cartDialog">
-    <button class="close-modal-btn" onclick="document.querySelector('#cartDialog').close()" aria-label="বন্ধ করুন">&times;</button>
+    <button class="close-modal-btn" onclick="closeDialogSafely('#cartDialog')" aria-label="বন্ধ করুন">&times;</button>
     <h3 style="color:var(--navy);margin:0 40px 10px 0;">🛒 আপনার কার্ট</h3>
     <div id="cartItems"></div>
     <div id="cartCheckout" style="display:none;">
@@ -337,12 +337,12 @@
       <p class="small" style="margin-bottom:6px;">সর্বমোট: <b id="successTotal"></b></p>
       <p class="small" style="margin-bottom:20px;">ধন্যবাদ, শাড়ি বিলাশের সঙ্গে থাকার জন্য। খুব শীঘ্রই ডেলিভারি নিশ্চিত করতে আমরা যোগাযোগ করব। ফোন নম্বর দিয়ে "আমার অর্ডার" থেকে স্ট্যাটাস দেখতে পারবেন।</p>
       <a id="successWa" class="whatsapp-order-btn" style="margin-bottom:8px;padding:12px;" href="#" target="_blank" rel="noopener">💬 WhatsApp-এ অর্ডার আইডি পাঠিয়ে দিন</a>
-      <button class="btn" style="width:100%;" onclick="document.querySelector('#successDialog').close()">ঠিক আছে</button>
+      <button class="btn" style="width:100%;" onclick="closeDialogSafely('#successDialog')">ঠিক আছে</button>
     </div>
   </dialog>
 
   <dialog id="trackDialog">
-    <button class="close-modal-btn" onclick="document.querySelector('#trackDialog').close()" aria-label="বন্ধ করুন">&times;</button>
+    <button class="close-modal-btn" onclick="closeDialogSafely('#trackDialog')" aria-label="বন্ধ করুন">&times;</button>
     <h3 style="color:var(--navy);margin:0 40px 15px 0;">📦 আমার অর্ডার ও স্ট্যাটাস</h3>
     <label class="field-label" for="trackPhone">অর্ডারের সময় দেওয়া ফোন নম্বর</label>
     <div class="row">
@@ -353,7 +353,7 @@
   </dialog>
 
   <dialog id="adminDialog">
-    <button class="close-modal-btn" onclick="document.querySelector('#adminDialog').close()" aria-label="বন্ধ করুন">&times;</button>
+    <button class="close-modal-btn" onclick="closeDialogSafely('#adminDialog')" aria-label="বন্ধ করুন">&times;</button>
     <h3 style="color:var(--navy);margin:0 40px 15px 0;">অ্যাডমিন লগইন</h3>
     <form id="loginForm">
       <label class="field-label" for="loginEmail">ইমেইল</label>
@@ -372,7 +372,7 @@
     <a href="https://www.facebook.com/SariBilash02" target="_blank" rel="noopener" class="social-button facebook-button" title="আমাদের ফেসবুক পেজ" aria-label="Facebook">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
     </a>
-    <a href="https://api.whatsapp.com/send?phone=8801628182808&text=%E0%A6%B9%E0%A7%8D%E0%A6%AF%E0%A6%BE%E0%A6%B2%E0%A7%8B%20%E0%A6%B6%E0%A6%BE%E0%A6%A1%E0%A6%BC%E0%A6%BF%20%E0%A6%AC%E0%A6%BF%E0%A6%B2%E0%A6%BE%E0%A6%B6!" target="_blank" rel="noopener" class="social-button whatsapp-button" title="WhatsApp" aria-label="WhatsApp">
+    <a href="https://api.whatsapp.com/send?phone=8801628182808&text=%E0%A6%B9%E0%A7%8D%E0%A6%AF%E0%A6%BE%E0%A6%B2%E0%A7%8B%20%E0%A6%B6%E0%A6%BE%E0%A6%A1%E0%A6%BC%E0%A6%BF%20%E0%A6%B6%E0%A6%BE%E0%A6%AA!" target="_blank" rel="noopener" class="social-button whatsapp-button" title="WhatsApp" aria-label="WhatsApp">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
     </a>
   </div>
@@ -406,8 +406,8 @@
     let currentImageUrlList = [];
     let currentAdminTabName = localStorage.getItem("sari_admin_active_tab") || "products";
     let reloadTimer = null, searchTimer = null;
-    let cardSel = {};                       // কার্ডে কোন রঙের ছবি দেখানো হচ্ছে
-    let det = { id: null, idx: 0, qty: 1 }; // বিস্তারিত পেজের অবস্থা
+    let cardSel = {};                       
+    let det = { id: null, idx: 0, qty: 1 }; 
     let cart = loadCart();
     let adminOrders = [];
     let orderFilter = { status: "", q: "" };
@@ -416,8 +416,31 @@
     const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
     const taka = n => new Intl.NumberFormat("bn-BD").format(Number(n) || 0);
 
+    function openDialogSafely(selector) {
+      const d = $(selector);
+      if (d) {
+        if (typeof d.showModal === 'function') {
+          if (!d.open) d.showModal();
+        } else {
+          d.setAttribute('open', 'true');
+        }
+      }
+    }
+
+    function closeDialogSafely(selector) {
+      const d = $(selector);
+      if (d) {
+        if (typeof d.close === 'function') {
+          if (d.open) d.close();
+        } else {
+          d.removeAttribute('open');
+        }
+      }
+    }
+
     function toast(text) {
       const el = $("#toast");
+      if (!el) return;
       el.textContent = text;
       el.classList.add("show");
       clearTimeout(el._t);
@@ -460,7 +483,10 @@
 
     // ---------- Auth ----------
     function sessionIsAdmin(session) { return (session?.user?.email || "").toLowerCase() === ADMIN_EMAIL; }
-    function checkLoginStatus() { $("#headerAdminBtn").style.display = isAdmin ? "inline-block" : "none"; }
+    function checkLoginStatus() { 
+      const btn = $("#headerAdminBtn");
+      if (btn) btn.style.display = isAdmin ? "inline-block" : "none"; 
+    }
 
     db.auth.onAuthStateChange((_event, session) => {
       const wasAdmin = isAdmin;
@@ -472,39 +498,43 @@
       }
     });
 
-    $("#brand").addEventListener("click", () => {
-      if (isAdmin) { openAdminPanelDirectly(); return; }
-      brandClicks++;
-      clearTimeout(brandClickTimer);
-      brandClickTimer = setTimeout(() => brandClicks = 0, 1800);
-      if (brandClicks >= 5) {
-        brandClicks = 0;
-        $("#loginForm").reset();
-        $("#loginMessage").textContent = "";
-        $("#adminDialog").showModal();
-      }
-    });
+    if ($("#brand")) {
+      $("#brand").addEventListener("click", () => {
+        if (isAdmin) { openAdminPanelDirectly(); return; }
+        brandClicks++;
+        clearTimeout(brandClickTimer);
+        brandClickTimer = setTimeout(() => brandClicks = 0, 1800);
+        if (brandClicks >= 5) {
+          brandClicks = 0;
+          if ($("#loginForm")) $("#loginForm").reset();
+          if ($("#loginMessage")) $("#loginMessage").textContent = "";
+          openDialogSafely("#adminDialog");
+        }
+      });
+    }
 
-    $("#loginForm").addEventListener("submit", async e => {
-      e.preventDefault();
-      const email = $("#loginEmail").value.trim().toLowerCase();
-      const password = $("#loginPassword").value;
-      const msg = $("#loginMessage"), btn = $("#loginBtn");
-      msg.className = "small"; msg.textContent = "যাচাই হচ্ছে..."; btn.disabled = true;
-      const { data, error } = await db.auth.signInWithPassword({ email, password });
-      btn.disabled = false;
-      if (error || !sessionIsAdmin(data?.session)) {
-        if (data?.session) await db.auth.signOut();
-        msg.className = "small msg-err";
-        msg.textContent = "ইমেইল বা পাসওয়ার্ড ভুল হয়েছে!";
-        return;
-      }
-      isAdmin = true;
-      checkLoginStatus();
-      $("#adminDialog").close();
-      await loadProducts();
-      openAdminPanelDirectly();
-    });
+    if ($("#loginForm")) {
+      $("#loginForm").addEventListener("submit", async e => {
+        e.preventDefault();
+        const email = $("#loginEmail").value.trim().toLowerCase();
+        const password = $("#loginPassword").value;
+        const msg = $("#loginMessage"), btn = $("#loginBtn");
+        msg.className = "small"; msg.textContent = "যাচাই হচ্ছে..."; btn.disabled = true;
+        const { data, error } = await db.auth.signInWithPassword({ email, password });
+        btn.disabled = false;
+        if (error || !sessionIsAdmin(data?.session)) {
+          if (data?.session) await db.auth.signOut();
+          msg.className = "small msg-err";
+          msg.textContent = "ইমেইল বা পাসওয়ার্ড ভুল হয়েছে!";
+          return;
+        }
+        isAdmin = true;
+        checkLoginStatus();
+        closeDialogSafely("#adminDialog");
+        await loadProducts();
+        openAdminPanelDirectly();
+      });
+    }
 
     async function logoutAdmin() {
       await db.auth.signOut();
@@ -525,7 +555,7 @@
       $("#adminFullPage").style.display = "none";
     }
 
-    // ---------- সেটিং (ডেলিভারি চার্জ — ফাঁকা থাকলে সাইটে দেখায় না) ----------
+    // ---------- সেটিং ----------
     const numOrNull = v => (v === null || v === undefined || v === "" || isNaN(Number(v))) ? null : Number(v);
     async function loadSettings() {
       try {
@@ -539,7 +569,7 @@
         }
       } catch {}
       applyDeliveryInfo();
-      if ($("#cartDialog").open && cart.length) renderCartSummary();
+      if ($("#cartDialog") && $("#cartDialog").open && cart.length) renderCartSummary();
     }
     function applyDeliveryInfo() {
       const s = settings, parts = [];
@@ -548,8 +578,8 @@
       let t = parts.join(", ");
       if (t && (s.dhaka_extra || s.outside_extra)) t += " (১ কেজি পর্যন্ত; ওজন বেশি হলে চার্জ বাড়বে)";
       if (s.free_delivery_min > 0) t += (t ? " • " : "") + `${taka(s.free_delivery_min)}/- বা বেশি অর্ডারে ফ্রি ডেলিভারি`;
-      $("#deliveryInfo").textContent = t || "সারা বাংলাদেশে নিরাপদ হোম ডেলিভারি সুবিধা";
-      $("#bkashNumberDisplay").textContent = BKASH_NUMBER;
+      if ($("#deliveryInfo")) $("#deliveryInfo").textContent = t || "সারা বাংলাদেশে নিরাপদ হোম ডেলিভারি সুবিধা";
+      if ($("#bkashNumberDisplay")) $("#bkashNumberDisplay").textContent = BKASH_NUMBER;
     }
 
     // ---------- পণ্য ----------
@@ -566,10 +596,12 @@
     const isNew = p => p.created_at && (Date.now() - new Date(p.created_at).getTime()) < 7 * 86400000;
 
     async function loadProducts() {
+      const box = $("#products");
+      if (!box) return;
       const { data, error } = await db.from("products").select("*").order("created_at", { ascending: false });
       if (error) {
         console.error("Products load error:", error);
-        $("#products").innerHTML = `<p style="text-align:center;grid-column:1/-1;color:var(--red);">শাড়ি লোড করা যায়নি। ইন্টারনেট সংযোগ দেখে আবার চেষ্টা করুন।</p>`;
+        box.innerHTML = `<p style="text-align:center;grid-column:1/-1;color:var(--red);">শাড়ি লোড করা যায়নি। ইন্টারনেট সংযোগ দেখে আবার চেষ্টা করুন।</p>`;
         return;
       }
       products = data || [];
@@ -591,16 +623,18 @@
     }
 
     function fillCategories(list) {
-      const sel = $("#categoryFilter"), cur = sel.value;
+      const sel = $("#categoryFilter");
+      if (!sel) return;
+      const cur = sel.value;
       const cats = [...new Set(list.map(p => (p.category || "").trim()).filter(Boolean))];
       sel.innerHTML = `<option value="">সব ক্যাটাগরি</option>` + cats.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join("");
       sel.value = cats.includes(cur) ? cur : "";
     }
 
     function filterSort(list) {
-      const q = $("#searchBox").value.trim().toLowerCase();
-      const cat = $("#categoryFilter").value;
-      const sort = $("#sortSelect").value;
+      const q = $("#searchBox") ? $("#searchBox").value.trim().toLowerCase() : "";
+      const cat = $("#categoryFilter") ? $("#categoryFilter").value : "";
+      const sort = $("#sortSelect") ? $("#sortSelect").value : "new";
       let out = list.filter(p => {
         if (cat && (p.category || "").trim() !== cat) return false;
         if (!q) return true;
@@ -637,10 +671,11 @@
 
     function renderProductsUI() {
       const box = $("#products");
+      if (!box) return;
       const all = products.filter(p => p && p.name && p.active !== false);
       fillCategories(all);
       const list = filterSort(all);
-      $("#resultCount").textContent = all.length ? `${taka(list.length)}টি শাড়ি পাওয়া গেছে` : "";
+      if ($("#resultCount")) $("#resultCount").textContent = all.length ? `${taka(list.length)}টি শাড়ি পাওয়া গেছে` : "";
       if (!all.length) { box.innerHTML = "<p style='text-align:center;grid-column:1/-1;'>এখন কোনো শাড়ি এভেইলেবল নেই।</p>"; updateWishlistBadge(); return; }
       if (!list.length) { box.innerHTML = "<p style='text-align:center;grid-column:1/-1;'>এই খোঁজার সাথে মেলে এমন কোনো শাড়ি পাওয়া যায়নি। অন্য শব্দে খুঁজুন।</p>"; updateWishlistBadge(); return; }
       const wl = getWishlist();
@@ -703,8 +738,7 @@
       if (!p) return;
       det = { id: p.id, idx: Math.min(cardSel[p.id] || 0, Math.max(0, productColors(p).length - 1)), qty: 1 };
       renderDetail();
-      const d = $("#productDialog");
-      if (!d.open) d.showModal();
+      openDialogSafely('#productDialog');
     }
     function renderDetail() {
       const p = getProduct(det.id);
@@ -716,43 +750,45 @@
       det.qty = Math.min(Math.max(1, det.qty), maxq);
       const id = esc(p.id);
       const isW = getWishlist().includes(String(p.id));
-      $("#productDetail").innerHTML = `<div class="detail">
-        <div>
-          <div style="position:relative;">
-            ${badgesHtml(p)}
-            <img class="detail-img" src="${esc(img)}" alt="${esc(p.name)}" onclick="openZoomModal(this.src)">
-          </div>
-          <div class="small" style="margin-top:6px;">🔍 ছবিতে ট্যাপ করে বড় করে জুম করুন</div>
-          ${colors.length > 1 ? `<div class="variant-thumbs">${colors.map((c, i) => `<button type="button" class="variant-thumb ${i === det.idx ? "selected" : ""}" onclick="detailSelect(${i})">${images[i] ? `<img src="${esc(images[i])}" alt="${esc(c)}">` : ""}<span>${esc(c)}</span></button>`).join("")}</div>` : ""}
-        </div>
-        <div>
-          <h2>${esc(p.name)}</h2>
-          <div class="spec-tags">${specTags(p)}</div>
-          ${priceHtml(p)}
-          <div>${pillsHtml(p)}</div>
-          <div class="muted" style="white-space:pre-line;">${esc(p.description || "")}</div>
-          ${colors.length ? `<div class="color-big">${colorDot(colors[det.idx] || colors[0])}🎨 রং: ${esc(colors[det.idx] || colors[0])}</div>` : ""}
-          <div style="display:flex;align-items:center;gap:12px;margin:10px 0 14px;flex-wrap:wrap;">
-            <span class="small">পরিমাণ:</span>
-            <div class="qty-box"><button onclick="detailQty(-1)" aria-label="কমান">−</button><b>${taka(det.qty)}</b><button onclick="detailQty(1)" aria-label="বাড়ান">+</button></div>
-            <span class="small">মোট: <b style="color:#b8860b;">${taka(Number(p.price) * det.qty)}/-</b></span>
-          </div>
-          <div class="product-actions">
-            <div class="action-row">
-              <button class="btn" ${sold ? "disabled" : ""} onclick="detailAdd(false)">${sold ? "স্টক শেষ" : "🛒 কার্টে রাখুন"}</button>
-              <button class="btn order-btn" ${sold ? "disabled" : ""} onclick="detailAdd(true)">⚡ এখনই অর্ডার</button>
+      if ($("#productDetail")) {
+        $("#productDetail").innerHTML = `<div class="detail">
+          <div>
+            <div style="position:relative;">
+              ${badgesHtml(p)}
+              <img class="detail-img" src="${esc(img)}" alt="${esc(p.name)}" onclick="openZoomModal(this.src)">
             </div>
-            <div class="action-row">
-              <button class="btn" style="background:#fff;border:1.5px solid var(--gold);box-shadow:none;" onclick="toggleWishlist('${id}')" data-card-wish-btn="${id}">${isW ? "❤️ পছন্দের তালিকায় আছে" : "🤍 পছন্দের তালিকায় রাখুন"}</button>
-              <button class="btn" style="background:#fff;border:1.5px solid var(--gold);box-shadow:none;" onclick="shareProduct('${id}')">🔗 শেয়ার করুন</button>
+            <div class="small" style="margin-top:6px;">🔍 ছবিতে ট্যাপ করে বড় করে জুম করুন</div>
+            ${colors.length > 1 ? `<div class="variant-thumbs">${colors.map((c, i) => `<button type="button" class="variant-thumb ${i === det.idx ? "selected" : ""}" onclick="detailSelect(${i})">${images[i] ? `<img src="${esc(images[i])}" alt="${esc(c)}">` : ""}<span>${esc(c)}</span></button>`).join("")}</div>` : ""}
+          </div>
+          <div>
+            <h2>${esc(p.name)}</h2>
+            <div class="spec-tags">${specTags(p)}</div>
+            ${priceHtml(p)}
+            <div>${pillsHtml(p)}</div>
+            <div class="muted" style="white-space:pre-line;">${esc(p.description || "")}</div>
+            ${colors.length ? `<div class="color-big">${colorDot(colors[det.idx] || colors[0])}🎨 রং: ${esc(colors[det.idx] || colors[0])}</div>` : ""}
+            <div style="display:flex;align-items:center;gap:12px;margin:10px 0 14px;flex-wrap:wrap;">
+              <span class="small">পরিমাণ:</span>
+              <div class="qty-box"><button onclick="detailQty(-1)" aria-label="কমান">−</button><b>${taka(det.qty)}</b><button onclick="detailQty(1)" aria-label="বাড়ান">+</button></div>
+              <span class="small">মোট: <b style="color:#b8860b;">${taka(Number(p.price) * det.qty)}/-</b></span>
             </div>
-            <div class="action-row">
-              <button class="whatsapp-order-btn" onclick="directWhatsAppOrder('${id}',${det.idx})">💬 WhatsApp-এ জানুন</button>
-              <button class="facebook-order-btn" onclick="directFacebookOrder()">📘 ফেসবুক পেজ</button>
+            <div class="product-actions">
+              <div class="action-row">
+                <button class="btn" ${sold ? "disabled" : ""} onclick="detailAdd(false)">${sold ? "স্টক শেষ" : "🛒 কার্টে রাখুন"}</button>
+                <button class="btn order-btn" ${sold ? "disabled" : ""} onclick="detailAdd(true)">⚡ এখনই অর্ডার</button>
+              </div>
+              <div class="action-row">
+                <button class="btn" style="background:#fff;border:1.5px solid var(--gold);box-shadow:none;" onclick="toggleWishlist('${id}')" data-card-wish-btn="${id}">${isW ? "❤️ পছন্দের তালিকায় আছে" : "🤍 পছন্দের তালিকায় রাখুন"}</button>
+                <button class="btn" style="background:#fff;border:1.5px solid var(--gold);box-shadow:none;" onclick="shareProduct('${id}')">🔗 শেয়ার করুন</button>
+              </div>
+              <div class="action-row">
+                <button class="whatsapp-order-btn" onclick="directWhatsAppOrder('${id}',${det.idx})">💬 WhatsApp-এ জানুন</button>
+                <button class="facebook-order-btn" onclick="directFacebookOrder()">📘 ফেসবুক পেজ</button>
+              </div>
             </div>
           </div>
-        </div>
-      </div>`;
+        </div>`;
+      }
     }
     function detailSelect(i) { det.idx = i; cardSel[det.id] = i; renderDetail(); const m = $("#mainimg-" + CSS.escape(String(det.id))); const p = getProduct(det.id); if (m && p && productImages(p)[i]) m.src = productImages(p)[i]; }
     function detailQty(d) {
@@ -766,7 +802,7 @@
       const p = getProduct(det.id); if (!p) return;
       const color = productColors(p)[det.idx] || productColors(p)[0] || NO_COLOR;
       if (addToCart(p.id, color, det.qty)) {
-        $("#productDialog").close();
+        closeDialogSafely('#productDialog');
         if (buy) openCart(); else toast("🛒 কার্টে যোগ হয়েছে");
       }
     }
@@ -781,12 +817,13 @@
     function openZoomModal(url) {
       if (!url) return;
       const img = $("#zoomModalImage");
-      img.classList.remove("zoomed");
-      img.style.transformOrigin = "center";
-      img.src = url;
-      $("#imageZoomDialog").showModal();
+      if (img) {
+        img.classList.remove("zoomed");
+        img.style.transformOrigin = "center";
+        img.src = url;
+        openDialogSafely('#imageZoomDialog');
+      }
     }
-    function closeZoomModal() { const m = $("#imageZoomDialog"); if (m.open) m.close(); }
     (function initZoom() {
       const img = $("#zoomModalImage");
       if (!img) return;
@@ -801,7 +838,9 @@
         if (!img.classList.contains("zoomed")) setOrigin(e);
         img.classList.toggle("zoomed");
       });
-      img.parentElement.addEventListener("pointermove", e => { if (img.classList.contains("zoomed")) setOrigin(e); });
+      if (img.parentElement) {
+        img.parentElement.addEventListener("pointermove", e => { if (img.classList.contains("zoomed")) setOrigin(e); });
+      }
     })();
 
     // ---------- হোয়াটসঅ্যাপ / ফেসবুক ----------
@@ -831,7 +870,7 @@
     function updateWishlistBadge() {
       const ids = new Set(products.map(p => String(p.id)));
       const count = products.length ? getWishlist().filter(id => ids.has(id)).length : getWishlist().length;
-      $("#wishlistCount").textContent = count;
+      if ($("#wishlistCount")) $("#wishlistCount").textContent = count;
     }
     function paintWishButtons(pId) {
       const on = getWishlist().includes(String(pId));
@@ -861,6 +900,7 @@
     function openWishlistDialog() {
       const wl = getWishlist();
       const box = $("#wishlistResult");
+      if (!box) return;
       const list = products.filter(p => wl.includes(String(p.id)) && p.active !== false);
       if (!list.length) {
         box.innerHTML = "<p style='text-align:center;color:var(--muted);padding:20px;'>আপনার Wishlist-এ কোনো শাড়ি যোগ করা নেই।</p>";
@@ -868,25 +908,25 @@
         box.innerHTML = list.map(p => {
           const img = productImages(p)[0], id = esc(p.id), sold = isSoldOut(p);
           return `<div class="admin-card" style="display:flex;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap;">
-            <div style="display:flex;align-items:center;gap:12px;cursor:pointer;" onclick="document.querySelector('#wishlistDialog').close();openProduct('${id}')">
+            <div style="display:flex;align-items:center;gap:12px;cursor:pointer;" onclick="closeDialogSafely('#wishlistDialog');openProduct('${id}')">
               ${img ? `<img src="${esc(img)}" alt="${esc(p.name)}" style="width:60px;height:70px;object-fit:cover;border-radius:8px;">` : ""}
               <div><b style="color:var(--navy);">${esc(p.name)}</b><br><b style="color:#b8860b;">দাম: ${taka(p.price)}/-</b>${sold ? '<br><span class="small" style="color:var(--red);">স্টক শেষ</span>' : ""}</div>
             </div>
             <div style="display:flex;gap:6px;">
-              <button class="btn order-btn" style="padding:6px 12px;font-size:13px;" ${sold ? "disabled" : ""} onclick="document.querySelector('#wishlistDialog').close();cardAddFromWishlist('${id}')">🛒 কার্টে</button>
+              <button class="btn order-btn" style="padding:6px 12px;font-size:13px;" ${sold ? "disabled" : ""} onclick="closeDialogSafely('#wishlistDialog');cardAddFromWishlist('${id}')">🛒 কার্টে</button>
               <button class="danger" style="padding:6px 10px;font-size:13px;" onclick="removeFromWishlistModal('${id}')">❌</button>
             </div>
           </div>`;
         }).join("");
       }
-      $("#wishlistDialog").showModal();
+      openDialogSafely('#wishlistDialog');
     }
     function cardAddFromWishlist(id) {
       const p = getProduct(id);
       if (p && addToCart(id, productColors(p)[0] || NO_COLOR, 1)) openCart();
     }
 
-    // ---------- কার্ট (ব্রাউজারে সেভ থাকে) ----------
+    // ---------- কার্ট ----------
     function loadCart() {
       try {
         const c = JSON.parse(localStorage.getItem("sari_cart") || "[]");
@@ -897,7 +937,7 @@
       try { localStorage.setItem("sari_cart", JSON.stringify(cart)); } catch {}
       updateCartBadge();
     }
-    function updateCartBadge() { $("#cartCount").textContent = cart.reduce((s, i) => s + i.qty, 0); }
+    function updateCartBadge() { if ($("#cartCount")) $("#cartCount").textContent = cart.reduce((s, i) => s + i.qty, 0); }
     const qtyInCart = pid => cart.filter(i => String(i.pid) === String(pid)).reduce((s, i) => s + i.qty, 0);
 
     function addToCart(pid, color, qty) {
@@ -910,7 +950,7 @@
       const ex = cart.find(i => String(i.pid) === String(pid) && i.color === color);
       if (ex) ex.qty += qty; else cart.push({ pid: String(pid), color, qty });
       saveCart();
-      if ($("#cartDialog").open) renderCart();
+      if ($("#cartDialog") && $("#cartDialog").open) renderCart();
       return true;
     }
 
@@ -926,20 +966,28 @@
       });
       cart = cart.filter(i => i.qty > 0);
       if (changed) saveCart(); else updateCartBadge();
-      if ($("#cartDialog").open) renderCart();
+      if ($("#cartDialog") && $("#cartDialog").open) renderCart();
     }
 
-    function openCart() { pruneCart(); renderCart(); prefillCustomer(); togglePaymentFields(); $("#orderMsg").textContent = ""; if (!$("#cartDialog").open) $("#cartDialog").showModal(); }
+    function openCart() { 
+      pruneCart(); 
+      renderCart(); 
+      prefillCustomer(); 
+      togglePaymentFields(); 
+      if ($("#orderMsg")) $("#orderMsg").textContent = ""; 
+      openDialogSafely('#cartDialog'); 
+    }
 
     function renderCart() {
       const box = $("#cartItems");
+      if (!box) return;
       const lines = cart.map((i, idx) => ({ i, idx, p: getProduct(i.pid) })).filter(x => x.p);
       if (!lines.length) {
         box.innerHTML = "<p style='text-align:center;color:var(--muted);padding:24px 0;'>আপনার কার্ট এখন খালি। পছন্দের শাড়ি কার্টে রাখুন।</p>";
-        $("#cartCheckout").style.display = "none";
+        if ($("#cartCheckout")) $("#cartCheckout").style.display = "none";
         return;
       }
-      $("#cartCheckout").style.display = "block";
+      if ($("#cartCheckout")) $("#cartCheckout").style.display = "block";
       box.innerHTML = lines.map(({ i, idx, p }) => {
         const colors = productColors(p), images = productImages(p);
         const ci = Math.max(0, colors.indexOf(i.color));
@@ -997,7 +1045,7 @@
         if (!p.free_delivery) allFree = false;
         grams += (numOrNull(p.weight_g) ?? settings.default_weight_g ?? 0) * i.qty;
       });
-      const inside = $("#zoneSelect").value === "inside";
+      const inside = $("#zoneSelect") ? $("#zoneSelect").value === "inside" : true;
       const base = inside ? settings.dhaka_charge : settings.outside_charge;
       const extra = (inside ? settings.dhaka_extra : settings.outside_extra) || 0;
       const min = settings.free_delivery_min;
@@ -1012,26 +1060,28 @@
 
     function renderCartSummary() {
       const t = calcTotals();
-      const inside = $("#zoneSelect").value === "inside";
+      const inside = $("#zoneSelect") ? $("#zoneSelect").value === "inside" : true;
       let note = "";
       if (t.free) note = `<div class="free-note">🎉 আপনার অর্ডারে ডেলিভারি ফ্রি!</div>`;
       else if (t.min > 0 && t.subtotal < t.min) note = `<div class="need-note">আরও ${taka(t.min - t.subtotal)}/- টাকার শাড়ি নিলে ডেলিভারি ফ্রি!</div>`;
       const delRow = t.unknown ? "" : `<div class="sum-row"><span>ডেলিভারি চার্জ (${inside ? "ঢাকার ভিতরে" : "ঢাকার বাইরে"})</span><b>${t.free ? "ফ্রি" : taka(t.charge) + "/-"}</b></div>`;
       const wt = (!t.free && !t.unknown && t.grams > 0) ? `<div class="small">আনুমানিক ওজন: ${taka(Math.round(t.grams / 100) / 10)} কেজি</div>` : "";
-      $("#cartSummary").innerHTML = `
-        <div class="sum-row"><span>শাড়ির দাম</span><b>${taka(t.subtotal)}/-</b></div>
-        ${delRow}
-        <div class="sum-row sum-total"><span>${t.unknown ? "সর্বমোট (ডেলিভারি চার্জ ছাড়া)" : "সর্বমোট"}</span><span>${taka(t.total)}/-</span></div>
-        ${t.unknown ? `<div class="need-note">ডেলিভারি চার্জ অর্ডার কনফার্মের সময় আপনাকে জানানো হবে।</div>` : ""}${wt}${note}
-        <div class="small" style="margin-top:6px;">চূড়ান্ত দাম, ছাড় ও ডেলিভারি চার্জ অর্ডারের সময় সার্ভার ঠিক করে দেবে।</div>`;
-      $("#bkashAmountDisplay").textContent = taka(t.total) + "/-";
+      if ($("#cartSummary")) {
+        $("#cartSummary").innerHTML = `
+          <div class="sum-row"><span>শাড়ির দাম</span><b>${taka(t.subtotal)}/-</b></div>
+          ${delRow}
+          <div class="sum-row sum-total"><span>${t.unknown ? "সর্বমোট (ডেলিভারি চার্জ ছাড়া)" : "সর্বমোট"}</span><span>${taka(t.total)}/-</span></div>
+          ${t.unknown ? `<div class="need-note">ডেলিভারি চার্জ অর্ডার কনফার্মের সময় আপনাকে জানানো হবে।</div>` : ""}${wt}${note}
+          <div class="small" style="margin-top:6px;">চূড়ান্ত দাম, ছাড় ও ডেলিভারি চার্জ অর্ডারের সময় সার্ভার ঠিক করে দেবে।</div>`;
+      }
+      if ($("#bkashAmountDisplay")) $("#bkashAmountDisplay").textContent = taka(t.total) + "/-";
     }
 
     function togglePaymentFields() {
-      const isBkash = $("#paymentMethod").value === "bkash";
-      $("#bkashFields").style.display = isBkash ? "block" : "none";
-      $("#transactionId").required = isBkash;
-      $("#bkashNumberDisplay").textContent = BKASH_NUMBER;
+      const isBkash = $("#paymentMethod") ? $("#paymentMethod").value === "bkash" : false;
+      if ($("#bkashFields")) $("#bkashFields").style.display = isBkash ? "block" : "none";
+      if ($("#transactionId")) $("#transactionId").required = isBkash;
+      if ($("#bkashNumberDisplay")) $("#bkashNumberDisplay").textContent = BKASH_NUMBER;
       if (cart.length) renderCartSummary();
     }
 
@@ -1052,66 +1102,68 @@
     function prefillCustomer() {
       try {
         const c = JSON.parse(localStorage.getItem("sari_customer") || "{}");
-        if (c.name && !$("#orderName").value) $("#orderName").value = c.name;
-        if (c.phone && !$("#orderPhone").value) $("#orderPhone").value = c.phone;
-        if (c.address && !$("#orderAddress").value) $("#orderAddress").value = c.address;
-        if (c.zone) $("#zoneSelect").value = c.zone;
+        if (c.name && $("#orderName") && !$("#orderName").value) $("#orderName").value = c.name;
+        if (c.phone && $("#orderPhone") && !$("#orderPhone").value) $("#orderPhone").value = c.phone;
+        if (c.address && $("#orderAddress") && !$("#orderAddress").value) $("#orderAddress").value = c.address;
+        if (c.zone && $("#zoneSelect")) $("#zoneSelect").value = c.zone;
       } catch {}
     }
 
-    $("#checkoutForm").addEventListener("submit", async e => {
-      e.preventDefault();
-      const btn = $("#submitOrderBtn"), msg = $("#orderMsg");
-      pruneCart();
-      const lines = cart.map(i => ({ i, p: getProduct(i.pid) })).filter(x => x.p);
-      if (!lines.length) { msg.className = "small msg-err"; msg.textContent = "কার্ট খালি বা শাড়ির স্টক শেষ হয়ে গেছে।"; return; }
-      const f = new FormData(e.target);
-      const name = String(f.get("name")).trim(), phone = String(f.get("phone")).trim(), addr = String(f.get("address")).trim();
-      const zone = String(f.get("zone")), payment = String(f.get("payment_method")), trx = String(f.get("transaction_id") || "").trim();
-      btn.disabled = true; btn.textContent = "প্রসেস হচ্ছে..."; msg.className = "small"; msg.textContent = "";
+    if ($("#checkoutForm")) {
+      $("#checkoutForm").addEventListener("submit", async e => {
+        e.preventDefault();
+        const btn = $("#submitOrderBtn"), msg = $("#orderMsg");
+        pruneCart();
+        const lines = cart.map(i => ({ i, p: getProduct(i.pid) })).filter(x => x.p);
+        if (!lines.length) { msg.className = "small msg-err"; msg.textContent = "কার্ট খালি বা শাড়ির স্টক শেষ হয়ে গেছে।"; return; }
+        const f = new FormData(e.target);
+        const name = String(f.get("name")).trim(), phone = String(f.get("phone")).trim(), addr = String(f.get("address")).trim();
+        const zone = String(f.get("zone")), payment = String(f.get("payment_method")), trx = String(f.get("transaction_id") || "").trim();
+        btn.disabled = true; btn.textContent = "প্রসেস হচ্ছে..."; msg.className = "small"; msg.textContent = "";
 
-      const items = lines.map(({ i, p }) => {
-        const ci = Math.max(0, productColors(p).indexOf(i.color));
-        return { id: p.id, color: i.color, qty: i.qty, image: productImages(p)[ci] || productImages(p)[0] || "" };
-      });
-      const done = () => { btn.disabled = false; btn.textContent = "অর্ডার নিশ্চিত করুন"; };
+        const items = lines.map(({ i, p }) => {
+          const ci = Math.max(0, productColors(p).indexOf(i.color));
+          return { id: p.id, color: i.color, qty: i.qty, image: productImages(p)[ci] || productImages(p)[0] || "" };
+        });
+        const done = () => { btn.disabled = false; btn.textContent = "অর্ডার নিশ্চিত করুন"; };
 
-      let result = null;
-      const { data, error } = await db.rpc("place_order", { p_name: name, p_phone: phone, p_address: addr, p_zone: zone, p_payment: payment, p_trx: trx, p_items: items });
-      if (!error) {
-        result = data;
-      } else if (isMissingFn(error) || isPermErr(error)) {
-        console.warn("place_order কাজ করেনি, সরাসরি জমা দেওয়া হচ্ছে:", error);
-        const t = calcTotals();
-        const orderId = "ORD-" + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2, 5).toUpperCase();
-        const delText = t.free ? "ফ্রি" : (t.unknown ? "কনফার্মের সময় জানানো হবে" : t.charge + "/-");
-        const address = addr + (payment === "bkash" ? `\n[পেমেন্ট: bKash | TrxID: ${trx}]` : "\n[পেমেন্ট: Cash on Delivery]") + `\n[এলাকা: ${zone === "inside" ? "ঢাকার ভিতরে" : "ঢাকার বাইরে"} | ডেলিভারি চার্জ: ${delText}]`;
-        const { error: insErr } = await db.from("orders").insert([{
-          id: orderId, customer_name: name, phone, address,
-          items: lines.map(({ i, p }, k) => ({ id: p.id, name: p.name, color: i.color, price: Number(p.price), qty: i.qty, subtotal: Number(p.price) * i.qty, image: items[k].image })),
-          total: t.total, status: "নতুন অর্ডার (Pending)"
-        }]);
-        if (insErr) { done(); msg.className = "small msg-err"; msg.textContent = "অর্ডার জমা হয়নি: " + errText(insErr) + " চাইলে WhatsApp-এ অর্ডার করুন।"; return; }
-        result = { id: orderId, total: t.total, delivery_charge: t.unknown ? null : t.charge };
-      } else {
+        let result = null;
+        const { data, error } = await db.rpc("place_order", { p_name: name, p_phone: phone, p_address: addr, p_zone: zone, p_payment: payment, p_trx: trx, p_items: items });
+        if (!error) {
+          result = data;
+        } else if (isMissingFn(error) || isPermErr(error)) {
+          console.warn("place_order কাজ করেনি, সরাসরি জমা দেওয়া হচ্ছে:", error);
+          const t = calcTotals();
+          const orderId = "ORD-" + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2, 5).toUpperCase();
+          const delText = t.free ? "ফ্রি" : (t.unknown ? "কনফার্মের সময় জানানো হবে" : t.charge + "/-");
+          const address = addr + (payment === "bkash" ? `\n[পেমেন্ট: bKash | TrxID: ${trx}]` : "\n[পেমেন্ট: Cash on Delivery]") + `\n[এলাকা: ${zone === "inside" ? "ঢাকার ভিতরে" : "ঢাকার বাইরে"} | ডেলিভারি চার্জ: ${delText}]`;
+          const { error: insErr } = await db.from("orders").insert([{
+            id: orderId, customer_name: name, phone, address,
+            items: lines.map(({ i, p }, k) => ({ id: p.id, name: p.name, color: i.color, price: Number(p.price), qty: i.qty, subtotal: Number(p.price) * i.qty, image: items[k].image })),
+            total: t.total, status: "নতুন অর্ডার (Pending)"
+          }]);
+          if (insErr) { done(); msg.className = "small msg-err"; msg.textContent = "অর্ডার জমা হয়নি: " + errText(insErr) + " চাইলে WhatsApp-এ অর্ডার করুন।"; return; }
+          result = { id: orderId, total: t.total, delivery_charge: t.unknown ? null : t.charge };
+        } else {
+          done();
+          msg.className = "small msg-err";
+          msg.textContent = "অর্ডার জমা হয়নি: " + errText(error);
+          if (/স্টক|শাড়ি আর পাওয়া/.test(error.message || "")) loadProducts();
+          return;
+        }
+
         done();
-        msg.className = "small msg-err";
-        msg.textContent = "অর্ডার জমা হয়নি: " + errText(error);
-        if (/স্টক|শাড়ি আর পাওয়া/.test(error.message || "")) loadProducts();
-        return;
-      }
-
-      done();
-      try { localStorage.setItem("sari_customer", JSON.stringify({ name, phone, address: addr, zone })); } catch {}
-      cart = []; saveCart();
-      $("#cartDialog").close();
-      $("#successOrderId").textContent = result.id;
-      $("#successTotal").textContent = taka(result.total) + "/-" + (result.delivery_charge === null ? " (ডেলিভারি চার্জ আলাদা — কনফার্মের সময় জানানো হবে)" : "");
-      $("#successWa").href = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=` + encodeURIComponent(`হ্যালো শাড়ি বিলাশ! আমি ওয়েবসাইটে অর্ডার করেছি।\nঅর্ডার আইডি: ${result.id}\nনাম: ${name}\nফোন: ${phone}`);
-      $("#successDialog").showModal();
-      e.target.reset();
-      loadProducts();
-    });
+        try { localStorage.setItem("sari_customer", JSON.stringify({ name, phone, address: addr, zone })); } catch {}
+        cart = []; saveCart();
+        closeDialogSafely('#cartDialog');
+        if ($("#successOrderId")) $("#successOrderId").textContent = result.id;
+        if ($("#successTotal")) $("#successTotal").textContent = taka(result.total) + "/-" + (result.delivery_charge === null ? " (ডেলিভারি চার্জ আলাদা — কনফার্মের সময় জানানো হবে)" : "");
+        if ($("#successWa")) $("#successWa").href = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=` + encodeURIComponent(`হ্যালো শাড়ি বিলাশ! আমি ওয়েবসাইটে অর্ডার করেছি।\nঅর্ডার আইডি: ${result.id}\nনাম: ${name}\nফোন: ${phone}`);
+        openDialogSafely('#successDialog');
+        e.target.reset();
+        loadProducts();
+      });
+    }
 
     async function cancelMyOrder(id) {
       if (!confirm("আপনি কি এই অর্ডারটি বাতিল করতে চান?")) return;
@@ -1166,6 +1218,7 @@
       currentAdminTabName = tab;
       localStorage.setItem("sari_admin_active_tab", tab);
       const box = $("#adminContent");
+      if (!box) return;
       if (tab === "dashboard") {
         renderDashboard();
       } else if (tab === "products") {
@@ -1264,6 +1317,7 @@
 
     async function renderDashboard() {
       const box = $("#adminContent");
+      if (!box) return;
       box.innerHTML = "<p>লোড হচ্ছে...</p>";
       const { data, error } = await db.from("orders").select("id,total,status,created_at");
       if (currentAdminTabName !== "dashboard") return;
@@ -1537,6 +1591,7 @@
     // ---------- অ্যাডমিন: অর্ডার ----------
     async function listOrders() {
       const box = $("#adminContent");
+      if (!box) return;
       box.innerHTML = "<p>অর্ডার লোড হচ্ছে...</p>";
       const { data, error } = await db.from("orders").select("*").order("created_at", { ascending: false });
       if (currentAdminTabName !== "orders") return;
@@ -1550,6 +1605,7 @@
 
     function renderOrders() {
       const box = $("#adminContent");
+      if (!box) return;
       let list = adminOrders;
       const q = (orderFilter.q || "").toLowerCase().trim();
       const st = orderFilter.status || "";
@@ -1625,17 +1681,21 @@
       listOrders();
     }
 
-    // Initial Load
-    document.addEventListener("DOMContentLoaded", () => {
+    // অটো-স্টার্ট ফাংশন যা পেজ লোড হওয়ার সাথে সাথেই সাথে সব চালু করে দেবে
+    (function startAppNow() {
       initDynamicReviews();
       loadSettings();
       loadProducts();
       updateCartBadge();
       updateWishlistBadge();
-      if (localStorage.getItem("sari_admin_view") === "true") {
-        openAdminPanelDirectly();
-      }
-    });
+      db.auth.getSession().then(({ data }) => {
+        isAdmin = sessionIsAdmin(data?.session);
+        checkLoginStatus();
+        if (isAdmin && localStorage.getItem("sari_admin_view") === "true") {
+          openAdminPanelDirectly();
+        }
+      });
+    })();
   </script>
 </body>
 </html>
