@@ -67,8 +67,8 @@
     .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
     .card{background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 10px 30px rgba(15,28,46,.06);display:flex;flex-direction:column;border:1px solid #f1f1f1;transition:all .35s ease}
     .card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(15,28,46,.12);border-color:rgba(212,175,55,.4)}
-    .image-container{position:relative;width:100%;height:320px;overflow:hidden;background:#f3efe6;cursor:pointer}
-    .product-main-image{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
+    .image-container{position:relative;width:100%;min-height:220px;overflow:hidden;background:#f3efe6;cursor:pointer}
+    .product-main-image{width:100%;height:auto;max-height:640px;object-fit:contain;display:block;margin:0 auto;transition:transform .5s}
     .image-container:hover .product-main-image{transform:scale(1.03)}
     .badges{position:absolute;top:12px;left:12px;display:flex;flex-direction:column;gap:6px;z-index:5;align-items:flex-start}
     .badge{font-size:13px;font-weight:700;padding:5px 12px;border-radius:20px;color:#fff;box-shadow:0 4px 12px rgba(0,0,0,.25)}
@@ -95,10 +95,10 @@
     .whatsapp-order-btn{background:#25D366} .whatsapp-order-btn:hover{background:#20ba5a}
     .facebook-order-btn{background:#1877F2} .facebook-order-btn:hover{background:#145dbf}
     .variant-thumbs{display:flex;gap:10px;overflow-x:auto;padding:10px 2px 6px}
-    .variant-thumb{flex:0 0 68px;width:68px;border:2px solid #e2e8f0;border-radius:10px;padding:3px;background:#fff;text-align:center;color:#333;font:inherit;transition:all .25s}
+    .variant-thumb{flex:0 0 78px;width:78px;border:2px solid #e2e8f0;border-radius:10px;padding:3px;background:#fff;text-align:center;color:#333;font:inherit;transition:all .25s}
     .variant-thumb.selected{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold-glow);transform:scale(1.05)}
     .variant-thumb img{display:block;width:58px;height:66px;object-fit:cover;border-radius:6px;background:#eee}
-    .variant-thumb span{display:block;font-size:11px;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600}
+    .variant-thumb span{display:block;font-size:11px;margin-top:4px;white-space:normal;line-height:1.25;font-weight:600}
 
     .reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
     .review-card{background:#fff;padding:22px;border-radius:16px;box-shadow:0 6px 20px rgba(0,0,0,.04);border:1px solid #eee}
@@ -126,7 +126,7 @@
     .zoom-close-btn{position:absolute;top:12px;right:12px;background:rgba(0,0,0,.7);color:#fff;border:2px solid #fff;font-size:28px;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:10}
 
     .detail{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-    .detail-img{width:100%;height:480px;object-fit:cover;border-radius:16px;background:#f3efe6;cursor:zoom-in;display:block}
+    .detail-img{width:100%;height:auto;max-height:80vh;object-fit:contain;border-radius:16px;background:#f3efe6;cursor:zoom-in;display:block}
     .detail h2{margin:4px 0 10px;color:var(--navy);font-size:28px}
     .qty-box{display:inline-flex;align-items:center;border:1.5px solid #e2e8f0;border-radius:10px;overflow:hidden}
     .qty-box button{background:#f1f5f9;border:0;width:38px;height:38px;font-size:20px;font-weight:700;color:var(--navy)}
@@ -219,7 +219,7 @@
     footer .f-title{color:#f3e5ad;font-size:22px;font-weight:700;margin-bottom:10px}
     footer a{color:#f3e5ad}
 
-    @media(max-width:850px){.grid,.reviews-grid{grid-template-columns:1fr 1fr}.features-container{grid-template-columns:1fr}.detail{grid-template-columns:1fr}.detail-img{height:380px}.toolbar{grid-template-columns:1fr 1fr}.toolbar input{grid-column:1/-1}}
+    @media(max-width:850px){.grid,.reviews-grid{grid-template-columns:1fr 1fr}.features-container{grid-template-columns:1fr}.detail{grid-template-columns:1fr}.detail-img{max-height:70vh}.toolbar{grid-template-columns:1fr 1fr}.toolbar input{grid-column:1/-1}}
     @media(max-width:550px){.grid,.reviews-grid{grid-template-columns:1fr}.brand{font-size:22px}.hero{margin:15px;padding:35px 22px;min-height:300px}.social-buttons{right:12px}.social-button{width:48px;height:48px}header{padding:12px 4%}.nav{gap:10px}.nav a,.nav button{font-size:13.5px}dialog{padding:20px 16px}}
   </style>
 </head>
@@ -260,7 +260,7 @@
       <input id="searchBox" type="search" placeholder="🔍 নাম, রং বা ধরন দিয়ে খুঁজুন (যেমন: জামদানি, লাল)" oninput="onFilterChange()">
       <select id="categoryFilter" onchange="onFilterChange()" aria-label="ক্যাটাগরি"><option value="">সব ক্যাটাগরি</option></select>
       <select id="sortSelect" onchange="onFilterChange()" aria-label="সাজান">
-        <option value="new">নতুন আগে</option>
+        <option value="new">সাজান (ডিফল্ট)</option>
         <option value="priceAsc">দাম: কম থেকে বেশি</option>
         <option value="priceDesc">দাম: বেশি থেকে কম</option>
         <option value="discount">বেশি ছাড় আগে</option>
@@ -624,6 +624,10 @@
     const stockOf = p => (p.stock === null || p.stock === undefined || p.stock === "") ? Infinity : Number(p.stock);
     const isSoldOut = p => stockOf(p) <= 0;
     const maxQty = p => Math.max(0, Math.min(20, stockOf(p)));
+    const colorStockMap = p => (p.color_stock && typeof p.color_stock === "object" && !Array.isArray(p.color_stock)) ? p.color_stock : null;
+    const colorStockOf = (p, c) => { const m = colorStockMap(p); return (m && m[c] !== undefined && m[c] !== null && m[c] !== "") ? Number(m[c]) : Infinity; };
+    const colorMax = (p, c) => Math.max(0, Math.min(20, colorStockOf(p, c), stockOf(p)));
+    const stockLabel = (p, c) => { const n = colorStockOf(p, c); return n === Infinity ? "" : (n <= 0 ? " (শেষ)" : ` (${taka(n)} টি)`); };
     function discountPercent(p) {
       const reg = Number(p.regular_price || 0), sale = Number(p.price || 0);
       return reg > sale && reg > 0 ? Math.round(((reg - sale) / reg) * 100) : 0;
@@ -720,7 +724,7 @@
     function thumbsHtml(p, selIdx, handler) {
       const images = productImages(p), colors = productColors(p);
       if (colors.length < 2) return "";
-      return `<div class="variant-thumbs">${colors.map((c, i) => `<button type="button" class="variant-thumb ${i === selIdx ? "selected" : ""}" onclick="${handler}(${i}${handler === "renderVariant" ? "" : ""})" data-vt="${esc(p.id)}">${images[i] ? `<img src="${esc(images[i])}" alt="${esc(c)}" loading="lazy">` : ""}<span>${esc(c)}</span></button>`).join("")}</div>`;
+      return `<div class="variant-thumbs">${colors.map((c, i) => `<button type="button" class="variant-thumb ${i === selIdx ? "selected" : ""}" onclick="${handler}(${i}${handler === "renderVariant" ? "" : ""})" data-vt="${esc(p.id)}">${images[i] ? `<img src="${esc(images[i])}" alt="${esc(c)}" loading="lazy">` : ""}<span>${esc(c)}${stockLabel(p, c)}</span></button>`).join("")}</div>`;
     }
 
     function renderProductsUI() {
@@ -735,7 +739,7 @@
       box.innerHTML = list.map(p => {
         const id = esc(p.id), images = productImages(p), colors = productColors(p);
         const sel = Math.min(cardSel[p.id] || 0, Math.max(0, colors.length - 1));
-        const thumbs = colors.length > 1 ? `<div class="variant-thumbs">${colors.map((c, i) => `<button type="button" class="variant-thumb ${i === sel ? "selected" : ""}" data-vt="${id}" onclick="renderVariant('${id}',${i})">${images[i] ? `<img src="${esc(images[i])}" alt="${esc(c)}" loading="lazy">` : ""}<span>${esc(c)}</span></button>`).join("")}</div>` : "";
+        const thumbs = colors.length > 1 ? `<div class="variant-thumbs">${colors.map((c, i) => `<button type="button" class="variant-thumb ${i === sel ? "selected" : ""}" data-vt="${id}" onclick="renderVariant('${id}',${i})">${images[i] ? `<img src="${esc(images[i])}" alt="${esc(c)}" loading="lazy">` : ""}<span>${esc(c)}${stockLabel(p, c)}</span></button>`).join("")}</div>` : "";
         const sold = isSoldOut(p);
         const isW = wl.includes(String(p.id));
         const tags = [p.category, p.fabric].filter(Boolean).map(t => `<span class="spec-tag">${esc(t)}</span>`).join("");
@@ -805,7 +809,9 @@
       const images = productImages(p), colors = productColors(p);
       const img = images[det.idx] || images[0] || "";
       const sold = isSoldOut(p);
-      const maxq = Math.max(1, maxQty(p));
+      const curColor = colors[det.idx] || colors[0] || NO_COLOR;
+      const soldColor = sold || colorMax(p, curColor) <= 0;
+      const maxq = Math.max(1, colorMax(p, curColor));
       det.qty = Math.min(Math.max(1, det.qty), maxq);
       const id = esc(p.id);
       const isW = getWishlist().includes(String(p.id));
@@ -817,11 +823,11 @@
             <img class="detail-img" src="${esc(img)}" alt="${esc(p.name)}" onclick="openZoomModal(this.src)">
           </div>
           <div class="small" style="margin-top:6px;">🔍 ছবিতে ট্যাপ করে বড় করে জুম করুন</div>
-          ${colors.length > 1 ? `<div class="variant-thumbs">${colors.map((c, i) => `<button type="button" class="variant-thumb ${i === det.idx ? "selected" : ""}" onclick="detailSelect(${i})">${images[i] ? `<img src="${esc(images[i])}" alt="${esc(c)}">` : ""}<span>${esc(c)}</span></button>`).join("")}</div>` : ""}
+          ${colors.length > 1 ? `<div class="variant-thumbs">${colors.map((c, i) => `<button type="button" class="variant-thumb ${i === det.idx ? "selected" : ""}" onclick="detailSelect(${i})">${images[i] ? `<img src="${esc(images[i])}" alt="${esc(c)}">` : ""}<span>${esc(c)}${stockLabel(p, c)}</span></button>`).join("")}</div>` : ""}
         </div>
         <div>
 
-          ${colors.length ? `<div class="color-big">${colorDot(colors[det.idx] || colors[0])}🎨 রং: ${esc(colors[det.idx] || colors[0])}</div>` : ""}
+          ${colors.length ? `<div class="color-big">${colorDot(colors[det.idx] || colors[0])}🎨 রং: ${esc(colors[det.idx] || colors[0])}<span style="font-size:13px;font-weight:600;color:#047857;margin-left:4px;">${stockLabel(p, colors[det.idx] || colors[0])}</span></div>` : ""}
           <div style="display:flex;align-items:center;gap:12px;margin:10px 0 14px;flex-wrap:wrap;">
             <span style="font-weight:700;color:var(--navy);">কত পিস নিবেন:</span>
             <div class="qty-box"><button onclick="detailQty(-1)" aria-label="কমান">−</button><b style="min-width:64px;">${taka(det.qty)} পিস</b><button onclick="detailQty(1)" aria-label="বাড়ান">+</button></div>
@@ -829,8 +835,8 @@
           </div>
           <div class="product-actions">
             <div class="action-row">
-              <button class="cart-btn" ${sold ? "disabled" : ""} onclick="detailAdd(false)">${sold ? "স্টক শেষ" : "🛒 কার্টে রাখুন"}</button>
-              <button class="buy-btn" ${sold ? "disabled" : ""} onclick="detailAdd(true)">${sold ? "স্টক শেষ" : "🛍️ এখনই অর্ডার করুন"}</button>
+              <button class="cart-btn" ${soldColor ? "disabled" : ""} onclick="detailAdd(false)">${soldColor ? "এই রংয়ের স্টক শেষ" : "🛒 কার্টে রাখুন"}</button>
+              <button class="buy-btn" ${soldColor ? "disabled" : ""} onclick="detailAdd(true)">${soldColor ? "এই রংয়ের স্টক শেষ" : "🛍️ এখনই অর্ডার করুন"}</button>
             </div>
             <div class="action-row">
               <button class="btn" style="background:#fff;border:1.5px solid var(--gold);box-shadow:none;" onclick="toggleWishlist('${id}')" data-card-wish-btn="${id}">${isW ? "❤️ পছন্দের তালিকায় আছে" : "🤍 পছন্দের তালিকায় রাখুন"}</button>
@@ -849,7 +855,7 @@
       const p = getProduct(det.id); if (!p) return;
       const next = det.qty + d;
       if (next < 1) return;
-      if (next > maxQty(p)) { toast(`সর্বোচ্চ ${taka(maxQty(p))} টি নেওয়া যাবে`); return; }
+      if (next > colorMax(p, productColors(p)[det.idx] || productColors(p)[0] || NO_COLOR)) { toast(`এই রংয়ের সর্বোচ্চ ${taka(colorMax(p, productColors(p)[det.idx] || productColors(p)[0] || NO_COLOR))} টি নেওয়া যাবে`); return; }
       det.qty = next; renderDetail();
     }
     function detailAdd(buy) {
@@ -996,6 +1002,10 @@
       const colors = productColors(p);
       if (!color || (colors.length && !colors.includes(color))) color = colors[0] || NO_COLOR;
       const max = maxQty(p);
+      const cmax = colorMax(p, color);
+      if (cmax <= 0) { toast(`দুঃখিত, "${color}" রঙের স্টক শেষ`); return false; }
+      const inColor = cart.filter(i => String(i.pid) === String(pid) && i.color === color).reduce((a, i) => a + i.qty, 0);
+      if (inColor + qty > cmax) { toast(`এই রং সর্বোচ্চ ${taka(cmax)} টি নেওয়া যাবে`); return false; }
       if (qtyInCart(pid) + qty > max) { toast(`এই শাড়ি সর্বোচ্চ ${taka(max)} টি নেওয়া যাবে`); return false; }
       const ex = cart.find(i => String(i.pid) === String(pid) && i.color === color);
       if (ex) ex.qty += qty; else cart.push({ pid: String(pid), color, qty });
@@ -1015,6 +1025,7 @@
         if (i.qty > allowed) { i.qty = allowed; changed = true; }
         used[i.pid] = (used[i.pid] || 0) + i.qty;
       });
+      cart.forEach(i => { const pp = getProduct(i.pid); if (!pp) return; const cm = colorMax(pp, i.color); if (i.qty > cm) { i.qty = cm; changed = true; } });
       cart = cart.filter(i => i.qty > 0);
       if (changed) saveCart(); else updateCartBadge();
       if ($("#cartDialog").open) renderCart();
@@ -1035,7 +1046,7 @@
         const colors = productColors(p), images = productImages(p);
         const ci = Math.max(0, colors.indexOf(i.color));
         const img = images[ci] || images[0] || "";
-        const colorSel = (i.color !== NO_COLOR ? `<div class="color-big">${colorDot(i.color)}🎨 রং: ${esc(i.color)}</div>` : "") + (colors.length > 1 ? `<div class="color-chips">${colors.map((c, k) => `<button type="button" class="color-chip ${c === i.color ? "sel" : ""}" onclick="pickCartColor(${idx},${k})">${images[k] ? `<img src="${esc(images[k])}" alt="">` : colorDot(c)}${esc(c)}</button>`).join("")}</div>` : "");
+        const colorSel = (i.color !== NO_COLOR ? `<div class="color-big">${colorDot(i.color)}🎨 রং: ${esc(i.color)}</div>` : "") + (colors.length > 1 ? `<div class="color-chips">${colors.map((c, k) => `<button type="button" class="color-chip ${c === i.color ? "sel" : ""}" onclick="pickCartColor(${idx},${k})">${images[k] ? `<img src="${esc(images[k])}" alt="">` : colorDot(c)}${esc(c)}${stockLabel(p, c)}</button>`).join("")}</div>` : "");
         return `<div class="cart-line">
           ${img ? `<img src="${esc(img)}" alt="${esc(p.name)}">` : `<div style="width:70px;height:84px;background:#eee;border-radius:8px;"></div>`}
           <div>
@@ -1063,7 +1074,7 @@
       const it = cart[idx]; if (!it) return;
       const p = getProduct(it.pid);
       if (it.qty + d < 1) { removeCartItem(idx); return; }
-      if (d > 0 && p && qtyInCart(it.pid) + d > maxQty(p)) { toast(`এই শাড়ি সর্বোচ্চ ${taka(maxQty(p))} টি নেওয়া যাবে`); return; }
+      if (d > 0 && p && (qtyInCart(it.pid) + d > maxQty(p) || it.qty + d > colorMax(p, it.color))) { toast(`এই শাড়ি/রং সর্বোচ্চ ${taka(Math.min(maxQty(p), colorMax(p, it.color)))} টি নেওয়া যাবে`); return; }
       it.qty += d; saveCart(); renderCart();
     }
     function removeCartItem(idx) { cart.splice(idx, 1); saveCart(); renderCart(); }
@@ -1091,7 +1102,7 @@
     function pickCartColor(idx, ci) {
       const it = cart[idx]; if (!it) return;
       const p = getProduct(it.pid); if (!p) return;
-      const c = productColors(p)[ci]; if (c) changeCartColor(idx, c);
+      const c = productColors(p)[ci]; if (!c) return; if (colorMax(p, c) <= 0) { toast(`"${c}" রঙের স্টক শেষ`); return; } changeCartColor(idx, c);
     }
 
     function calcTotals() {
@@ -1314,7 +1325,7 @@
             <div class="row">
               <div><label class="field-label" for="pregularprice">কাটা দাম</label><input id="pregularprice" type="number" min="0"></div>
               <div><label class="field-label" for="pprice">বিক্রয় মূল্য</label><input id="pprice" type="number" min="1" required></div>
-              <div><label class="field-label" for="pstock">স্টক (ফাঁকা = সীমা নেই)</label><input id="pstock" type="number" min="0" placeholder="যেমন: 10"></div>
+              <div><label class="field-label" for="pstock">স্টক মোট (ফাঁকা = সীমা নেই; নিচে রং অনুযায়ী দিলে এটা লাগবে না)</label><input id="pstock" type="number" min="0" placeholder="যেমন: 10"></div>
             </div>
             <div style="margin:12px 0;display:flex;align-items:center;gap:8px;">
               <input type="checkbox" id="pfreedelivery" style="width:20px;height:20px;margin:0;cursor:pointer;">
@@ -1326,7 +1337,8 @@
             </div>
             <div class="field-label">🎟️ কুপন চলবে (এই শাড়িতে যে কুপন দিতে চান তাতে টিক দিন)</div>
             <div id="couponChecks" class="small" style="margin:8px 0 12px;">লোড হচ্ছে...</div>
-            <label class="field-label" for="pcolors">রঙের নাম (কমা দিয়ে, ছবির ক্রম অনুযায়ী)</label><input id="pcolors" placeholder="লাল, নীল">
+            <label class="field-label" for="pcolors">রঙের নাম (কমা দিয়ে, ছবির ক্রম অনুযায়ী)</label><input id="pcolors" placeholder="লাল, নীল" oninput="renderColorStockInputs()">
+            <div id="colorStockBox" style="margin:6px 0 12px;"></div>
             <label class="field-label">বর্তমান ছবি (ডিলিট করতে ✕ চাপুন)</label>
             <div id="imagePreviewContainer" style="display:flex;gap:10px;flex-wrap:wrap;margin:10px 0;"></div>
             <label class="field-label" for="pimages">নতুন ছবি আপলোড করুন</label><input id="pimages" type="file" multiple accept="image/*">
@@ -1398,6 +1410,7 @@
       if (currentAdminTabName !== "dashboard") return;
       if (error) { box.innerHTML = `<p class="msg-err">লোড করা যায়নি: ${esc(explainError(error))}</p>`; return; }
       dashOrders = data || [];
+      try { const ar = await db.from("orders_archive").select("*"); if (!ar.error && ar.data) dashOrders = dashOrders.concat(ar.data.map(a => ({ ...a, archived: true }))); } catch {}
       if (!dashRange) { const d = new Date(); d.setDate(d.getDate() - 6); dashRange = { from: dkey(d), to: dkey(new Date()) }; }
       if (!$("#dashBody")) {
         box.innerHTML = `
@@ -1431,7 +1444,7 @@
       const sum = a => a.reduce((x, o) => x + Number(o.total || 0), 0);
       const delivered = list.filter(o => (o.status || "").includes("সম্পন্ন"));
       const pending = list.filter(o => (o.status || "").includes("Pending") || (o.status || "").includes("নতুন"));
-      const deleted = list.filter(o => o.is_deleted);
+      const deleted = list.filter(o => o.archived);
 
       const days = {};
       list.forEach(o => {
@@ -1537,7 +1550,7 @@
           </div>
           <button type="button" class="btn order-btn" style="width:100%;" onclick="saveCoupon()">কুপন সেভ করুন</button>
           <div id="cMsg" class="small" style="margin-top:8px;font-weight:bold;"></div>
-          <p class="small" style="margin-bottom:0;">কুপন বানানোর পর <b>"পণ্য পরিচালনা"</b>-তে শাড়ি যোগ/সম্পাদনার সময় "কুপন চলবে" থেকে টিক দিন — শুধু সেই শাড়িতেই ছাড় পাবে। একই ফোন নম্বর একটা কুপন একবারই ব্যবহার করতে পারবে।</p>
+          <p class="small" style="margin-bottom:0;">কুপন বানানোর পর <b>"পণ্য পরিচালনা"</b>-তে শাড়ি যোগ/সম্পাদনার সময় "কুপন চলবে" থেকে টিক দিন — শুধু সেই শাড়িতেই ছাড় পাবে। একই ফোন নম্বর দিয়ে কুপন বারবার ব্যবহার করা যাবে — শুধু আপনার দেওয়া মোট জনের সীমা পর্যন্ত।</p>
         </div>
         <div id="couponList"></div>`;
       listCoupons();
@@ -1689,6 +1702,7 @@
         }
         msg.textContent = "ডাটাবেসে সেভ হচ্ছে...";
         const stockRaw = $("#pstock").value.trim();
+        const cs = collectColorStock(stockRaw);
         const productData = {
           name,
           description: $("#pdesc").value.trim(),
@@ -1700,7 +1714,8 @@
           coupon_codes: [...document.querySelectorAll(".cchk:checked")].map(x => x.value).join(",") || null,
           price,
           regular_price: Number($("#pregularprice").value || 0),
-          stock: stockRaw === "" ? null : Math.max(0, parseInt(stockRaw, 10) || 0),
+          stock: cs.stock,
+          color_stock: cs.color_stock,
           free_delivery: $("#pfreedelivery").checked,
           active: $("#pactive").checked,
           colors: $("#pcolors").value.split(",").map(s => s.trim()).filter(Boolean),
@@ -1727,6 +1742,28 @@
       }
     }
 
+    // রং অনুযায়ী স্টকের ঘর (রঙের নাম লিখলেই নিচে প্রতি রঙের জন্য ঘর আসবে)
+    function renderColorStockInputs(existing) {
+      const box = $("#colorStockBox"); if (!box) return;
+      const colors = $("#pcolors").value.split(",").map(x => x.trim()).filter(Boolean);
+      const old = {};
+      document.querySelectorAll("[data-cs]").forEach(el => { if (el.value !== "") old[el.getAttribute("data-cs")] = el.value; });
+      if (existing) Object.keys(existing).forEach(k => { if (existing[k] !== null && existing[k] !== undefined) old[k] = existing[k]; });
+      if (colors.length < 1) { box.innerHTML = ""; return; }
+      box.innerHTML = `<div class="small" style="margin-bottom:6px;">🎨 <b>রং অনুযায়ী স্টক</b> (ঐচ্ছিক — সব রঙের ঘর পূরণ করলে মোট স্টক নিজে যোগ হয়ে যাবে; ফাঁকা রাখলে ওই রংয়ের সীমা নেই):</div>` +
+        colors.map((c, i) => `<div style="display:flex;align-items:center;gap:8px;margin:4px 0;"><span style="min-width:90px;font-weight:700;color:var(--navy);">${colorDot(c)} ${esc(c)}</span><input id="cs-${i}" data-cs="${esc(c)}" type="number" min="0" placeholder="কত পিস" value="${old[c] !== undefined ? esc(old[c]) : ""}" style="margin:0;padding:8px;max-width:140px;"></div>`).join("");
+    }
+    function collectColorStock(stockRaw) {
+      const colors = $("#pcolors").value.split(",").map(x => x.trim()).filter(Boolean);
+      const map = {}; let filled = 0, sum = 0;
+      colors.forEach((c, i) => {
+        const el = document.getElementById("cs-" + i), v = el ? el.value.trim() : "";
+        if (v !== "") { const n = Math.max(0, parseInt(v, 10) || 0); map[c] = n; filled++; sum += n; }
+      });
+      if (filled) return { color_stock: map, stock: filled === colors.length ? sum : null };
+      return { color_stock: null, stock: stockRaw === "" ? null : Math.max(0, parseInt(stockRaw, 10) || 0) };
+    }
+
     function editProduct(id) {
       const p = getProduct(id);
       if (!p) return;
@@ -1743,10 +1780,11 @@
       couponSel = productCoupons(p); applyCouponChecks();
       $("#pprice").value = p.price || "";
       $("#pregularprice").value = p.regular_price || "";
-      $("#pstock").value = (p.stock === null || p.stock === undefined) ? "" : p.stock;
+      $("#pstock").value = (p.stock === null || p.stock === undefined || colorStockMap(p)) ? "" : p.stock;
       $("#pfreedelivery").checked = !!p.free_delivery;
       $("#pactive").checked = p.active !== false;
       $("#pcolors").value = productColors(p).join(", ");
+      renderColorStockInputs(colorStockMap(p));
       $("#pmsg").textContent = "";
       renderImagePreviewControl();
       $("#adminFullPage").scrollTo({ top: 0, behavior: "smooth" });
@@ -1758,6 +1796,20 @@
       if (!products.length) { box.innerHTML = "<p class='small'>ডাটাবেসে এখনো কোনো শাড়ি নেই।</p>"; return; }
       box.innerHTML = products.map(p => {
         const id = esc(p.id), unl = p.stock === null || p.stock === undefined;
+        const cm = colorStockMap(p), cols = productColors(p);
+        const ctl = cm
+          ? `<div style="display:flex;flex-direction:column;gap:6px;">${cols.map((c, k) => `<div class="stock-ctl"><span class="small" style="min-width:80px;font-weight:700;">${colorDot(c)} ${esc(c)}:</span>
+              <button type="button" class="edit-btn" onclick="adjustColorStock('${id}',${k},-1)" aria-label="১ কমান">−১</button>
+              <input id="cstk-${id}-${k}" type="number" min="0" placeholder="সীমা নেই" value="${colorStockOf(p, c) === Infinity ? "" : colorStockOf(p, c)}">
+              <button type="button" class="edit-btn" onclick="adjustColorStock('${id}',${k},1)" aria-label="১ বাড়ান">+১</button>
+              <button type="button" class="edit-btn" style="background:#0f1c2e;" onclick="setColorStock('${id}',${k})">সেট</button></div>`).join("")}</div>`
+          : `<div class="stock-ctl">
+            <span class="small">স্টক:</span>
+            <button type="button" class="edit-btn" onclick="adjustStock('${id}',-1)" aria-label="১ কমান">−১</button>
+            <input id="stk-${id}" type="number" min="0" placeholder="সীমা নেই" value="${unl ? "" : Number(p.stock)}">
+            <button type="button" class="edit-btn" onclick="adjustStock('${id}',1)" aria-label="১ বাড়ান">+১</button>
+            <button type="button" class="edit-btn" style="background:#0f1c2e;" onclick="setStock('${id}')">সেট</button>
+          </div>`;
         return `<div class="admin-card" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
           <div style="flex:1;min-width:200px;">
             <b>${esc(p.name)}</b> <span class="small">[${esc(productCode(p.id))}]</span> - ${taka(p.price)}/-
@@ -1765,19 +1817,38 @@
             ${p.free_delivery ? '<span style="color:var(--green);font-weight:bold;">(ফ্রি ডেলিভারি)</span>' : ""}
             ${p.active === false ? '<span style="color:var(--red);font-weight:bold;">(লুকানো)</span>' : ""}
           </div>
-          <div class="stock-ctl">
-            <span class="small">স্টক:</span>
-            <button type="button" class="edit-btn" onclick="adjustStock('${id}',-1)" aria-label="১ কমান">−১</button>
-            <input id="stk-${id}" type="number" min="0" placeholder="সীমা নেই" value="${unl ? "" : Number(p.stock)}">
-            <button type="button" class="edit-btn" onclick="adjustStock('${id}',1)" aria-label="১ বাড়ান">+১</button>
-            <button type="button" class="edit-btn" style="background:#0f1c2e;" onclick="setStock('${id}')">সেট</button>
-          </div>
+          ${ctl}
           <div>
             <button type="button" class="edit-btn" onclick="editProduct('${id}')">সম্পাদনা</button>
             <button type="button" class="danger" onclick="deleteProduct('${id}')">মুছুন</button>
           </div>
         </div>`;
       }).join("");
+    }
+
+    async function writeColorStock(id, k, val) {
+      const p = getProduct(id); if (!p) return;
+      const cols = productColors(p), c = cols[k]; if (c === undefined) return;
+      const map = { ...(colorStockMap(p) || {}) };
+      if (val === null) delete map[c]; else map[c] = val;
+      const has = Object.keys(map).length > 0;
+      const allFilled = cols.length > 0 && cols.every(x => map[x] !== undefined && map[x] !== null);
+      const stock = has && allFilled ? cols.reduce((a, x) => a + Number(map[x]), 0) : null;
+      const { data, error } = await db.from("products").update({ color_stock: has ? map : null, stock }).eq("id", id).select();
+      if (error || !data || !data.length) { alert("স্টক বদলানো যায়নি: " + errText(error || "permission denied")); return; }
+      toast("✅ রংয়ের স্টক আপডেট হয়েছে");
+      await loadProducts();
+    }
+    function adjustColorStock(id, k, d) {
+      const p = getProduct(id); if (!p) return;
+      const cur = colorStockOf(p, productColors(p)[k]);
+      if (cur === Infinity) { toast("আগে সংখ্যা লিখে 'সেট' চাপুন"); return; }
+      writeColorStock(id, k, Math.max(0, cur + d));
+    }
+    function setColorStock(id, k) {
+      const el = document.getElementById(`cstk-${id}-${k}`); if (!el) return;
+      const v = el.value.trim();
+      writeColorStock(id, k, v === "" ? null : Math.max(0, parseInt(v, 10) || 0));
     }
 
     // WhatsApp/ফোনে অর্ডার এলে হাতে স্টক মিলিয়ে নেওয়ার জন্য
@@ -1856,7 +1927,7 @@
               ${ORDER_STATUSES.map(([v, l]) => `<option value="${esc(v)}" ${v === orderFilter.status ? "selected" : ""}>${l}</option>`).join("")}
             </select>
           </div>
-          <label style="display:flex;align-items:center;gap:8px;margin-top:10px;cursor:pointer;font-size:14px;"><input type="checkbox" ${orderFilter.deleted ? "checked" : ""} onchange="orderFilter.deleted=this.checked;renderOrders()" style="width:18px;height:18px;margin:0;"> 🗑️ শুধু ডিলিট করা অর্ডার দেখুন</label></div>
+          <div style="margin-top:10px;"><button type="button" class="danger" onclick="deleteFinishedOrders()">🧹 সম্পন্ন ও বাতিল অর্ডার একসাথে মুছুন</button></div></div>
           <div class="small" style="margin:0 0 8px;">ℹ️ অর্ডার "নিশ্চিত / কুরিয়ার / সম্পন্ন" করলে স্টক কমবে; "বাতিল" বা আবার "নতুন" করলে স্টক আগের মতো ফিরে আসবে।</div><div id="ordersList"><p>অর্ডার লোড হচ্ছে...</p></div>`;
       }
       const { data, error } = await db.from("orders").select("*").order("created_at", { ascending: false });
@@ -1871,7 +1942,6 @@
       if (!box) return;
       const q = orderFilter.q.trim().toLowerCase();
       const list = adminOrders.filter(o =>
-        (orderFilter.deleted ? !!o.is_deleted : !o.is_deleted) &&
         (!orderFilter.status || o.status === orderFilter.status) &&
         (!q || [o.customer_name, o.phone, o.id].join(" ").toLowerCase().includes(q)));
       if (!adminOrders.length) { box.innerHTML = "<p style='padding:15px;background:#fff;'>এখনো কোনো কাস্টমার অর্ডার করেনি।</p>"; return; }
@@ -1888,7 +1958,7 @@
         const wa = o.phone ? `https://wa.me/880${String(o.phone).replace(/^0/, "")}` : "";
         const delTxt = (o.delivery_charge === null || o.delivery_charge === undefined) ? "<b style='color:#b45309;'>এখনো নির্ধারিত নয় — কাস্টমারকে জানিয়ে নিচে বসান</b>" : (Number(o.delivery_charge) ? taka(o.delivery_charge) + "/-" : "ফ্রি");
         const extra = o.zone ? `<div class="small" style="margin-top:4px;">শাড়ির দাম: ${taka(o.subtotal)}/-${Number(o.discount) > 0 ? ` − কুপন ${esc(o.coupon_code || "")}: ${taka(o.discount)}/-` : ""} + ডেলিভারি: ${delTxt}${o.payment_method ? " | " + (o.payment_method === "bkash" ? "bKash" : "COD") : ""}
-          <div style="display:flex;gap:6px;align-items:center;margin-top:6px;"><input data-del-for="${esc(o.id)}" type="number" min="0" placeholder="ডেলিভারি চার্জ" style="margin:0;padding:6px;width:130px;"><button type="button" class="edit-btn" style="margin:0;" onclick="setOrderDelivery('${esc(o.id)}', ${(Number(o.subtotal) - Number(o.discount || 0)) || 0})">চার্জ বসান</button></div></div>` : "";
+          ${(o.delivery_charge !== null && o.delivery_charge !== undefined && Number(o.delivery_charge) === 0) ? "" : `<div style="display:flex;gap:6px;align-items:center;margin-top:6px;"><input data-del-for="${esc(o.id)}" type="number" min="0" placeholder="ডেলিভারি চার্জ" style="margin:0;padding:6px;width:130px;"><button type="button" class="edit-btn" style="margin:0;" onclick="setOrderDelivery('${esc(o.id)}', ${(Number(o.subtotal) - Number(o.discount || 0)) || 0})">চার্জ বসান</button></div>`}</div>` : "";
                 return `<div class="admin-card" style="border-left:5px solid var(--navy);">
           <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
             <h4 style="margin:0;color:var(--navy);">📦 কাস্টমার: ${esc(o.customer_name || "নাম নেই")}</h4>
@@ -1908,7 +1978,7 @@
                 ${ORDER_STATUSES.map(([v, l]) => `<option value="${esc(v)}" ${v === cur ? "selected" : ""}>${l}</option>`).join("")}
               </select>
               <button type="button" class="btn" style="padding:6px 12px;font-size:13.5px;background:var(--navy);color:#fff;" onclick="updateOrderStatusAdmin('${esc(o.id)}', this)">আপডেট</button>
-              ${o.is_deleted ? `<button type="button" class="edit-btn" style="margin:0;" onclick="softDeleteOrder('${esc(o.id)}', false)">♻️ ফিরিয়ে আনুন</button>` : `<button type="button" class="danger" style="padding:6px 10px;" onclick="softDeleteOrder('${esc(o.id)}', true)">🗑️ ডিলিট</button>`}
+              <button type="button" class="danger" style="padding:6px 10px;" onclick="deleteOrderForever('${esc(o.id)}')">🗑️ ডিলিট</button>
             </div>
           </div>
         </div>`;
@@ -1939,11 +2009,18 @@
       listOrders();
     }
 
-    async function softDeleteOrder(id, flag) {
-      if (flag && !confirm("এই অর্ডারটি তালিকা থেকে ডিলিট করবেন?\n(সারসংক্ষেপের হিসাবে এটা থেকে যাবে, কাস্টমারও আর দেখতে পাবে না)")) return;
-      const { data, error } = await db.from("orders").update({ is_deleted: flag }).eq("id", id).select();
-      if (error || !data || !data.length) { alert("হয়নি: " + errText(error || "permission denied") + (/column/i.test(String(error && error.message)) ? "\nSupabase-এ supabase-upgrade-6.sql চালান।" : "")); return; }
-      toast(flag ? "🗑️ ডিলিট হয়েছে — সারসংক্ষেপে হিসাব থাকবে" : "♻️ অর্ডার ফিরে এসেছে");
+    async function deleteOrderForever(id) {
+      if (!confirm("এই অর্ডারটি ডাটাবেস থেকে একেবারে মুছে ফেলবেন?\n(ঠিকানা, ছবি সব মুছে যাবে — শুধু সারসংক্ষেপের ছোট হিসাবটুকু থাকবে)")) return;
+      const { data, error } = await db.from("orders").delete().eq("id", id).select("id");
+      if (error || !data || !data.length) { alert("মোছা যায়নি: " + errText(error || "permission denied")); return; }
+      toast("🗑️ অর্ডার মুছে গেছে — সারসংক্ষেপে হিসাব থাকবে");
+      listOrders();
+    }
+    async function deleteFinishedOrders() {
+      if (!confirm("সব \"ডেলিভারি সম্পন্ন\" ও \"বাতিল\" অর্ডার ডাটাবেস থেকে একেবারে মুছে ফেলবেন?\n(সারসংক্ষেপের হিসাব থাকবে, কিন্তু ঠিকানা/ছবি মুছে জায়গা খালি হবে। চলমান অর্ডারে হাত পড়বে না।)")) return;
+      const { data, error } = await db.from("orders").delete().or("status.ilike.*Delivered*,status.ilike.*বাতিল*").select("id");
+      if (error) { alert("মোছা যায়নি: " + errText(error)); return; }
+      toast(`🧹 ${taka((data || []).length)}টি অর্ডার মুছে গেছে`);
       listOrders();
     }
 
