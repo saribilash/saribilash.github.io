@@ -316,11 +316,7 @@
         <label class="field-label" for="orderPhone">ফোন নম্বর</label>
         <input id="orderPhone" name="phone" type="tel" placeholder="01XXXXXXXXX" required pattern="01[0-9]{9}" title="১১ সংখ্যার মোবাইল নম্বর দিন (যেমন: 01XXXXXXXXX)" autocomplete="tel">
 
-        <label class="field-label" for="zoneSelect">ডেলিভারি এলাকা</label>
-        <select id="zoneSelect" name="zone" onchange="renderCartSummary()">
-          <option value="inside">ঢাকার ভিতরে</option>
-          <option value="outside">ঢাকার বাইরে</option>
-        </select>
+        <div class="small" style="margin-top:12px;font-weight:700;color:var(--navy);">🚚 সারা বাংলাদেশে একই ডেলিভারি চার্জ</div>
 
         <label class="field-label" for="orderAddress">সম্পূর্ণ ঠিকানা</label>
         <textarea id="orderAddress" name="address" placeholder="গ্রাম/মহল্লা, থানা, জেলাসহ সম্পূর্ণ ঠিকানা লিখুন" required minlength="5" maxlength="500" autocomplete="street-address"></textarea>
@@ -420,7 +416,7 @@
     const $ = s => document.querySelector(s);
 
     let products = [];
-    let settings = { dhaka_charge: null, dhaka_extra: null, outside_charge: null, outside_extra: null, free_delivery_min: null, default_weight_g: null };
+    let settings = { dhaka_charge: 150, dhaka_extra: null, outside_charge: 150, outside_extra: null, free_delivery_min: null, default_weight_g: null };
     let isAdmin = false;
     let brandClicks = 0, brandClickTimer;
     let editingProductId = null;
@@ -563,11 +559,8 @@
       if ($("#cartDialog").open && cart.length) renderCartSummary();
     }
     function applyDeliveryInfo() {
-      const s = settings, parts = [];
-      if (s.dhaka_charge !== null) parts.push(`ঢাকার ভিতরে ${taka(s.dhaka_charge)}/-`);
-      if (s.outside_charge !== null) parts.push(`ঢাকার বাইরে ${taka(s.outside_charge)}/-`);
-      let t = parts.join(", ");
-      if (t && (s.dhaka_extra || s.outside_extra)) t += " (১ কেজি পর্যন্ত; ওজন বেশি হলে চার্জ বাড়বে)";
+      const s = settings; let t = "";
+      if (s.dhaka_charge !== null) t = `সারা বাংলাদেশে ডেলিভারি চার্জ মাত্র ${taka(s.dhaka_charge)}/-`;
       if (s.free_delivery_min > 0) t += (t ? " • " : "") + `${taka(s.free_delivery_min)}/- বা বেশি অর্ডারে ফ্রি ডেলিভারি`;
       $("#deliveryInfo").textContent = t || "সারা বাংলাদেশে নিরাপদ হোম ডেলিভারি সুবিধা";
       $("#bkashNumberDisplay").textContent = BKASH_NUMBER;
@@ -763,8 +756,8 @@
           <div class="muted" style="white-space:pre-line;">${esc(p.description || "")}</div>
           ${colors.length ? `<div class="color-big">${colorDot(colors[det.idx] || colors[0])}🎨 রং: ${esc(colors[det.idx] || colors[0])}</div>` : ""}
           <div style="display:flex;align-items:center;gap:12px;margin:10px 0 14px;flex-wrap:wrap;">
-            <span class="small">পরিমাণ:</span>
-            <div class="qty-box"><button onclick="detailQty(-1)" aria-label="কমান">−</button><b>${taka(det.qty)}</b><button onclick="detailQty(1)" aria-label="বাড়ান">+</button></div>
+            <span style="font-weight:700;color:var(--navy);">কত পিস নিবেন:</span>
+            <div class="qty-box"><button onclick="detailQty(-1)" aria-label="কমান">−</button><b style="min-width:64px;">${taka(det.qty)} পিস</b><button onclick="detailQty(1)" aria-label="বাড়ান">+</button></div>
             <span class="small">মোট: <b style="color:#b8860b;">${taka(Number(p.price) * det.qty)}/-</b></span>
           </div>
           <div class="product-actions">
@@ -981,7 +974,7 @@
           <div>
             <b style="color:var(--navy);">${esc(p.name)}</b>
             ${colorSel}
-            <div style="margin-top:6px;" class="qty-box"><button onclick="changeCartQty(${idx},-1)" aria-label="কমান">−</button><b>${taka(i.qty)}</b><button onclick="changeCartQty(${idx},1)" aria-label="বাড়ান">+</button></div>
+            <div style="margin-top:8px;font-weight:700;color:var(--navy);font-size:14px;">কত পিস নিবেন:</div><div class="qty-box"><button onclick="changeCartQty(${idx},-1)" aria-label="কমান">−</button><b style="min-width:64px;">${taka(i.qty)} পিস</b><button onclick="changeCartQty(${idx},1)" aria-label="বাড়ান">+</button></div><div class="small" style="margin-top:4px;">${taka(p.price)}/- × ${taka(i.qty)} পিস</div>
           </div>
           <div style="text-align:right;">
             <b style="color:#b8860b;">${taka(p.price * i.qty)}/-</b><br>
@@ -1028,9 +1021,9 @@
         if (!p.free_delivery) allFree = false;
         grams += (numOrNull(p.weight_g) ?? settings.default_weight_g ?? 0) * i.qty;
       });
-      const inside = $("#zoneSelect").value === "inside";
-      const base = inside ? settings.dhaka_charge : settings.outside_charge;
-      const extra = (inside ? settings.dhaka_extra : settings.outside_extra) || 0;
+      const inside = true;
+      const base = settings.dhaka_charge;
+      const extra = settings.dhaka_extra || 0;
       const min = settings.free_delivery_min;
       const free = n > 0 && (allFree || (min > 0 && subtotal >= min));
       let charge = 0, unknown = false;
@@ -1043,11 +1036,11 @@
 
     function renderCartSummary() {
       const t = calcTotals();
-      const inside = $("#zoneSelect").value === "inside";
+      const inside = true;
       let note = "";
       if (t.free) note = `<div class="free-note">🎉 আপনার অর্ডারে ডেলিভারি ফ্রি!</div>`;
       else if (t.min > 0 && t.subtotal < t.min) note = `<div class="need-note">আরও ${taka(t.min - t.subtotal)}/- টাকার শাড়ি নিলে ডেলিভারি ফ্রি!</div>`;
-      const delRow = t.unknown ? "" : `<div class="sum-row"><span>ডেলিভারি চার্জ (${inside ? "ঢাকার ভিতরে" : "ঢাকার বাইরে"})</span><b>${t.free ? "ফ্রি" : taka(t.charge) + "/-"}</b></div>`;
+      const delRow = t.unknown ? "" : `<div class="sum-row"><span>ডেলিভারি চার্জ (সারা বাংলাদেশ)</span><b>${t.free ? "ফ্রি" : taka(t.charge) + "/-"}</b></div>`;
       const wt = (!t.free && !t.unknown && t.grams > 0) ? `<div class="small">আনুমানিক ওজন: ${taka(Math.round(t.grams / 100) / 10)} কেজি</div>` : "";
       $("#cartSummary").innerHTML = `
         <div class="sum-row"><span>শাড়ির দাম</span><b>${taka(t.subtotal)}/-</b></div>
@@ -1086,7 +1079,7 @@
         if (c.name && !$("#orderName").value) $("#orderName").value = c.name;
         if (c.phone && !$("#orderPhone").value) $("#orderPhone").value = c.phone;
         if (c.address && !$("#orderAddress").value) $("#orderAddress").value = c.address;
-        if (c.zone) $("#zoneSelect").value = c.zone;
+
       } catch {}
     }
 
@@ -1098,7 +1091,7 @@
       if (!lines.length) { msg.className = "small msg-err"; msg.textContent = "কার্ট খালি বা শাড়ির স্টক শেষ হয়ে গেছে।"; return; }
       const f = new FormData(e.target);
       const name = String(f.get("name")).trim(), phone = String(f.get("phone")).trim(), addr = String(f.get("address")).trim();
-      const zone = String(f.get("zone")), payment = String(f.get("payment_method")), trx = String(f.get("transaction_id") || "").trim();
+      const zone = "all", payment = String(f.get("payment_method")), trx = String(f.get("transaction_id") || "").trim();
       btn.disabled = true; btn.textContent = "প্রসেস হচ্ছে..."; msg.className = "small"; msg.textContent = "";
 
       const items = lines.map(({ i, p }) => {
@@ -1117,13 +1110,13 @@
         const t = calcTotals();
         const orderId = "ORD-" + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2, 5).toUpperCase();
         const delText = t.free ? "ফ্রি" : (t.unknown ? "কনফার্মের সময় জানানো হবে" : t.charge + "/-");
-        const address = addr + (payment === "bkash" ? `\n[পেমেন্ট: bKash | TrxID: ${trx}]` : "\n[পেমেন্ট: Cash on Delivery]") + `\n[এলাকা: ${zone === "inside" ? "ঢাকার ভিতরে" : "ঢাকার বাইরে"} | ডেলিভারি চার্জ: ${delText}]`;
+        const address = addr + (payment === "bkash" ? `\n[পেমেন্ট: bKash | TrxID: ${trx}]` : "\n[পেমেন্ট: Cash on Delivery]") + `\n[ডেলিভারি চার্জ (সারা বাংলাদেশ): ${delText}]`;
         const { error: insErr } = await db.from("orders").insert([{
           id: orderId, customer_name: name, phone, address,
           items: lines.map(({ i, p }, k) => ({ id: p.id, name: p.name, color: i.color, price: Number(p.price), qty: i.qty, subtotal: Number(p.price) * i.qty, image: items[k].image })),
           total: t.total, status: "নতুন অর্ডার (Pending)"
         }]);
-        if (insErr) { done(); msg.className = "small msg-err"; msg.textContent = "অর্ডার জমা হয়নি: " + errText(insErr) + " চাইলে WhatsApp-এ অর্ডার করুন।"; return; }
+        if (insErr) { done(); msg.className = "small msg-err"; msg.textContent = (isPermErr(insErr) ? "অর্ডার সিস্টেমের অনুমতি ঠিক করা হয়নি (অ্যাডমিন supabase-upgrade-3.sql চালান)। " : "অর্ডার জমা হয়নি: " + errText(insErr) + " ") + "এখনকার জন্য WhatsApp-এ অর্ডার করুন।"; return; }
         result = { id: orderId, total: t.total, delivery_charge: t.unknown ? null : t.charge };
       } else {
         done();
@@ -1261,20 +1254,18 @@
         const v = x => (x === null || x === undefined) ? "" : Number(x);
         box.innerHTML = `
           <div class="admin-card" style="max-width:560px;">
-            <h3>🚚 ডেলিভারি চার্জ (ওজন অনুযায়ী)</h3>
-            <p class="small">হিসাব: <b>প্রথম ১ কেজির চার্জ + (বাকি প্রতি অতিরিক্ত কেজি × অতিরিক্ত চার্জ)</b>। শাড়ির ওজন প্রতিটা শাড়ির "ওজন (গ্রাম)" ঘর থেকে আসে; না দিলে নিচের ডিফল্ট ওজন ধরা হয়।<br><b>যে ঘর ফাঁকা রাখবেন সেটা সাইটে দেখাবে না।</b> ঢাকার ভিতরে/বাইরের চার্জ ফাঁকা থাকলে কাস্টমারকে বলা হবে "কনফার্মের সময় জানানো হবে"।</p>
-            <div class="row">
-              <div><label class="field-label" for="setDhaka">ঢাকার ভিতরে: প্রথম ১ কেজি</label><input id="setDhaka" type="number" min="0" value="${v(settings.dhaka_charge)}" placeholder="যেমন: 70"></div>
-              <div><label class="field-label" for="setDhakaX">ঢাকার ভিতরে: প্রতি অতিরিক্ত কেজি</label><input id="setDhakaX" type="number" min="0" value="${v(settings.dhaka_extra)}" placeholder="যেমন: 20"></div>
-            </div>
-            <div class="row">
-              <div><label class="field-label" for="setOutside">ঢাকার বাইরে: প্রথম ১ কেজি</label><input id="setOutside" type="number" min="0" value="${v(settings.outside_charge)}" placeholder="যেমন: 130"></div>
-              <div><label class="field-label" for="setOutsideX">ঢাকার বাইরে: প্রতি অতিরিক্ত কেজি</label><input id="setOutsideX" type="number" min="0" value="${v(settings.outside_extra)}" placeholder="যেমন: 30"></div>
-            </div>
-            <label class="field-label" for="setDefW">ডিফল্ট ওজন প্রতি শাড়ি (গ্রাম, শাড়িতে ওজন না দিলে এটা ধরা হবে)</label>
-            <input id="setDefW" type="number" min="0" value="${v(settings.default_weight_g)}" placeholder="যেমন: 700">
+            <h3>🚚 ডেলিভারি চার্জ (সারা বাংলাদেশ)</h3>
+            <p class="small">সারা দেশে একই চার্জ। <b>যে ঘর ফাঁকা রাখবেন সেটা সাইটে দেখাবে না।</b> চার্জের ঘর ফাঁকা থাকলে কাস্টমারকে বলা হবে "কনফার্মের সময় জানানো হবে"।</p>
+            <label class="field-label" for="setDhaka">ডেলিভারি চার্জ (টাকা)</label>
+            <input id="setDhaka" type="number" min="0" value="${v(settings.dhaka_charge)}" placeholder="যেমন: 150">
             <label class="field-label" for="setFreeMin">এত টাকা বা বেশি অর্ডারে ফ্রি ডেলিভারি (ফাঁকা = বন্ধ)</label>
             <input id="setFreeMin" type="number" min="0" value="${v(settings.free_delivery_min)}" placeholder="যেমন: 3000">
+            <details style="margin:8px 0;"><summary class="small" style="cursor:pointer;">⚙️ ওজন অনুযায়ী বাড়তি চার্জ (দরকার না হলে ফাঁকা রাখুন)</summary>
+              <label class="field-label" for="setDhakaX">১ কেজির পর প্রতি অতিরিক্ত কেজির চার্জ</label>
+              <input id="setDhakaX" type="number" min="0" value="${v(settings.dhaka_extra)}" placeholder="ফাঁকা = সবসময় একই চার্জ">
+              <label class="field-label" for="setDefW">ডিফল্ট ওজন প্রতি শাড়ি (গ্রাম)</label>
+              <input id="setDefW" type="number" min="0" value="${v(settings.default_weight_g)}" placeholder="যেমন: 700">
+            </details>
             <button type="button" id="saveSettingsBtn" class="btn order-btn" style="margin-top:6px;width:100%;" onclick="saveDeliverySettings()">সেভ করুন</button>
             <div id="setMsg" class="small" style="margin-top:10px;font-weight:bold;"></div>
           </div>`;
@@ -1325,7 +1316,8 @@
     async function saveDeliverySettings() {
       const msg = $("#setMsg"), btn = $("#saveSettingsBtn");
       const g = sel => { const n = numOrNull($(sel).value); return n === null ? null : Math.max(0, n); };
-      const row = { id: 1, dhaka_charge: g("#setDhaka"), dhaka_extra: g("#setDhakaX"), outside_charge: g("#setOutside"), outside_extra: g("#setOutsideX"), free_delivery_min: g("#setFreeMin"), default_weight_g: g("#setDefW") };
+      const base = g("#setDhaka"), extra = g("#setDhakaX");
+      const row = { id: 1, dhaka_charge: base, outside_charge: base, dhaka_extra: extra, outside_extra: extra, free_delivery_min: g("#setFreeMin"), default_weight_g: g("#setDefW") };
       btn.disabled = true; msg.className = "small"; msg.textContent = "সেভ হচ্ছে...";
       const { data, error } = await db.from("store_settings").upsert([row]).select();
       btn.disabled = false;
