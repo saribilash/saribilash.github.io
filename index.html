@@ -318,6 +318,7 @@
         <button class="btn" style="padding:8px 14px;font-size:14px;" onclick="showAdminTab('notify')">🔔 নোটিফিকেশন</button>
         <button class="btn" style="padding:8px 14px;font-size:14px;" onclick="showAdminTab('delivery')">🚚 ডেলিভারি সেটিং</button>
         <button class="btn" style="padding:8px 14px;font-size:14px;" onclick="showAdminTab('settings')">পাসওয়ার্ড পরিবর্তন</button>
+        <button class="btn" style="padding:8px 14px;font-size:14px;" onclick="window.open('https://saribilash.goatcounter.com','_blank')">👁️ ভিজিটর দেখুন</button>
       </div>
       <div id="adminContent"></div>
     </div>
@@ -1382,7 +1383,7 @@
       }
     }
 
-    let dashOrders = [], dashRange = null;
+    let dashOrders = [], dashRange = null, dashVisits = null, dashVisitsErr = null;
     const dkey = d => { const x = new Date(d); return `${x.getFullYear()}-${String(x.getMonth() + 1).padStart(2, "0")}-${String(x.getDate()).padStart(2, "0")}`; };
     function dashQuick(kind) {
       const k = off => { const d = new Date(); d.setDate(d.getDate() - off); return dkey(d); };
@@ -1395,8 +1396,13 @@
       else dashRange = { from: "", to: "" };
       if ($("#dFrom")) { $("#dFrom").value = dashRange.from; $("#dTo").value = dashRange.to; }
       renderDashBody();
+      loadDashVisits().then(() => { if (currentAdminTabName === "dashboard") renderDashBody(); });
     }
-    function dashDateChanged() { dashRange = { from: $("#dFrom").value, to: $("#dTo").value }; renderDashBody(); }
+    function dashDateChanged() {
+      dashRange = { from: $("#dFrom").value, to: $("#dTo").value };
+      renderDashBody();
+      loadDashVisits().then(() => { if (currentAdminTabName === "dashboard") renderDashBody(); });
+    }
 
     async function renderDashboard() {
       const box = $("#adminContent");
@@ -1426,7 +1432,17 @@
           </div>
           <div id="dashBody"></div>`;
       }
+      await loadDashVisits();
+      if (currentAdminTabName !== "dashboard") return;
       renderDashBody();
+    }
+
+    async function loadDashVisits() {
+      dashVisits = null; dashVisitsErr = null;
+      try {
+        const { data, error } = await db.rpc("visit_stats", { p_from: dashRange.from || "2000-01-01", p_to: dashRange.to || "2100-01-01" });
+        if (error) dashVisitsErr = error; else dashVisits = data;
+      } catch (e) { dashVisitsErr = e; }
     }
 
     function renderDashBody() {
@@ -1463,7 +1479,27 @@
         `<tr><td>${esc(r.name)}${r.id ? ` <span class="small">${esc(productCode(r.id))}</span>` : ""}</td><td><b>${taka(r.pieces)} পিস</b></td><td>${taka(r.amount)}/-</td></tr>`).join("");
 
       const low = products.filter(p => p.stock !== null && p.stock !== undefined && p.stock !== "" && Number(p.stock) <= 5);
-      body.innerHTML = `
+      let visitHtml;
+      if (dashVisitsErr) {
+        visitHtml = `<div class="admin-card" style="margin-top:14px;"><h3 style="margin-top:0;">👁️ ভিজিটর</h3><p class="small msg-err">ভিজিটর তথ্য লোড হয়নি। Supabase-এ ভিজিটর SQL (supabase-upgrade-7) একবার Run করুন।</p></div>`;
+      } else if (!dashVisits) {
+        visitHtml = `<div class="admin-card" style="margin-top:14px;"><h3 style="margin-top:0;">👁️ ভিজিটর</h3><p class="small">লোড হচ্ছে...</p></div>`;
+      } else {
+        const vRows = (dashVisits.days || []).map(d => {
+          const label = new Date(d.day + "T00:00:00").toLocaleDateString("bn-BD", { day: "numeric", month: "long", year: "numeric" });
+          return `<tr><td>${esc(label)}</td><td><b>${taka(d.visitors)} জন</b></td><td>${taka(d.views)} বার</td></tr>`;
+        }).join("");
+        visitHtml = `
+          <div class="stat-grid" style="margin-top:14px;">
+            <div class="stat"><b>${taka(dashVisits.unique_total)}</b>👁️ ভিজিটর (আলাদা মানুষ)</div>
+            <div class="stat"><b>${taka(dashVisits.views_total)}</b>মোট ভিজিট</div>
+          </div>
+          <div class="admin-card"><h3 style="margin-top:0;">👁️ দিন অনুযায়ী ভিজিটর</h3>
+            ${vRows ? `<div class="dash-scroll"><table class="dash-table"><tr><th>তারিখ</th><th>ভিজিটর</th><th>ভিজিট</th></tr>${vRows}</table></div>` : "<p class='small'>এই সময়ে কোনো ভিজিটর নেই।</p>"}
+            <p class="small">ℹ️ আপনি (অ্যাডমিন) নিজে ঢুকলে গোনা হয় না। একই মানুষ একদিনে বারবার এলে ১ জন ধরা হয়।</p>
+          </div>`;
+      }
+      body.innerHTML = visitHtml + `
         <div class="stat-grid" style="margin-top:14px;">
           <div class="stat"><b>${taka(list.length)}</b>মোট অর্ডার</div>
           <div class="stat"><b>${taka(live.reduce((a, o) => a + pcs(o), 0))}</b>বিক্রি (পিস)</div>
@@ -2267,6 +2303,21 @@
     document.addEventListener("visibilitychange", () => { if (!document.hidden) scheduleReload(); });
     window.addEventListener("focus", scheduleReload);
 
+    // ---------- ভিজিটর গণনা (প্রতি ব্রাউজার সেশনে একবার; অ্যাডমিন গোনা হয় না) ----------
+    async function logSiteVisit() {
+      try {
+        if (isAdmin) return;
+        if (sessionStorage.getItem("sari_visit_logged")) return;
+        let vid = localStorage.getItem("sari_vid");
+        if (!vid) {
+          vid = (crypto.randomUUID ? crypto.randomUUID() : (Date.now().toString(36) + Math.random().toString(36).slice(2, 12)));
+          localStorage.setItem("sari_vid", vid);
+        }
+        sessionStorage.setItem("sari_visit_logged", "1");
+        await db.rpc("log_visit", { p_visitor: vid });
+      } catch (e) { console.warn("visit log", e); }
+    }
+
     // ---------- শুরু ----------
     (async () => {
       window.__sariReady = true;
@@ -2282,6 +2333,7 @@
         isAdmin = sessionIsAdmin(r.data.session);
         checkLoginStatus();
       } catch (e) { console.warn("সেশন পাওয়া যায়নি:", e); }
+      logSiteVisit();
       await loadProducts();
       if (isAdmin && localStorage.getItem("sari_admin_view") === "true") openAdminPanelDirectly();
     })();
