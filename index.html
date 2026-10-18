@@ -147,6 +147,12 @@
     .need-note{background:#fffbeb;color:#92400e;border-radius:8px;padding:8px 10px;font-size:13.5px;margin-top:8px;font-weight:600}
 
     .spec-tags:empty{display:none}
+    .p-coupon{background:#fef3c7;color:#92400e;border:1px solid #fcd34d}
+    .card-head{padding:18px 20px 12px}
+    .card-head h3{margin:8px 0 8px}
+    .code-chip{display:inline-block;background:#0f1c2e;color:#f3e5ad;font-size:12.5px;font-weight:700;padding:3px 10px;border-radius:6px;letter-spacing:.5px}
+    .detail-head{margin:0 44px 14px 0}
+    .detail-head h2{margin:8px 0 8px;color:var(--navy);font-size:26px}
     .color-chips{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
     .color-chip{display:flex;align-items:center;gap:8px;border:2.5px solid #e2e8f0;background:#fff;border-radius:12px;padding:5px 12px 5px 5px;font:inherit;font-size:15px;font-weight:700;color:var(--navy);transition:all .2s}
     .color-chip img{width:42px;height:50px;object-fit:cover;border-radius:8px;background:#eee}
@@ -272,6 +278,7 @@
         <button class="btn" style="padding:8px 14px;font-size:14px;" onclick="showAdminTab('dashboard')">📊 সারসংক্ষেপ</button>
         <button class="btn" style="padding:8px 14px;font-size:14px;" onclick="showAdminTab('products')">পণ্য পরিচালনা</button>
         <button class="btn" style="padding:8px 14px;font-size:14px;" onclick="showAdminTab('orders')">অর্ডার দেখুন</button>
+        <button class="btn" style="padding:8px 14px;font-size:14px;" onclick="showAdminTab('coupons')">🎟️ কুপন</button>
         <button class="btn" style="padding:8px 14px;font-size:14px;" onclick="showAdminTab('delivery')">🚚 ডেলিভারি সেটিং</button>
         <button class="btn" style="padding:8px 14px;font-size:14px;" onclick="showAdminTab('settings')">পাসওয়ার্ড পরিবর্তন</button>
       </div>
@@ -308,6 +315,11 @@
     <h3 style="color:var(--navy);margin:0 40px 10px 0;">🛒 আপনার কার্ট</h3>
     <div id="cartItems"></div>
     <div id="cartCheckout" style="display:none;">
+      <div class="admin-card" style="background:#fffbeb;">
+        <label class="field-label" for="couponInput" style="margin-top:0;">🎟️ কুপন কোড (থাকলে)</label>
+        <div class="row"><input id="couponInput" placeholder="কুপন কোড লিখুন" style="margin:0;text-transform:uppercase;" autocomplete="off"><button type="button" class="btn order-btn" style="padding:10px 14px;white-space:nowrap;flex:0 0 auto;font-size:15px;" onclick="applyCoupon()">প্রয়োগ করুন</button></div>
+        <div id="couponMsg" class="small" style="margin-top:6px;"></div>
+      </div>
       <div id="cartSummary" class="admin-card"></div>
       <form id="checkoutForm">
         <label class="field-label" for="orderName">আপনার নাম</label>
@@ -620,7 +632,7 @@
       let out = list.filter(p => {
         if (cat && (p.category || "").trim() !== cat) return false;
         if (!q) return true;
-        const hay = [p.name, p.description, p.category, p.fabric, ...productColors(p)].join(" ").toLowerCase();
+        const hay = [p.name, p.description, p.category, p.fabric, productCode(p.id), ...productColors(p)].join(" ").toLowerCase();
         return q.split(/\s+/).every(w => hay.includes(w));
       });
       if (sort === "priceAsc") out.sort((a, b) => a.price - b.price);
@@ -629,6 +641,16 @@
       return out;
     }
 
+    function productCode(id) {
+      const sid = String(id);
+      const m = sid.match(/\d{6,15}/);
+      let n = 0;
+      if (m) n = Number(m[0]); else for (const ch of sid) n = (n * 31 + ch.charCodeAt(0)) % 1000000007;
+      const A = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
+      let out = "";
+      for (let k = 0; k < 5; k++) { out = A[n % 32] + out; n = Math.floor(n / 32); }
+      return "SB-" + out;
+    }
     function specTags(p) {
       const t = [];
       if (p.blouse_free) t.push("ব্লাউজ পিস ফ্রি");
@@ -638,13 +660,14 @@
     }
     function badgesHtml(p) {
       const d = discountPercent(p);
-      return `<div class="badges">${isSoldOut(p) ? '<span class="badge b-sold">স্টক শেষ</span>' : ""}${d > 0 ? `<span class="badge b-disc">${taka(d)}% ছাড়</span>` : ""}${isNew(p) ? '<span class="badge b-new">🆕 নতুন</span>' : ""}</div>`;
+      return `<div class="badges">${isSoldOut(p) ? '<span class="badge b-sold">স্টক শেষ</span>' : ""}${d > 0 ? `<span class="badge b-disc">${taka(d)}% ছাড়</span>` : ""}</div>`;
     }
     function pillsHtml(p) {
       const s = stockOf(p);
       const stock = s <= 0 ? '<span class="pill p-out">❌ স্টক শেষ</span>' : (s <= 5 ? `<span class="pill p-low">⚡ মাত্র ${taka(s)} টি বাকি</span>` : `<span class="pill p-stock">✅ স্টকে আছে${s === Infinity ? "" : " (" + taka(s) + " টি)"}</span>`);
       const del = p.free_delivery ? '<span class="pill p-free">🚚 ফ্রি ডেলিভারি</span>' : '<span class="pill p-home">📦 হোম ডেলিভারি</span>';
-      return stock + del;
+      const cp = productCoupons(p).length ? '<span class="pill p-coupon">🎟️ কুপন চলবে</span>' : "";
+      return stock + del + cp;
     }
     function priceHtml(p) {
       const reg = Number(p.regular_price || 0), sale = Number(p.price || 0);
@@ -673,6 +696,14 @@
         const isW = wl.includes(String(p.id));
         const tags = [p.category, p.fabric].filter(Boolean).map(t => `<span class="spec-tag">${esc(t)}</span>`).join("");
         return `<article class="card">
+          <div class="card-head">
+            <span class="code-chip">🔖 কোড: ${esc(productCode(p.id))}</span>
+            <h3 onclick="openProduct('${id}')">${esc(p.name)}</h3>
+            <div class="spec-tags">${specTags(p)}</div>
+            ${priceHtml(p)}
+            <div>${pillsHtml(p)}</div>
+            ${p.description ? `<div class="muted" style="margin-bottom:0;">${esc(p.description)}</div>` : ""}
+          </div>
           <div class="image-container" onclick="openProduct('${id}')">
             ${badgesHtml(p)}
             <button class="wishlist-btn ${isW ? "active" : ""}" data-card-wish-btn="${id}" onclick="event.stopPropagation();toggleWishlist('${id}')" title="পছন্দের তালিকায় রাখুন" aria-label="পছন্দের তালিকা">${isW ? "❤️" : "🤍"}</button>
@@ -681,11 +712,6 @@
           </div>
           ${thumbs}
           <div class="card-body">
-            <h3 onclick="openProduct('${id}')">${esc(p.name)}</h3>
-            <div class="spec-tags">${specTags(p)}</div>
-            ${priceHtml(p)}
-            <div>${pillsHtml(p)}</div>
-            <div class="muted">${esc(p.description || "")}</div>
             <div class="product-actions">
               <div class="action-row">
                 <button class="btn" ${sold ? "disabled" : ""} onclick="cardAdd('${id}',false)">🛒 কার্টে রাখুন</button>
@@ -739,7 +765,7 @@
       const id = esc(p.id);
       const isW = getWishlist().includes(String(p.id));
       const tags = [p.category, p.fabric].filter(Boolean).map(t => `<span class="spec-tag">${esc(t)}</span>`).join("");
-      $("#productDetail").innerHTML = `<div class="detail">
+      $("#productDetail").innerHTML = `<div class="detail-head"><span class="code-chip">🔖 কোড: ${esc(productCode(p.id))}</span><h2>${esc(p.name)}</h2><div class="spec-tags">${specTags(p)}</div>${priceHtml(p)}<div>${pillsHtml(p)}</div></div><div class="detail">
         <div>
           <div style="position:relative;">
             ${badgesHtml(p)}
@@ -749,10 +775,6 @@
           ${colors.length > 1 ? `<div class="variant-thumbs">${colors.map((c, i) => `<button type="button" class="variant-thumb ${i === det.idx ? "selected" : ""}" onclick="detailSelect(${i})">${images[i] ? `<img src="${esc(images[i])}" alt="${esc(c)}">` : ""}<span>${esc(c)}</span></button>`).join("")}</div>` : ""}
         </div>
         <div>
-          <h2>${esc(p.name)}</h2>
-          <div class="spec-tags">${specTags(p)}</div>
-          ${priceHtml(p)}
-          <div>${pillsHtml(p)}</div>
           <div class="muted" style="white-space:pre-line;">${esc(p.description || "")}</div>
           ${colors.length ? `<div class="color-big">${colorDot(colors[det.idx] || colors[0])}🎨 রং: ${esc(colors[det.idx] || colors[0])}</div>` : ""}
           <div style="display:flex;align-items:center;gap:12px;margin:10px 0 14px;flex-wrap:wrap;">
@@ -830,7 +852,7 @@
     function directWhatsAppOrder(productId, idx) {
       const p = getProduct(productId); if (!p) return;
       const color = idx !== undefined ? (productColors(p)[idx] || cardColor(productId)) : cardColor(productId);
-      const msg = `হ্যালো শাড়ি বিলাশ! 👋\nআমি এই শাড়িটি অর্ডার করতে চাই:\n\n🛍️ শাড়ির নাম: ${p.name}\n🎨 পছন্দকৃত রং: ${color === NO_COLOR ? "সাধারণ" : color}\n💰 দাম: ${taka(p.price)}/- টাকা\n\nঅনুগ্রহ করে অর্ডারের প্রক্রিয়াটি জানান।`;
+      const msg = `হ্যালো শাড়ি বিলাশ! 👋\nআমি এই শাড়িটি অর্ডার করতে চাই:\n\n🛍️ শাড়ির নাম: ${p.name}\n🔖 শাড়ির কোড: ${productCode(p.id)}\n🎨 পছন্দকৃত রং: ${color === NO_COLOR ? "সাধারণ" : color}\n💰 দাম: ${taka(p.price)}/- টাকা\n\nঅনুগ্রহ করে অর্ডারের প্রক্রিয়াটি জানান।`;
       window.open(`https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(msg)}`, "_blank", "noopener");
     }
     function directFacebookOrder() { window.open(FB_PAGE_URL, "_blank", "noopener"); }
@@ -972,7 +994,7 @@
         return `<div class="cart-line">
           ${img ? `<img src="${esc(img)}" alt="${esc(p.name)}">` : `<div style="width:70px;height:84px;background:#eee;border-radius:8px;"></div>`}
           <div>
-            <b style="color:var(--navy);">${esc(p.name)}</b>
+            <b style="color:var(--navy);">${esc(p.name)}</b> <span class="small">(${esc(productCode(p.id))})</span>
             ${colorSel}
             <div style="margin-top:8px;font-weight:700;color:var(--navy);font-size:14px;">কত পিস নিবেন:</div><div class="qty-box"><button onclick="changeCartQty(${idx},-1)" aria-label="কমান">−</button><b style="min-width:64px;">${taka(i.qty)} পিস</b><button onclick="changeCartQty(${idx},1)" aria-label="বাড়ান">+</button></div><div class="small" style="margin-top:4px;">${taka(p.price)}/- × ${taka(i.qty)} পিস</div>
           </div>
@@ -1002,6 +1024,20 @@
     function removeCartItem(idx) { cart.splice(idx, 1); saveCart(); renderCart(); }
 
     const COLOR_MAP = [["মেরুন","#800000"],["maroon","#800000"],["লাল","#d62828"],["red","#d62828"],["গোলাপি","#ff69b4"],["pink","#ff69b4"],["কমলা","#f77f00"],["orange","#f77f00"],["হলুদ","#f4c20d"],["yellow","#f4c20d"],["সোনালি","#d4af37"],["gold","#d4af37"],["আকাশি","#87ceeb"],["sky","#87ceeb"],["ফিরোজা","#30d5c8"],["turquoise","#30d5c8"],["নীল","#1d4ed8"],["blue","#1d4ed8"],["সবুজ","#16a34a"],["green","#16a34a"],["বেগুনি","#7e22ce"],["purple","#7e22ce"],["কালো","#111827"],["black","#111827"],["সাদা","#f8fafc"],["white","#f8fafc"],["ধূসর","#9ca3af"],["grey","#9ca3af"],["gray","#9ca3af"],["বাদামি","#8b5a2b"],["brown","#8b5a2b"],["অফ","#f5f0e1"]];
+    let appliedCoupon = null; // { code, percent }
+    const productCoupons = p => String(p.coupon_codes || "").split(",").map(x => x.trim().toUpperCase()).filter(Boolean);
+    async function applyCoupon() {
+      const code = $("#couponInput").value.trim().toUpperCase().replace(/\s+/g, "");
+      const cm = $("#couponMsg");
+      if (!code) { appliedCoupon = null; cm.textContent = ""; renderCartSummary(); return; }
+      cm.className = "small"; cm.textContent = "যাচাই হচ্ছে...";
+      const { data, error } = await db.rpc("get_coupon", { p_code: code });
+      if (error) { appliedCoupon = null; cm.className = "small msg-err"; cm.textContent = isMissingFn(error) ? "কুপন সিস্টেম এখনো চালু হয়নি (অ্যাডমিন supabase-upgrade-5.sql চালান)।" : "কুপন যাচাই করা যায়নি: " + errText(error); renderCartSummary(); return; }
+      const c = Array.isArray(data) ? data[0] : data;
+      if (!c || !c.code) { appliedCoupon = null; cm.className = "small msg-err"; cm.textContent = "কুপন কোডটি সঠিক নয়, বন্ধ আছে বা সীমা শেষ হয়ে গেছে।"; renderCartSummary(); return; }
+      appliedCoupon = { code: String(c.code).toUpperCase(), percent: Number(c.percent) };
+      renderCartSummary();
+    }
     function colorDot(name) {
       const n = String(name || "").toLowerCase();
       const m = COLOR_MAP.find(([k]) => n.includes(k));
@@ -1025,13 +1061,19 @@
       const base = settings.dhaka_charge;
       const extra = settings.dhaka_extra || 0;
       const min = settings.free_delivery_min;
-      const free = n > 0 && (allFree || (min > 0 && subtotal >= min));
+      let discount = 0;
+      if (appliedCoupon) {
+        cart.forEach(i => { const p = getProduct(i.pid); if (p && productCoupons(p).includes(appliedCoupon.code)) discount += Number(p.price) * i.qty; });
+        discount = Math.round(discount * appliedCoupon.percent / 100);
+      }
+      const net = subtotal - discount;
+      const free = n > 0 && (allFree || (min > 0 && net >= min));
       let charge = 0, unknown = false;
       if (n && !free) {
         if (base === null) unknown = true;
         else charge = base + Math.max(0, Math.ceil(grams / 1000) - 1) * extra;
       }
-      return { subtotal, charge, total: subtotal + charge, free, unknown, grams, min };
+      return { subtotal, discount, charge, total: net + charge, free, unknown, grams, min };
     }
 
     function renderCartSummary() {
@@ -1039,11 +1081,17 @@
       const inside = true;
       let note = "";
       if (t.free) note = `<div class="free-note">🎉 আপনার অর্ডারে ডেলিভারি ফ্রি!</div>`;
-      else if (t.min > 0 && t.subtotal < t.min) note = `<div class="need-note">আরও ${taka(t.min - t.subtotal)}/- টাকার শাড়ি নিলে ডেলিভারি ফ্রি!</div>`;
+      else if (t.min > 0 && (t.subtotal - t.discount) < t.min) note = `<div class="need-note">আরও ${taka(t.min - (t.subtotal - t.discount))}/- টাকার শাড়ি নিলে ডেলিভারি ফ্রি!</div>`;
+      const cm = $("#couponMsg");
+      if (cm && appliedCoupon) {
+        if (t.discount > 0) { cm.className = "small msg-ok"; cm.textContent = `✅ কুপন চালু: ${taka(appliedCoupon.percent)}% ছাড় (শুধু কুপন চলা শাড়িতে)`; }
+        else { cm.className = "small msg-err"; cm.textContent = "এই কুপন আপনার কার্টের কোনো শাড়িতে প্রযোজ্য নয়।"; }
+      }
       const delRow = t.unknown ? "" : `<div class="sum-row"><span>ডেলিভারি চার্জ (সারা বাংলাদেশ)</span><b>${t.free ? "ফ্রি" : taka(t.charge) + "/-"}</b></div>`;
       const wt = (!t.free && !t.unknown && t.grams > 0) ? `<div class="small">আনুমানিক ওজন: ${taka(Math.round(t.grams / 100) / 10)} কেজি</div>` : "";
       $("#cartSummary").innerHTML = `
         <div class="sum-row"><span>শাড়ির দাম</span><b>${taka(t.subtotal)}/-</b></div>
+        ${t.discount > 0 ? `<div class="sum-row" style="color:#047857;"><span>🎟️ কুপন (${esc(appliedCoupon.code)} — ${taka(appliedCoupon.percent)}% ছাড়)</span><b>− ${taka(t.discount)}/-</b></div>` : ""}
         ${delRow}
         <div class="sum-row sum-total"><span>${t.unknown ? "সর্বমোট (ডেলিভারি চার্জ ছাড়া)" : "সর্বমোট"}</span><span>${taka(t.total)}/-</span></div>
         ${t.unknown ? `<div class="need-note">ডেলিভারি চার্জ অর্ডার কনফার্মের সময় আপনাকে জানানো হবে।</div>` : ""}${wt}${note}
@@ -1064,8 +1112,8 @@
       if (!lines.length) return;
       const t = calcTotals();
       const txt = `হ্যালো শাড়ি বিলাশ! 👋\nআমি নিচের শাড়িগুলো অর্ডার করতে চাই:\n\n` +
-        lines.map(({ i, p }, n) => `${n + 1}. ${p.name} | রং: ${i.color === NO_COLOR ? "সাধারণ" : i.color} | ${taka(i.qty)} টি | ${taka(p.price * i.qty)}/-`).join("\n") +
-        `\n\nশাড়ির দাম: ${taka(t.subtotal)}/-\nডেলিভারি: ${t.free ? "ফ্রি" : taka(t.charge) + "/-"}\nসর্বমোট: ${taka(t.total)}/-`;
+        lines.map(({ i, p }, n) => `${n + 1}. ${p.name} [কোড: ${productCode(p.id)}] | রং: ${i.color === NO_COLOR ? "সাধারণ" : i.color} | ${taka(i.qty)} টি | ${taka(p.price * i.qty)}/-`).join("\n") +
+        `\n\nশাড়ির দাম: ${taka(t.subtotal)}/-${t.discount > 0 ? `\nকুপন (${appliedCoupon.code}): -${taka(t.discount)}/-` : ""}\nডেলিভারি: ${t.free ? "ফ্রি" : taka(t.charge) + "/-"}\nসর্বমোট: ${taka(t.total)}/-`;
       window.open(`https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(txt)}`, "_blank", "noopener");
     }
 
@@ -1101,10 +1149,12 @@
       const done = () => { btn.disabled = false; btn.textContent = "অর্ডার নিশ্চিত করুন"; };
 
       let result = null;
-      const { data, error } = await db.rpc("place_order", { p_name: name, p_phone: phone, p_address: addr, p_zone: zone, p_payment: payment, p_trx: trx, p_items: items });
+      const rpcArgs = { p_name: name, p_phone: phone, p_address: addr, p_zone: zone, p_payment: payment, p_trx: trx, p_items: items };
+      let { data, error } = await db.rpc("place_order", { ...rpcArgs, p_coupon: appliedCoupon ? appliedCoupon.code : null });
+      if (error && isMissingFn(error) && !appliedCoupon) ({ data, error } = await db.rpc("place_order", rpcArgs));
       if (!error) {
         result = data;
-      } else if (isMissingFn(error) || isPermErr(error)) {
+      } else if ((isMissingFn(error) || isPermErr(error)) && !appliedCoupon) {
         // সার্ভার ফাংশন কাজ না করলে পুরোনো পদ্ধতিতে অর্ডার জমা হবে যাতে অর্ডার হারিয়ে না যায়
         console.warn("place_order কাজ করেনি, সরাসরি জমা দেওয়া হচ্ছে:", error);
         const t = calcTotals();
@@ -1121,7 +1171,7 @@
       } else {
         done();
         msg.className = "small msg-err";
-        msg.textContent = "অর্ডার জমা হয়নি: " + errText(error);
+        msg.textContent = "অর্ডার জমা হয়নি: " + errText(error) + (appliedCoupon && (isMissingFn(error) || isPermErr(error)) ? " (কুপনসহ অর্ডারের জন্য supabase-upgrade-5.sql চালানো দরকার)" : "");
         if (/স্টক|শাড়ি আর পাওয়া/.test(error.message || "")) loadProducts();
         return;
       }
@@ -1130,9 +1180,10 @@
       try { localStorage.setItem("sari_customer", JSON.stringify({ name, phone, address: addr, zone })); } catch {}
       cart = []; saveCart();
       $("#cartDialog").close();
+      appliedCoupon = null; $("#couponInput").value = ""; $("#couponMsg").textContent = "";
       $("#successOrderId").textContent = result.id;
       $("#successTotal").textContent = taka(result.total) + "/-" + (result.delivery_charge === null ? " (ডেলিভারি চার্জ আলাদা — কনফার্মের সময় জানানো হবে)" : "");
-      $("#successWa").href = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=` + encodeURIComponent(`হ্যালো শাড়ি বিলাশ! আমি ওয়েবসাইটে অর্ডার করেছি।\nঅর্ডার আইডি: ${result.id}\nনাম: ${name}\nফোন: ${phone}`);
+      $("#successWa").href = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=` + encodeURIComponent(`হ্যালো শাড়ি বিলাশ! আমি ওয়েবসাইটে অর্ডার করেছি।\nঅর্ডার আইডি: ${result.id}\nনাম: ${name}\nফোন: ${phone}\nশাড়ির কোড: ${lines.map(({ p }) => productCode(p.id)).join(", ")}`);
       $("#successDialog").showModal();
       e.target.reset();
       loadProducts();
@@ -1235,6 +1286,8 @@
               <input type="checkbox" id="pactive" checked style="width:20px;height:20px;margin:0;cursor:pointer;">
               <label for="pactive" style="font-weight:bold;color:var(--navy);cursor:pointer;">👁️ সাইটে দেখাবে (বন্ধ করলে শাড়ি কাস্টমারের কাছে লুকানো থাকবে, মুছে যাবে না)</label>
             </div>
+            <div class="field-label">🎟️ কুপন চলবে (এই শাড়িতে যে কুপন দিতে চান তাতে টিক দিন)</div>
+            <div id="couponChecks" class="small" style="margin:8px 0 12px;">লোড হচ্ছে...</div>
             <label class="field-label" for="pcolors">রঙের নাম (কমা দিয়ে, ছবির ক্রম অনুযায়ী)</label><input id="pcolors" placeholder="লাল, নীল">
             <label class="field-label">বর্তমান ছবি (ডিলিট করতে ✕ চাপুন)</label>
             <div id="imagePreviewContainer" style="display:flex;gap:10px;flex-wrap:wrap;margin:10px 0;"></div>
@@ -1248,8 +1301,11 @@
           <div id="adminProductsList"></div>`;
         renderImagePreviewControl();
         listAdminProducts();
+        couponSel = []; fillCouponChecks();
       } else if (tab === "orders") {
         listOrders();
+      } else if (tab === "coupons") {
+        renderCouponsTab();
       } else if (tab === "delivery") {
         const v = x => (x === null || x === undefined) ? "" : Number(x);
         box.innerHTML = `
@@ -1338,6 +1394,110 @@
       listOrders();
     }
 
+    // ---------- অ্যাডমিন: কুপন ----------
+    let adminCoupons = [], couponSel = [];
+    async function fetchCoupons() {
+      const { data, error } = await db.from("coupons").select("*").order("created_at", { ascending: false });
+      if (!error) adminCoupons = data || [];
+      return error;
+    }
+    function applyCouponChecks() {
+      document.querySelectorAll(".cchk").forEach(c => { c.checked = couponSel.includes(c.value); });
+    }
+    async function fillCouponChecks() {
+      const box = $("#couponChecks"); if (!box) return;
+      const err = await fetchCoupons();
+      if (!$("#couponChecks")) return;
+      if (err) { box.innerHTML = "কুপন লোড করা যায়নি (supabase-upgrade-5.sql চালিয়েছেন কি?)"; return; }
+      if (!adminCoupons.length) { box.innerHTML = "এখনো কোনো কুপন নেই — আগে উপরের \"🎟️ কুপন\" ট্যাব থেকে কুপন বানান।"; return; }
+      box.innerHTML = adminCoupons.map(c => `<label style="display:inline-flex;gap:6px;align-items:center;margin:4px 14px 4px 0;font-size:14px;cursor:pointer;"><input type="checkbox" class="cchk" value="${esc(c.code)}" style="width:18px;height:18px;margin:0;"> <b>${esc(c.code)}</b> (${taka(c.percent)}% ছাড়${c.active ? "" : ", বন্ধ"})</label>`).join("");
+      applyCouponChecks();
+    }
+    async function renderCouponsTab() {
+      const box = $("#adminContent");
+      box.innerHTML = "<p>লোড হচ্ছে...</p>";
+      const err = await fetchCoupons();
+      if (currentAdminTabName !== "coupons") return;
+      if (err) { box.innerHTML = `<p class="msg-err">কুপন লোড করা যায়নি: ${esc(errText(err))}</p><p class="small">Supabase-এ supabase-upgrade-5.sql চালিয়েছেন কি?</p>`; return; }
+      box.innerHTML = `
+        <div class="admin-card">
+          <h3 style="margin-top:0;">🎟️ নতুন কুপন বানান</h3>
+          <div class="row">
+            <div><label class="field-label" for="cCode">কুপন কোড (আপনি যা চান)</label><input id="cCode" placeholder="যেমন: EID10" maxlength="20" style="text-transform:uppercase;"></div>
+            <div><label class="field-label" for="cPercent">কত % ছাড়</label><input id="cPercent" type="number" min="1" max="100" placeholder="যেমন: 10"></div>
+            <div><label class="field-label" for="cMax">কতজন ব্যবহার করতে পারবে</label><input id="cMax" type="number" min="1" placeholder="ফাঁকা = সীমা নেই"></div>
+          </div>
+          <button type="button" class="btn order-btn" style="width:100%;" onclick="saveCoupon()">কুপন সেভ করুন</button>
+          <div id="cMsg" class="small" style="margin-top:8px;font-weight:bold;"></div>
+          <p class="small" style="margin-bottom:0;">কুপন বানানোর পর <b>"পণ্য পরিচালনা"</b>-তে শাড়ি যোগ/সম্পাদনার সময় "কুপন চলবে" থেকে টিক দিন — শুধু সেই শাড়িতেই ছাড় পাবে। একই ফোন নম্বর একটা কুপন একবারই ব্যবহার করতে পারবে।</p>
+        </div>
+        <div id="couponList"></div>`;
+      listCoupons();
+    }
+    function listCoupons() {
+      const box = $("#couponList"); if (!box) return;
+      if (!adminCoupons.length) { box.innerHTML = "<p class='small'>এখনো কোনো কুপন নেই।</p>"; return; }
+      box.innerHTML = adminCoupons.map(c => {
+        const n = products.filter(p => productCoupons(p).includes(String(c.code).toUpperCase())).length;
+        const left = c.max_uses === null || c.max_uses === undefined ? "সীমা নেই" : `${taka(Math.max(0, c.max_uses - c.used_count))} জন বাকি`;
+        const code = esc(c.code);
+        return `<div class="admin-card" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+          <div>
+            <b style="font-size:18px;color:var(--navy);">${code}</b> — <b style="color:var(--green);">${taka(c.percent)}% ছাড়</b>
+            ${c.active ? "" : '<span style="color:var(--red);font-weight:bold;">(বন্ধ)</span>'}<br>
+            <span class="small">ব্যবহার হয়েছে: ${taka(c.used_count)} জন${c.max_uses ? " / " + taka(c.max_uses) + " জন" : ""} (${left}) • ${taka(n)}টি শাড়িতে চলছে</span>
+          </div>
+          <div>
+            <button type="button" class="edit-btn" onclick="setCouponMax('${code}')">সীমা বদলান</button>
+            <button type="button" class="edit-btn" style="background:${c.active ? "#b45309" : "#059669"};" onclick="toggleCoupon('${code}', ${c.active ? "false" : "true"})">${c.active ? "বন্ধ করুন" : "চালু করুন"}</button>
+            <button type="button" class="danger" onclick="deleteCoupon('${code}')">মুছুন</button>
+          </div>
+        </div>`;
+      }).join("");
+    }
+    async function saveCoupon() {
+      const msg = $("#cMsg");
+      const code = $("#cCode").value.trim().toUpperCase().replace(/\s+/g, "");
+      const pct = Number($("#cPercent").value);
+      const maxRaw = $("#cMax").value.trim();
+      const fail = t => { msg.className = "small msg-err"; msg.textContent = t; };
+      if (!/^[A-Z0-9_-]{3,20}$/.test(code)) return fail("কুপন কোড ৩–২০ অক্ষরের হতে হবে (ইংরেজি অক্ষর/সংখ্যা)।");
+      if (!(pct >= 1 && pct <= 100)) return fail("ছাড়ের % ১ থেকে ১০০-এর মধ্যে দিন।");
+      const max = maxRaw === "" ? null : Math.max(1, parseInt(maxRaw, 10) || 1);
+      const exists = adminCoupons.some(c => c.code === code);
+      const { data, error } = exists
+        ? await db.from("coupons").update({ percent: pct, max_uses: max, active: true }).eq("code", code).select()
+        : await db.from("coupons").insert([{ code, percent: pct, max_uses: max }]).select();
+      if (error || !data || !data.length) return fail("❌ সেভ হয়নি: " + errText(error || "permission denied"));
+      toast("✅ কুপন সেভ হয়েছে");
+      renderCouponsTab();
+    }
+    async function toggleCoupon(code, active) {
+      const { data, error } = await db.from("coupons").update({ active }).eq("code", code).select();
+      if (error || !data || !data.length) { alert("বদলানো যায়নি: " + errText(error || "permission denied")); return; }
+      renderCouponsTab();
+    }
+    async function setCouponMax(code) {
+      const v = prompt("কতজন ব্যবহার করতে পারবে? (ফাঁকা রাখলে সীমা থাকবে না)", "");
+      if (v === null) return;
+      const max = v.trim() === "" ? null : Math.max(1, parseInt(v, 10) || 1);
+      const { data, error } = await db.from("coupons").update({ max_uses: max }).eq("code", code).select();
+      if (error || !data || !data.length) { alert("বদলানো যায়নি: " + errText(error || "permission denied")); return; }
+      renderCouponsTab();
+    }
+    async function deleteCoupon(code) {
+      if (!confirm(`"${code}" কুপনটি মুছে ফেলবেন? যে শাড়িতে এটা দেওয়া ছিল সেখান থেকেও সরে যাবে।`)) return;
+      const { error } = await db.from("coupons").delete().eq("code", code);
+      if (error) { alert("মোছা যায়নি: " + errText(error)); return; }
+      for (const p of products.filter(p => productCoupons(p).includes(code.toUpperCase()))) {
+        const rest = productCoupons(p).filter(c => c !== code.toUpperCase()).join(",") || null;
+        await db.from("products").update({ coupon_codes: rest }).eq("id", p.id);
+      }
+      toast("🗑️ কুপন মুছে গেছে");
+      await loadProducts();
+      renderCouponsTab();
+    }
+
     async function updateAdminPassword() {
       const oldPass = $("#oldPass").value, newPass1 = $("#newPass1").value, newPass2 = $("#newPass2").value;
       const passMsg = $("#passMsg"), btn = $("#passBtn");
@@ -1412,6 +1572,7 @@
           length_text: $("#plength").value.trim() || null,
           weight_g: numOrNull($("#pweight").value),
           blouse_free: $("#pblouse").checked,
+          coupon_codes: [...document.querySelectorAll(".cchk:checked")].map(x => x.value).join(",") || null,
           price,
           regular_price: Number($("#pregularprice").value || 0),
           stock: stockRaw === "" ? null : Math.max(0, parseInt(stockRaw, 10) || 0),
@@ -1454,6 +1615,7 @@
       $("#plength").value = p.length_text || "";
       $("#pweight").value = (p.weight_g === null || p.weight_g === undefined) ? "" : p.weight_g;
       $("#pblouse").checked = !!p.blouse_free;
+      couponSel = productCoupons(p); applyCouponChecks();
       $("#pprice").value = p.price || "";
       $("#pregularprice").value = p.regular_price || "";
       $("#pstock").value = (p.stock === null || p.stock === undefined) ? "" : p.stock;
@@ -1473,7 +1635,7 @@
         const id = esc(p.id), unl = p.stock === null || p.stock === undefined;
         return `<div class="admin-card" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
           <div style="flex:1;min-width:200px;">
-            <b>${esc(p.name)}</b> - ${taka(p.price)}/-
+            <b>${esc(p.name)}</b> <span class="small">[${esc(productCode(p.id))}]</span> - ${taka(p.price)}/-
             ${p.category ? `<span class="small">[${esc(p.category)}]</span>` : ""}
             ${p.free_delivery ? '<span style="color:var(--green);font-weight:bold;">(ফ্রি ডেলিভারি)</span>' : ""}
             ${p.active === false ? '<span style="color:var(--red);font-weight:bold;">(লুকানো)</span>' : ""}
@@ -1591,15 +1753,15 @@
         const itemsHtml = parseItems(o.items).map(i => `
           <div style="display:flex;align-items:center;gap:12px;background:#fff;padding:10px;border-radius:10px;margin:8px 0;border:1px solid #e2e8f0;">
             ${i.image ? `<img src="${esc(i.image)}" alt="${esc(i.name)}" style="width:65px;height:75px;object-fit:cover;border-radius:8px;">` : `<div style="width:65px;height:75px;background:#eee;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#888;">ছবি নেই</div>`}
-            <div><b style="color:var(--navy);font-size:16px;">${esc(i.name || "শাড়ি")}</b><br>
+            <div><b style="color:var(--navy);font-size:16px;">${esc(i.name || "শাড়ি")}</b> <span class="small">কোড: ${esc(productCode(i.id))}</span><br>
               <span style="color:#0284c7;font-weight:bold;">রং: ${esc(i.color || "সাধারণ")}</span><br>
               <span>পরিমাণ: <b>${taka(i.qty || 1)} টি</b> | দাম: <b>${taka(i.price || 0)}/-</b></span></div>
           </div>`).join("");
         const cur = o.status || ORDER_STATUSES[0][0];
         const wa = o.phone ? `https://wa.me/880${String(o.phone).replace(/^0/, "")}` : "";
         const delTxt = (o.delivery_charge === null || o.delivery_charge === undefined) ? "<b style='color:#b45309;'>এখনো নির্ধারিত নয় — কাস্টমারকে জানিয়ে নিচে বসান</b>" : (Number(o.delivery_charge) ? taka(o.delivery_charge) + "/-" : "ফ্রি");
-        const extra = o.zone ? `<div class="small" style="margin-top:4px;">শাড়ির দাম: ${taka(o.subtotal)}/- + ডেলিভারি: ${delTxt}${o.payment_method ? " | " + (o.payment_method === "bkash" ? "bKash" : "COD") : ""}
-          <div style="display:flex;gap:6px;align-items:center;margin-top:6px;"><input data-del-for="${esc(o.id)}" type="number" min="0" placeholder="ডেলিভারি চার্জ" style="margin:0;padding:6px;width:130px;"><button type="button" class="edit-btn" style="margin:0;" onclick="setOrderDelivery('${esc(o.id)}', ${Number(o.subtotal) || 0})">চার্জ বসান</button></div></div>` : "";
+        const extra = o.zone ? `<div class="small" style="margin-top:4px;">শাড়ির দাম: ${taka(o.subtotal)}/-${Number(o.discount) > 0 ? ` − কুপন ${esc(o.coupon_code || "")}: ${taka(o.discount)}/-` : ""} + ডেলিভারি: ${delTxt}${o.payment_method ? " | " + (o.payment_method === "bkash" ? "bKash" : "COD") : ""}
+          <div style="display:flex;gap:6px;align-items:center;margin-top:6px;"><input data-del-for="${esc(o.id)}" type="number" min="0" placeholder="ডেলিভারি চার্জ" style="margin:0;padding:6px;width:130px;"><button type="button" class="edit-btn" style="margin:0;" onclick="setOrderDelivery('${esc(o.id)}', ${(Number(o.subtotal) - Number(o.discount || 0)) || 0})">চার্জ বসান</button></div></div>` : "";
                 return `<div class="admin-card" style="border-left:5px solid var(--navy);">
           <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
             <h4 style="margin:0;color:var(--navy);">📦 কাস্টমার: ${esc(o.customer_name || "নাম নেই")}</h4>
@@ -1628,11 +1790,24 @@
     async function updateOrderStatusAdmin(orderId, btn) {
       const sel = document.querySelector(`[data-status-for="${CSS.escape(orderId)}"]`);
       if (!sel) return;
+      const newStatus = sel.value;
       btn.disabled = true;
-      const { data, error } = await db.from("orders").update({ status: sel.value }).eq("id", orderId).select();
+      const { data, error } = await db.from("orders").update({ status: newStatus }).eq("id", orderId).select();
       btn.disabled = false;
-      if (error || !data || !data.length) { alert("আপডেট হয়নি: " + explainError(error || "permission denied")); return; }
-      toast("✅ স্ট্যাটাস আপডেট হয়েছে — কাস্টমার এখনই দেখতে পাবে");
+      if (error || !data || !data.length) { alert("আপডেট হয়নি: " + errText(error || "permission denied")); return; }
+      const row = data[0];
+      await loadProducts();
+      const items = parseItems(row.items);
+      const limited = items.map(i => getProduct(i.id)).filter(p => p && p.stock !== null && p.stock !== undefined);
+      const commit = /(Confirmed|Shipped|Delivered)/.test(newStatus);
+      const synced = row.stock_deducted === commit;
+      if (limited.length && !synced) {
+        alert("⚠️ স্ট্যাটাস বদলেছে, কিন্তু স্টক নিজে নিজে বদলায়নি। Supabase-এ supabase-upgrade-4.sql একবার Run করুন। ততক্ষণ পণ্যের তালিকা থেকে হাতে স্টক ঠিক করে নিন।");
+      } else if (limited.length) {
+        toast("✅ আপডেট হয়েছে — স্টক: " + limited.map(p => `${p.name} = ${taka(p.stock)} টি`).join(", "));
+      } else {
+        toast("✅ স্ট্যাটাস আপডেট হয়েছে — কাস্টমার এখনই দেখতে পাবে");
+      }
       listOrders();
     }
 
