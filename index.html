@@ -60,7 +60,7 @@
     .section-title::after{content:'';width:70px;height:3px;background:var(--gold-gradient);display:block;margin:8px auto 0;border-radius:2px}
 
     /* ---- খোঁজা / ফিল্টার / সাজানো ---- */
-    .toolbar{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;margin-bottom:8px}
+    .toolbar{display:grid;grid-template-columns:2fr 1fr;gap:12px;margin-bottom:8px}
     .toolbar input,.toolbar select{margin:0}
     .result-count{font-size:14px;color:var(--muted);margin:6px 2px 16px}
 
@@ -95,7 +95,7 @@
     .whatsapp-order-btn{background:#25D366} .whatsapp-order-btn:hover{background:#20ba5a}
     .facebook-order-btn{background:#1877F2} .facebook-order-btn:hover{background:#145dbf}
     .variant-thumbs{display:flex;gap:10px;overflow-x:auto;padding:10px 2px 6px}
-    .variant-thumb{flex:0 0 78px;width:78px;border:2px solid #e2e8f0;border-radius:10px;padding:3px;background:#fff;text-align:center;color:#333;font:inherit;transition:all .25s}
+    .variant-thumb{flex:0 0 88px;width:88px;border:2px solid #e2e8f0;border-radius:10px;padding:3px;background:#fff;text-align:center;color:#333;font:inherit;transition:all .25s}
     .variant-thumb.selected{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold-glow);transform:scale(1.05)}
     .variant-thumb img{display:block;width:58px;height:66px;object-fit:cover;border-radius:6px;background:#eee}
     .variant-thumb span{display:block;font-size:11px;margin-top:4px;white-space:normal;line-height:1.25;font-weight:600}
@@ -219,7 +219,7 @@
     footer .f-title{color:#f3e5ad;font-size:22px;font-weight:700;margin-bottom:10px}
     footer a{color:#f3e5ad}
 
-    @media(max-width:850px){.grid,.reviews-grid{grid-template-columns:1fr 1fr}.features-container{grid-template-columns:1fr}.detail{grid-template-columns:1fr}.detail-img{max-height:70vh}.toolbar{grid-template-columns:1fr 1fr}.toolbar input{grid-column:1/-1}}
+    @media(max-width:850px){.grid,.reviews-grid{grid-template-columns:1fr 1fr}.features-container{grid-template-columns:1fr}.detail{grid-template-columns:1fr}.detail-img{max-height:70vh}.toolbar{grid-template-columns:1fr}}
     @media(max-width:550px){.grid,.reviews-grid{grid-template-columns:1fr}.brand{font-size:22px}.hero{margin:15px;padding:35px 22px;min-height:300px}.social-buttons{right:12px}.social-button{width:48px;height:48px}header{padding:12px 4%}.nav{gap:10px}.nav a,.nav button{font-size:13.5px}dialog{padding:20px 16px}}
   </style>
 </head>
@@ -259,12 +259,7 @@
     <div class="toolbar">
       <input id="searchBox" type="search" placeholder="🔍 নাম, রং বা ধরন দিয়ে খুঁজুন (যেমন: জামদানি, লাল)" oninput="onFilterChange()">
       <select id="categoryFilter" onchange="onFilterChange()" aria-label="ক্যাটাগরি"><option value="">সব ক্যাটাগরি</option></select>
-      <select id="sortSelect" onchange="onFilterChange()" aria-label="সাজান">
-        <option value="new">সাজান (ডিফল্ট)</option>
-        <option value="priceAsc">দাম: কম থেকে বেশি</option>
-        <option value="priceDesc">দাম: বেশি থেকে কম</option>
-        <option value="discount">বেশি ছাড় আগে</option>
-      </select>
+
     </div>
     <div class="budget-row">
       <span class="budget-label">💰 আপনার বাজেট (টাকা):</span>
@@ -627,7 +622,7 @@
     const colorStockMap = p => (p.color_stock && typeof p.color_stock === "object" && !Array.isArray(p.color_stock)) ? p.color_stock : null;
     const colorStockOf = (p, c) => { const m = colorStockMap(p); return (m && m[c] !== undefined && m[c] !== null && m[c] !== "") ? Number(m[c]) : Infinity; };
     const colorMax = (p, c) => Math.max(0, Math.min(20, colorStockOf(p, c), stockOf(p)));
-    const stockLabel = (p, c) => { const n = colorStockOf(p, c); return n === Infinity ? "" : (n <= 0 ? " (শেষ)" : ` (${taka(n)} টি)`); };
+    const stockLabel = (p, c) => { const n = colorStockOf(p, c); return n === Infinity ? "" : (n <= 0 ? " (স্টক শেষ)" : ` (${taka(n)} পিস স্টকে আছে)`); };
     function discountPercent(p) {
       const reg = Number(p.regular_price || 0), sale = Number(p.price || 0);
       return reg > sale && reg > 0 ? Math.round(((reg - sale) / reg) * 100) : 0;
@@ -672,7 +667,7 @@
     function filterSort(list) {
       const q = $("#searchBox").value.trim().toLowerCase();
       const cat = $("#categoryFilter").value;
-      const sort = $("#sortSelect").value;
+      const sort = "new";
       let out = list.filter(p => {
         if (cat && (p.category || "").trim() !== cat) return false;
         const lo = numOrNull($("#minPrice").value), hi = numOrNull($("#maxPrice").value);
@@ -711,7 +706,7 @@
     }
     function pillsHtml(p) {
       const s = stockOf(p);
-      const stock = s <= 0 ? '<span class="pill p-out">❌ স্টক শেষ</span>' : (s <= 5 ? `<span class="pill p-low">⚡ মাত্র ${taka(s)} টি বাকি</span>` : `<span class="pill p-stock">✅ স্টকে আছে${s === Infinity ? "" : " (" + taka(s) + " টি)"}</span>`);
+      const stock = s <= 0 ? '<span class="pill p-out">❌ স্টক শেষ</span>' : (s <= 5 ? `<span class="pill p-low">⚡ মাত্র ${taka(s)} পিস স্টকে আছে</span>` : `<span class="pill p-stock">✅ ${s === Infinity ? "স্টকে আছে" : taka(s) + " পিস স্টকে আছে"}</span>`);
       const del = p.free_delivery ? '<span class="pill p-free">🚚 ফ্রি ডেলিভারি</span>' : '<span class="pill p-home">📦 হোম ডেলিভারি</span>';
       const fm = (numOrNull(p.free_min) > 0 && !p.free_delivery) ? `<span class="pill p-free">🚚 ${taka(p.free_min)}/- বা বেশি অর্ডারে ফ্রি ডেলিভারি</span>` : "";
       const cp = productCoupons(p).length ? '<span class="pill p-coupon">🎟️ কুপন চলবে</span>' : "";
