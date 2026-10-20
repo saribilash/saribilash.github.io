@@ -43,7 +43,7 @@
     .nav a:hover,.nav button:hover{color:var(--gold)}
     .admin-nav-btn{background:var(--gold-gradient)!important;color:var(--navy)!important;padding:6px 14px!important;border-radius:8px!important;font-weight:700!important;display:none}
     .hero{margin:28px auto;max-width:1200px;min-height:380px;border-radius:24px;background:linear-gradient(90deg,#0f1c2ee6 0%,#0f1c2ec2 50%,#0f1c2e1a 100%),url('https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1400&q=85') center/cover;color:#fff;padding:60px 8%;display:flex;align-items:center;box-shadow:0 12px 35px rgba(15,28,46,.25);border:1px solid rgba(212,175,55,.15)}
-    .hero-text{max-width:550px}
+    .hero-text{max-width:550px;width:100%}
     .hero h1{font-size:clamp(36px,5vw,60px);line-height:1.25;margin:0 0 14px;background:linear-gradient(135deg,#fff 0%,#f3e5ad 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
     .hero p{font-size:19px;line-height:1.7;color:#e2e8f0;margin-bottom:24px}
     .btn{background:var(--gold-gradient);color:#0f1c2e;border:0;border-radius:10px;padding:14px 28px;font-size:17px;font-weight:700;box-shadow:0 6px 20px var(--gold-glow);transition:all .3s;display:inline-block;text-decoration:none;text-align:center}
@@ -301,7 +301,18 @@
     footer a{color:#f3e5ad}
 
 
+    .hero-btns{display:flex;gap:10px;flex-wrap:nowrap;align-items:stretch}
+    .hero-btns .btn{margin:0;flex:1 1 0;min-width:0;padding:13px 10px;font-size:15.5px;display:flex;align-items:center;justify-content:center;line-height:1.3}
     /* থ্রি পিস পেজ */
+    .ic{width:26px;height:26px;flex:none;display:inline-block;vertical-align:middle}
+    .hero-btns .btn{gap:9px}
+    .hero-btns .btn .ic{width:30px;height:30px;padding:4px;border-radius:50%;background:rgba(15,28,46,.14);border:1px solid rgba(15,28,46,.35)}
+    .tp-nav{display:inline-flex;align-items:center;gap:7px}
+    .tp-nav .ic{width:22px;height:22px}
+    .tp-promo b{display:flex;align-items:center;gap:10px}
+    .tp-promo b .ic{width:34px;height:34px;padding:6px;border-radius:50%;border:1.5px solid var(--gold);color:var(--gold);background:rgba(212,175,55,.1)}
+    .tp-crest{width:68px;height:68px;margin:16px auto 0;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gold);border:1.5px solid rgba(212,175,55,.7);background:radial-gradient(circle,rgba(212,175,55,.22),rgba(212,175,55,.04));box-shadow:0 0 0 6px rgba(212,175,55,.08)}
+    .tp-crest .ic{width:40px;height:40px}
     .tp-nav{background:linear-gradient(135deg,rgba(212,175,55,.22),rgba(212,175,55,.07));border:1px solid rgba(212,175,55,.6)!important;border-radius:30px;padding:6px 14px;color:#f3e5ad!important;font-weight:700!important}
     .tp-nav:hover{background:var(--gold-gradient);color:var(--navy)!important}
     .tp-promo{max-width:1200px;margin:6px auto 22px;padding:0 20px}
@@ -324,6 +335,14 @@
     .tp-tools input,.tp-tools select{margin:0;padding:12px 16px;border-radius:30px;border:1.5px solid rgba(212,175,55,.5);font:inherit;font-size:15px;background:#fff;min-width:0;width:100%}
     #tpCount{max-width:1200px;margin:8px auto 4px;padding:0 20px}
     #threePiecePage .grid{padding-bottom:10px}
+    .tp-budget{max-width:1160px;margin:10px 20px 0;padding:10px 14px;display:flex;align-items:center;gap:8px;background:#fff;border:1.5px solid rgba(212,175,55,.5);border-radius:18px}
+    @media(min-width:1240px){.tp-budget{margin:10px auto 0}}
+    .tp-budget input{margin:0;flex:1 1 90px;min-width:0;padding:9px 12px;border-radius:30px;border:1.5px solid #e2e8f0;font:inherit;font-size:14.5px}
+    .tp-budget .hf-clear{flex:none;background:var(--navy);color:#f3e5ad}
+    .tp-budget .budget-label{color:var(--navy);white-space:nowrap}
+    .tp-chips{max-width:1200px;margin:8px auto 0;padding:0 20px;display:flex;gap:8px;flex-wrap:wrap}
+    .tp-chip{background:#fff;border:1.5px solid rgba(212,175,55,.55);color:var(--navy);border-radius:30px;padding:7px 16px;font-size:14.5px;font-weight:700}
+    .tp-chip.on{background:var(--gold-gradient);border-color:var(--gold);box-shadow:0 4px 12px var(--gold-glow)}
     .tp-empty{grid-column:1/-1;text-align:center;padding:50px 20px;color:var(--muted);font-size:17px}
     .tp-empty b{display:block;color:var(--navy);font-size:22px;margin-bottom:6px}
     @media(max-width:550px){.tp-hero{margin:14px;padding:34px 18px 30px}.tp-hero h1{font-size:29px}.tp-tools{grid-template-columns:1fr}.tp-top .brand{font-size:20px}}
@@ -332,6 +351,24 @@
   </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="ic-saree" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M13 3.5c.6 1.6 5.4 1.6 6 0"/>
+      <path d="M13 3.5 11.6 9c-.7 5-2.2 11-3.6 19.5h16C22.6 20 21.1 14 20.4 9L19 3.5"/>
+      <path d="M12.3 7.2c4.4 2.2 8 5.6 11.4 10.6"/>
+      <path d="M14.2 22.5v6M17.4 22.2v6.3M20.5 22.8v5.7" stroke-width="1.2"/>
+      <circle cx="23.7" cy="17.9" r=".9" fill="currentColor" stroke="none"/>
+    </symbol>
+    <symbol id="ic-three" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 3.5c.7 1.8 7.3 1.8 8 0"/>
+      <path d="M12 3.5 7 6.6l1.9 4.7 2.6-1.1v10.3h9V10.2l2.6 1.1L25 6.6l-5-3.1"/>
+      <path d="M11.5 20.5 10.4 28.5M20.5 20.5l1.1 8M16 20.5v8" />
+      <path d="M9.8 11c3.2 5.2 8.4 6 13 3.2" stroke-width="1.2"/>
+      <path d="M16 6.4v3.2" stroke-width="1.2"/>
+    </symbol>
+  </defs>
+</svg>
 
   <div class="announcement-bar">🔥 শাড়ি বিলাশ কালেকশনে চলছে এক্সক্লুসিভ ছাড় ও বিশেষ অফার!</div>
 
@@ -340,7 +377,7 @@
       <div class="brand" id="brand">শাড়ি বিলাশ</div>
       <nav class="nav">
         <a href="#productsSection">শাড়ির কালেকশন</a>
-        <a href="#three-piece" class="tp-nav">👗 থ্রি পিস</a>
+        <a href="#three-piece" class="tp-nav"><svg class="ic" aria-hidden="true"><use href="#ic-three"/></svg><span>থ্রি পিস</span></a>
         <button class="wish-nav" onclick="openWishlistDialog()" title="আপনার পছন্দের শাড়ির তালিকা">❤️ উইশলিস্ট (<span id="wishlistCount">0</span>)</button>
         <button onclick="openCart()">🛒 কার্ট (<span id="cartCount">0</span>)</button>
         <button onclick="document.querySelector('#trackDialog').showModal()">📦 আমার অর্ডার</button>
@@ -369,7 +406,7 @@
     <div class="hero-text">
       <h1>নিজস্ব আভিজাত্যে উজ্জ্বল</h1>
       <p>শিল্পীর হাতে বোনা শাড়িতে ঐতিহ্য আর সৌন্দর্যের অনবদ্য সংমিশ্রণ। আপনার পছন্দমতো শাড়ি বেছে নিন এখনই।</p>
-      <a href="#productsSection" class="btn">শাড়ির কালেকশন দেখুন</a>
+      <div class="hero-btns"><a href="#productsSection" class="btn"><svg class="ic" aria-hidden="true"><use href="#ic-saree"/></svg><span>শাড়ির কালেকশন দেখুন</span></a><a href="#three-piece" class="btn btn-tp"><svg class="ic" aria-hidden="true"><use href="#ic-three"/></svg><span>থ্রি পিস দেখুন</span></a></div>
     </div>
   </div>
 
@@ -380,7 +417,7 @@
   </div>
 
   <section class="tp-promo" id="tpPromo"><a href="#three-piece">
-    <div><b>👗 নতুন — থ্রি পিস কালেকশন</b><span class="sub">আভিজাত্যে ভরা থ্রি পিসের আলাদা সংগ্রহ এখন আমাদের সাইটেই <span id="tpPromoCount"></span></span></div>
+    <div><b><svg class="ic" aria-hidden="true"><use href="#ic-three"/></svg><span>নতুন — থ্রি পিস কালেকশন</span></b><span class="sub">আভিজাত্যে ভরা থ্রি পিসের আলাদা সংগ্রহ এখন আমাদের সাইটেই <span id="tpPromoCount"></span></span></div>
     <span class="go">থ্রি পিস দেখুন →</span>
   </a></section>
 
@@ -434,15 +471,22 @@
       <button type="button" onclick="openCart()">🛒 কার্ট (<span id="cartCount2">0</span>)</button>
     </div>
     <div class="tp-hero">
-      <span class="tp-eyebrow">✨ এক্সক্লুসিভ কালেকশন</span>
+      <span class="tp-eyebrow">এক্সক্লুসিভ কালেকশন</span><div class="tp-crest"><svg class="ic" aria-hidden="true"><use href="#ic-three"/></svg></div>
       <h1>থ্রি পিস কালেকশন</h1>
       <p>পছন্দের কাপড়, নিখুঁত ফিনিশিং আর আভিজাত্যের ছোঁয়ায় সাজানো থ্রি পিস — সারা বাংলাদেশে হোম ডেলিভারি ও ক্যাশ অন ডেলিভারি সুবিধাসহ।</p>
-      <div class="tp-perks"><span>✨ প্রিমিয়াম কোয়ালিটি</span><span>📦 ক্যাশ অন ডেলিভারি</span><span>🚚 হোম ডেলিভারি</span></div>
+      <div class="tp-perks"><span>◆ প্রিমিয়াম কোয়ালিটি</span><span>📦 ক্যাশ অন ডেলিভারি</span><span>🚚 হোম ডেলিভারি</span></div>
     </div>
     <div class="tp-tools">
       <input id="tpSearch" type="search" placeholder="🔍 থ্রি পিস খুঁজুন — নাম, রং বা কোড" aria-label="থ্রি পিস খুঁজুন" oninput="renderThreePiece()">
       <select id="tpSort" onchange="renderThreePiece()" aria-label="সাজান"><option value="new">নতুন আগে</option><option value="low">কম দাম আগে</option><option value="high">বেশি দাম আগে</option></select>
     </div>
+    <div class="tp-budget"><span class="budget-label">💰 বাজেট:</span>
+      <input id="tpMin" type="number" min="0" inputmode="numeric" placeholder="কত টাকা থেকে" aria-label="সর্বনিম্ন বাজেট" oninput="renderThreePiece()">
+      <span>—</span>
+      <input id="tpMax" type="number" min="0" inputmode="numeric" placeholder="কত টাকা পর্যন্ত" aria-label="সর্বোচ্চ বাজেট" oninput="renderThreePiece()">
+      <button type="button" class="hf-clear" onclick="$('#tpMin').value='';$('#tpMax').value='';renderThreePiece()">মুছুন</button>
+    </div>
+    <div class="tp-chips" id="tpChips"></div>
     <div class="result-count" id="tpCount"></div>
     <div class="grid" id="tpProducts"></div>
     <section>
@@ -970,18 +1014,24 @@
     }
 
     // ---------- থ্রি পিস পেজ ----------
-    let tpOpen = false;
+    let tpOpen = false, tpGroup = "";
+    const tpGroupOf = p => String(p.fabric || "").trim() || String(p.category || "").replace(THREE_RE, "").replace(/^[\s\-–:,|/]+|[\s\-–:,|/]+$/g, "");
+    function setTpGroup(g) { tpGroup = g; renderThreePiece(); }
     function renderThreePiece() {
       const all = products.filter(p => p && p.name && p.active !== false && isThreePiece(p));
       const pc = $("#tpPromoCount"); if (pc) pc.textContent = all.length ? `(${taka(all.length)}টি)` : "";
       if (!tpOpen) return;
       const q = ($("#tpSearch").value || "").trim().toLowerCase(), sort = $("#tpSort").value;
-      let list = all.filter(p => !q || [p.name, p.description, p.category, p.fabric, productCode(p.id), ...productColors(p)].join(" ").toLowerCase().includes(q));
+      const groups = [...new Set(all.map(tpGroupOf).filter(Boolean))];
+      if (tpGroup && !groups.includes(tpGroup)) tpGroup = "";
+      $("#tpChips").innerHTML = groups.length > 1 ? [""].concat(groups).map(g => `<button type="button" class="tp-chip ${g === tpGroup ? "on" : ""}" data-g="${esc(g)}">${g ? esc(g) : "সব"}</button>`).join("") : "";
+      const lo = numOrNull($("#tpMin").value), hi = numOrNull($("#tpMax").value);
+      let list = all.filter(p => (lo === null || Number(p.price) >= lo) && (hi === null || Number(p.price) <= hi) && (!tpGroup || tpGroupOf(p) === tpGroup) && (!q || [p.name, p.description, p.category, p.fabric, productCode(p.id), ...productColors(p)].join(" ").toLowerCase().includes(q)));
       if (sort === "low") list = list.slice().sort((a, b) => Number(a.price) - Number(b.price));
       else if (sort === "high") list = list.slice().sort((a, b) => Number(b.price) - Number(a.price));
       $("#tpCount").textContent = all.length ? `${taka(list.length)}টি থ্রি পিস পাওয়া গেছে` : "";
       const box = $("#tpProducts");
-      if (!all.length) { box.innerHTML = '<div class="tp-empty"><b>✨ থ্রি পিস কালেকশন শীঘ্রই আসছে</b>নতুন থ্রি পিস যোগ হলেই এখানে দেখতে পাবেন।</div>'; return; }
+      if (!all.length) { box.innerHTML = '<div class="tp-empty"><b>থ্রি পিস কালেকশন শীঘ্রই আসছে</b>নতুন থ্রি পিস যোগ হলেই এখানে দেখতে পাবেন।</div>'; return; }
       if (!list.length) { box.innerHTML = '<div class="tp-empty">এই খোঁজার সাথে মেলে এমন কোনো থ্রি পিস পাওয়া যায়নি।</div>'; return; }
       const wl = getWishlist();
       box.innerHTML = list.map(p => cardHtml(p, wl)).join("");
@@ -1001,6 +1051,7 @@
       window.scrollTo(0, 0);
     }
     window.addEventListener("hashchange", syncThreePiece);
+    document.addEventListener("click", e => { const b = e.target.closest && e.target.closest(".tp-chip"); if (b) setTpGroup(b.dataset.g || ""); });
 
     function renderVariant(id, index) {
       const p = getProduct(id);
@@ -1611,7 +1662,7 @@
             <label class="field-label" for="pdesc">বিবরণ</label><input id="pdesc">
             <div class="row">
               <div><label class="field-label" for="pcategory">ক্যাটাগরি</label><input id="pcategory" list="catList" placeholder="যেমন: জামদানি, থ্রি পিস"></div>
-              <div><label class="field-label" for="pfabric">শাড়ির ধরন</label><input id="pfabric" placeholder="যেমন: সুতি, সিল্ক"></div>
+              <div><label class="field-label" for="pfabric">ধরন / কাপড় (থ্রি পিসেও এটা দিয়ে ভাগ হয়)</label><input id="pfabric" placeholder="যেমন: সুতি, সিল্ক, কটন, জর্জেট"></div>
             </div>
             <datalist id="catList">${cats.map(c => `<option value="${esc(c)}">`).join("")}</datalist>
             <div class="row">
