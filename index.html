@@ -311,6 +311,16 @@
       .nav>a:not(.admin-nav-btn),.nav>button:not(.admin-nav-btn){font-size:13px;padding:5px 11px;gap:5px}
       .nav .tp-nav .ic{width:18px;height:18px}
     }
+    #cartDialog .pick-label{font-size:12.5px;font-weight:700;color:var(--navy);margin:8px 0 2px}
+    #cartDialog .color-chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:6px;margin:4px 0}
+    #cartDialog .color-chip{padding:3px 6px 3px 3px;gap:5px;min-width:0;border-radius:10px;font-size:12px}
+    #cartDialog .color-chip img{width:26px;height:32px;border-radius:5px;flex:none}
+    #cartDialog .cc-t{display:flex;flex-direction:column;align-items:flex-start;min-width:0;line-height:1.2;text-align:left}
+    #cartDialog .cc-t b{font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+    #cartDialog .cc-t small{font-size:10.5px;font-weight:400;color:var(--muted);white-space:nowrap}
+    #cartDialog .cart-line{grid-template-columns:56px 1fr auto;gap:8px}
+    dialog,#threePiecePage,#adminFullPage{overscroll-behavior:contain}
+    body:has(dialog[open]){overflow:hidden}
     /* থ্রি পিস পেজ */
     .ic{width:26px;height:26px;flex:none;display:inline-block;vertical-align:middle}
     .hero-btns .btn{gap:9px}
@@ -555,7 +565,7 @@
     <div id="buyNote" class="buy-note" style="display:none;"></div>
     <div id="cartItems"></div>
     <div id="cartCheckout" style="display:none;">
-      <div class="admin-card coupon-card">
+      <div class="admin-card coupon-card" id="couponCard">
         <label class="field-label" for="couponInput" style="margin-top:0;">🎟️ কুপন কোড (থাকলে)</label>
         <div class="row"><input id="couponInput" placeholder="কুপন কোড লিখুন" style="margin:0;text-transform:uppercase;" autocomplete="off"><button type="button" class="btn order-btn" style="padding:10px 14px;white-space:nowrap;flex:0 0 auto;font-size:15px;" onclick="applyCoupon()">প্রয়োগ করুন</button></div>
         <div id="couponMsg" class="small" style="margin-top:6px;"></div>
@@ -826,6 +836,7 @@
     const colorStockMap = p => (p.color_stock && typeof p.color_stock === "object" && !Array.isArray(p.color_stock)) ? p.color_stock : null;
     const colorStockOf = (p, c) => { const m = colorStockMap(p); return (m && m[c] !== undefined && m[c] !== null && m[c] !== "") ? Number(m[c]) : Infinity; };
     const colorMax = (p, c) => Math.max(0, Math.min(20, colorStockOf(p, c), stockOf(p)));
+    const stockShort = (p, c) => { const n = colorStockOf(p, c); return n === Infinity ? "" : (n <= 0 ? "স্টক শেষ" : `${taka(n)} পিস আছে`); };
     const stockLabel = (p, c) => { const n = colorStockOf(p, c); return n === Infinity ? "" : (n <= 0 ? " (স্টক শেষ)" : ` (${taka(n)} পিস স্টকে আছে)`); };
     function discountPercent(p) {
       const reg = Number(p.regular_price || 0), sale = Number(p.price || 0);
@@ -1342,11 +1353,14 @@
         return;
       }
       $("#cartCheckout").style.display = "block";
+      const hasCp = lines.some(({ p }) => productCoupons(p).some(c => couponInfo[c] !== null));
+      $("#couponCard").style.display = hasCp ? "" : "none";
+      if (!hasCp && appliedCoupon) { appliedCoupon = null; $("#couponInput").value = ""; $("#couponMsg").textContent = ""; }
       box.innerHTML = lines.map(({ i, idx, p }) => {
         const colors = productColors(p), images = productImages(p);
         const ci = Math.max(0, colors.indexOf(i.color));
         const img = images[ci] || images[0] || "";
-        const colorSel = (colors.length < 2 && i.color !== NO_COLOR ? `<div class="color-big">${colorDot(i.color)}🎨 রং: ${esc(i.color)}</div>` : "") + (colors.length > 1 ? `<div class="color-chips">${colors.map((c, k) => `<button type="button" class="color-chip ${c === i.color ? "sel" : ""}" onclick="pickCartColor(${idx},${k})">${images[k] ? `<img src="${esc(images[k])}" alt="">` : colorDot(c)}${esc(c)}${stockLabel(p, c)}</button>`).join("")}</div>` : "");
+        const colorSel = (colors.length < 2 && i.color !== NO_COLOR ? `<div class="color-big">${colorDot(i.color)}🎨 রং: ${esc(i.color)}</div>` : "") + (colors.length > 1 ? `<div class="pick-label">🎨 রং বাছুন</div><div class="color-chips">${colors.map((c, k) => `<button type="button" class="color-chip ${c === i.color ? "sel" : ""}" onclick="pickCartColor(${idx},${k})">${images[k] ? `<img src="${esc(images[k])}" alt="">` : colorDot(c)}<span class="cc-t"><b>${esc(c)}</b><small>${stockShort(p, c)}</small></span></button>`).join("")}</div>` : "");
         return `<div class="cart-line">
           ${img ? `<img src="${esc(img)}" alt="${esc(p.name)}">` : `<div style="width:60px;height:72px;background:#eee;border-radius:10px;"></div>`}
           <div>
