@@ -3,6 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <script>
+    /* ডেক্সটপ মোড: অ্যাপ/মোবাইলে চাপলে সাইট কম্পিউটারের লেআউটে খোলে (মনে রাখে) */
+    (function () {
+      var KEY = "sari_desktop_mode", vp = document.querySelector('meta[name="viewport"]'), MOBILE = vp.getAttribute("content");
+      var DESK = "width=1200, viewport-fit=cover, user-scalable=yes";
+      function isOn() { try { return localStorage.getItem(KEY) === "1"; } catch (e) { return false; } }
+      function label() {
+        var el = document.getElementById("dtLabel"), sub = document.getElementById("dtSub"), on = isOn();
+        if (el) el.textContent = on ? "মোবাইল মোডে ফিরুন" : "ডেক্সটপ মোড চালু করুন";
+        if (sub) sub.textContent = on ? "ফোনের উপযোগী লেআউটে ফিরে যান" : "কম্পিউটারের মতো বড় পেজে দেখুন";
+      }
+      vp.setAttribute("content", isOn() ? DESK : MOBILE);
+      window.toggleDesktopMode = function () {
+        var on = !isOn();
+        try { localStorage.setItem(KEY, on ? "1" : "0"); } catch (e) {}
+        vp.setAttribute("content", on ? DESK : MOBILE); label();
+        setTimeout(function () { window.scrollTo(0, 0); }, 50);
+      };
+      document.addEventListener("DOMContentLoaded", function () {
+        var item = document.getElementById("dtItem");
+        if (item && !(window.matchMedia && window.matchMedia("(pointer:coarse)").matches) && !isOn()) item.style.display = "none";
+        label();
+      });
+    })();
+  </script>
   <!-- ===== অ্যাপ (PWA) সেটিং: হোম স্ক্রিনে যোগ করলে অ্যাপের মতো খুলবে ===== -->
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="theme-color" content="#0f1c2e">
@@ -438,18 +463,27 @@
     .care-item .ci svg{width:24px;height:24px;fill:currentColor}
     .ci-wa{background:linear-gradient(135deg,#128c4a,#25d366)}
     .ci-fb{background:linear-gradient(135deg,#1456c4,#1877f2)}
+    .ci-dt{background:linear-gradient(135deg,#334155,#64748b);font-size:22px}
+    button.care-item{width:100%;background:none;border:0;font-family:inherit;text-align:left;cursor:pointer}
+    button.care-item span{text-align:left}
     .care-item span b{display:block;font-size:15px}
     .care-item span em{display:block;font-size:12px;font-style:normal;color:#94a3b8;margin-top:1px}
 
-    /* ===== WhatsApp এ অর্ডার করুন বাটন ===== */
-    .whatsapp-order-btn.wa-order{position:relative;overflow:hidden;grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:11px;padding:11px 14px;border-radius:16px;font-family:inherit;font-size:16.5px;font-weight:700;color:#fff;cursor:pointer;
-      background:linear-gradient(135deg,#064e3b 0%,#0f8a4b 50%,#25d366 100%);border:1.5px solid rgba(243,229,173,.8);box-shadow:0 8px 22px rgba(18,140,74,.4),inset 0 1px 0 rgba(255,255,255,.25);text-shadow:0 1px 2px rgba(0,0,0,.25)}
-    .whatsapp-order-btn.wa-order:hover{background:linear-gradient(135deg,#064e3b 0%,#0f8a4b 50%,#25d366 100%);transform:translateY(-2px)}
-    .wa-order .wa-ic{width:34px;height:34px;border-radius:50%;flex:none;display:grid;place-items:center;background:#fff;color:#16a34a;box-shadow:0 3px 8px rgba(0,0,0,.25),0 0 0 3px rgba(243,229,173,.55)}
-    .wa-order .wa-ic svg{width:20px;height:20px;fill:currentColor}
-    .wa-order .wa-txt{letter-spacing:.2px}
-    .wa-order::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.38),transparent);transform:skewX(-18deg);animation:waShine 3.6s ease-in-out infinite}
+    /* ===== WhatsApp এ অর্ডার করুন বাটন — স্বচ্ছ গ্লাস + সোনালি-সবুজ গ্রেডিয়েন্ট বর্ডার ===== */
+    .whatsapp-order-btn.wa-order{position:relative;overflow:hidden;isolation:isolate;grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:12px;padding:9px 18px 9px 10px;border-radius:50px;font-family:inherit;font-size:16px;font-weight:800;letter-spacing:.2px;cursor:pointer;text-decoration:none;
+      color:#0b5a34;border:1.6px solid transparent;
+      background:linear-gradient(rgba(37,211,102,.10),rgba(37,211,102,.04)) padding-box,linear-gradient(120deg,#25d366 0%,#f3e5ad 48%,#c8a04b 72%,#25d366 100%) border-box;
+      -webkit-backdrop-filter:blur(8px) saturate(1.4);backdrop-filter:blur(8px) saturate(1.4);
+      box-shadow:0 6px 18px rgba(37,211,102,.18),inset 0 1px 0 rgba(255,255,255,.55);text-shadow:none;transition:transform .25s,box-shadow .25s,background .25s}
+    .whatsapp-order-btn.wa-order:hover,.whatsapp-order-btn.wa-order:active{background:linear-gradient(rgba(37,211,102,.20),rgba(37,211,102,.08)) padding-box,linear-gradient(120deg,#25d366 0%,#f3e5ad 48%,#c8a04b 72%,#25d366 100%) border-box;transform:translateY(-2px);box-shadow:0 10px 24px rgba(37,211,102,.30),inset 0 1px 0 rgba(255,255,255,.6)}
+    .wa-order .wa-ic{width:34px;height:34px;border-radius:50%;flex:none;display:grid;place-items:center;background:linear-gradient(135deg,#128c4a,#25d366);color:#fff;box-shadow:0 0 0 3px rgba(37,211,102,.18),0 3px 8px rgba(18,140,74,.35)}
+    .wa-order .wa-ic svg{width:19px;height:19px;fill:currentColor}
+    .wa-order .wa-txt{letter-spacing:.2px;background:linear-gradient(90deg,#065f37,#0f8a4b);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+    .wa-order .wa-txt::after{content:"›";display:inline-block;margin-left:8px;font-size:22px;line-height:1;font-weight:700;transition:transform .25s;-webkit-text-fill-color:#b8860b}
+    .wa-order:hover .wa-txt::after{transform:translateX(5px)}
+    .wa-order::after{content:"";position:absolute;z-index:-1;top:0;bottom:0;left:-60%;width:35%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-18deg);animation:waShine 4.2s ease-in-out infinite}
     @keyframes waShine{0%,55%{left:-60%}100%{left:130%}}
+    .wa-order.wa-full{width:100%;margin-top:8px}
     .action-row:has(.wa-order) .facebook-order-btn{grid-column:1/-1}
   </style>
 </head>
@@ -684,7 +718,7 @@
         </div>
 
         <button class="btn order-btn" id="submitOrderBtn" type="submit" style="margin-top:8px;width:100%;">অর্ডার নিশ্চিত করুন</button>
-        <button class="whatsapp-order-btn" type="button" style="margin-top:8px;width:100%;padding:10px;font-size:14px;" onclick="whatsappCart()">💬 WhatsApp-এ পাঠিয়ে অর্ডার করুন</button>
+        <button class="whatsapp-order-btn wa-order wa-full" type="button" onclick="whatsappCart()"><span class="wa-ic"><svg><use href="#ic-wa"/></svg></span><span class="wa-txt">WhatsApp-এ পাঠিয়ে অর্ডার করুন</span></button>
         <div id="orderMsg" class="small" style="margin-top:10px;"></div>
       </form>
     </div>
@@ -697,7 +731,7 @@
       <p class="small" style="margin-bottom:6px;">অর্ডার আইডি: <b id="successOrderId"></b></p>
       <p class="small" style="margin-bottom:6px;">সর্বমোট: <b id="successTotal"></b></p>
       <p class="small" style="margin-bottom:20px;">ধন্যবাদ, শাড়ি বিলাশের সঙ্গে থাকার জন্য। খুব শীঘ্রই ডেলিভারি নিশ্চিত করতে আমরা যোগাযোগ করব। ফোন নম্বর দিয়ে "আমার অর্ডার" থেকে স্ট্যাটাস দেখতে পারবেন।</p>
-      <a id="successWa" class="whatsapp-order-btn" style="margin-bottom:8px;padding:12px;" href="#" target="_blank" rel="noopener">💬 WhatsApp-এ অর্ডার আইডি পাঠিয়ে দিন</a>
+      <a id="successWa" class="whatsapp-order-btn wa-order wa-full" style="margin:0 0 8px;" href="#" target="_blank" rel="noopener"><span class="wa-ic"><svg><use href="#ic-wa"/></svg></span><span class="wa-txt">WhatsApp-এ অর্ডার আইডি পাঠান</span></a>
       <button class="btn" style="width:100%;" onclick="document.querySelector('#successDialog').close()">ঠিক আছে</button>
     </div>
   </dialog>
@@ -755,6 +789,10 @@
         <i class="ci ci-fb"><svg><use href="#ic-fb"/></svg></i>
         <span><b>ফেসবুক পেজে মেসেজ করুন</b><em>Sari Bilash পেজে মেসেজ দিন</em></span>
       </a>
+      <button type="button" class="care-item" id="dtItem" onclick="toggleDesktopMode()" role="menuitem">
+        <i class="ci ci-dt">🖥️</i>
+        <span><b id="dtLabel">ডেক্সটপ মোড চালু করুন</b><em id="dtSub">কম্পিউটারের মতো বড় পেজে দেখুন</em></span>
+      </button>
     </div>
     <button type="button" class="care-btn" id="careBtn" onclick="toggleCare()" aria-expanded="false" aria-controls="careMenu" aria-label="কাস্টমার সাপোর্ট">
       <span class="care-logo"><svg><use href="#ic-care"/></svg><u class="care-dot"></u></span>
@@ -1058,7 +1096,7 @@
       const s = stockOf(p);
       const stock = s <= 0 ? '<span class="pill p-out">❌ স্টক শেষ</span>' : (s <= 5 ? `<span class="pill p-low">⚡ মাত্র ${taka(s)} পিস স্টকে আছে</span>` : `<span class="pill p-stock">✅ ${s === Infinity ? "স্টকে আছে" : taka(s) + " পিস স্টকে আছে"}</span>`);
       const del = p.free_delivery ? '<span class="pill p-free">🚚 ফ্রি ডেলিভারি</span>' : '<span class="pill p-home">📦 হোম ডেলিভারি</span>';
-      const fm = (numOrNull(p.free_min) > 0 && !p.free_delivery) ? `<span class="pill p-free">🚚 ${taka(p.free_min)}/- বা বেশি অর্ডারে ফ্রি ডেলিভারি</span>` : "";
+      const fm = (numOrNull(p.free_min) > 0 && !p.free_delivery) ? `<span class="pill p-free">🚚 এই শাড়ি ${taka(p.free_min)}/- বা বেশি টাকার নিলে ফ্রি ডেলিভারি</span>` : "";
       const cp = productCoupons(p).some(c => couponInfo[c] === undefined) ? '<span class="pill p-coupon">🎟️ কুপন চলবে</span>' : "";
       return stock + del + fm + cp;
     }
@@ -1236,7 +1274,7 @@
             </div>
             <div class="help-note">ছবি, কাপড়, রং, দাম বা ডেলিভারি — যেকোনো কিছু বিস্তারিত জানতে WhatsApp অথবা ফেসবুক পেজে মেসেজ করুন</div>
             <div class="action-row">
-              <button class="whatsapp-order-btn wa-order" onclick="directWhatsAppOrder('${id}',${det.idx})"><span class="wa-ic"><svg><use href="#ic-wa"/></svg></span><span class="wa-txt">WhatsApp এ অর্ডার করুন</span></button>
+              <button class="whatsapp-order-btn wa-order" onclick="directWhatsAppOrder('${id}',${det.idx},${det.qty})"><span class="wa-ic"><svg><use href="#ic-wa"/></svg></span><span class="wa-txt">WhatsApp এ অর্ডার করুন</span></button>
               <button class="facebook-order-btn" onclick="directFacebookOrder()">📘 ফেসবুক পেজ</button>
             </div>
           </div>
@@ -1294,10 +1332,22 @@
     })();
 
     // ---------- হোয়াটসঅ্যাপ / ফেসবুক ----------
-    function directWhatsAppOrder(productId, idx) {
+    function directWhatsAppOrder(productId, idx, qty) {
       const p = getProduct(productId); if (!p) return;
-      const color = idx !== undefined ? (productColors(p)[idx] || cardColor(productId)) : cardColor(productId);
-      const msg = `হ্যালো শাড়ি বিলাশ! 👋\nআমি এই শাড়িটি অর্ডার করতে চাই:\n\n🛍️ শাড়ির নাম: ${p.name}\n🔖 শাড়ির কোড: ${productCode(p.id)}\n🎨 পছন্দকৃত রং: ${color === NO_COLOR ? "সাধারণ" : color}\n💰 দাম: ${taka(p.price)}/- টাকা\n\nঅনুগ্রহ করে অর্ডারের প্রক্রিয়াটি জানান।`;
+      const color = idx !== undefined && idx !== null ? (productColors(p)[idx] || cardColor(productId)) : cardColor(productId);
+      const q = Math.max(1, Number(qty) || 1);
+      const f = freeInfoFor(p, q);
+      const gross = Number(p.price) * q, disc = lineDiscountOf(p, q);
+      let del;
+      if (f.free) del = "🚚 ডেলিভারি: ফ্রি";
+      else if (settings.dhaka_charge === null) del = "🚚 ডেলিভারি চার্জ: কনফার্মের সময় জানানো হবে";
+      else del = `🚚 ডেলিভারি চার্জ: ${taka(settings.dhaka_charge)}/-` + (f.min > 0 ? ` (এই শাড়ি আরও ${taka(f.need)}/- টাকার নিলে ফ্রি)` : "");
+      const extra = [];
+      if (p.blouse_free) extra.push("🧵 ব্লাউজ পিস ফ্রি");
+      const msg = `হ্যালো শাড়ি বিলাশ! 👋\nআমি এই শাড়িটি অর্ডার করতে চাই:\n\n🛍️ শাড়ির নাম: ${p.name}\n🔖 শাড়ির কোড: ${productCode(p.id)}\n🎨 পছন্দকৃত রং: ${color === NO_COLOR ? "সাধারণ" : color}\n📦 কত পিস: ${taka(q)} টি\n💰 এক পিসের দাম: ${taka(p.price)}/- টাকা\n` +
+        (disc > 0 ? `🎟️ কুপন (${appliedCoupon.code}): -${taka(disc)}/-\n` : "") +
+        `🧮 শাড়ির মোট দাম: ${taka(gross - disc)}/- টাকা\n${del}\n` + (extra.length ? extra.join("\n") + "\n" : "") +
+        `\nঅনুগ্রহ করে অর্ডারের প্রক্রিয়াটি জানান।`;
       window.open(`https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(msg)}`, "_blank", "noopener");
     }
     function directFacebookOrder() { window.open(FB_PAGE_URL, "_blank", "noopener"); }
@@ -1573,14 +1623,33 @@
       const c = productColors(p)[ci]; if (!c) return; if (colorMax(p, c) <= 0) { toast(`"${c}" রঙের স্টক শেষ`); return; } changeCartColor(idx, c);
     }
 
+    // কুপনের ছাড় (একটি লাইনের জন্য) — শুধু ফ্রি ডেলিভারির লিমিট মেলানোর কাজে লাগে
+    function lineDiscountOf(p, qty) {
+      if (!appliedCoupon || !productCoupons(p).includes(appliedCoupon.code)) return 0;
+      const ci = { pct: appliedCoupon.percent, amt: appliedCoupon.amount };
+      return ci.amt > 0 ? couponAmt(p.price, ci) * qty : Math.round(Number(p.price) * qty * ci.pct / 100);
+    }
+    // ফ্রি ডেলিভারি নিয়ম: প্রতিটি শাড়ির লিমিট শুধু সেই শাড়ির নিজের টাকায় মেলে।
+    // অন্য শাড়ির টাকা যোগ হয় না। যে শাড়ির লিমিট পূরণ হয়েছে সেটার জন্যই ডেলিভারি ফ্রি।
+    function freeInfoFor(p, qty) {
+      const net = Number(p.price) * qty - lineDiscountOf(p, qty);
+      const fm = numOrNull(p.free_min);
+      if (p.free_delivery) return { free: true, need: 0, min: 0, net };
+      if (fm > 0) return { free: net >= fm, need: Math.max(0, fm - net), min: fm, net };
+      return { free: false, need: 0, min: 0, net };
+    }
     function calcTotals() {
-      let subtotal = 0, allFree = true, n = 0, min = 0;
+      let subtotal = 0, n = 0, freeBy = null, nearest = null;
+      const perProd = {};
       cart.forEach(i => {
         const p = getProduct(i.pid); if (!p) return;
         subtotal += Number(p.price) * i.qty; n++;
-        if (!p.free_delivery) allFree = false;
-        const fm = numOrNull(p.free_min);
-        if (fm > 0 && (min === 0 || fm < min)) min = fm;
+        perProd[p.id] = { p, qty: ((perProd[p.id] || {}).qty || 0) + i.qty };
+      });
+      Object.values(perProd).forEach(({ p, qty }) => {
+        const f = freeInfoFor(p, qty);
+        if (f.free) { if (!freeBy) freeBy = p.name; }
+        else if (f.min > 0 && (!nearest || f.need < nearest.need)) nearest = { need: f.need, name: p.name };
       });
       let discount = 0;
       if (appliedCoupon) {
@@ -1590,17 +1659,17 @@
       }
       const net = subtotal - discount;
       const base = settings.dhaka_charge;
-      const free = n > 0 && (allFree || (min > 0 && net >= min));
+      const free = n > 0 && !!freeBy;
       let charge = 0, unknown = false;
       if (n && !free) { if (base === null) unknown = true; else charge = base; }
-      return { subtotal, discount, charge, total: net + charge, free, unknown, min, net };
+      return { subtotal, discount, charge, total: net + charge, free, unknown, net, freeBy, nearest };
     }
 
     function renderCartSummary() {
       const t = calcTotals();
       let note = "";
-      if (t.free) note = `<div class="free-note">🎉 আপনার অর্ডারে ডেলিভারি ফ্রি!</div>`;
-      else if (t.min > 0 && t.net < t.min) note = `<div class="need-note">আরও ${taka(t.min - t.net)}/- টাকার শাড়ি নিলে ডেলিভারি ফ্রি!</div>`;
+      if (t.free) note = `<div class="free-note">🎉 “${esc(t.freeBy)}” শাড়ির জন্য আপনার অর্ডারে ডেলিভারি ফ্রি!</div>`;
+      else if (t.nearest) note = `<div class="need-note">“${esc(t.nearest.name)}” শাড়িতে আরও ${taka(t.nearest.need)}/- টাকার নিলে ডেলিভারি ফ্রি!</div>`;
       const cm = $("#couponMsg");
       if (cm && appliedCoupon) {
         if (t.discount > 0) { cm.className = "small msg-ok"; cm.textContent = `✅ কুপন চালু: ${couponLabel(appliedCoupon)} (শুধু কুপন চলা শাড়িতে)`; }
@@ -1629,9 +1698,14 @@
       const lines = cart.map(i => ({ i, p: getProduct(i.pid) })).filter(x => x.p);
       if (!lines.length) return;
       const t = calcTotals();
+      const val = id => { const el = document.getElementById(id); return el ? String(el.value || "").trim() : ""; };
+      const nm = val("orderName"), ph = val("orderPhone"), ad = val("orderAddress");
+      const pay = val("paymentMethod") === "bkash" ? "bKash" : "Cash on Delivery";
+      const delTxt = t.free ? `ফ্রি (“${t.freeBy}” শাড়ির জন্য)` : (t.unknown ? "কনফার্মের সময় জানানো হবে" : taka(t.charge) + "/-");
       const txt = `হ্যালো শাড়ি বিলাশ! 👋\nআমি নিচের শাড়িগুলো অর্ডার করতে চাই:\n\n` +
-        lines.map(({ i, p }, n) => `${n + 1}. ${p.name} [কোড: ${productCode(p.id)}] | রং: ${i.color === NO_COLOR ? "সাধারণ" : i.color} | ${taka(i.qty)} টি | ${taka(p.price * i.qty)}/-`).join("\n") +
-        `\n\nশাড়ির দাম: ${taka(t.subtotal)}/-${t.discount > 0 ? `\nকুপন (${appliedCoupon.code}): -${taka(t.discount)}/-` : ""}\nডেলিভারি: ${t.free ? "ফ্রি" : taka(t.charge) + "/-"}\nসর্বমোট: ${taka(t.total)}/-`;
+        lines.map(({ i, p }, n) => `${n + 1}. 🛍️ ${p.name}\n   🔖 কোড: ${productCode(p.id)}\n   🎨 রং: ${i.color === NO_COLOR ? "সাধারণ" : i.color}\n   📦 ${taka(i.qty)} টি × ${taka(p.price)}/- = ${taka(p.price * i.qty)}/-`).join("\n\n") +
+        `\n\n🧮 শাড়ির দাম: ${taka(t.subtotal)}/-${t.discount > 0 ? `\n🎟️ কুপন (${appliedCoupon.code}): -${taka(t.discount)}/-` : ""}\n🚚 ডেলিভারি: ${delTxt}\n💵 সর্বমোট: ${taka(t.total)}/-\n💳 পেমেন্ট: ${pay}` +
+        (nm || ph || ad ? `\n\n👤 নাম: ${nm || "—"}\n📞 ফোন: ${ph || "—"}\n📍 ঠিকানা: ${ad || "—"}` : "");
       window.open(`https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(txt)}`, "_blank", "noopener");
     }
 
@@ -1788,7 +1862,7 @@
             <datalist id="catList">${cats.map(c => `<option value="${esc(c)}">`).join("")}</datalist>
             <div class="row">
               <div><label class="field-label" for="plength">দৈর্ঘ্য (ফাঁকা রাখলে সাইটে দেখাবে না)</label><input id="plength" placeholder="যেমন: ১২ হাত"></div>
-              <div><label class="field-label" for="pfreemin">এত টাকা বা বেশি অর্ডারে ফ্রি ডেলিভারি (ফাঁকা = নেই)</label><input id="pfreemin" type="number" min="0" placeholder="যেমন: 3000"></div>
+              <div><label class="field-label" for="pfreemin">এই শাড়িতে এত টাকা বা বেশি নিলে ফ্রি ডেলিভারি (ফাঁকা = নেই)</label><input id="pfreemin" type="number" min="0" placeholder="যেমন: 3000"></div>
             </div>
             <div style="margin:12px 0;display:flex;align-items:center;gap:8px;">
               <input type="checkbox" id="pblouse" style="width:20px;height:20px;margin:0;cursor:pointer;">
