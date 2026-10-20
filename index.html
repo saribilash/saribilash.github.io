@@ -407,6 +407,50 @@
       img{-webkit-user-drag:none}
       .install-bar,.install-nav-btn{display:none!important}
     }
+  
+    /* ===== কাস্টমার সাপোর্ট ফ্লোটিং বাটন ===== */
+    .care-fab{position:fixed;right:14px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:120;display:flex;flex-direction:column;align-items:flex-end;gap:12px}
+    body:has(.install-bar.show) .care-fab{bottom:calc(98px + env(safe-area-inset-bottom,0px))}
+    .care-btn{display:flex;align-items:center;gap:10px;height:58px;padding:5px 18px 5px 5px;border-radius:40px;color:#fff;font-family:inherit;font-size:15.5px;font-weight:700;letter-spacing:.2px;cursor:pointer;
+      background:linear-gradient(135deg,#0b1626 0%,#182e4a 100%);border:1.5px solid transparent;
+      background-image:linear-gradient(135deg,#0b1626,#182e4a),linear-gradient(135deg,#f3e5ad,#c8a04b 50%,#987121);background-origin:border-box;background-clip:padding-box,border-box;
+      box-shadow:0 10px 28px rgba(0,0,0,.4),0 0 0 4px rgba(212,175,55,.14);transition:all .35s cubic-bezier(.3,.8,.3,1)}
+    .care-btn:active{transform:scale(.96)}
+    .care-logo{position:relative;width:48px;height:48px;border-radius:50%;flex:none;display:grid;place-items:center;color:#0f1c2e;background:radial-gradient(circle at 30% 25%,#fff6cf 0%,#e2c067 40%,#a97c1f 100%);box-shadow:inset 0 -3px 6px rgba(120,80,0,.35),0 3px 10px rgba(212,175,55,.5)}
+    .care-logo svg{width:28px;height:28px}
+    .care-dot{position:absolute;right:0;top:1px;width:12px;height:12px;border-radius:50%;background:#22c55e;border:2px solid #0f1c2e;animation:careDot 2s infinite}
+    @keyframes careDot{0%{box-shadow:0 0 0 0 rgba(34,197,94,.7)}70%{box-shadow:0 0 0 9px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+    .care-txt{white-space:nowrap;max-width:175px;overflow:hidden;transition:max-width .35s ease,opacity .25s ease;background:linear-gradient(135deg,#fff 0%,#f3e5ad 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+    .care-fab.mini .care-btn{padding-right:5px;gap:0}
+    .care-fab.mini .care-txt{max-width:0;opacity:0}
+    .care-backdrop{position:fixed;inset:0;z-index:119;background:rgba(5,10,18,.45);opacity:0;pointer-events:none;transition:opacity .25s}
+    .care-backdrop.show{opacity:1;pointer-events:auto}
+    .care-menu{width:min(310px,calc(100vw - 28px));padding:14px;border-radius:22px;color:#fff;background:linear-gradient(160deg,#0b1626 0%,#182e4a 100%);border:1px solid rgba(212,175,55,.5);box-shadow:0 18px 50px rgba(0,0,0,.5);
+      transform-origin:bottom right;transform:translateY(12px) scale(.92);opacity:0;pointer-events:none;visibility:hidden;transition:all .28s cubic-bezier(.3,.9,.3,1.1)}
+    .care-fab.open .care-menu{transform:none;opacity:1;pointer-events:auto;visibility:visible}
+    .care-head{padding:2px 4px 12px;border-bottom:1px solid rgba(212,175,55,.25);margin-bottom:10px;line-height:1.4}
+    .care-head b{display:block;font-size:18px;background:var(--gold-gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+    .care-head span{font-size:12.5px;color:#cbd5e1}
+    .care-item{display:flex;align-items:center;gap:12px;padding:10px;border-radius:16px;color:#fff;text-decoration:none;transition:background .2s}
+    .care-item+.care-item{margin-top:6px}
+    .care-item:active,.care-item:hover{background:rgba(255,255,255,.08)}
+    .care-item .ci{width:44px;height:44px;border-radius:14px;flex:none;display:grid;place-items:center;color:#fff;font-style:normal;box-shadow:0 4px 12px rgba(0,0,0,.3)}
+    .care-item .ci svg{width:24px;height:24px;fill:currentColor}
+    .ci-wa{background:linear-gradient(135deg,#128c4a,#25d366)}
+    .ci-fb{background:linear-gradient(135deg,#1456c4,#1877f2)}
+    .care-item span b{display:block;font-size:15px}
+    .care-item span em{display:block;font-size:12px;font-style:normal;color:#94a3b8;margin-top:1px}
+
+    /* ===== WhatsApp এ অর্ডার করুন বাটন ===== */
+    .whatsapp-order-btn.wa-order{position:relative;overflow:hidden;grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:11px;padding:11px 14px;border-radius:16px;font-family:inherit;font-size:16.5px;font-weight:700;color:#fff;cursor:pointer;
+      background:linear-gradient(135deg,#064e3b 0%,#0f8a4b 50%,#25d366 100%);border:1.5px solid rgba(243,229,173,.8);box-shadow:0 8px 22px rgba(18,140,74,.4),inset 0 1px 0 rgba(255,255,255,.25);text-shadow:0 1px 2px rgba(0,0,0,.25)}
+    .whatsapp-order-btn.wa-order:hover{background:linear-gradient(135deg,#064e3b 0%,#0f8a4b 50%,#25d366 100%);transform:translateY(-2px)}
+    .wa-order .wa-ic{width:34px;height:34px;border-radius:50%;flex:none;display:grid;place-items:center;background:#fff;color:#16a34a;box-shadow:0 3px 8px rgba(0,0,0,.25),0 0 0 3px rgba(243,229,173,.55)}
+    .wa-order .wa-ic svg{width:20px;height:20px;fill:currentColor}
+    .wa-order .wa-txt{letter-spacing:.2px}
+    .wa-order::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.38),transparent);transform:skewX(-18deg);animation:waShine 3.6s ease-in-out infinite}
+    @keyframes waShine{0%,55%{left:-60%}100%{left:130%}}
+    .action-row:has(.wa-order) .facebook-order-btn{grid-column:1/-1}
   </style>
 </head>
 <body>
@@ -684,14 +728,38 @@
 
   <div id="toast" role="status" aria-live="polite"></div>
 
-  <!-- ফেসবুক (ওপরে) ও হোয়াটসঅ্যাপ (নিচে) -->
-  <div class="social-buttons">
-    <a href="https://www.facebook.com/SariBilash02" target="_blank" rel="noopener" class="social-button facebook-button" title="যেকোনো প্রয়োজনে আমাদের ফেসবুক পেজে মেসেজ করুন" aria-label="Facebook">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-    </a>
-    <a href="https://api.whatsapp.com/send?phone=8801628182808&text=%E0%A6%B9%E0%A7%8D%E0%A6%AF%E0%A6%BE%E0%A6%B2%E0%A7%8B%20%E0%A6%B6%E0%A6%BE%E0%A6%A1%E0%A6%BC%E0%A6%BF%20%E0%A6%AC%E0%A6%BF%E0%A6%B2%E0%A6%BE%E0%A6%B6!" target="_blank" rel="noopener" class="social-button whatsapp-button" title="যেকোনো প্রয়োজনে WhatsApp-এ মেসেজ করুন" aria-label="WhatsApp">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-    </a>
+  <!-- কাস্টমার সাপোর্ট (ফ্লোটিং বাটন) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="ic-wa" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></symbol>
+      <symbol id="ic-fb" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></symbol>
+      <symbol id="ic-care" viewBox="0 0 32 32">
+        <path d="M6 18v-3a10 10 0 0 1 20 0v3" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/>
+        <rect x="3.4" y="16.5" width="5.8" height="8.6" rx="2.9" fill="currentColor"/>
+        <rect x="22.8" y="16.5" width="5.8" height="8.6" rx="2.9" fill="currentColor"/>
+        <path d="M26 25.2c0 2.9-2.7 4.1-6.2 4.1h-2" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/>
+        <rect x="13.4" y="27.4" width="5.4" height="3.6" rx="1.8" fill="currentColor"/>
+        <path d="M16 22.4S11.4 19.5 11.4 16.4a2.45 2.45 0 0 1 4.6-1.2 2.45 2.45 0 0 1 4.6 1.2c0 3.1-4.6 6-4.6 6z" fill="currentColor"/>
+      </symbol>
+    </defs>
+  </svg>
+  <div class="care-backdrop" id="careBackdrop" onclick="closeCare()"></div>
+  <div class="care-fab" id="careFab">
+    <div class="care-menu" id="careMenu" role="menu" aria-hidden="true">
+      <div class="care-head"><b>কাস্টমার সাপোর্ট</b><span>যেকোনো প্রয়োজনে আমাদের সঙ্গে কথা বলুন</span></div>
+      <a class="care-item" href="https://api.whatsapp.com/send?phone=8801628182808&text=%E0%A6%B9%E0%A7%8D%E0%A6%AF%E0%A6%BE%E0%A6%B2%E0%A7%8B%20%E0%A6%B6%E0%A6%BE%E0%A6%A1%E0%A6%BC%E0%A6%BF%20%E0%A6%AC%E0%A6%BF%E0%A6%B2%E0%A6%BE%E0%A6%B6!" target="_blank" rel="noopener" role="menuitem">
+        <i class="ci ci-wa"><svg><use href="#ic-wa"/></svg></i>
+        <span><b>WhatsApp এ মেসেজ করুন</b><em>সরাসরি চ্যাটে কথা বলুন</em></span>
+      </a>
+      <a class="care-item" href="https://www.facebook.com/SariBilash02" target="_blank" rel="noopener" role="menuitem">
+        <i class="ci ci-fb"><svg><use href="#ic-fb"/></svg></i>
+        <span><b>ফেসবুক পেজে মেসেজ করুন</b><em>Sari Bilash পেজে মেসেজ দিন</em></span>
+      </a>
+    </div>
+    <button type="button" class="care-btn" id="careBtn" onclick="toggleCare()" aria-expanded="false" aria-controls="careMenu" aria-label="কাস্টমার সাপোর্ট">
+      <span class="care-logo"><svg><use href="#ic-care"/></svg><u class="care-dot"></u></span>
+      <span class="care-txt">কাস্টমার সাপোর্ট</span>
+    </button>
   </div>
 
   <script>
@@ -1037,7 +1105,7 @@
               </div>
               <div class="help-note">💬 যেকোনো প্রয়োজনে বা বিস্তারিত জানতে WhatsApp অথবা ফেসবুক পেজে মেসেজ করুন</div>
               <div class="action-row">
-                <button class="whatsapp-order-btn" onclick="directWhatsAppOrder('${id}')">💬 WhatsApp</button>
+                <button class="whatsapp-order-btn wa-order" onclick="directWhatsAppOrder('${id}')"><span class="wa-ic"><svg><use href="#ic-wa"/></svg></span><span class="wa-txt">WhatsApp এ অর্ডার করুন</span></button>
                 <button class="facebook-order-btn" onclick="directFacebookOrder()">📘 ফেসবুক পেজ</button>
               </div>
             </div>
@@ -1168,7 +1236,7 @@
             </div>
             <div class="help-note">ছবি, কাপড়, রং, দাম বা ডেলিভারি — যেকোনো কিছু বিস্তারিত জানতে WhatsApp অথবা ফেসবুক পেজে মেসেজ করুন</div>
             <div class="action-row">
-              <button class="whatsapp-order-btn" onclick="directWhatsAppOrder('${id}',${det.idx})">💬 WhatsApp-এ জানুন</button>
+              <button class="whatsapp-order-btn wa-order" onclick="directWhatsAppOrder('${id}',${det.idx})"><span class="wa-ic"><svg><use href="#ic-wa"/></svg></span><span class="wa-txt">WhatsApp এ অর্ডার করুন</span></button>
               <button class="facebook-order-btn" onclick="directFacebookOrder()">📘 ফেসবুক পেজ</button>
             </div>
           </div>
@@ -2902,6 +2970,28 @@
       if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
         window.addEventListener("load", function () { navigator.serviceWorker.register("sw.js").catch(function () {}); });
       }
+    })();
+  </script>
+
+  <script>
+    (function () {
+      var fab = document.getElementById("careFab"), back = document.getElementById("careBackdrop"), btn = document.getElementById("careBtn"), menu = document.getElementById("careMenu");
+      function setOpen(o) {
+        fab.classList.toggle("open", o); back.classList.toggle("show", o);
+        btn.setAttribute("aria-expanded", o ? "true" : "false"); menu.setAttribute("aria-hidden", o ? "false" : "true");
+        if (o) fab.classList.remove("mini");
+      }
+      window.toggleCare = function () { setOpen(!fab.classList.contains("open")); };
+      window.closeCare = function () { setOpen(false); };
+      document.addEventListener("keydown", function (e) { if (e.key === "Escape") setOpen(false); });
+      menu.addEventListener("click", function (e) { if (e.target.closest("a")) setTimeout(function () { setOpen(false); }, 150); });
+      var last = window.scrollY || 0;
+      window.addEventListener("scroll", function () {
+        if (fab.classList.contains("open")) return;
+        var y = window.scrollY || 0;
+        if (y > last + 6 && y > 160) fab.classList.add("mini"); else if (y < last - 6 || y < 80) fab.classList.remove("mini");
+        last = y;
+      }, { passive: true });
     })();
   </script>
 </body>
