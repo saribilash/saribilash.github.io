@@ -619,6 +619,57 @@
       #dynamicReviewsContainer.reviews-grid::-webkit-scrollbar{display:none}
       #dynamicReviewsContainer .review-card{flex:0 0 82%;max-width:82%;scroll-snap-align:center}
     }
+  
+    /* ===== নতুন: বিস্তারিত পেজের উপরের অফার + অর্ডার বক্স + সুন্দর কার্ট ===== */
+    .offer-top{display:flex;flex-direction:column;gap:8px;margin:0 0 12px}
+    .offer-free{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#047857,#10b981);color:#fff;border-radius:14px;padding:10px 14px;box-shadow:0 6px 16px rgba(5,150,105,.25)}
+    .offer-free .of-ic{font-size:26px;line-height:1}
+    .offer-free b{display:block;font-size:16px}
+    .offer-free small{display:block;font-size:12.5px;opacity:.92;font-weight:500;margin-top:1px}
+    .offer-pending{background:#fef3c7;color:#92400e;border:1px solid #fcd34d;border-radius:12px;padding:8px 12px;font-weight:700;font-size:14px}
+    .offer-top .coupon-box{margin:0}
+    .ord-box{background:linear-gradient(135deg,#fffaf0,#fff6df);border:1.5px solid rgba(212,175,55,.5);border-radius:16px;padding:12px;margin:0 0 12px}
+    .ord-box .ob-title{font-weight:800;color:var(--navy);font-size:14.5px;margin-bottom:6px}
+    .ord-box .color-chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:8px;margin:4px 0}
+    .ord-box .color-chip{padding:4px 8px 4px 4px;gap:7px;min-width:0;border-width:2px;border-radius:12px}
+    .ord-box .color-chip img{width:36px;height:44px;border-radius:7px;flex:none}
+    .cc-t{display:flex;flex-direction:column;align-items:flex-start;min-width:0;line-height:1.25;text-align:left}
+    .cc-t b{font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+    .cc-t small{font-size:11px;font-weight:600;color:#047857;white-space:nowrap}
+    .qty-box.big button{width:44px;height:44px;font-size:22px}
+    .qty-box.big b{min-width:76px;font-size:16px}
+    .ord-total{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:10px;border-top:1px dashed #cbd5e1;font-weight:700;color:var(--navy);font-size:14.5px}
+    .ord-total b{color:#b8860b;font-size:21px}
+    /* কার্ট */
+    #freeBar{margin:0 0 10px}
+    .fb{border-radius:14px;padding:10px 12px;font-size:13.5px;font-weight:700}
+    .fb.go{background:#fffbeb;border:1px solid #fcd34d;color:#92400e}
+    .fb.ok{background:linear-gradient(135deg,#047857,#10b981);color:#fff}
+    .fb-track{height:9px;background:rgba(146,64,14,.15);border-radius:20px;overflow:hidden;margin-top:7px}
+    .fb-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,#d4af37,#f59e0b);transition:width .4s}
+    .cart-head{display:flex;justify-content:space-between;align-items:center;font-size:13.5px;font-weight:800;color:var(--navy);margin:2px 2px 8px}
+    .cart-head span{background:var(--navy);color:#f3e5ad;border-radius:20px;padding:3px 12px;font-size:12.5px}
+    .cl-card{background:#fff;border:1px solid #eadfc2;border-radius:16px;padding:10px;margin:0 0 10px;box-shadow:0 4px 14px rgba(15,28,46,.06)}
+    .cl-top{display:grid;grid-template-columns:62px 1fr auto;gap:10px;align-items:start}
+    .cl-top img,.cl-ph{width:62px;height:76px;object-fit:cover;border-radius:10px;border:1px solid #eadfc2;background:#eee}
+    .cl-name{display:block;color:var(--navy);font-size:15.5px;line-height:1.3}
+    .cl-unit{font-size:13px;color:#b8860b;font-weight:700;margin-top:3px}
+    .cl-del{background:#fee2e2;color:#b91c1c;border:0;border-radius:10px;width:34px;height:34px;font-size:16px}
+    .cl-bottom{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;margin-top:8px;padding-top:8px;border-top:1px dashed #e5dcc3}
+    .cl-sub{text-align:right;font-size:12px;color:var(--muted)}
+    .cl-sub b{display:block;font-size:19px;color:#b8860b}
+    .cl-more{width:100%;margin-top:8px;background:#fff8e7;border:1.5px dashed var(--gold);color:var(--navy);border-radius:10px;padding:7px;font:inherit;font-size:13px;font-weight:700}
+    #couponChips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+  
+    .cr{display:grid;grid-template-columns:44px 1fr auto;gap:10px;align-items:center;background:#fff;border:2px solid #e2e8f0;border-radius:12px;padding:5px 8px 5px 5px;margin:6px 0;transition:all .2s}
+    .cr:not(:has(img)){grid-template-columns:1fr auto;padding-left:10px}
+    .cr.on{border-color:var(--gold);background:#fff8e7;box-shadow:0 0 0 3px var(--gold-glow)}
+    .cr.out{opacity:.55}
+    .cr img{width:44px;height:54px;object-fit:cover;border-radius:8px;background:#eee;cursor:zoom-in}
+    .cr-t b{display:flex;align-items:center;gap:6px;color:var(--navy);font-size:15px}
+    .cr-t small{display:block;font-size:11.5px;font-weight:600;color:#047857;margin-top:2px}
+    .cr .qty-box button{width:36px;height:38px}
+    .cr .qty-box b{min-width:36px;font-size:16px}
   </style>
 </head>
 <body>
@@ -821,11 +872,13 @@
     <button class="close-modal-btn" onclick="document.querySelector('#cartDialog').close()" aria-label="বন্ধ করুন">&times;</button>
     <h3 id="cartTitle">🛒 আপনার কার্ট</h3>
     <div id="buyNote" class="buy-note" style="display:none;"></div>
+    <div id="freeBar"></div>
     <div id="cartItems"></div>
     <div id="cartCheckout" style="display:none;">
       <div class="admin-card coupon-card" id="couponCard">
         <label class="field-label" for="couponInput" style="margin-top:0;">🎟️ কুপন কোড (থাকলে)</label>
         <div class="row"><input id="couponInput" placeholder="কুপন কোড লিখুন" style="margin:0;text-transform:uppercase;" autocomplete="off"><button type="button" class="btn order-btn" style="padding:10px 14px;white-space:nowrap;flex:0 0 auto;font-size:15px;" onclick="applyCoupon()">প্রয়োগ করুন</button></div>
+        <div id="couponChips"></div>
         <div id="couponMsg" class="small" style="margin-top:6px;"></div>
       </div>
       <div id="cartSummary" class="admin-card"></div>
@@ -996,7 +1049,7 @@
     let currentAdminTabName = localStorage.getItem("sari_admin_active_tab") || "products";
     let reloadTimer = null, searchTimer = null;
     let cardSel = {};                       // কার্ডে কোন রঙের ছবি দেখানো হচ্ছে
-    let det = { id: null, idx: 0, qty: 1 }; // বিস্তারিত পেজের অবস্থা
+    let det = { id: null, idx: 0, qty: 1, q: {} }; // বিস্তারিত পেজের অবস্থা
     let cart = loadCart();
     let checkoutMode = "cart", stashedCart = null; // "buy" = শুধু একটা শাড়ির সরাসরি অর্ডার (কার্ট আলাদা থাকে)
     let adminOrders = [];
@@ -1346,6 +1399,23 @@
       const cp = productCoupons(p).some(c => couponInfo[c] === undefined) ? '<span class="pill p-coupon">🎟️ কুপন চলবে</span>' : "";
       return stock + del + fm + cp;
     }
+    function freeDeliveryTopHtml(p) {
+      if (p.free_delivery) return `<div class="offer-free"><span class="of-ic">🚚</span><div><b>ফ্রি ডেলিভারি!</b><small>এই শাড়ি অর্ডারে ডেলিভারি চার্জ লাগবে না</small></div></div>`;
+      const fm = numOrNull(p.free_min), price = Number(p.price) || 0;
+      if (!(fm > 0)) return "";
+      const n = price > 0 ? Math.ceil(fm / price) : 0;
+      const sub = n > 1 ? `এই শাড়ি ${taka(n)} পিস নিলেই ডেলিভারি ফ্রি` : "এই শাড়ি নিলেই ডেলিভারি ফ্রি";
+      return `<div class="offer-free"><span class="of-ic">🚚</span><div><b>${taka(fm)}/- বা বেশি টাকার নিলে ফ্রি ডেলিভারি</b><small>${sub}</small></div></div>`;
+    }
+    function offerTopHtml(p) {
+      const pending = productCoupons(p).some(c => couponInfo[c] === undefined) ? '<div class="offer-pending">🎟️ এই শাড়িতে কুপন চলবে</div>' : "";
+      const inner = freeDeliveryTopHtml(p) + couponHtml(p) + pending;
+      return inner ? `<div class="offer-top">${inner}</div>` : "";
+    }
+    function stockPillHtml(p) {
+      const s = stockOf(p);
+      return s <= 0 ? '<span class="pill p-out">❌ স্টক শেষ</span>' : (s <= 5 ? `<span class="pill p-low">⚡ মাত্র ${taka(s)} পিস স্টকে আছে</span>` : `<span class="pill p-stock">✅ ${s === Infinity ? "স্টকে আছে" : taka(s) + " পিস স্টকে আছে"}</span>`);
+    }
     function priceHtml(p) {
       const reg = Number(p.regular_price || 0), sale = Number(p.price || 0);
       return `<div class="price-container"><p class="price">মূল্য: ${taka(sale)}/-</p>${reg > sale ? `<span class="original-price">আসল দাম: ${taka(reg)}/-</span>` : ""}</div>`;
@@ -1458,7 +1528,8 @@
     function openProduct(id) {
       const p = getProduct(id);
       if (!p) return;
-      det = { id: p.id, idx: Math.min(cardSel[p.id] || 0, Math.max(0, productColors(p).length - 1)), qty: 1 };
+      det = { id: p.id, idx: Math.min(cardSel[p.id] || 0, Math.max(0, productColors(p).length - 1)), qty: 1, q: {} };
+      det.q[productColors(p)[det.idx] || NO_COLOR] = 1;
       renderDetail();
       const d = $("#productDialog");
       if (!d.open) d.showModal();
@@ -1472,28 +1543,38 @@
       const img = images[det.idx] || images[0] || "";
       const sold = isSoldOut(p);
       const curColor = colors[det.idx] || colors[0] || NO_COLOR;
-      const soldColor = sold || colorMax(p, curColor) <= 0;
-      const maxq = Math.max(1, colorMax(p, curColor));
-      det.qty = Math.min(Math.max(1, det.qty), maxq);
-      const id = esc(p.id);
+      const clist = colors.length ? colors : [NO_COLOR];
+      const soldColor = sold || clist.every(c => colorMax(p, c) <= 0);
+      det.q = det.q || {};
+            const id = esc(p.id);
       const isW = getWishlist().includes(String(p.id));
       const tags = [p.category, p.fabric].filter(Boolean).map(t => `<span class="spec-tag">${esc(t)}</span>`).join("");
-      $("#productDetail").innerHTML = `<div class="detail-head"><span class="code-chip">🔖 কোড: ${esc(productCode(p.id))}</span><h2>${esc(p.name)}</h2>${p.description ? `<p class="desc" style="white-space:pre-line;">${esc(p.description)}</p>` : ""}<div class="spec-tags">${specTags(p)}</div>${priceHtml(p)}${couponHtml(p)}<div>${pillsHtml(p)}</div></div><div class="detail">
+      const totalPcs = clist.reduce((a, c) => a + (det.q[c] || 0), 0);
+      const orderBox = `<div class="ord-box">
+        <div class="ob-title">🎨 রং ও 🧮 পিস বাছুন</div>
+        <div class="small" style="margin-bottom:4px;">যে রংয়ের যতটি লাগবে, সেই রংয়ের পাশে + চাপুন</div>
+        ${clist.map((c, i) => { const q = det.q[c] || 0, out = colorMax(p, c) <= 0; return `<div class="cr ${q > 0 ? "on" : ""} ${out ? "out" : ""}">
+          ${colors.length && images[i] ? `<img src="${esc(images[i])}" alt="" onclick="detailPreview(${i})">` : ""}
+          <div class="cr-t"><b>${colors.length ? colorDot(c) + esc(c) : "পিস সংখ্যা"}</b><small>${out ? "স্টক শেষ" : stockShort(p, c)}</small></div>
+          <div class="qty-box"><button type="button" ${out ? "disabled" : ""} onclick="detailQtyColor(${i},-1)" aria-label="কমান">−</button><b>${taka(q)}</b><button type="button" ${out ? "disabled" : ""} onclick="detailQtyColor(${i},1)" aria-label="বাড়ান">+</button></div>
+        </div>`; }).join("")}
+        <div class="ord-total"><span>মোট ${taka(totalPcs)} পিস × ${taka(p.price)}/-</span><b>${taka(Number(p.price) * totalPcs)}/-</b></div>
+      </div>`;
+      $("#productDetail").innerHTML = `<div class="detail-head">${offerTopHtml(p)}<span class="code-chip">🔖 কোড: ${esc(productCode(p.id))}</span><h2>${esc(p.name)}</h2>${p.description ? `<p class="desc" style="white-space:pre-line;">${esc(p.description)}</p>` : ""}<div class="spec-tags">${specTags(p)}</div>${priceHtml(p)}<div>${stockPillHtml(p)}</div></div><div class="detail">
         <div>
           <div style="position:relative;">
             ${badgesHtml(p)}
             <img class="detail-img" src="${esc(img)}" alt="${esc(p.name)}" onclick="openZoomModal(this.src)">
           </div>
           <div class="small" style="margin-top:6px;">🔍 ছবিতে ট্যাপ করে বড় করে জুম করুন</div>
-          ${colors.length > 1 ? `<div class="variant-thumbs">${colors.map((c, i) => `<button type="button" class="variant-thumb ${i === det.idx ? "selected" : ""}" onclick="detailSelect(${i})">${images[i] ? `<img src="${esc(images[i])}" alt="${esc(c)}">` : ""}<span>${esc(c)}${stockLabel(p, c)}</span></button>`).join("")}</div>` : ""}
         </div>
         <div>
 
-          ${colors.length ? `<div class="color-big">${colorDot(colors[det.idx] || colors[0])}🎨 রং: ${esc(colors[det.idx] || colors[0])}<span style="font-size:13px;font-weight:600;color:#047857;margin-left:4px;">${stockLabel(p, colors[det.idx] || colors[0])}</span></div>` : ""}
+          ${orderBox}
           <div class="product-actions">
             <div class="action-row">
-              <button class="cart-btn" ${soldColor ? "disabled" : ""} onclick="detailAdd(false)">${soldColor ? "এই রংয়ের স্টক শেষ" : "🛒 কার্টে রাখুন"}</button>
-              <button class="buy-btn" ${soldColor ? "disabled" : ""} onclick="detailAdd(true)">${soldColor ? "এই রংয়ের স্টক শেষ" : "🛍️ এখনই অর্ডার করুন"}</button>
+              <button class="cart-btn" ${soldColor ? "disabled" : ""} onclick="detailAdd(false)">${soldColor ? "স্টক শেষ" : "🛒 কার্টে রাখুন"}</button>
+              <button class="buy-btn" ${soldColor ? "disabled" : ""} onclick="detailAdd(true)">${soldColor ? "স্টক শেষ" : "🛍️ এখনই অর্ডার করুন" + (totalPcs ? " (" + taka(totalPcs) + " পিস)" : "")}</button>
             </div>
             <div class="action-row">
               <button class="btn wish-big ${isW ? "active" : ""}" onclick="toggleWishlist('${id}')" data-card-wish-btn="${id}">${isW ? "❤️ উইশলিস্টে আছে" : "🤍 উইশলিস্টে রাখুন"}</button>
@@ -1501,7 +1582,7 @@
             </div>
             <div class="help-note">ছবি, কাপড়, রং, দাম বা ডেলিভারি — যেকোনো কিছু বিস্তারিত জানতে WhatsApp অথবা ফেসবুক পেজে মেসেজ করুন</div>
             <div class="action-row">
-              <button class="whatsapp-order-btn wa-order" onclick="directWhatsAppOrder('${id}',${det.idx},${det.qty})"><span class="wa-ic"><svg><use href="#ic-wa"/></svg></span><span class="wa-txt">WhatsApp এ অর্ডার করুন</span></button>
+              <button class="whatsapp-order-btn wa-order" onclick="detailWhatsApp()"><span class="wa-ic"><svg><use href="#ic-wa"/></svg></span><span class="wa-txt">WhatsApp এ অর্ডার করুন</span></button>
               <button class="facebook-order-btn" onclick="directFacebookOrder()">📘 ফেসবুক পেজ</button>
             </div>
           </div>
@@ -1510,21 +1591,51 @@
       _dlg.scrollTop = _st;
     }
     function detailSelect(i) { det.idx = i; renderVariant(det.id, i); renderDetail(); }
-    function detailQty(d) {
+    function detailPreview(i) { det.idx = i; renderVariant(det.id, i); renderDetail(); }
+    function detailQtyColor(i, d) {
       const p = getProduct(det.id); if (!p) return;
-      const next = det.qty + d;
-      if (next < 1) return;
-      if (next > colorMax(p, productColors(p)[det.idx] || productColors(p)[0] || NO_COLOR)) { toast(`এই রংয়ের সর্বোচ্চ ${taka(colorMax(p, productColors(p)[det.idx] || productColors(p)[0] || NO_COLOR))} টি নেওয়া যাবে`); return; }
-      det.qty = next; renderDetail();
+      const colors = productColors(p), list = colors.length ? colors : [NO_COLOR], c = list[i];
+      if (c === undefined) return;
+      const cur = det.q[c] || 0, next = cur + d;
+      if (next < 0) return;
+      if (d > 0) {
+        if (next > colorMax(p, c)) { toast(`এই রংয়ের সর্বোচ্চ ${taka(colorMax(p, c))} টি নেওয়া যাবে`); return; }
+        const total = Object.values(det.q).reduce((a, b) => a + b, 0);
+        if (total + d > maxQty(p)) { toast(`এই শাড়ি সর্বমোট সর্বোচ্চ ${taka(maxQty(p))} টি নেওয়া যাবে`); return; }
+        if (colors.length) { det.idx = i; renderVariant(det.id, i); }
+      }
+      det.q[c] = next; renderDetail();
+    }
+    function detailItems() {
+      const p = getProduct(det.id); if (!p) return [];
+      const colors = productColors(p), list = colors.length ? colors : [NO_COLOR];
+      return list.map(c => ({ color: c, qty: det.q[c] || 0 })).filter(x => x.qty > 0);
     }
     function detailAdd(buy) {
       const p = getProduct(det.id); if (!p) return;
-      const color = productColors(p)[det.idx] || productColors(p)[0] || NO_COLOR;
-      if (buy) { startBuyNow(p.id, color, det.qty, () => $("#productDialog").close()); return; }
-      if (addToCart(p.id, color, det.qty)) {
-        $("#productDialog").close();
-        toast("🛒 কার্টে যোগ হয়েছে");
-      }
+      const items = detailItems();
+      if (!items.length) { toast("কমপক্ষে ১ পিস বাছুন — রংয়ের পাশে + চাপুন"); return; }
+      if (buy) { startBuyNowMulti(p.id, items, () => $("#productDialog").close()); return; }
+      let n = 0;
+      for (const it of items) { if (addToCart(p.id, it.color, it.qty)) { n += it.qty; det.q[it.color] = 0; } else break; }
+      if (n === items.reduce((a, x) => a + x.qty, 0)) { $("#productDialog").close(); toast(`🛒 ${taka(n)} পিস কার্টে যোগ হয়েছে`); }
+      else if (n) renderDetail();
+    }
+    function detailWhatsApp() {
+      const p = getProduct(det.id); if (!p) return;
+      const items = detailItems();
+      if (!items.length) { toast("কমপক্ষে ১ পিস বাছুন — রংয়ের পাশে + চাপুন"); return; }
+      const q = items.reduce((a, x) => a + x.qty, 0);
+      const f = freeInfoFor(p, q), gross = Number(p.price) * q, disc = lineDiscountOf(p, q);
+      let del;
+      if (f.free) del = "🚚 ডেলিভারি: ফ্রি";
+      else if (settings.dhaka_charge === null) del = "🚚 ডেলিভারি চার্জ: কনফার্মের সময় জানানো হবে";
+      else del = `🚚 ডেলিভারি চার্জ: ${taka(settings.dhaka_charge)}/-` + (f.min > 0 ? ` (এই শাড়ি আরও ${taka(f.need)}/- টাকার নিলে ফ্রি)` : "");
+      const colorLines = items.map(x => `   • ${x.color === NO_COLOR ? "সাধারণ" : x.color}: ${taka(x.qty)} পিস`).join("\n");
+      const msg = `হ্যালো শাড়ি বিলাশ! 👋\nআমি এই শাড়িটি অর্ডার করতে চাই:\n\n🛍️ শাড়ির নাম: ${p.name}\n🔖 শাড়ির কোড: ${productCode(p.id)}\n🎨 রং ও পিস:\n${colorLines}\n📦 মোট পিস: ${taka(q)} টি\n💰 এক পিসের দাম: ${taka(p.price)}/- টাকা\n` +
+        (disc > 0 ? `🎟️ কুপন (${appliedCoupon.code}): -${taka(disc)}/-\n` : "") +
+        `🧮 শাড়ির মোট দাম: ${taka(gross - disc)}/- টাকা\n${del}\n` + (p.blouse_free ? "🧵 ব্লাউজ পিস ফ্রি\n" : "") + `\nঅনুগ্রহ করে অর্ডারের প্রক্রিয়াটি জানান।`;
+      openExternal(`https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(msg)}`);
     }
     function shareProduct(id) {
       const p = getProduct(id); if (!p) return;
@@ -1683,6 +1794,17 @@
       openCart();
       return true;
     }
+    function startBuyNowMulti(pid, items, onOk) {
+      if (checkoutMode === "buy") return false;
+      const saved = cart;
+      checkoutMode = "buy"; stashedCart = saved; cart = [];
+      for (const it of items) {
+        if (!addToCart(pid, it.color, it.qty)) { cart = saved; stashedCart = null; checkoutMode = "cart"; updateCartBadge(); return false; }
+      }
+      if (onOk) onOk();
+      openCart();
+      return true;
+    }
     function endBuyNow() {
       if (checkoutMode !== "buy") return;
       cart = stashedCart || []; stashedCart = null; checkoutMode = "cart";
@@ -1739,33 +1861,52 @@
       const lines = cart.map((i, idx) => ({ i, idx, p: getProduct(i.pid) })).filter(x => x.p);
       if (!lines.length) {
         box.innerHTML = buyMode ? "<p style='text-align:center;color:var(--muted);padding:24px 0;'>এই অর্ডারে কোনো শাড়ি নেই।</p>" : "<p style='text-align:center;color:var(--muted);padding:24px 0;'>আপনার কার্ট এখন খালি। পছন্দের শাড়ি কার্টে রাখুন।</p>";
-        $("#cartCheckout").style.display = "none";
+        $("#cartCheckout").style.display = "none"; $("#freeBar").innerHTML = ""; $("#couponChips").innerHTML = "";
         return;
       }
       $("#cartCheckout").style.display = "block";
       const hasCp = lines.some(({ p }) => productCoupons(p).some(c => couponInfo[c] !== null));
-      $("#couponCard").style.display = hasCp ? "" : "none";
+      $("#couponCard").style.display = hasCp ? "" : "none"; renderCouponChips(lines);
       if (!hasCp && appliedCoupon) { appliedCoupon = null; $("#couponInput").value = ""; $("#couponMsg").textContent = ""; }
-      box.innerHTML = lines.map(({ i, idx, p }) => {
+      box.innerHTML = cartHeadHtml(lines) + lines.map(({ i, idx, p }) => {
         const colors = productColors(p), images = productImages(p);
         const ci = Math.max(0, colors.indexOf(i.color));
         const img = images[ci] || images[0] || "";
         const colorSel = (colors.length < 2 && i.color !== NO_COLOR ? `<div class="color-big">${colorDot(i.color)}🎨 রং: ${esc(i.color)}</div>` : "") + (colors.length > 1 ? `<div class="pick-label">🎨 রং বাছুন</div><div class="color-chips">${colors.map((c, k) => `<button type="button" class="color-chip ${c === i.color ? "sel" : ""}" onclick="pickCartColor(${idx},${k})">${images[k] ? `<img src="${esc(images[k])}" alt="">` : colorDot(c)}<span class="cc-t"><b>${esc(c)}</b><small>${stockShort(p, c)}</small></span></button>`).join("")}</div>` : "");
-        return `<div class="cart-line">
-          ${img ? `<img src="${esc(img)}" alt="${esc(p.name)}">` : `<div style="width:60px;height:72px;background:#eee;border-radius:10px;"></div>`}
-          <div>
-            <b style="color:var(--navy);">${esc(p.name)}</b> <span class="small">(${esc(productCode(p.id))})</span>
-            ${colorSel}
-            <div style="margin-top:6px;font-weight:700;color:var(--navy);font-size:12.5px;">কত পিস নিবেন:</div><div class="qty-box"><button onclick="changeCartQty(${idx},-1)" aria-label="কমান">−</button><b style="min-width:64px;">${taka(i.qty)} পিস</b><button onclick="changeCartQty(${idx},1)" aria-label="বাড়ান">+</button></div><div class="small" style="margin-top:4px;">${taka(p.price)}/- × ${taka(i.qty)} পিস</div>
+        const other = colors.length > 1 && colors.some(c => c !== i.color && colorMax(p, c) > 0 && !cart.some(o => o.pid === i.pid && o.color === c));
+        return `<div class="cl-card">
+          <div class="cl-top">
+            ${img ? `<img src="${esc(img)}" alt="${esc(p.name)}">` : `<div class="cl-ph"></div>`}
+            <div><b class="cl-name">${esc(p.name)}</b><span class="small">কোড: ${esc(productCode(p.id))}</span><div class="cl-unit">${taka(p.price)}/- প্রতি পিস</div></div>
+            <button type="button" class="cl-del" onclick="removeCartItem(${idx})" aria-label="মুছুন">🗑️</button>
           </div>
-          <div style="text-align:right;">
-            <b style="color:#b8860b;">${taka(p.price * i.qty)}/-</b><br>
-            <button class="danger" style="margin-top:8px;padding:5px 9px;font-size:12px;" onclick="removeCartItem(${idx})">মুছুন</button>
+          ${colorSel}
+          <div class="cl-bottom">
+            <div><div class="pick-label" style="margin-top:0;">কত পিস নিবেন</div><div class="qty-box"><button type="button" onclick="changeCartQty(${idx},-1)" aria-label="কমান">−</button><b style="min-width:64px;">${taka(i.qty)} পিস</b><button type="button" onclick="changeCartQty(${idx},1)" aria-label="বাড়ান">+</button></div></div>
+            <div class="cl-sub">${taka(p.price)}/- × ${taka(i.qty)}<b>${taka(p.price * i.qty)}/-</b></div>
           </div>
+          ${other ? `<button type="button" class="cl-more" onclick="addOtherColor(${idx})">➕ এই শাড়ির আরেকটা রং যোগ করুন</button>` : ""}
         </div>`;
       }).join("");
       renderCartSummary();
     }
+
+    function cartHeadHtml(lines) {
+      const pcs = lines.reduce((a, x) => a + x.i.qty, 0);
+      return `<div class="cart-head">আপনার বাছাই করা শাড়ি <span>${taka(lines.length)} লাইন · ${taka(pcs)} পিস</span></div>`;
+    }
+    function addOtherColor(idx) {
+      const it = cart[idx]; if (!it) return;
+      const p = getProduct(it.pid); if (!p) return;
+      const c = productColors(p).find(c => c !== it.color && colorMax(p, c) > 0 && !cart.some(o => o.pid === it.pid && o.color === c));
+      if (c && addToCart(it.pid, c, 1)) toast(`🎨 “${c}” রং যোগ হয়েছে — পিস ঠিক করে নিন`);
+    }
+    function renderCouponChips(lines) {
+      const box = $("#couponChips"); if (!box) return;
+      const codes = [...new Set(lines.flatMap(({ p }) => productCoupons(p)))].filter(c => couponInfo[c] && (!appliedCoupon || appliedCoupon.code !== c));
+      box.innerHTML = codes.length ? codes.map(c => `<button type="button" class="chip-btn" onclick="quickCoupon('${esc(c)}')">🎟️ ${esc(c)} ব্যবহার করুন</button>`).join("") : "";
+    }
+    function quickCoupon(code) { $("#couponInput").value = code; applyCoupon(); }
 
     function changeCartColor(idx, color) {
       const it = cart[idx]; if (!it) return;
@@ -1879,7 +2020,7 @@
       Object.values(perProd).forEach(({ p, qty }) => {
         const f = freeInfoFor(p, qty);
         if (f.free) { if (!freeBy) freeBy = p.name; }
-        else if (f.min > 0 && (!nearest || f.need < nearest.need)) nearest = { need: f.need, name: p.name };
+        else if (f.min > 0 && (!nearest || f.need < nearest.need)) nearest = { need: f.need, name: p.name, min: f.min, net: f.net };
       });
       let discount = 0;
       if (appliedCoupon) {
@@ -1905,13 +2046,17 @@
         if (t.discount > 0) { cm.className = "small msg-ok"; cm.textContent = `✅ কুপন চালু: ${couponLabel(appliedCoupon)} (শুধু কুপন চলা শাড়িতে)`; }
         else { cm.className = "small msg-err"; cm.textContent = "এই কুপন আপনার কার্টের কোনো শাড়িতে প্রযোজ্য নয়।"; }
       }
+      renderCouponChips(cart.map(i => ({ i, p: getProduct(i.pid) })).filter(x => x.p));
+      const fb = $("#freeBar");
+      if (fb) fb.innerHTML = t.free ? `<div class="fb ok">🎉 অভিনন্দন! “${esc(t.freeBy)}” শাড়ির জন্য আপনার ডেলিভারি ফ্রি</div>`
+        : (t.nearest ? `<div class="fb go">🚚 “${esc(t.nearest.name)}” শাড়িতে আরও ${taka(t.nearest.need)}/- টাকার নিলে ডেলিভারি ফ্রি!<div class="fb-track"><div class="fb-fill" style="width:${Math.max(6, Math.min(100, Math.round(t.nearest.net / t.nearest.min * 100)))}%"></div></div></div>` : "");
       const delRow = t.unknown ? "" : `<div class="sum-row"><span>ডেলিভারি চার্জ</span><b>${t.free ? "ফ্রি" : taka(t.charge) + "/-"}</b></div>`;
       $("#cartSummary").innerHTML = `
         <div class="sum-row"><span>শাড়ির দাম</span><b>${taka(t.subtotal)}/-</b></div>
         ${t.discount > 0 ? `<div class="sum-row" style="color:#047857;"><span>🎟️ কুপন (${esc(appliedCoupon.code)} — ${couponLabel(appliedCoupon)})</span><b>− ${taka(t.discount)}/-</b></div>` : ""}
         ${delRow}
         <div class="sum-row sum-total"><span>${t.unknown ? "সর্বমোট (ডেলিভারি চার্জ ছাড়া)" : "সর্বমোট"}</span><span>${taka(t.total)}/-</span></div>
-        ${t.unknown ? `<div class="need-note">ডেলিভারি চার্জ অর্ডার কনফার্মের সময় আপনাকে জানানো হবে।</div>` : ""}${note}
+        ${t.unknown ? `<div class="need-note">ডেলিভারি চার্জ অর্ডার কনফার্মের সময় আপনাকে জানানো হবে।</div>` : ""}
         <div class="small" style="margin-top:6px;">চূড়ান্ত দাম, ছাড় ও ডেলিভারি চার্জ অর্ডারের সময় সার্ভার ঠিক করে দেবে।</div>`;
       $("#bkashAmountDisplay").textContent = taka(t.total) + "/-";
     }
