@@ -235,6 +235,31 @@
     .admin-thumb{width:56px;height:66px;object-fit:cover;border-radius:8px;background:#eee;flex:none;display:flex;align-items:center;justify-content:center;font-size:10px;color:#888;text-align:center}
     .admin-row-name{flex:1;min-width:130px;font-size:16px;color:var(--navy)}
     .hidden-tag{color:var(--red);font-weight:700;font-size:12.5px}
+
+    /* কার্ট ও অর্ডার পেজ — ছোট ও প্রিমিয়াম */
+    #cartDialog{max-width:500px;padding:20px 18px 18px;border:1px solid rgba(212,175,55,.4)}
+    #cartTitle{font-size:20px;margin:0 44px 12px 0;color:var(--navy);padding-bottom:9px;border-bottom:1px solid rgba(212,175,55,.45)}
+    #cartDialog .close-modal-btn{width:36px;height:36px;font-size:26px;top:14px;right:14px}
+    #cartDialog .cart-line{grid-template-columns:60px 1fr auto;gap:10px;padding:10px 0}
+    #cartDialog .cart-line img{width:60px;height:72px;border-radius:10px;border:1px solid #eadfc2}
+    #cartDialog .qty-box button{width:30px;height:30px;font-size:17px}
+    #cartDialog .qty-box b{min-width:56px!important;font-size:13.5px}
+    #cartDialog .color-big{font-size:13px;padding:2px 10px;margin:4px 0;border-width:1.5px}
+    #cartDialog .color-chips{gap:6px;margin:6px 0}
+    #cartDialog .color-chip{font-size:12px;padding:3px 9px 3px 3px;border-width:2px;border-radius:10px;gap:6px}
+    #cartDialog .color-chip img{width:28px;height:34px;border-radius:6px}
+    #cartDialog .admin-card{padding:12px 14px;margin:10px 0;border-radius:14px}
+    #cartDialog .coupon-card{background:linear-gradient(135deg,#fffaf0,#fff3d6);border:1.5px dashed var(--gold)}
+    #cartDialog #cartSummary{background:#fff;border:1px solid #eadfc2;box-shadow:0 4px 14px rgba(15,28,46,.06)}
+    #cartDialog .sum-row{font-size:14px;padding:4px 0}
+    #cartDialog .sum-total{font-size:18px}
+    #cartDialog .sum-total span:last-child{color:#b8860b}
+    #cartDialog .field-label{font-size:13px;margin-top:8px}
+    #cartDialog input,#cartDialog textarea,#cartDialog select{padding:10px 12px;margin:4px 0 6px;font-size:14.5px;border-radius:10px}
+    #cartDialog textarea{min-height:62px;resize:vertical}
+    #submitOrderBtn{background:var(--gold-gradient);color:var(--navy);padding:13px;font-size:16.5px;border-radius:12px}
+    #submitOrderBtn:hover{color:var(--navy)}
+    .buy-note{background:#f0f9ff;border:1px solid #bae6fd;color:#075985;border-radius:10px;padding:8px 10px;font-size:13px;margin:0 0 8px;line-height:1.5}
     .card-head{padding:18px 20px 12px}
     .card-head h3{margin:8px 0 8px}
     .code-chip{display:inline-block;background:#0f1c2e;color:#f3e5ad;font-size:12.5px;font-weight:700;padding:3px 10px;border-radius:6px;letter-spacing:.5px}
@@ -301,9 +326,9 @@
         <select id="categoryFilter" onchange="onFilterChange()" aria-label="ক্যাটাগরি"><option value="">সব ক্যাটাগরি</option></select>
         <div class="hf-budget">
           <span class="budget-label">💰 বাজেট:</span>
-          <input id="minPrice" type="number" min="0" inputmode="numeric" placeholder="কত টাকা থেকে" aria-label="সর্বনিম্ন বাজেট" oninput="onFilterChange()">
+          <input id="minPrice" type="number" min="0" inputmode="numeric" placeholder="কত টাকা থেকে" aria-label="সর্বনিম্ন বাজেট" oninput="onFilterChange('budget')">
           <span>—</span>
-          <input id="maxPrice" type="number" min="0" inputmode="numeric" placeholder="কত টাকা পর্যন্ত" aria-label="সর্বোচ্চ বাজেট" oninput="onFilterChange()">
+          <input id="maxPrice" type="number" min="0" inputmode="numeric" placeholder="কত টাকা পর্যন্ত" aria-label="সর্বোচ্চ বাজেট" oninput="onFilterChange('budget')">
           <button type="button" class="hf-clear" onclick="clearBudget()">মুছুন</button>
         </div>
       </div>
@@ -422,10 +447,11 @@
   <!-- কার্ট ও চেকআউট -->
   <dialog id="cartDialog">
     <button class="close-modal-btn" onclick="document.querySelector('#cartDialog').close()" aria-label="বন্ধ করুন">&times;</button>
-    <h3 style="color:var(--navy);margin:0 40px 10px 0;">🛒 আপনার কার্ট</h3>
+    <h3 id="cartTitle">🛒 আপনার কার্ট</h3>
+    <div id="buyNote" class="buy-note" style="display:none;"></div>
     <div id="cartItems"></div>
     <div id="cartCheckout" style="display:none;">
-      <div class="admin-card" style="background:#fffbeb;">
+      <div class="admin-card coupon-card">
         <label class="field-label" for="couponInput" style="margin-top:0;">🎟️ কুপন কোড (থাকলে)</label>
         <div class="row"><input id="couponInput" placeholder="কুপন কোড লিখুন" style="margin:0;text-transform:uppercase;" autocomplete="off"><button type="button" class="btn order-btn" style="padding:10px 14px;white-space:nowrap;flex:0 0 auto;font-size:15px;" onclick="applyCoupon()">প্রয়োগ করুন</button></div>
         <div id="couponMsg" class="small" style="margin-top:6px;"></div>
@@ -458,7 +484,7 @@
         </div>
 
         <button class="btn order-btn" id="submitOrderBtn" type="submit" style="margin-top:8px;width:100%;">অর্ডার নিশ্চিত করুন</button>
-        <button class="whatsapp-order-btn" type="button" style="margin-top:8px;width:100%;padding:12px;" onclick="whatsappCart()">💬 WhatsApp-এ কার্ট পাঠিয়ে অর্ডার করুন</button>
+        <button class="whatsapp-order-btn" type="button" style="margin-top:8px;width:100%;padding:10px;font-size:14px;" onclick="whatsappCart()">💬 WhatsApp-এ পাঠিয়ে অর্ডার করুন</button>
         <div id="orderMsg" class="small" style="margin-top:10px;"></div>
       </form>
     </div>
@@ -548,6 +574,7 @@
     let cardSel = {};                       // কার্ডে কোন রঙের ছবি দেখানো হচ্ছে
     let det = { id: null, idx: 0, qty: 1 }; // বিস্তারিত পেজের অবস্থা
     let cart = loadCart();
+    let checkoutMode = "cart", stashedCart = null; // "buy" = শুধু একটা শাড়ির সরাসরি অর্ডার (কার্ট আলাদা থাকে)
     let adminOrders = [];
     let orderFilter = { status: "", q: "", deleted: false };
     let wishlistImported = false, deepLinkDone = false;
@@ -727,10 +754,20 @@
     }
 
     function clearBudget() { $("#minPrice").value = ""; $("#maxPrice").value = ""; onFilterChange(); }
-    function onFilterChange() {
+    function onFilterChange(src) {
       clearTimeout(searchTimer);
-      searchTimer = setTimeout(() => { renderProductsUI(); revealResults(); }, 150);
+      // বাজেট লেখার সময় পেজ নিচে যাবে না; লেখা শেষ হলে (নিচের initBudgetFinish) তবেই যাবে
+      searchTimer = setTimeout(() => { renderProductsUI(); if (src !== "budget") revealResults(); }, 150);
     }
+    (function initBudgetFinish() {
+      const box = document.querySelector(".hf-budget"); if (!box) return;
+      box.addEventListener("focusout", e => {
+        if (box.contains(e.relatedTarget)) return; // এক ঘর থেকে আরেক ঘরে গেলে এখনো লেখা চলছে
+        if (window.innerWidth <= 850) $("#hfPanel").classList.remove("open");
+        requestAnimationFrame(() => { clearTimeout(searchTimer); renderProductsUI(); revealResults(); });
+      });
+      box.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.tagName === "INPUT") e.target.blur(); });
+    })();
     function toggleFilterPanel() { $("#hfPanel").classList.toggle("open"); }
     function updateFilterBadge() {
       const on = !!($("#categoryFilter").value || $("#minPrice").value.trim() || $("#maxPrice").value.trim());
@@ -877,7 +914,8 @@
       return p ? (productColors(p)[cardSel[p.id] || 0] || productColors(p)[0] || NO_COLOR) : NO_COLOR;
     }
     function cardAdd(id, buy) {
-      if (addToCart(id, cardColor(id), 1)) { if (buy) openCart(); else toast("🛒 কার্টে যোগ হয়েছে"); }
+      if (buy) { startBuyNow(id, cardColor(id), 1); return; }
+      if (addToCart(id, cardColor(id), 1)) toast("🛒 কার্টে যোগ হয়েছে");
     }
 
     // ---------- বিস্তারিত পেজ ----------
@@ -948,9 +986,10 @@
     function detailAdd(buy) {
       const p = getProduct(det.id); if (!p) return;
       const color = productColors(p)[det.idx] || productColors(p)[0] || NO_COLOR;
+      if (buy) { startBuyNow(p.id, color, det.qty, () => $("#productDialog").close()); return; }
       if (addToCart(p.id, color, det.qty)) {
         $("#productDialog").close();
-        if (buy) openCart(); else toast("🛒 কার্টে যোগ হয়েছে");
+        toast("🛒 কার্টে যোগ হয়েছে");
       }
     }
     function shareProduct(id) {
@@ -1081,10 +1120,28 @@
       } catch { return []; }
     }
     function saveCart() {
+      if (checkoutMode === "buy") { updateCartBadge(); return; } // সরাসরি অর্ডারে আসল কার্ট সেভ/বদল হয় না
       try { localStorage.setItem("sari_cart", JSON.stringify(cart)); } catch {}
       updateCartBadge();
     }
-    function updateCartBadge() { $("#cartCount").textContent = cart.reduce((s, i) => s + i.qty, 0); }
+    function updateCartBadge() { const real = checkoutMode === "buy" ? (stashedCart || []) : cart; $("#cartCount").textContent = real.reduce((s, i) => s + i.qty, 0); }
+    // "এখনই অর্ডার করুন": শুধু এই শাড়িটি নিয়ে অর্ডার পেজ খোলে, কার্টে আগে রাখা শাড়ি মেশে না
+    function startBuyNow(pid, color, qty, onOk) {
+      if (checkoutMode === "buy") return false;
+      const saved = cart;
+      checkoutMode = "buy"; stashedCart = saved; cart = [];
+      if (!addToCart(pid, color, qty)) { cart = saved; stashedCart = null; checkoutMode = "cart"; updateCartBadge(); return false; }
+      if (onOk) onOk();
+      openCart();
+      return true;
+    }
+    function endBuyNow() {
+      if (checkoutMode !== "buy") return;
+      cart = stashedCart || []; stashedCart = null; checkoutMode = "cart";
+      updateCartBadge();
+      pruneCart();
+    }
+    $("#cartDialog").addEventListener("close", endBuyNow);
     const qtyInCart = pid => cart.filter(i => String(i.pid) === String(pid)).reduce((s, i) => s + i.qty, 0);
 
     function addToCart(pid, color, qty) {
@@ -1126,9 +1183,14 @@
 
     function renderCart() {
       const box = $("#cartItems");
+      const buyMode = checkoutMode === "buy";
+      $("#cartTitle").textContent = buyMode ? "🛍️ অর্ডার করুন" : "🛒 আপনার কার্ট";
+      const bn = $("#buyNote"), realN = (stashedCart || []).length;
+      bn.style.display = buyMode && realN ? "block" : "none";
+      if (buyMode && realN) bn.textContent = "ℹ️ এটা শুধু এই শাড়িটির অর্ডার। কার্টে রাখা অন্য শাড়ি এর সাথে যুক্ত হয়নি — সেগুলো উপরের \"🛒 কার্ট\" থেকে আলাদাভাবে অর্ডার করতে পারবেন।";
       const lines = cart.map((i, idx) => ({ i, idx, p: getProduct(i.pid) })).filter(x => x.p);
       if (!lines.length) {
-        box.innerHTML = "<p style='text-align:center;color:var(--muted);padding:24px 0;'>আপনার কার্ট এখন খালি। পছন্দের শাড়ি কার্টে রাখুন।</p>";
+        box.innerHTML = buyMode ? "<p style='text-align:center;color:var(--muted);padding:24px 0;'>এই অর্ডারে কোনো শাড়ি নেই।</p>" : "<p style='text-align:center;color:var(--muted);padding:24px 0;'>আপনার কার্ট এখন খালি। পছন্দের শাড়ি কার্টে রাখুন।</p>";
         $("#cartCheckout").style.display = "none";
         return;
       }
@@ -1137,13 +1199,13 @@
         const colors = productColors(p), images = productImages(p);
         const ci = Math.max(0, colors.indexOf(i.color));
         const img = images[ci] || images[0] || "";
-        const colorSel = (i.color !== NO_COLOR ? `<div class="color-big">${colorDot(i.color)}🎨 রং: ${esc(i.color)}</div>` : "") + (colors.length > 1 ? `<div class="color-chips">${colors.map((c, k) => `<button type="button" class="color-chip ${c === i.color ? "sel" : ""}" onclick="pickCartColor(${idx},${k})">${images[k] ? `<img src="${esc(images[k])}" alt="">` : colorDot(c)}${esc(c)}${stockLabel(p, c)}</button>`).join("")}</div>` : "");
+        const colorSel = (colors.length < 2 && i.color !== NO_COLOR ? `<div class="color-big">${colorDot(i.color)}🎨 রং: ${esc(i.color)}</div>` : "") + (colors.length > 1 ? `<div class="color-chips">${colors.map((c, k) => `<button type="button" class="color-chip ${c === i.color ? "sel" : ""}" onclick="pickCartColor(${idx},${k})">${images[k] ? `<img src="${esc(images[k])}" alt="">` : colorDot(c)}${esc(c)}${stockLabel(p, c)}</button>`).join("")}</div>` : "");
         return `<div class="cart-line">
-          ${img ? `<img src="${esc(img)}" alt="${esc(p.name)}">` : `<div style="width:70px;height:84px;background:#eee;border-radius:8px;"></div>`}
+          ${img ? `<img src="${esc(img)}" alt="${esc(p.name)}">` : `<div style="width:60px;height:72px;background:#eee;border-radius:10px;"></div>`}
           <div>
             <b style="color:var(--navy);">${esc(p.name)}</b> <span class="small">(${esc(productCode(p.id))})</span>
             ${colorSel}
-            <div style="margin-top:8px;font-weight:700;color:var(--navy);font-size:14px;">কত পিস নিবেন:</div><div class="qty-box"><button onclick="changeCartQty(${idx},-1)" aria-label="কমান">−</button><b style="min-width:64px;">${taka(i.qty)} পিস</b><button onclick="changeCartQty(${idx},1)" aria-label="বাড়ান">+</button></div><div class="small" style="margin-top:4px;">${taka(p.price)}/- × ${taka(i.qty)} পিস</div>
+            <div style="margin-top:6px;font-weight:700;color:var(--navy);font-size:12.5px;">কত পিস নিবেন:</div><div class="qty-box"><button onclick="changeCartQty(${idx},-1)" aria-label="কমান">−</button><b style="min-width:64px;">${taka(i.qty)} পিস</b><button onclick="changeCartQty(${idx},1)" aria-label="বাড়ান">+</button></div><div class="small" style="margin-top:4px;">${taka(p.price)}/- × ${taka(i.qty)} পিস</div>
           </div>
           <div style="text-align:right;">
             <b style="color:#b8860b;">${taka(p.price * i.qty)}/-</b><br>
@@ -1173,11 +1235,14 @@
     const COLOR_MAP = [["মেরুন","#800000"],["maroon","#800000"],["লাল","#d62828"],["red","#d62828"],["গোলাপি","#ff69b4"],["pink","#ff69b4"],["কমলা","#f77f00"],["orange","#f77f00"],["হলুদ","#f4c20d"],["yellow","#f4c20d"],["সোনালি","#d4af37"],["gold","#d4af37"],["আকাশি","#87ceeb"],["sky","#87ceeb"],["ফিরোজা","#30d5c8"],["turquoise","#30d5c8"],["নীল","#1d4ed8"],["blue","#1d4ed8"],["সবুজ","#16a34a"],["green","#16a34a"],["বেগুনি","#7e22ce"],["purple","#7e22ce"],["কালো","#111827"],["black","#111827"],["সাদা","#f8fafc"],["white","#f8fafc"],["ধূসর","#9ca3af"],["grey","#9ca3af"],["gray","#9ca3af"],["বাদামি","#8b5a2b"],["brown","#8b5a2b"],["অফ","#f5f0e1"]];
     let appliedCoupon = null; // { code, percent }
     let couponInfo = {}, couponFetchedAt = 0; // code -> percent | null (অচল/শেষ) | undefined (এখনো জানা নেই)
+    // কুপনের ছাড়: নির্দিষ্ট টাকা (amt) থাকলে সেটাই, না থাকলে % হিসাবে — প্রতি পিসে
+    const couponAmt = (price, c) => { price = Number(price) || 0; return c && c.amt > 0 ? Math.min(Math.round(c.amt), price) : Math.round(price * ((c && c.pct) || 0) / 100); };
+    const couponLabel = c => (Number(c.amount) > 0 ? `${taka(Math.round(c.amount))} টাকা ছাড়` : `${taka(c.percent)}% ছাড়`);
     function couponHtml(p) {
       return productCoupons(p).map(code => {
-        const pct = couponInfo[code];
-        if (!(pct > 0)) return "";
-        const amt = Math.round(Number(p.price) * pct / 100);
+        const ci = couponInfo[code];
+        if (!ci) return "";
+        const amt = couponAmt(p.price, ci);
         if (!(amt > 0)) return "";
         const c = esc(code);
         return `<div class="coupon-box">
@@ -1205,8 +1270,8 @@
           const { data, error } = await db.rpc("get_coupon", { p_code: code });
           if (error) return;
           const c = Array.isArray(data) ? data[0] : data;
-          const val = (c && c.code) ? Number(c.percent) : null;
-          if (couponInfo[code] !== val) { couponInfo[code] = val; changed = true; }
+          const val = (c && c.code) ? { pct: Number(c.percent) || 0, amt: Number(c.amount) || 0 } : null;
+          if (JSON.stringify(couponInfo[code]) !== JSON.stringify(val)) { couponInfo[code] = val; changed = true; }
         } catch {}
       }));
       if (changed) {
@@ -1223,7 +1288,7 @@
       if (error) { appliedCoupon = null; cm.className = "small msg-err"; cm.textContent = isMissingFn(error) ? "কুপন সিস্টেম এখনো চালু হয়নি (অ্যাডমিন supabase-upgrade-5.sql চালান)।" : "কুপন যাচাই করা যায়নি: " + errText(error); renderCartSummary(); return; }
       const c = Array.isArray(data) ? data[0] : data;
       if (!c || !c.code) { appliedCoupon = null; cm.className = "small msg-err"; cm.textContent = "কুপন কোডটি সঠিক নয়, বন্ধ আছে বা সীমা শেষ হয়ে গেছে।"; renderCartSummary(); return; }
-      appliedCoupon = { code: String(c.code).toUpperCase(), percent: Number(c.percent) };
+      appliedCoupon = { code: String(c.code).toUpperCase(), percent: Number(c.percent) || 0, amount: Number(c.amount) || 0 };
       renderCartSummary();
     }
     function colorDot(name) {
@@ -1248,8 +1313,9 @@
       });
       let discount = 0;
       if (appliedCoupon) {
-        cart.forEach(i => { const p = getProduct(i.pid); if (p && productCoupons(p).includes(appliedCoupon.code)) discount += Number(p.price) * i.qty; });
-        discount = Math.round(discount * appliedCoupon.percent / 100);
+        const ci = { pct: appliedCoupon.percent, amt: appliedCoupon.amount };
+        cart.forEach(i => { const p = getProduct(i.pid); if (p && productCoupons(p).includes(appliedCoupon.code)) discount += ci.amt > 0 ? couponAmt(p.price, ci) * i.qty : Number(p.price) * i.qty; });
+        if (!(ci.amt > 0)) discount = Math.round(discount * ci.pct / 100);
       }
       const net = subtotal - discount;
       const base = settings.dhaka_charge;
@@ -1266,13 +1332,13 @@
       else if (t.min > 0 && t.net < t.min) note = `<div class="need-note">আরও ${taka(t.min - t.net)}/- টাকার শাড়ি নিলে ডেলিভারি ফ্রি!</div>`;
       const cm = $("#couponMsg");
       if (cm && appliedCoupon) {
-        if (t.discount > 0) { cm.className = "small msg-ok"; cm.textContent = `✅ কুপন চালু: ${taka(appliedCoupon.percent)}% ছাড় (শুধু কুপন চলা শাড়িতে)`; }
+        if (t.discount > 0) { cm.className = "small msg-ok"; cm.textContent = `✅ কুপন চালু: ${couponLabel(appliedCoupon)} (শুধু কুপন চলা শাড়িতে)`; }
         else { cm.className = "small msg-err"; cm.textContent = "এই কুপন আপনার কার্টের কোনো শাড়িতে প্রযোজ্য নয়।"; }
       }
       const delRow = t.unknown ? "" : `<div class="sum-row"><span>ডেলিভারি চার্জ</span><b>${t.free ? "ফ্রি" : taka(t.charge) + "/-"}</b></div>`;
       $("#cartSummary").innerHTML = `
         <div class="sum-row"><span>শাড়ির দাম</span><b>${taka(t.subtotal)}/-</b></div>
-        ${t.discount > 0 ? `<div class="sum-row" style="color:#047857;"><span>🎟️ কুপন (${esc(appliedCoupon.code)} — ${taka(appliedCoupon.percent)}% ছাড়)</span><b>− ${taka(t.discount)}/-</b></div>` : ""}
+        ${t.discount > 0 ? `<div class="sum-row" style="color:#047857;"><span>🎟️ কুপন (${esc(appliedCoupon.code)} — ${couponLabel(appliedCoupon)})</span><b>− ${taka(t.discount)}/-</b></div>` : ""}
         ${delRow}
         <div class="sum-row sum-total"><span>${t.unknown ? "সর্বমোট (ডেলিভারি চার্জ ছাড়া)" : "সর্বমোট"}</span><span>${taka(t.total)}/-</span></div>
         ${t.unknown ? `<div class="need-note">ডেলিভারি চার্জ অর্ডার কনফার্মের সময় আপনাকে জানানো হবে।</div>` : ""}${note}
@@ -1688,7 +1754,7 @@
     }
 
     // ---------- অ্যাডমিন: কুপন ----------
-    let adminCoupons = [], couponSel = [];
+    let adminCoupons = [], couponSel = [], editingCouponCode = null;
     async function fetchCoupons() {
       const { data, error } = await db.from("coupons").select("*").order("created_at", { ascending: false });
       if (!error) adminCoupons = data || [];
@@ -1703,10 +1769,11 @@
       if (!$("#couponChecks")) return;
       if (err) { box.innerHTML = "কুপন লোড করা যায়নি (supabase-upgrade-5.sql চালিয়েছেন কি?)"; return; }
       if (!adminCoupons.length) { box.innerHTML = "এখনো কোনো কুপন নেই — আগে উপরের \"🎟️ কুপন\" ট্যাব থেকে কুপন বানান।"; return; }
-      box.innerHTML = adminCoupons.map(c => `<label style="display:inline-flex;gap:6px;align-items:center;margin:4px 14px 4px 0;font-size:14px;cursor:pointer;"><input type="checkbox" class="cchk" value="${esc(c.code)}" style="width:18px;height:18px;margin:0;"> <b>${esc(c.code)}</b> (${taka(c.percent)}% ছাড়${c.active ? "" : ", বন্ধ"})</label>`).join("");
+      box.innerHTML = adminCoupons.map(c => `<label style="display:inline-flex;gap:6px;align-items:center;margin:4px 14px 4px 0;font-size:14px;cursor:pointer;"><input type="checkbox" class="cchk" value="${esc(c.code)}" style="width:18px;height:18px;margin:0;"> <b>${esc(c.code)}</b> (${couponLabel(c)}${c.active ? "" : ", বন্ধ"})</label>`).join("");
       applyCouponChecks();
     }
     async function renderCouponsTab() {
+      editingCouponCode = null;
       const box = $("#adminContent");
       box.innerHTML = "<p>লোড হচ্ছে...</p>";
       const err = await fetchCoupons();
@@ -1714,13 +1781,17 @@
       if (err) { box.innerHTML = `<p class="msg-err">কুপন লোড করা যায়নি: ${esc(errText(err))}</p><p class="small">Supabase-এ supabase-upgrade-5.sql চালিয়েছেন কি?</p>`; return; }
       box.innerHTML = `
         <div class="admin-card">
-          <h3 style="margin-top:0;">🎟️ নতুন কুপন বানান</h3>
+          <h3 id="cFormTitle" style="margin-top:0;">🎟️ নতুন কুপন বানান</h3>
           <div class="row">
             <div><label class="field-label" for="cCode">কুপন কোড (আপনি যা চান)</label><input id="cCode" placeholder="যেমন: EID10" maxlength="20" style="text-transform:uppercase;"></div>
-            <div><label class="field-label" for="cPercent">কত % ছাড়</label><input id="cPercent" type="number" min="1" max="100" placeholder="যেমন: 10"></div>
+            <div><label class="field-label" for="cPercent">কত % ছাড়</label><input id="cPercent" type="number" min="1" max="100" step="any" placeholder="যেমন: 10"></div>
+            <div><label class="field-label" for="cAmount">অথবা নির্দিষ্ট টাকা ছাড় (প্রতি পিসে)</label><input id="cAmount" type="number" min="1" step="1" placeholder="যেমন: 100"></div>
             <div><label class="field-label" for="cMax">কতজন ব্যবহার করতে পারবে</label><input id="cMax" type="number" min="1" placeholder="ফাঁকা = সীমা নেই"></div>
           </div>
-          <button type="button" class="btn order-btn" style="width:100%;" onclick="saveCoupon()">কুপন সেভ করুন</button>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button type="button" id="cSaveBtn" class="btn order-btn" style="flex:1 1 200px;" onclick="saveCoupon()">কুপন সেভ করুন</button>
+            <button type="button" id="cCancelBtn" class="btn" style="display:none;background:#e2e8f0;box-shadow:none;" onclick="renderCouponsTab()">বাতিল</button>
+          </div>
           <div id="cMsg" class="small" style="margin-top:8px;font-weight:bold;"></div>
           <p class="small" style="margin-bottom:0;">কুপন বানানোর পর <b>"পণ্য পরিচালনা"</b>-তে শাড়ি যোগ/সম্পাদনার সময় "কুপন চলবে" থেকে টিক দিন — শুধু সেই শাড়িতেই ছাড় পাবে। একই ফোন নম্বর দিয়ে কুপন বারবার ব্যবহার করা যাবে — শুধু আপনার দেওয়া মোট জনের সীমা পর্যন্ত।</p>
         </div>
@@ -1736,11 +1807,12 @@
         const code = esc(c.code);
         return `<div class="admin-card" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
           <div>
-            <b style="font-size:18px;color:var(--navy);">${code}</b> — <b style="color:var(--green);">${taka(c.percent)}% ছাড়</b>
+            <b style="font-size:18px;color:var(--navy);">${code}</b> — <b style="color:var(--green);">${couponLabel(c)}</b>
             ${c.active ? "" : '<span style="color:var(--red);font-weight:bold;">(বন্ধ)</span>'}<br>
-            <span class="small">ব্যবহার হয়েছে: ${taka(c.used_count)} জন${c.max_uses ? " / " + taka(c.max_uses) + " জন" : ""} (${left}) • ${taka(n)}টি শাড়িতে চলছে</span>
+            <span class="small">ব্যবহার হয়েছে: ${taka(c.used_count)} জন${c.max_uses ? " / " + taka(c.max_uses) + " জন" : ""} (${left}) • ${taka(n)}টি শাড়িতে চলছে</span>${couponAmountsHtml(c)}
           </div>
           <div>
+            <button type="button" class="edit-btn" style="background:#0f766e;" onclick="editCoupon('${code}')">✏️ সম্পাদনা</button>
             <button type="button" class="edit-btn" onclick="setCouponMax('${code}')">সীমা বদলান</button>
             <button type="button" class="edit-btn" style="background:${c.active ? "#b45309" : "#059669"};" onclick="toggleCoupon('${code}', ${c.active ? "false" : "true"})">${c.active ? "বন্ধ করুন" : "চালু করুন"}</button>
             <button type="button" class="danger" onclick="deleteCoupon('${code}')">মুছুন</button>
@@ -1748,19 +1820,62 @@
         </div>`;
       }).join("");
     }
+    // কোন শাড়িতে এই কুপনে প্রতি পিসে কত টাকা ছাড় হচ্ছে তার হিসাব
+    function couponAmountsHtml(c) {
+      const code = String(c.code).toUpperCase();
+      const list = products.filter(p => productCoupons(p).includes(code));
+      if (!list.length) return "";
+      const rows = list.slice(0, 6).map(p => `${esc(p.name)}: <b>${taka(couponAmt(p.price, { pct: Number(c.percent) || 0, amt: Number(c.amount) || 0 }))}/- টাকা</b>`).join(" • ");
+      return `<br><span class="small" style="color:#047857;">💰 প্রতি পিসে ছাড়: ${rows}${list.length > 6 ? " …" : ""}</span>`;
+    }
+    function editCoupon(code) {
+      const c = adminCoupons.find(x => x.code === code); if (!c) return;
+      editingCouponCode = c.code;
+      $("#cFormTitle").textContent = "✏️ কুপন সম্পাদনা: " + c.code;
+      $("#cCode").value = c.code; $("#cCode").readOnly = true;
+      $("#cPercent").value = Number(c.amount) > 0 ? "" : c.percent;
+      $("#cAmount").value = Number(c.amount) > 0 ? c.amount : "";
+      $("#cMax").value = (c.max_uses === null || c.max_uses === undefined) ? "" : c.max_uses;
+      $("#cSaveBtn").textContent = "✅ আপডেট করুন";
+      $("#cCancelBtn").style.display = "inline-block";
+      const m = $("#cMsg"); m.className = "small"; m.textContent = "কুপনের কোড বদলানো যায় না — কোড বদলাতে চাইলে নতুন কুপন বানান।";
+      $("#adminFullPage").scrollTo({ top: 0, behavior: "smooth" });
+    }
     async function saveCoupon() {
       const msg = $("#cMsg");
+      if (editingCouponCode) {
+        const pctE = Number($("#cPercent").value), amtE = Math.round(Number($("#cAmount").value) || 0), maxE = $("#cMax").value.trim();
+        const failE = t => { msg.className = "small msg-err"; msg.textContent = t; };
+        if (amtE > 0 && pctE > 0) return failE("% আর টাকা — যেকোনো একটা দিন, দুটো একসাথে নয়।");
+        if (!(amtE > 0) && !(pctE >= 1 && pctE <= 100)) return failE("ছাড়ের % ১ থেকে ১০০-এর মধ্যে দিন, অথবা নির্দিষ্ট টাকা দিন।");
+        const maxV = maxE === "" ? null : Math.max(1, parseInt(maxE, 10) || 1);
+        const hasAmtCol = adminCoupons.length && "amount" in adminCoupons[0];
+        if (amtE > 0 && !hasAmtCol) return failE("নির্দিষ্ট টাকার ছাড়ের জন্য আগে Supabase-এ নতুন SQL চালাতে হবে (amount কলাম নেই)।");
+        const bodyE = { percent: amtE > 0 ? 0 : pctE, max_uses: maxV };
+        if (hasAmtCol) bodyE.amount = amtE > 0 ? amtE : null;
+        const r = await db.from("coupons").update(bodyE).eq("code", editingCouponCode).select();
+        if (r.error || !r.data || !r.data.length) return failE("❌ আপডেট হয়নি: " + errText(r.error || "permission denied"));
+        toast("✅ কুপন আপডেট হয়েছে");
+        loadCouponInfo(true);
+        renderCouponsTab();
+        return;
+      }
       const code = $("#cCode").value.trim().toUpperCase().replace(/\s+/g, "");
-      const pct = Number($("#cPercent").value);
+      const pct = Number($("#cPercent").value), amt = Math.round(Number($("#cAmount").value) || 0);
       const maxRaw = $("#cMax").value.trim();
       const fail = t => { msg.className = "small msg-err"; msg.textContent = t; };
       if (!/^[A-Z0-9_-]{3,20}$/.test(code)) return fail("কুপন কোড ৩–২০ অক্ষরের হতে হবে (ইংরেজি অক্ষর/সংখ্যা)।");
-      if (!(pct >= 1 && pct <= 100)) return fail("ছাড়ের % ১ থেকে ১০০-এর মধ্যে দিন।");
+      if (amt > 0 && pct > 0) return fail("% আর টাকা — যেকোনো একটা দিন, দুটো একসাথে নয়।");
+      if (!(amt > 0) && !(pct >= 1 && pct <= 100)) return fail("ছাড়ের % ১ থেকে ১০০-এর মধ্যে দিন, অথবা নির্দিষ্ট টাকা দিন।");
+      const hasAmtCol = adminCoupons.length && "amount" in adminCoupons[0];
+      if (amt > 0 && adminCoupons.length && !hasAmtCol) return fail("নির্দিষ্ট টাকার ছাড়ের জন্য আগে Supabase-এ নতুন SQL চালাতে হবে (amount কলাম নেই)।");
+      const cBody = { percent: amt > 0 ? 0 : pct };
+      if (amt > 0) cBody.amount = amt; else if (hasAmtCol) cBody.amount = null;
       const max = maxRaw === "" ? null : Math.max(1, parseInt(maxRaw, 10) || 1);
       const exists = adminCoupons.some(c => c.code === code);
       const { data, error } = exists
-        ? await db.from("coupons").update({ percent: pct, max_uses: max, active: true }).eq("code", code).select()
-        : await db.from("coupons").insert([{ code, percent: pct, max_uses: max }]).select();
+        ? await db.from("coupons").update({ ...cBody, max_uses: max, active: true }).eq("code", code).select()
+        : await db.from("coupons").insert([{ code, ...cBody, max_uses: max }]).select();
       if (error || !data || !data.length) return fail("❌ সেভ হয়নি: " + errText(error || "permission denied"));
       toast("✅ কুপন সেভ হয়েছে");
       loadCouponInfo(true);
