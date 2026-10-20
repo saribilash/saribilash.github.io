@@ -300,6 +300,33 @@
     footer .f-title{color:#f3e5ad;font-size:22px;font-weight:700;margin-bottom:10px}
     footer a{color:#f3e5ad}
 
+
+    /* থ্রি পিস পেজ */
+    .tp-nav{background:linear-gradient(135deg,rgba(212,175,55,.22),rgba(212,175,55,.07));border:1px solid rgba(212,175,55,.6)!important;border-radius:30px;padding:6px 14px;color:#f3e5ad!important;font-weight:700!important}
+    .tp-nav:hover{background:var(--gold-gradient);color:var(--navy)!important}
+    .tp-promo{max-width:1200px;margin:6px auto 22px;padding:0 20px}
+    .tp-promo a{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;text-decoration:none;background:linear-gradient(135deg,#09121f,#182e4a);border:1.5px solid rgba(212,175,55,.6);border-radius:20px;padding:18px 22px;color:#f3e5ad;box-shadow:0 10px 26px rgba(15,28,46,.18)}
+    .tp-promo b{display:block;font-size:21px;color:#fff}
+    .tp-promo span.sub{font-size:14px;color:#cbd5e1}
+    .tp-promo .go{background:var(--gold-gradient);color:var(--navy);font-weight:700;padding:9px 18px;border-radius:30px;white-space:nowrap}
+    #threePiecePage{display:none;position:fixed;inset:0;z-index:500;background:var(--cream);overflow-y:auto;-webkit-overflow-scrolling:touch}
+    .tp-top{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 4%;background:linear-gradient(180deg,#09121f,var(--navy));border-bottom:1px solid rgba(212,175,55,.3);box-shadow:0 4px 18px rgba(0,0,0,.18)}
+    .tp-top .brand{font-size:24px}
+    .tp-top button{background:none;border:1px solid rgba(212,175,55,.55);color:#f3e5ad;border-radius:30px;padding:7px 14px;font-size:14px;font-weight:700}
+    .tp-top button:hover{background:var(--gold-gradient);color:var(--navy)}
+    .tp-hero{max-width:1200px;margin:22px auto 8px;border-radius:26px;padding:46px 7% 40px;color:#fff;text-align:center;background:radial-gradient(circle at 15% 20%,rgba(212,175,55,.28),transparent 45%),radial-gradient(circle at 85% 80%,rgba(212,175,55,.2),transparent 45%),linear-gradient(135deg,#09121f 0%,#182e4a 100%);border:1px solid rgba(212,175,55,.45);box-shadow:0 18px 40px rgba(15,28,46,.22)}
+    .tp-eyebrow{display:inline-block;background:var(--gold-gradient);color:var(--navy);font-weight:700;font-size:13px;padding:4px 14px;border-radius:30px;letter-spacing:.5px}
+    .tp-hero h1{margin:14px 0 10px;font-size:38px;line-height:1.25;background:var(--gold-gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+    .tp-hero p{margin:0 auto;max-width:640px;color:#e2e8f0;font-size:16.5px;line-height:1.7}
+    .tp-perks{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+    .tp-perks span{background:rgba(255,255,255,.08);border:1px solid rgba(212,175,55,.45);color:#f3e5ad;padding:7px 14px;border-radius:30px;font-size:13.5px}
+    .tp-tools{max-width:1200px;margin:18px auto 4px;padding:0 20px;display:grid;grid-template-columns:1fr 200px;gap:10px}
+    .tp-tools input,.tp-tools select{margin:0;padding:12px 16px;border-radius:30px;border:1.5px solid rgba(212,175,55,.5);font:inherit;font-size:15px;background:#fff;min-width:0;width:100%}
+    #tpCount{max-width:1200px;margin:8px auto 4px;padding:0 20px}
+    #threePiecePage .grid{padding-bottom:10px}
+    .tp-empty{grid-column:1/-1;text-align:center;padding:50px 20px;color:var(--muted);font-size:17px}
+    .tp-empty b{display:block;color:var(--navy);font-size:22px;margin-bottom:6px}
+    @media(max-width:550px){.tp-hero{margin:14px;padding:34px 18px 30px}.tp-hero h1{font-size:29px}.tp-tools{grid-template-columns:1fr}.tp-top .brand{font-size:20px}}
     @media(max-width:850px){.grid,.reviews-grid{grid-template-columns:1fr 1fr}.features-container{grid-template-columns:1fr}.detail{grid-template-columns:1fr}.detail-img{max-height:52vh}.toolbar{grid-template-columns:1fr}}
     @media(max-width:550px){.grid,.reviews-grid{grid-template-columns:1fr}.brand{font-size:22px}.hero{margin:15px;padding:35px 22px;min-height:300px}.social-buttons{right:12px}.social-button{width:48px;height:48px}header{padding:12px 4%}.nav{gap:10px}.nav a,.nav button{font-size:13.5px}dialog{padding:20px 16px}.product-main-image{max-height:340px}.image-container{min-height:180px}.detail-img{max-height:46vh}}
   </style>
@@ -313,6 +340,7 @@
       <div class="brand" id="brand">শাড়ি বিলাশ</div>
       <nav class="nav">
         <a href="#productsSection">শাড়ির কালেকশন</a>
+        <a href="#three-piece" class="tp-nav">👗 থ্রি পিস</a>
         <button class="wish-nav" onclick="openWishlistDialog()" title="আপনার পছন্দের শাড়ির তালিকা">❤️ উইশলিস্ট (<span id="wishlistCount">0</span>)</button>
         <button onclick="openCart()">🛒 কার্ট (<span id="cartCount">0</span>)</button>
         <button onclick="document.querySelector('#trackDialog').showModal()">📦 আমার অর্ডার</button>
@@ -350,6 +378,11 @@
     <div class="feature-box"><span>📦</span><h4>ক্যাশ অন ডেলিভারি</h4><p>পণ্য হাতে পেয়ে দেখে শুনে টাকা পরিশোধের সুব্যবস্থা</p></div>
     <div class="feature-box"><span>🚚</span><h4>হোম ডেলিভারি সেবা</h4><p id="deliveryInfo">সারা বাংলাদেশে নিরাপদ হোম ডেলিভারি সুবিধা</p></div>
   </div>
+
+  <section class="tp-promo" id="tpPromo"><a href="#three-piece">
+    <div><b>👗 নতুন — থ্রি পিস কালেকশন</b><span class="sub">আভিজাত্যে ভরা থ্রি পিসের আলাদা সংগ্রহ এখন আমাদের সাইটেই <span id="tpPromoCount"></span></span></div>
+    <span class="go">থ্রি পিস দেখুন →</span>
+  </a></section>
 
   <section id="productsSection">
     <h2 class="section-title">আমাদের এক্সক্লুসিভ শাড়ির কালেকশন</h2>
@@ -392,6 +425,37 @@
     <p>যেকোনো প্রয়োজনে বা বিস্তারিত জানতে WhatsApp অথবা ফেসবুক পেজে মেসেজ করুন।</p>
     <p><a href="https://www.facebook.com/SariBilash02" target="_blank" rel="noopener">ফেসবুক পেজ: Sari Bilash</a></p>
   </footer>
+
+  <!-- থ্রি পিস পেজ -->
+  <div id="threePiecePage">
+    <div class="tp-top">
+      <button type="button" onclick="closeThreePiece()">← মূল সাইট</button>
+      <div class="brand" onclick="closeThreePiece()">শাড়ি বিলাশ</div>
+      <button type="button" onclick="openCart()">🛒 কার্ট (<span id="cartCount2">0</span>)</button>
+    </div>
+    <div class="tp-hero">
+      <span class="tp-eyebrow">✨ এক্সক্লুসিভ কালেকশন</span>
+      <h1>থ্রি পিস কালেকশন</h1>
+      <p>পছন্দের কাপড়, নিখুঁত ফিনিশিং আর আভিজাত্যের ছোঁয়ায় সাজানো থ্রি পিস — সারা বাংলাদেশে হোম ডেলিভারি ও ক্যাশ অন ডেলিভারি সুবিধাসহ।</p>
+      <div class="tp-perks"><span>✨ প্রিমিয়াম কোয়ালিটি</span><span>📦 ক্যাশ অন ডেলিভারি</span><span>🚚 হোম ডেলিভারি</span></div>
+    </div>
+    <div class="tp-tools">
+      <input id="tpSearch" type="search" placeholder="🔍 থ্রি পিস খুঁজুন — নাম, রং বা কোড" aria-label="থ্রি পিস খুঁজুন" oninput="renderThreePiece()">
+      <select id="tpSort" onchange="renderThreePiece()" aria-label="সাজান"><option value="new">নতুন আগে</option><option value="low">কম দাম আগে</option><option value="high">বেশি দাম আগে</option></select>
+    </div>
+    <div class="result-count" id="tpCount"></div>
+    <div class="grid" id="tpProducts"></div>
+    <section>
+      <div class="contact-band">
+        <h3>✨ কিছু জানার আছে? আমরা আছি আপনার পাশে</h3>
+        <p>থ্রি পিসের কাপড়, সাইজ, রং, দাম বা ডেলিভারি — যেকোনো কিছু জানতে WhatsApp অথবা ফেসবুক পেজে মেসেজ করুন।</p>
+        <div class="contact-btns">
+          <a class="whatsapp-order-btn" href="https://api.whatsapp.com/send?phone=8801628182808" target="_blank" rel="noopener">💬 WhatsApp-এ মেসেজ করুন</a>
+          <a class="facebook-order-btn" href="https://www.facebook.com/SariBilash02" target="_blank" rel="noopener">📘 ফেসবুক পেজে মেসেজ করুন</a>
+        </div>
+      </div>
+    </section>
+  </div>
 
   <!-- অ্যাডমিন -->
   <div id="adminFullPage">
@@ -847,17 +911,7 @@
       return `<div class="variant-thumbs">${colors.map((c, i) => `<button type="button" class="variant-thumb ${i === selIdx ? "selected" : ""}" onclick="${handler}(${i}${handler === "renderVariant" ? "" : ""})" data-vt="${esc(p.id)}">${images[i] ? `<img src="${esc(images[i])}" alt="${esc(c)}" loading="lazy">` : ""}<span>${esc(c)}${stockLabel(p, c)}</span></button>`).join("")}</div>`;
     }
 
-    function renderProductsUI() {
-      const box = $("#products");
-      updateFilterBadge();
-      const all = products.filter(p => p && p.name && p.active !== false);
-      fillCategories(all);
-      const list = filterSort(all);
-      $("#resultCount").textContent = all.length ? `${taka(list.length)}টি শাড়ি পাওয়া গেছে` : "";
-      if (!all.length) { box.innerHTML = "<p style='text-align:center;grid-column:1/-1;'>এখন কোনো শাড়ি এভেইলেবল নেই।</p>"; updateWishlistBadge(); return; }
-      if (!list.length) { box.innerHTML = "<p style='text-align:center;grid-column:1/-1;'>এই খোঁজার সাথে মেলে এমন কোনো শাড়ি পাওয়া যায়নি। অন্য শব্দে খুঁজুন।</p>"; updateWishlistBadge(); return; }
-      const wl = getWishlist();
-      box.innerHTML = list.map(p => {
+    function cardHtml(p, wl) {
         const id = esc(p.id), images = productImages(p), colors = productColors(p);
         const sel = Math.min(cardSel[p.id] || 0, Math.max(0, colors.length - 1));
         const thumbs = colors.length > 1 ? `<div class="variant-thumbs">${colors.map((c, i) => `<button type="button" class="variant-thumb ${i === sel ? "selected" : ""}" data-vt="${id}" onclick="renderVariant('${id}',${i})">${images[i] ? `<img src="${esc(images[i])}" alt="${esc(c)}" loading="lazy">` : ""}<span>${esc(c)}${stockLabel(p, c)}</span></button>`).join("")}</div>` : "";
@@ -896,9 +950,57 @@
             </div>
           </div>
         </article>`;
-      }).join("");
+    }
+    // থ্রি পিস: ক্যাটাগরির নামে "থ্রি পিস / three piece / 3 piece" থাকলে আলাদা পেজে যায়
+    const THREE_RE = /থ্রি\s*-?\s*পি(স|ছ)|three\s*-?\s*piece|3\s*-?\s*piece/i;
+    const isThreePiece = p => THREE_RE.test(String((p && p.category) || ""));
+    function renderProductsUI() { renderMainProducts(); renderThreePiece(); }
+    function renderMainProducts() {
+      const box = $("#products");
+      updateFilterBadge();
+      const all = products.filter(p => p && p.name && p.active !== false && !isThreePiece(p));
+      fillCategories(all);
+      const list = filterSort(all);
+      $("#resultCount").textContent = all.length ? `${taka(list.length)}টি শাড়ি পাওয়া গেছে` : "";
+      if (!all.length) { box.innerHTML = "<p style='text-align:center;grid-column:1/-1;'>এখন কোনো শাড়ি এভেইলেবল নেই।</p>"; updateWishlistBadge(); return; }
+      if (!list.length) { box.innerHTML = "<p style='text-align:center;grid-column:1/-1;'>এই খোঁজার সাথে মেলে এমন কোনো শাড়ি পাওয়া যায়নি। অন্য শব্দে খুঁজুন।</p>"; updateWishlistBadge(); return; }
+      const wl = getWishlist();
+      box.innerHTML = list.map(p => cardHtml(p, wl)).join("");
       updateWishlistBadge();
     }
+
+    // ---------- থ্রি পিস পেজ ----------
+    let tpOpen = false;
+    function renderThreePiece() {
+      const all = products.filter(p => p && p.name && p.active !== false && isThreePiece(p));
+      const pc = $("#tpPromoCount"); if (pc) pc.textContent = all.length ? `(${taka(all.length)}টি)` : "";
+      if (!tpOpen) return;
+      const q = ($("#tpSearch").value || "").trim().toLowerCase(), sort = $("#tpSort").value;
+      let list = all.filter(p => !q || [p.name, p.description, p.category, p.fabric, productCode(p.id), ...productColors(p)].join(" ").toLowerCase().includes(q));
+      if (sort === "low") list = list.slice().sort((a, b) => Number(a.price) - Number(b.price));
+      else if (sort === "high") list = list.slice().sort((a, b) => Number(b.price) - Number(a.price));
+      $("#tpCount").textContent = all.length ? `${taka(list.length)}টি থ্রি পিস পাওয়া গেছে` : "";
+      const box = $("#tpProducts");
+      if (!all.length) { box.innerHTML = '<div class="tp-empty"><b>✨ থ্রি পিস কালেকশন শীঘ্রই আসছে</b>নতুন থ্রি পিস যোগ হলেই এখানে দেখতে পাবেন।</div>'; return; }
+      if (!list.length) { box.innerHTML = '<div class="tp-empty">এই খোঁজার সাথে মেলে এমন কোনো থ্রি পিস পাওয়া যায়নি।</div>'; return; }
+      const wl = getWishlist();
+      box.innerHTML = list.map(p => cardHtml(p, wl)).join("");
+      updateWishlistBadge();
+    }
+    function syncThreePiece() {
+      const want = location.hash === "#three-piece", pg = $("#threePiecePage");
+      if (want === tpOpen) return;
+      tpOpen = want;
+      pg.style.display = want ? "block" : "none";
+      document.body.style.overflow = want ? "hidden" : "";
+      if (want) { pg.scrollTop = 0; renderThreePiece(); }
+    }
+    function closeThreePiece() {
+      if (location.hash === "#three-piece") history.replaceState(null, "", location.pathname + location.search);
+      syncThreePiece();
+      window.scrollTo(0, 0);
+    }
+    window.addEventListener("hashchange", syncThreePiece);
 
     function renderVariant(id, index) {
       const p = getProduct(id);
@@ -1124,7 +1226,7 @@
       try { localStorage.setItem("sari_cart", JSON.stringify(cart)); } catch {}
       updateCartBadge();
     }
-    function updateCartBadge() { const real = checkoutMode === "buy" ? (stashedCart || []) : cart; $("#cartCount").textContent = real.reduce((s, i) => s + i.qty, 0); }
+    function updateCartBadge() { const real = checkoutMode === "buy" ? (stashedCart || []) : cart; const n = real.reduce((s, i) => s + i.qty, 0); $("#cartCount").textContent = n; const c2 = $("#cartCount2"); if (c2) c2.textContent = n; }
     // "এখনই অর্ডার করুন": শুধু এই শাড়িটি নিয়ে অর্ডার পেজ খোলে, কার্টে আগে রাখা শাড়ি মেশে না
     function startBuyNow(pid, color, qty, onOk) {
       if (checkoutMode === "buy") return false;
@@ -1495,7 +1597,7 @@
         editingProductId = null;
         currentImageUrlList = [];
         const hasLocal = getLegacyLocalProducts().length > 0;
-        const cats = [...new Set(products.map(p => (p.category || "").trim()).filter(Boolean))];
+        const cats = [...new Set([...products.map(p => (p.category || "").trim()).filter(Boolean), "থ্রি পিস"])];
         box.innerHTML = `
           ${hasLocal ? `<div class="admin-card" style="background:#fff8e7;border-color:#f2e2b8;">
             <b>⚠️ এই ফোনে ${taka(getLegacyLocalProducts().length)}টি পুরোনো শাড়ি শুধু লোকালি সেভ আছে (অন্য ফোনে দেখা যায় না)।</b>
@@ -1508,7 +1610,7 @@
             <label class="field-label" for="pname">শাড়ির নাম</label><input id="pname" required>
             <label class="field-label" for="pdesc">বিবরণ</label><input id="pdesc">
             <div class="row">
-              <div><label class="field-label" for="pcategory">ক্যাটাগরি</label><input id="pcategory" list="catList" placeholder="যেমন: জামদানি"></div>
+              <div><label class="field-label" for="pcategory">ক্যাটাগরি</label><input id="pcategory" list="catList" placeholder="যেমন: জামদানি, থ্রি পিস"></div>
               <div><label class="field-label" for="pfabric">শাড়ির ধরন</label><input id="pfabric" placeholder="যেমন: সুতি, সিল্ক"></div>
             </div>
             <datalist id="catList">${cats.map(c => `<option value="${esc(c)}">`).join("")}</datalist>
@@ -1851,7 +1953,7 @@
         const maxV = maxE === "" ? null : Math.max(1, parseInt(maxE, 10) || 1);
         const hasAmtCol = adminCoupons.length && "amount" in adminCoupons[0];
         if (amtE > 0 && !hasAmtCol) return failE("নির্দিষ্ট টাকার ছাড়ের জন্য আগে Supabase-এ নতুন SQL চালাতে হবে (amount কলাম নেই)।");
-        const bodyE = { percent: amtE > 0 ? 0 : pctE, max_uses: maxV };
+        const bodyE = { percent: amtE > 0 ? 1 : pctE, max_uses: maxV };
         if (hasAmtCol) bodyE.amount = amtE > 0 ? amtE : null;
         const r = await db.from("coupons").update(bodyE).eq("code", editingCouponCode).select();
         if (r.error || !r.data || !r.data.length) return failE("❌ আপডেট হয়নি: " + errText(r.error || "permission denied"));
@@ -1869,7 +1971,7 @@
       if (!(amt > 0) && !(pct >= 1 && pct <= 100)) return fail("ছাড়ের % ১ থেকে ১০০-এর মধ্যে দিন, অথবা নির্দিষ্ট টাকা দিন।");
       const hasAmtCol = adminCoupons.length && "amount" in adminCoupons[0];
       if (amt > 0 && adminCoupons.length && !hasAmtCol) return fail("নির্দিষ্ট টাকার ছাড়ের জন্য আগে Supabase-এ নতুন SQL চালাতে হবে (amount কলাম নেই)।");
-      const cBody = { percent: amt > 0 ? 0 : pct };
+      const cBody = { percent: amt > 0 ? 1 : pct };
       if (amt > 0) cBody.amount = amt; else if (hasAmtCol) cBody.amount = null;
       const max = maxRaw === "" ? null : Math.max(1, parseInt(maxRaw, 10) || 1);
       const exists = adminCoupons.some(c => c.code === code);
@@ -2469,6 +2571,7 @@
         const p = products.find(x => productCode(x.id) === link.toUpperCase());
         if (p) { openProduct(p.id); return; }
       }
+      if (THREE_RE.test(link)) { location.hash = "#three-piece"; return; }
       const cat = [...$("#categoryFilter").options].find(o => o.value && o.value.toLowerCase() === link.toLowerCase());
       if (cat) { $("#categoryFilter").value = cat.value; $("#searchBox").value = ""; }
       else { $("#categoryFilter").value = ""; $("#searchBox").value = link; }
@@ -2603,6 +2706,7 @@
     // ---------- শুরু ----------
     (async () => {
       window.__sariReady = true;
+      syncThreePiece();
       try { initDynamicReviews(); } catch (e) { console.warn(e); }
       updateCartBadge();
       applyDeliveryInfo();
