@@ -154,7 +154,8 @@
     input[type=checkbox]{width:auto}
 
     dialog{border:0;border-radius:22px;max-width:580px;width:94%;padding:28px;box-shadow:0 20px 60px rgba(0,0,0,.3);position:relative;background:#fff;max-height:92vh;overflow-y:auto}
-    dialog::backdrop{background:rgba(15,28,46,.75);backdrop-filter:blur(4px)}
+    dialog::backdrop{background:rgba(15,28,46,.78)}
+    button,a,[onclick],.btn,.wa-order{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
     #productDialog{max-width:900px}
     .close-modal-btn{position:absolute;top:12px;right:14px;background:#f1f5f9;border:none;font-size:30px;font-weight:bold;color:#475569;width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .25s;line-height:1;z-index:3}
     .close-modal-btn:hover{background:var(--red);color:#fff}
@@ -469,19 +470,36 @@
     .care-item span b{display:block;font-size:15px}
     .care-item span em{display:block;font-size:12px;font-style:normal;color:#94a3b8;margin-top:1px}
 
+    /* ===== রিভিউ লেখার বাটন ও ফর্ম ===== */
+    .rv-write{position:relative;display:inline-flex;align-items:center;gap:12px;padding:10px 24px 10px 10px;border-radius:50px;border:0;cursor:pointer;font-family:inherit;font-size:16.5px;font-weight:800;color:#2a1c00;
+      background:linear-gradient(135deg,#fff3c4 0%,#f3d77a 35%,#d4af37 70%,#b8860b 100%);box-shadow:0 8px 22px rgba(184,134,11,.35),inset 0 1px 0 rgba(255,255,255,.7);transition:transform .2s,box-shadow .2s}
+    .rv-write:active{transform:scale(.97)}
+    .rv-write .rv-ic{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#0f1c2e;color:#f3d77a;font-size:18px;box-shadow:0 3px 8px rgba(0,0,0,.3)}
+    .rv-write small{display:block;font-size:11.5px;font-weight:600;opacity:.75;margin-top:1px}
+    .rv-write span.rv-t{text-align:left;line-height:1.2}
+    .rv-wrap{text-align:center;margin-top:26px}
+    .rv-form label{display:block;font-weight:700;color:var(--navy);margin:12px 0 5px}
+    .rv-form input,.rv-form textarea{width:100%;padding:12px;border:1.5px solid #e2e8f0;border-radius:12px;font:inherit;font-size:16px}
+    .rv-form textarea{min-height:120px;resize:vertical}
+    .rv-count{font-size:12px;color:#94a3b8;text-align:right}
+    .review-card.rv-real{border-top:3px solid #d4af37}
+    .review-card .rv-q{color:#d4af37;font-size:28px;line-height:.6;font-family:Georgia,serif}
+    .rv-adm{border:1px solid #e2e8f0;border-radius:12px;padding:12px;margin-bottom:10px;background:#fff}
     /* ===== WhatsApp এ অর্ডার করুন বাটন — স্বচ্ছ গ্লাস + সোনালি-সবুজ গ্রেডিয়েন্ট বর্ডার ===== */
     .whatsapp-order-btn.wa-order{position:relative;overflow:hidden;isolation:isolate;grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:12px;padding:9px 18px 9px 10px;border-radius:50px;font-family:inherit;font-size:16px;font-weight:800;letter-spacing:.2px;cursor:pointer;text-decoration:none;
-      color:#0b5a34;border:1.6px solid transparent;
-      background:linear-gradient(rgba(37,211,102,.10),rgba(37,211,102,.04)) padding-box,linear-gradient(120deg,#25d366 0%,#f3e5ad 48%,#c8a04b 72%,#25d366 100%) border-box;
-      -webkit-backdrop-filter:blur(8px) saturate(1.4);backdrop-filter:blur(8px) saturate(1.4);
-      box-shadow:0 6px 18px rgba(37,211,102,.18),inset 0 1px 0 rgba(255,255,255,.55);text-shadow:none;transition:transform .25s,box-shadow .25s,background .25s}
-    .whatsapp-order-btn.wa-order:hover,.whatsapp-order-btn.wa-order:active{background:linear-gradient(rgba(37,211,102,.20),rgba(37,211,102,.08)) padding-box,linear-gradient(120deg,#25d366 0%,#f3e5ad 48%,#c8a04b 72%,#25d366 100%) border-box;transform:translateY(-2px);box-shadow:0 10px 24px rgba(37,211,102,.30),inset 0 1px 0 rgba(255,255,255,.6)}
+      color:#0b5a34;border:0;background:rgba(37,211,102,.09);
+      box-shadow:0 6px 18px rgba(37,211,102,.16),inset 0 1px 0 rgba(255,255,255,.5);text-shadow:none;transition:transform .25s,box-shadow .25s,background .25s}
+    .whatsapp-order-btn.wa-order::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.6px;pointer-events:none;z-index:1;
+      background:linear-gradient(120deg,#25d366 0%,#f3e5ad 48%,#c8a04b 72%,#25d366 100%);
+      -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
+    .whatsapp-order-btn.wa-order:hover,.whatsapp-order-btn.wa-order:active{background:rgba(37,211,102,.18);transform:translateY(-2px);box-shadow:0 10px 24px rgba(37,211,102,.28),inset 0 1px 0 rgba(255,255,255,.6)}
     .wa-order .wa-ic{width:34px;height:34px;border-radius:50%;flex:none;display:grid;place-items:center;background:linear-gradient(135deg,#128c4a,#25d366);color:#fff;box-shadow:0 0 0 3px rgba(37,211,102,.18),0 3px 8px rgba(18,140,74,.35)}
     .wa-order .wa-ic svg{width:19px;height:19px;fill:currentColor}
     .wa-order .wa-txt{letter-spacing:.2px;background:linear-gradient(90deg,#065f37,#0f8a4b);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
     .wa-order .wa-txt::after{content:"›";display:inline-block;margin-left:8px;font-size:22px;line-height:1;font-weight:700;transition:transform .25s;-webkit-text-fill-color:#b8860b}
     .wa-order:hover .wa-txt::after{transform:translateX(5px)}
-    .wa-order::after{content:"";position:absolute;z-index:-1;top:0;bottom:0;left:-60%;width:35%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-18deg);animation:waShine 4.2s ease-in-out infinite}
+    .wa-order::after{content:"";position:absolute;z-index:-1;top:0;bottom:0;left:-60%;width:35%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-18deg);opacity:0}
+    .wa-order:hover::after{opacity:1;animation:waShine 1.1s ease-out 1}
     @keyframes waShine{0%,55%{left:-60%}100%{left:130%}}
     .wa-order.wa-full{width:100%;margin-top:8px}
     .action-row:has(.wa-order) .facebook-order-btn{grid-column:1/-1}
@@ -563,6 +581,9 @@
   <section>
     <h2 class="section-title">আমাদের সম্মানিত ক্রেতাদের মতামত</h2>
     <div class="reviews-grid" id="dynamicReviewsContainer"></div>
+    <div class="rv-wrap">
+      <button type="button" class="rv-write" onclick="openReviewForm()"><span class="rv-ic">✍️</span><span class="rv-t">আপনার মতামত লিখুন<small>শাড়ি বিলাশ সম্পর্কে দুটো কথা</small></span></button>
+    </div>
   </section>
 
   <section>
@@ -645,6 +666,7 @@
         <button class="btn" style="padding:8px 14px;font-size:14px;" onclick="showAdminTab('products')">পণ্য পরিচালনা</button>
         <button class="btn" style="padding:8px 14px;font-size:14px;" onclick="showAdminTab('orders')">অর্ডার দেখুন</button>
         <button class="btn" style="padding:8px 14px;font-size:14px;" onclick="showAdminTab('coupons')">🎟️ কুপন</button>
+        <button class="btn" style="padding:8px 14px;font-size:14px;" onclick="showAdminTab('reviews')">⭐ রিভিউ</button>
         <button class="btn" style="padding:8px 14px;font-size:14px;" onclick="showAdminTab('banners')">🖼️ ব্যানার</button>
         <button class="btn" style="padding:8px 14px;font-size:14px;" onclick="showAdminTab('notify')">🔔 নোটিফিকেশন</button>
         <button class="btn" style="padding:8px 14px;font-size:14px;" onclick="showAdminTab('delivery')">🚚 ডেলিভারি সেটিং</button>
@@ -721,6 +743,26 @@
         <button class="whatsapp-order-btn wa-order wa-full" type="button" onclick="whatsappCart()"><span class="wa-ic"><svg><use href="#ic-wa"/></svg></span><span class="wa-txt">WhatsApp-এ পাঠিয়ে অর্ডার করুন</span></button>
         <div id="orderMsg" class="small" style="margin-top:10px;"></div>
       </form>
+    </div>
+  </dialog>
+
+  <dialog id="reviewDialog">
+    <div class="rv-form" style="padding:6px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <h3 style="color:var(--navy);margin:0;">✍️ আপনার মতামত লিখুন</h3>
+        <button type="button" class="btn" style="padding:4px 12px;background:#e2e8f0;box-shadow:none;color:#334155;" onclick="document.getElementById('reviewDialog').close()" aria-label="বন্ধ করুন">✕</button>
+      </div>
+      <div id="rvThanks" style="display:none;text-align:center;padding:26px 6px;"><div style="font-size:46px;">🙏</div><h3 style="color:var(--navy);margin:8px 0;">ধন্যবাদ!</h3><p class="small">আপনার মতামত জমা হয়েছে। আমরা দেখে অনুমোদন দিলে সাইটে দেখা যাবে।</p><button type="button" class="btn" style="margin-top:14px;" onclick="document.getElementById('reviewDialog').close()">ঠিক আছে</button></div>
+      <div id="rvFormBox">
+        <label for="rvName">আপনার নাম</label>
+        <input id="rvName" maxlength="60" placeholder="যেমন: রিনা আক্তার" autocomplete="name">
+        <label for="rvText">আপনার মতামত</label>
+        <textarea id="rvText" maxlength="500" placeholder="শাড়ি, কোয়ালিটি বা ডেলিভারি সম্পর্কে লিখুন..."></textarea>
+        <div class="rv-count"><span id="rvCount">0</span>/500</div>
+        <button type="button" class="rv-write" id="rvSubmit" style="width:100%;justify-content:center;margin-top:12px;padding:12px 20px;" onclick="submitReview()">📨 রিভিউ পাঠান</button>
+        <div id="rvMsg" class="small" style="margin-top:10px;text-align:center;"></div>
+        <p class="small" style="margin-top:10px;text-align:center;">আপনার মতামত আমরা দেখে অনুমোদন দিলে সাইটে দেখা যাবে।</p>
+      </div>
     </div>
   </dialog>
 
@@ -875,14 +917,65 @@
       { name: "সাদিয়া আফরিন", text: "অরিজিনাল সুতার কাজ পেয়েছি। যেমন চেয়েছিলাম ঠিক তেমনই সুন্দর।" },
       { name: "মেহজাবিন হক", text: "অনলাইন থেকে প্রথমবার শাড়ি নিলাম, কোয়ালিটি দেখে মুগ্ধ হয়ে গেলাম। সবাইকে সাজেস্ট করব।" }
     ];
+    let approvedReviews = [], reviewTimer = null;
+    function renderReviewCards() {
+      const container = $("#dynamicReviewsContainer"); if (!container) return;
+      const real = [...approvedReviews].sort(() => 0.5 - Math.random());
+      const fill = real.length >= 3 ? [] : [...allReviewsPool].sort(() => 0.5 - Math.random());
+      const picked = [...real.map(r => ({ ...r, real: true })), ...fill].slice(0, 3);
+      container.innerHTML = picked.map(r => r.real
+        ? `<div class="review-card rv-real"><div class="rv-q">“</div><p>${esc(r.text)}</p><p style="margin-top:8px;"><b>— ${esc(r.name)}</b></p></div>`
+        : `<div class="review-card"><div class="stars">⭐⭐⭐⭐⭐</div><p><b>${esc(r.name)}:</b> "${esc(r.text)}"</p></div>`).join("");
+    }
+    async function loadApprovedReviews() {
+      try {
+        const { data, error } = await db.from("reviews").select("id,name,text,approved").eq("approved", true).order("created_at", { ascending: false }).limit(30);
+        if (!error && Array.isArray(data)) approvedReviews = data.filter(r => r && r.approved === true);
+      } catch (e) { console.warn(e); }
+      renderReviewCards();
+    }
     function initDynamicReviews() {
-      const container = $("#dynamicReviewsContainer");
-      const render = () => {
-        const selected = [...allReviewsPool].sort(() => 0.5 - Math.random()).slice(0, 3);
-        container.innerHTML = selected.map(r => `<div class="review-card"><div class="stars">⭐⭐⭐⭐⭐</div><p><b>${esc(r.name)}:</b> "${esc(r.text)}"</p></div>`).join("");
-      };
-      render();
-      setInterval(render, 6000);
+      renderReviewCards();
+      loadApprovedReviews();
+      if (!reviewTimer) reviewTimer = setInterval(renderReviewCards, 6000);
+    }
+    function openReviewForm() {
+      $("#rvMsg").textContent = ""; $("#rvFormBox").style.display = "block"; $("#rvThanks").style.display = "none";
+      try { const c = JSON.parse(localStorage.getItem("sari_customer") || "{}"); if (c.name && !$("#rvName").value) $("#rvName").value = c.name; } catch {}
+      const d = $("#reviewDialog"); if (!d.open) d.showModal();
+    }
+    $("#rvText").addEventListener("input", e => { $("#rvCount").textContent = e.target.value.length; });
+    async function submitReview() {
+      const name = $("#rvName").value.trim(), text = $("#rvText").value.trim(), msg = $("#rvMsg"), btn = $("#rvSubmit");
+      if (name.length < 2) { msg.className = "small msg-err"; msg.textContent = "আপনার নাম লিখুন"; return; }
+      if (text.length < 5) { msg.className = "small msg-err"; msg.textContent = "আপনার মতামত একটু বিস্তারিত লিখুন"; return; }
+      btn.disabled = true; msg.className = "small"; msg.textContent = "পাঠানো হচ্ছে...";
+      const { error } = await db.rpc("submit_review", { p_name: name, p_text: text });
+      btn.disabled = false;
+      if (error) { msg.className = "small msg-err"; msg.textContent = isMissingFn(error) ? "রিভিউ সিস্টেম এখনো চালু হয়নি (অ্যাডমিন supabase-upgrade-10.sql চালান)।" : "পাঠানো যায়নি: " + errText(error); return; }
+      $("#rvText").value = ""; $("#rvCount").textContent = "0";
+      $("#rvFormBox").style.display = "none"; $("#rvThanks").style.display = "block";
+    }
+
+    // ---------- অ্যাডমিন: রিভিউ অনুমোদন ----------
+    async function renderAdminReviews() {
+      const box = $("#adminContent");
+      box.innerHTML = `<div class="admin-card"><h3>⭐ ক্রেতাদের রিভিউ</h3><p class="small">লোড হচ্ছে...</p></div>`;
+      const { data, error } = await db.from("reviews").select("*").order("created_at", { ascending: false }).limit(200);
+      if (error) { box.innerHTML = `<div class="admin-card"><h3>⭐ ক্রেতাদের রিভিউ</h3><p class="small msg-err">${esc(isMissingFn(error) || /relation .* does not exist|schema cache/i.test(error.message || "") ? "রিভিউ টেবিল নেই — supabase-upgrade-10.sql একবার Run করুন।" : errText(error))}</p></div>`; return; }
+      const pending = data.filter(r => !r.approved), done = data.filter(r => r.approved);
+      const card = (r, ok) => `<div class="rv-adm"><div class="small" style="margin-bottom:4px;"><b>${esc(r.name)}</b> · ${esc(new Date(r.created_at).toLocaleDateString("bn-BD"))}</div><div style="margin-bottom:10px;white-space:pre-wrap;">${esc(r.text)}</div>
+        ${ok ? "" : `<button type="button" class="btn" style="padding:7px 14px;font-size:14px;background:#059669;" onclick="reviewAction(${r.id},'approve')">✅ অনুমোদন</button> `}${ok ? `<button type="button" class="btn" style="padding:7px 14px;font-size:14px;background:#64748b;" onclick="reviewAction(${r.id},'hide')">🙈 লুকান</button> ` : ""}<button type="button" class="btn" style="padding:7px 14px;font-size:14px;background:#dc2626;" onclick="reviewAction(${r.id},'delete')">🗑️ মুছুন</button></div>`;
+      box.innerHTML = `<div class="admin-card"><h3>⭐ অপেক্ষায় আছে (${taka(pending.length)})</h3>${pending.length ? pending.map(r => card(r, false)).join("") : '<p class="small">নতুন কোনো রিভিউ নেই।</p>'}</div>
+        <div class="admin-card"><h3>✅ সাইটে দেখা যাচ্ছে (${taka(done.length)})</h3>${done.length ? done.map(r => card(r, true)).join("") : '<p class="small">এখনো কোনো রিভিউ অনুমোদন করা হয়নি।</p>'}</div>`;
+    }
+    async function reviewAction(id, act) {
+      if (act === "delete" && !confirm("এই রিভিউ মুছে ফেলবেন?")) return;
+      const q = act === "delete" ? db.from("reviews").delete().eq("id", id) : db.from("reviews").update({ approved: act === "approve" }).eq("id", id);
+      const { error } = await q;
+      if (error) { alert("হয়নি: " + errText(error)); return; }
+      toast(act === "approve" ? "✅ অনুমোদন হয়েছে — এখন সাইটে দেখাবে" : act === "hide" ? "রিভিউ লুকানো হয়েছে" : "মুছে ফেলা হয়েছে");
+      renderAdminReviews(); loadApprovedReviews();
     }
 
     // ---------- Auth ----------
@@ -1332,6 +1425,8 @@
     })();
 
     // ---------- হোয়াটসঅ্যাপ / ফেসবুক ----------
+    // আগের মতোই নতুন ট্যাবে খোলে
+    function openExternal(url) { window.open(url, "_blank", "noopener"); }
     function directWhatsAppOrder(productId, idx, qty) {
       const p = getProduct(productId); if (!p) return;
       const color = idx !== undefined && idx !== null ? (productColors(p)[idx] || cardColor(productId)) : cardColor(productId);
@@ -1348,9 +1443,9 @@
         (disc > 0 ? `🎟️ কুপন (${appliedCoupon.code}): -${taka(disc)}/-\n` : "") +
         `🧮 শাড়ির মোট দাম: ${taka(gross - disc)}/- টাকা\n${del}\n` + (extra.length ? extra.join("\n") + "\n" : "") +
         `\nঅনুগ্রহ করে অর্ডারের প্রক্রিয়াটি জানান।`;
-      window.open(`https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(msg)}`, "_blank", "noopener");
+      openExternal(`https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(msg)}`);
     }
-    function directFacebookOrder() { window.open(FB_PAGE_URL, "_blank", "noopener"); }
+    function directFacebookOrder() { openExternal(FB_PAGE_URL); }
 
     // ---------- Wishlist ----------
     function readWishlist() { try { const w = JSON.parse(localStorage.getItem("sari_wishlist") || "[]"); return Array.isArray(w) ? w.map(String) : []; } catch { return []; } }
@@ -1706,7 +1801,7 @@
         lines.map(({ i, p }, n) => `${n + 1}. 🛍️ ${p.name}\n   🔖 কোড: ${productCode(p.id)}\n   🎨 রং: ${i.color === NO_COLOR ? "সাধারণ" : i.color}\n   📦 ${taka(i.qty)} টি × ${taka(p.price)}/- = ${taka(p.price * i.qty)}/-`).join("\n\n") +
         `\n\n🧮 শাড়ির দাম: ${taka(t.subtotal)}/-${t.discount > 0 ? `\n🎟️ কুপন (${appliedCoupon.code}): -${taka(t.discount)}/-` : ""}\n🚚 ডেলিভারি: ${delTxt}\n💵 সর্বমোট: ${taka(t.total)}/-\n💳 পেমেন্ট: ${pay}` +
         (nm || ph || ad ? `\n\n👤 নাম: ${nm || "—"}\n📞 ফোন: ${ph || "—"}\n📍 ঠিকানা: ${ad || "—"}` : "");
-      window.open(`https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(txt)}`, "_blank", "noopener");
+      openExternal(`https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(txt)}`);
     }
 
     const isMissingFn = e => e && (e.code === "PGRST202" || e.code === "42883" || /could not find the function/i.test(e.message || ""));
@@ -1836,6 +1931,8 @@
       const box = $("#adminContent");
       if (tab === "dashboard") {
         renderDashboard();
+      } else if (tab === "reviews") {
+        renderAdminReviews();
       } else if (tab === "products") {
         editingProductId = null;
         currentImageUrlList = [];
