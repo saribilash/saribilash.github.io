@@ -339,7 +339,7 @@
     .tp-hero p{margin:0 auto;max-width:640px;color:#e2e8f0;font-size:16.5px;line-height:1.7}
     .tp-perks{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
     .tp-perks span{background:rgba(255,255,255,.08);border:1px solid rgba(212,175,55,.45);color:#f3e5ad;padding:7px 14px;border-radius:30px;font-size:13.5px}
-    .tp-tools{max-width:1200px;margin:18px auto 4px;padding:0 20px;display:grid;grid-template-columns:1fr 190px 170px;gap:10px}
+    .tp-tools{max-width:1200px;margin:18px auto 4px;padding:0 20px;display:grid;grid-template-columns:1fr 240px;gap:10px}
     .tp-tools input,.tp-tools select{margin:0;padding:12px 16px;border-radius:30px;border:1.5px solid rgba(212,175,55,.5);font:inherit;font-size:15px;background:#fff;min-width:0;width:100%}
     #tpCount{max-width:1200px;margin:8px auto 4px;padding:0 20px}
     #threePiecePage .grid{padding-bottom:10px}
@@ -353,7 +353,7 @@
     .tp-chip.on{background:var(--gold-gradient);border-color:var(--gold);box-shadow:0 4px 12px var(--gold-glow)}
     .tp-empty{grid-column:1/-1;text-align:center;padding:50px 20px;color:var(--muted);font-size:17px}
     .tp-empty b{display:block;color:var(--navy);font-size:22px;margin-bottom:6px}
-    @media(max-width:550px){.tp-hero{margin:14px;padding:34px 18px 30px}.tp-hero h1{font-size:29px}.tp-tools{grid-template-columns:1fr 1fr}.tp-tools input{grid-column:1/-1}.tp-top .brand{font-size:20px}}
+    @media(max-width:550px){.tp-hero{margin:14px;padding:34px 18px 30px}.tp-hero h1{font-size:29px}.tp-tools{grid-template-columns:1fr}.tp-top .brand{font-size:20px}}
     @media(max-width:850px){.grid,.reviews-grid{grid-template-columns:1fr 1fr}.features-container{grid-template-columns:1fr}.detail{grid-template-columns:1fr}.detail-img{max-height:52vh}.toolbar{grid-template-columns:1fr}}
     @media(max-width:550px){.grid,.reviews-grid{grid-template-columns:1fr}.brand{font-size:22px}.hero{margin:15px;padding:35px 22px;min-height:300px}.social-buttons{right:12px}.social-button{width:48px;height:48px}header{padding:12px 4%}.nav{gap:10px}.nav a,.nav button{font-size:13.5px}dialog{padding:20px 16px}.product-main-image{max-height:340px}.image-container{min-height:180px}.detail-img{max-height:46vh}}
   </style>
@@ -476,7 +476,6 @@
     <div class="tp-tools">
       <input id="tpSearch" type="search" placeholder="🔍 থ্রি পিস খুঁজুন — নাম, রং বা কোড" aria-label="থ্রি পিস খুঁজুন" oninput="renderThreePiece()">
       <select id="tpCat" onchange="tpGroup=this.value;renderThreePiece()" aria-label="ক্যাটাগরি"><option value="">সব ক্যাটাগরি</option></select>
-      <select id="tpSort" onchange="renderThreePiece()" aria-label="সাজান"><option value="new">নতুন আগে</option><option value="low">কম দাম আগে</option><option value="high">বেশি দাম আগে</option></select>
     </div>
     <div class="tp-budget"><span class="budget-label">💰 বাজেট:</span>
       <input id="tpMin" type="number" min="0" inputmode="numeric" placeholder="কত টাকা থেকে" aria-label="সর্বনিম্ন বাজেট" oninput="renderThreePiece()">
@@ -1012,20 +1011,19 @@
 
     // ---------- থ্রি পিস পেজ ----------
     let tpOpen = false, tpGroup = "";
-    const tpGroupOf = p => String(p.fabric || "").trim() || String(p.category || "").replace(THREE_RE, "").replace(/^[\s\-–:,|/]+|[\s\-–:,|/]+$/g, "");
+    const tpSubOf = p => String(p.category || "").replace(THREE_RE, "").replace(/^[\s\-–:,|/]+|[\s\-–:,|/]+$/g, "");
+    const tpGroupOf = p => tpSubOf(p) || String(p.fabric || "").trim();
     function setTpGroup(g) { tpGroup = g; renderThreePiece(); }
     function renderThreePiece() {
       const all = products.filter(p => p && p.name && p.active !== false && isThreePiece(p));
       const pc = $("#tpPromoCount"); if (pc) pc.textContent = all.length ? `(${taka(all.length)}টি)` : "";
       if (!tpOpen) return;
-      const q = ($("#tpSearch").value || "").trim().toLowerCase(), sort = $("#tpSort").value;
+      const q = ($("#tpSearch").value || "").trim().toLowerCase();
       const groups = [...new Set(all.map(tpGroupOf).filter(Boolean))];
       if (tpGroup && !groups.includes(tpGroup)) tpGroup = "";
       $("#tpCat").innerHTML = `<option value="">সব ক্যাটাগরি</option>` + groups.map(g => `<option value="${esc(g)}"${g === tpGroup ? " selected" : ""}>${esc(g)}</option>`).join("");
       const lo = numOrNull($("#tpMin").value), hi = numOrNull($("#tpMax").value);
       let list = all.filter(p => (lo === null || Number(p.price) >= lo) && (hi === null || Number(p.price) <= hi) && (!tpGroup || tpGroupOf(p) === tpGroup) && (!q || [p.name, p.description, p.category, p.fabric, productCode(p.id), ...productColors(p)].join(" ").toLowerCase().includes(q)));
-      if (sort === "low") list = list.slice().sort((a, b) => Number(a.price) - Number(b.price));
-      else if (sort === "high") list = list.slice().sort((a, b) => Number(b.price) - Number(a.price));
       $("#tpCount").textContent = all.length ? `${taka(list.length)}টি থ্রি পিস পাওয়া গেছে` : "";
       const box = $("#tpProducts");
       if (!all.length) { box.innerHTML = '<div class="tp-empty"><b>থ্রি পিস কালেকশন শীঘ্রই আসছে</b>নতুন থ্রি পিস যোগ হলেই এখানে দেখতে পাবেন।</div>'; return; }
@@ -1644,7 +1642,8 @@
         editingProductId = null;
         currentImageUrlList = [];
         const hasLocal = getLegacyLocalProducts().length > 0;
-        const cats = [...new Set([...products.map(p => (p.category || "").trim()).filter(Boolean), "থ্রি পিস"])];
+        const cats = [...new Set(products.filter(p => !isThreePiece(p)).map(p => (p.category || "").trim()).filter(Boolean))];
+        const tpSubs = [...new Set(products.filter(isThreePiece).map(tpSubOf).filter(Boolean))];
         box.innerHTML = `
           ${hasLocal ? `<div class="admin-card" style="background:#fff8e7;border-color:#f2e2b8;">
             <b>⚠️ এই ফোনে ${taka(getLegacyLocalProducts().length)}টি পুরোনো শাড়ি শুধু লোকালি সেভ আছে (অন্য ফোনে দেখা যায় না)।</b>
@@ -1657,9 +1656,11 @@
             <label class="field-label" for="pname">শাড়ির নাম</label><input id="pname" required>
             <label class="field-label" for="pdesc">বিবরণ</label><input id="pdesc">
             <div class="row">
-              <div><label class="field-label" for="pcategory">ক্যাটাগরি</label><input id="pcategory" list="catList" placeholder="যেমন: জামদানি, থ্রি পিস"></div>
+              <div><label class="field-label" for="pcategory">ক্যাটাগরি</label><input id="pcategory" list="catList" placeholder="যেমন: জামদানি, কাতান"></div>
               <div><label class="field-label" for="pfabric">ধরন / কাপড় (থ্রি পিসেও এটা দিয়ে ভাগ হয়)</label><input id="pfabric" placeholder="যেমন: সুতি, সিল্ক, কটন, জর্জেট"></div>
+              <div><label class="field-label" for="ptpcat">👗 থ্রি পিসের ক্যাটাগরি (শুধু থ্রি পিস হলে)</label><input id="ptpcat" list="tpCatList" placeholder="যেমন: কটন, জর্জেট, পার্টি — দিলেই থ্রি পিস পেজে যাবে"></div>
             </div>
+            <datalist id="tpCatList">${tpSubs.map(c => `<option value="${esc(c)}">`).join("")}</datalist>
             <datalist id="catList">${cats.map(c => `<option value="${esc(c)}">`).join("")}</datalist>
             <div class="row">
               <div><label class="field-label" for="plength">দৈর্ঘ্য (ফাঁকা রাখলে সাইটে দেখাবে না)</label><input id="plength" placeholder="যেমন: ১২ হাত"></div>
@@ -2145,7 +2146,7 @@
         const productData = {
           name,
           description: $("#pdesc").value.trim(),
-          category: $("#pcategory").value.trim() || null,
+          category: ($("#ptpcat").value.trim() ? "থ্রি পিস - " + $("#ptpcat").value.trim() : $("#pcategory").value.trim()) || null,
           fabric: $("#pfabric").value.trim() || null,
           length_text: $("#plength").value.trim() || null,
           free_min: numOrNull($("#pfreemin").value),
@@ -2211,7 +2212,8 @@
       $("#formTitle").textContent = "শাড়ির তথ্য ও ছবি পরিবর্তন (সম্পাদনা) — কোড: " + productCode(p.id);
       $("#pname").value = p.name || "";
       $("#pdesc").value = p.description || "";
-      $("#pcategory").value = p.category || "";
+      $("#pcategory").value = isThreePiece(p) ? "" : (p.category || "");
+      $("#ptpcat").value = isThreePiece(p) ? (tpSubOf(p) || "থ্রি পিস") : "";
       $("#pfabric").value = p.fabric || "";
       $("#plength").value = p.length_text || "";
       $("#pfreemin").value = (p.free_min === null || p.free_min === undefined) ? "" : p.free_min;
