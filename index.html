@@ -120,6 +120,12 @@
     .sold-overlay{position:absolute;inset:0;background:rgba(15,28,46,.45);z-index:4;display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;font-weight:700;pointer-events:none}
     .card-body{padding:18px 20px 20px;display:flex;flex-direction:column;flex-grow:1}
     .card h3{margin:0 0 8px;color:var(--navy);font-size:21px;cursor:pointer}
+    .card-compact{cursor:pointer;-webkit-tap-highlight-color:transparent}
+    .card-compact .card-head{padding:14px 16px 10px}
+    .card-compact .card-body{padding:0 16px 16px;flex-grow:0}
+    .card-view-btn{width:100%;border:0;border-radius:12px;padding:11px 10px;font-family:inherit;font-size:15px;font-weight:800;color:#f3e5ad;background:linear-gradient(135deg,#0f1c2e,#182e4a);cursor:pointer;box-shadow:0 4px 12px rgba(15,28,46,.25)}
+    .card-view-btn[data-sold]{background:#64748b}
+    .card-view-btn:active{transform:scale(.98)}
     .muted{color:var(--muted);font-size:14.5px;margin-bottom:12px;line-height:1.6}
     .spec-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
     .spec-tag{background:#f1f5f9;color:var(--navy);font-size:12.5px;padding:4px 10px;border-radius:6px;font-weight:600}
@@ -570,6 +576,9 @@
       .wishlist-btn{top:6px;right:6px;height:26px;padding:0 8px 0 6px;font-size:10.5px;gap:3px}
       .wishlist-btn .wl-ic{font-size:13px}
       .card-body{padding:8px 9px 10px}
+      .card-compact .card-head{padding:8px 9px 4px}
+      .card-compact .card-body{padding:2px 9px 10px}
+      .card-view-btn{padding:7px 4px;font-size:12px;border-radius:8px}
       .product-actions{gap:5px}
       .action-row{grid-template-columns:1fr;gap:5px}
       .action-row .cart-btn,.action-row .buy-btn,.facebook-order-btn,.whatsapp-order-btn{padding:7px 4px!important;font-size:12px!important;border-radius:8px!important}
@@ -595,6 +604,20 @@
       #products.grid::-webkit-scrollbar,#tpProducts.grid::-webkit-scrollbar{display:none}
       #products.grid>.card,#tpProducts.grid>.card{flex:0 0 46%;max-width:46%;scroll-snap-align:start}
       #products.grid>:not(.card),#tpProducts.grid>:not(.card){flex:0 0 calc(100% - 24px)}
+    }
+    /* ===== বিস্তারিত পপআপ: ছোট ছবি + আশেপাশে নড়াচড়া বন্ধ ===== */
+    #productDialog{overflow-x:hidden;touch-action:pan-y;overscroll-behavior:contain}
+    #productDialog .detail{width:100%}
+    #productDialog .detail>*{min-width:0}
+    #productDialog .detail-img{height:38vh;max-height:38vh;width:100%;object-fit:contain}
+    #productDialog .variant-thumbs{overscroll-behavior-x:contain;touch-action:pan-x}
+    @media(max-width:850px){#productDialog .detail-img{height:32vh;max-height:32vh}}
+    @media(max-width:550px){#productDialog .detail-img{height:28vh;max-height:28vh}}
+    /* ===== মোবাইলে রিভিউ পাশাপাশি স্লাইড করে দেখা (নিচে না নেমে) ===== */
+    @media(max-width:850px){
+      #dynamicReviewsContainer.reviews-grid{display:flex;flex-wrap:nowrap;gap:12px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;padding:2px 12px 14px;margin:0 -12px;scrollbar-width:none;align-items:stretch}
+      #dynamicReviewsContainer.reviews-grid::-webkit-scrollbar{display:none}
+      #dynamicReviewsContainer .review-card{flex:0 0 82%;max-width:82%;scroll-snap-align:center}
     }
   </style>
 </head>
@@ -1015,11 +1038,29 @@
       { name: "মেহজাবিন হক", text: "অনলাইন থেকে প্রথমবার শাড়ি নিলাম, কোয়ালিটি দেখে মুগ্ধ হয়ে গেলাম। সবাইকে সাজেস্ট করব।" }
     ];
     let approvedReviews = [], reviewTimer = null;
-    function renderReviewCards() {
+    // প্রতি ৪ সেকেন্ডে: মোবাইলে পরের রিভিউতে স্লাইড, কম্পিউটারে রিভিউ বদল। কেউ আঙুল দিয়ে ধরলে ৮ সেকেন্ড থেমে থাকে
+    let rvPauseUntil = 0;
+    function rvTick() {
+      const c = $("#dynamicReviewsContainer"); if (!c) return;
+      if (!window.matchMedia("(max-width:850px)").matches) { renderReviewCards(); return; }
+      if (c.dataset.mob !== "1") { renderReviewCards(true); return; }
+      if (Date.now() < rvPauseUntil || document.hidden) return;
+      const cards = [...c.children]; if (cards.length < 2) return;
+      const cr = c.getBoundingClientRect(), mid = cr.left + cr.width / 2;
+      let cur = 0, best = Infinity;
+      cards.forEach((el, i) => { const r = el.getBoundingClientRect(), d = Math.abs(r.left + r.width / 2 - mid); if (d < best) { best = d; cur = i; } });
+      const next = cards[(cur + 1) % cards.length], nr = next.getBoundingClientRect();
+      c.scrollTo({ left: c.scrollLeft + (nr.left + nr.width / 2 - mid), behavior: "smooth" });
+    }
+    function renderReviewCards(force) {
       const container = $("#dynamicReviewsContainer"); if (!container) return;
+      const mob = window.matchMedia("(max-width:850px)").matches;
+      // মোবাইলে স্লাইডার: টাইমারে রিফ্রেশ করলে আঙুলে স্লাইড করার সময় কার্ড লাফিয়ে যায়, তাই শুধু জোর করলে/প্রথমবার আঁকা হবে
+      if (mob && force !== true && container.dataset.mob === "1" && container.children.length) return;
+      container.dataset.mob = mob ? "1" : "0";
       const real = [...approvedReviews].sort(() => 0.5 - Math.random());
       const fill = real.length >= 3 ? [] : [...allReviewsPool].sort(() => 0.5 - Math.random());
-      const picked = [...real.map(r => ({ ...r, real: true })), ...fill].slice(0, 3);
+      const picked = [...real.map(r => ({ ...r, real: true })), ...fill].slice(0, mob ? 8 : 3);
       container.innerHTML = picked.map(r => r.real
         ? `<div class="review-card rv-real">${parseRv(r.text).stars ? `<div class="stars">${starsHtml(parseRv(r.text).stars)}</div>` : '<div class="rv-q">“</div>'}<p>${esc(parseRv(r.text).text)}</p><p style="margin-top:8px;"><b>— ${esc(r.name)}</b></p></div>`
         : `<div class="review-card"><div class="stars">⭐⭐⭐⭐⭐</div><p><b>${esc(r.name)}:</b> "${esc(r.text)}"</p></div>`).join("");
@@ -1029,12 +1070,14 @@
         const { data, error } = await db.from("reviews").select("id,name,text,approved").eq("approved", true).order("created_at", { ascending: false }).limit(30);
         if (!error && Array.isArray(data)) approvedReviews = data.filter(r => r && r.approved === true);
       } catch (e) { console.warn(e); }
-      renderReviewCards();
+      renderReviewCards(true);
     }
     function initDynamicReviews() {
-      renderReviewCards();
+      renderReviewCards(true);
       loadApprovedReviews();
-      if (!reviewTimer) reviewTimer = setInterval(renderReviewCards, 6000);
+      const rc = $("#dynamicReviewsContainer");
+      if (rc && !rc.dataset.touchBound) { rc.dataset.touchBound = "1"; ["touchstart", "touchmove", "pointerdown", "wheel"].forEach(ev => rc.addEventListener(ev, () => { rvPauseUntil = Date.now() + 8000; }, { passive: true })); }
+      if (!reviewTimer) reviewTimer = setInterval(rvTick, 4000);
     }
     function openReviewForm() {
       $("#rvMsg").textContent = ""; setRvRating(0); $("#rvFormBox").style.display = "block"; $("#rvThanks").style.display = "none";
@@ -1320,16 +1363,10 @@
         const sold = isSoldOut(p);
         const isW = wl.includes(String(p.id));
         const tags = [p.category, p.fabric].filter(Boolean).map(t => `<span class="spec-tag">${esc(t)}</span>`).join("");
-        return `<article class="card">
+        return `<article class="card card-compact" onclick="openProduct('${id}')" role="button" tabindex="0" aria-label="${esc(p.name)}">
           <div class="card-head">
-            <span class="code-chip">🔖 কোড: ${esc(productCode(p.id))}</span>
-            <h3 onclick="openProduct('${id}')">${esc(p.name)}</h3>
-            ${p.description ? `<p class="desc">${esc(p.description)}</p>` : ""}
-            <div class="spec-tags">${specTags(p)}</div>
+            <h3>${esc(p.name)}</h3>
             ${priceHtml(p)}
-            ${couponHtml(p)}
-            <div>${pillsHtml(p)}</div>
-
           </div>
           <div class="image-container" onclick="openProduct('${id}')">
             ${badgesHtml(p)}
@@ -1337,19 +1374,8 @@
             ${sold ? '<div class="sold-overlay">স্টক শেষ</div>' : ""}
             <img class="product-main-image" id="mainimg-${id}" src="${esc(images[sel] || images[0] || "")}" alt="${esc(p.name)}" loading="lazy">
           </div>
-          ${thumbs}
           <div class="card-body">
-            <div class="product-actions">
-              <div class="action-row">
-                <button class="cart-btn" ${sold ? "disabled" : ""} onclick="cardAdd('${id}',false)">🛒 কার্টে রাখুন</button>
-                <button class="buy-btn" ${sold ? "disabled" : ""} onclick="cardAdd('${id}',true)">${sold ? "স্টক শেষ" : "🛍️ এখনই অর্ডার করুন"}</button>
-              </div>
-              <div class="help-note">💬 যেকোনো প্রয়োজনে বা বিস্তারিত জানতে WhatsApp অথবা ফেসবুক পেজে মেসেজ করুন</div>
-              <div class="action-row">
-                <button class="whatsapp-order-btn wa-order" onclick="directWhatsAppOrder('${id}')"><span class="wa-ic"><svg><use href="#ic-wa"/></svg></span><span class="wa-txt">WhatsApp এ অর্ডার করুন</span></button>
-                <button class="facebook-order-btn" onclick="directFacebookOrder()">📘 ফেসবুক পেজ</button>
-              </div>
-            </div>
+            <button type="button" class="card-view-btn" ${sold ? 'data-sold="1"' : ""}>${sold ? "স্টক শেষ" : "🛍️ অর্ডার করুন"}</button>
           </div>
         </article>`;
     }
@@ -1422,6 +1448,7 @@
       const p = getProduct(id);
       return p ? (productColors(p)[cardSel[p.id] || 0] || productColors(p)[0] || NO_COLOR) : NO_COLOR;
     }
+    document.addEventListener("keydown", e => { const c = e.target.closest && e.target.closest(".card-compact"); if (c && (e.key === "Enter" || e.key === " ") && e.target === c) { e.preventDefault(); c.click(); } });
     function cardAdd(id, buy) {
       if (buy) { startBuyNow(id, cardColor(id), 1); return; }
       if (addToCart(id, cardColor(id), 1)) toast("🛒 কার্টে যোগ হয়েছে");
@@ -1435,10 +1462,12 @@
       renderDetail();
       const d = $("#productDialog");
       if (!d.open) d.showModal();
+      d.scrollTop = 0;
     }
     function renderDetail() {
       const p = getProduct(det.id);
       if (!p) return;
+      const _dlg = $("#productDialog"), _st = _dlg.scrollTop;
       const images = productImages(p), colors = productColors(p);
       const img = images[det.idx] || images[0] || "";
       const sold = isSoldOut(p);
@@ -1461,11 +1490,6 @@
         <div>
 
           ${colors.length ? `<div class="color-big">${colorDot(colors[det.idx] || colors[0])}🎨 রং: ${esc(colors[det.idx] || colors[0])}<span style="font-size:13px;font-weight:600;color:#047857;margin-left:4px;">${stockLabel(p, colors[det.idx] || colors[0])}</span></div>` : ""}
-          <div style="display:flex;align-items:center;gap:12px;margin:10px 0 14px;flex-wrap:wrap;">
-            <span style="font-weight:700;color:var(--navy);">কত পিস নিবেন:</span>
-            <div class="qty-box"><button onclick="detailQty(-1)" aria-label="কমান">−</button><b style="min-width:64px;">${taka(det.qty)} পিস</b><button onclick="detailQty(1)" aria-label="বাড়ান">+</button></div>
-            <span class="small">মোট: <b style="color:#b8860b;">${taka(Number(p.price) * det.qty)}/-</b></span>
-          </div>
           <div class="product-actions">
             <div class="action-row">
               <button class="cart-btn" ${soldColor ? "disabled" : ""} onclick="detailAdd(false)">${soldColor ? "এই রংয়ের স্টক শেষ" : "🛒 কার্টে রাখুন"}</button>
@@ -1483,6 +1507,7 @@
           </div>
         </div>
       </div>`;
+      _dlg.scrollTop = _st;
     }
     function detailSelect(i) { det.idx = i; renderVariant(det.id, i); renderDetail(); }
     function detailQty(d) {
