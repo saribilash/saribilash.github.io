@@ -11,7 +11,7 @@
       function isOn() { try { return localStorage.getItem(KEY) === "1"; } catch (e) { return false; } }
       function label() {
         var el = document.getElementById("dtLabel"), sub = document.getElementById("dtSub"), on = isOn();
-        if (el) el.textContent = on ? "মোবাইল মোডে ফিরুন" : "ডেক্সটপ মোড চালু করুন";
+        if (el) el.textContent = on ? "মোবাইল মোড" : "ডেক্সটপ মোড";
         if (sub) sub.textContent = on ? "ফোনের উপযোগী লেআউটে ফিরে যান" : "কম্পিউটারের মতো বড় পেজে দেখুন";
       }
       vp.setAttribute("content", isOn() ? DESK : MOBILE);
@@ -670,7 +670,99 @@
     .cr-t small{display:block;font-size:11.5px;font-weight:600;color:#047857;margin-top:2px}
     .cr .qty-box button{width:36px;height:38px}
     .cr .qty-box b{min-width:36px;font-size:16px}
-  </style>
+  
+    /* ===== কার্ড: অফার লাইন, কার্ট বাটন, সব ছবি সমান সাইজ ===== */
+    .card-compact .card-head{flex:1 1 auto}
+    .card-offers{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+    .co{font-size:12.5px;font-weight:700;line-height:1.35;padding:5px 9px;border-radius:9px}
+    .co-free{background:linear-gradient(135deg,#047857,#10b981);color:#fff}
+    .co-cp{background:#fef3c7;color:#92400e;border:1px dashed #d4af37;cursor:pointer}
+    .co-cp b{letter-spacing:.4px;color:#78350f}
+    .card-cart-btn{width:100%;margin-top:8px;border:1.5px solid #d4af37;border-radius:12px;padding:10px;font-family:inherit;font-size:14.5px;font-weight:800;color:#0f1c2e;background:linear-gradient(135deg,#fff8e1,#f3e5ad);cursor:pointer}
+    .card-cart-btn:active{transform:scale(.98)}
+    .card-compact .image-container{position:relative;aspect-ratio:3/4;min-height:0;flex:none}
+    .card-compact .product-main-image{position:absolute;inset:0;width:100%;height:100%;max-height:none;object-fit:cover}
+    #products.grid,#tpProducts.grid{align-items:stretch}
+    @media(max-width:550px){
+      .co{font-size:10.5px;padding:3px 6px;border-radius:7px}
+      .card-offers{gap:3px;margin-top:4px}
+      .card-cart-btn{padding:6px 4px;font-size:12px;border-radius:8px;margin-top:5px}
+    }
+    .ord-ic{width:20px;height:20px;vertical-align:-4px;margin-right:4px}
+    @media(max-width:550px){.ord-ic{width:15px;height:15px;vertical-align:-3px;margin-right:2px}}
+
+    /* ===== রং বাছাই সারি ছোট (কম স্ক্রল) ===== */
+    .ord-box{padding:9px 10px;margin:0 0 8px}
+    .ord-box .ob-title{font-size:13.5px;margin-bottom:2px}
+    .ord-box>.small{font-size:11.5px;margin-bottom:2px!important}
+    .cr{grid-template-columns:30px 1fr auto;gap:7px;padding:3px 6px 3px 3px;margin:4px 0;border-width:1.5px;border-radius:10px}
+    .cr:not(:has(img)){grid-template-columns:1fr auto;padding-left:8px}
+    .cr.on{box-shadow:0 0 0 2px var(--gold-glow)}
+    .cr img{width:30px;height:36px;border-radius:6px}
+    .cr-t b{font-size:13.5px;gap:5px;line-height:1.2}
+    .cr-t small{font-size:10.5px;margin-top:0}
+    .cr .qty-box{border-radius:8px}
+    .cr .qty-box button{width:28px;height:28px;font-size:16px}
+    .cr .qty-box b{min-width:28px;font-size:14px}
+    .ord-total{margin-top:6px;padding-top:6px;font-size:13px}
+    .ord-total b{font-size:18px}
+
+    /* ===== প্রিমিয়াম বড় অর্ডার বাটন ===== */
+    #productDialog .action-row .buy-btn{position:relative;overflow:hidden;padding:17px 12px!important;font-size:19px!important;font-weight:800!important;border-radius:16px!important;
+      background:linear-gradient(135deg,#8a6508 0%,#d4af37 30%,#f7e7a1 50%,#d4af37 70%,#8a6508 100%)!important;color:#0f1c2e;letter-spacing:.3px;
+      border:1.5px solid #fff3c4!important;box-shadow:0 10px 26px rgba(184,134,11,.5),inset 0 1px 0 rgba(255,255,255,.7),inset 0 -3px 0 rgba(120,80,0,.25)!important;text-shadow:0 1px 0 rgba(255,255,255,.45)}
+    #productDialog .action-row .buy-btn::after{content:"";position:absolute;top:0;left:-70%;width:45%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.65),transparent);transform:skewX(-20deg);animation:buyShine 3.2s ease-in-out infinite}
+    @keyframes buyShine{0%,55%{left:-70%}100%{left:130%}}
+    #productDialog .action-row .buy-btn:disabled{background:#cbd5e1!important;color:#64748b;box-shadow:none!important;text-shadow:none}
+    #productDialog .action-row .buy-btn:disabled::after{display:none}
+    #productDialog .action-row .buy-btn .ord-ic{width:26px;height:26px;vertical-align:-6px;margin-right:6px;filter:drop-shadow(0 1px 1px rgba(80,50,0,.4))}
+    #productDialog .action-row .buy-btn:active{transform:scale(.98)}
+    #productDialog .action-row .cart-btn{padding:12px 8px!important;font-size:14.5px!important;border-radius:12px!important}
+    .card-view-btn{padding:13px 10px;font-size:16px;border-radius:14px;border:1.5px solid #d4af37;box-shadow:0 6px 16px rgba(15,28,46,.3),inset 0 1px 0 rgba(243,229,173,.25);letter-spacing:.2px}
+    .card-view-btn .ord-ic{width:22px;height:22px;vertical-align:-6px}
+    @media(max-width:550px){.card-view-btn{padding:10px 4px;font-size:13.5px;border-radius:10px}.card-view-btn .ord-ic{width:17px;height:17px;vertical-align:-4px}}
+
+    /* ===== কার্ডের ফাঁকা জায়গা ভরাট ===== */
+    .card-compact .card-head{display:flex;flex-direction:column}
+    .card-compact .card-offers{flex:1 1 auto}
+    .card-compact .co{flex:1 1 auto;display:flex;align-items:center}
+    .co-info{background:linear-gradient(135deg,#0f1c2e,#182e4a);color:#f3e5ad;border:1px solid rgba(212,175,55,.45)}
+    /* হেডারে ডেক্সটপ মোড বাটন */
+    .dt-nav-btn{white-space:nowrap}
+    /* কাস্টমার সাপোর্ট বাটন বড় */
+    .care-btn{height:66px;padding:6px 22px 6px 6px;font-size:17.5px;gap:12px}
+    .care-logo{width:54px;height:54px}
+    .care-logo svg{width:32px;height:32px}
+    @media(max-width:550px){
+      .care-btn{height:56px;padding:5px 16px 5px 5px;font-size:15.5px;gap:9px}
+      .care-logo{width:46px;height:46px}
+      .care-logo svg{width:27px;height:27px}
+    }
+
+    /* ===== কুপন টিকিট ডিজাইন ===== */
+    .co span{display:block;width:100%}
+    .cp-ticket{flex:1 1 auto;display:flex;align-items:stretch;border-radius:13px;overflow:hidden;cursor:pointer;color:#f3e5ad;
+      background:linear-gradient(135deg,#0b1626,#1b3556);border:1.5px solid #d4af37;box-shadow:0 5px 14px rgba(15,28,46,.25)}
+    .cp-l{flex:1 1 auto;min-width:0;padding:7px 10px;display:flex;flex-direction:column;justify-content:center;gap:2px}
+    .cp-l small{font-size:10.5px;font-weight:600;opacity:.85;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .cp-l b{font-size:15.5px;letter-spacing:1.2px;color:#fff;font-weight:800;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .cp-r{position:relative;flex:none;min-width:64px;padding:6px 10px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+      background:linear-gradient(135deg,#d4af37,#f7e7a1 55%,#d4af37);color:#0f1c2e;border-left:2px dashed #0f1c2e;line-height:1.1}
+    .cp-r b{font-size:16px;font-weight:800;white-space:nowrap}
+    .cp-r small{font-size:11px;font-weight:700}
+    .cp-r::before,.cp-r::after{content:"";position:absolute;left:-8px;width:14px;height:14px;border-radius:50%;background:#fff;border:1.5px solid #d4af37}
+    .cp-r::before{top:-8px}.cp-r::after{bottom:-8px}
+    @media(max-width:550px){
+      .cp-ticket{border-radius:9px}
+      .cp-l{padding:4px 6px}
+      .cp-l small{font-size:8.5px}
+      .cp-l b{font-size:11.5px;letter-spacing:.6px}
+      .cp-r{min-width:44px;padding:3px 6px}
+      .cp-r b{font-size:12px}.cp-r small{font-size:9px}
+      .cp-r::before,.cp-r::after{width:10px;height:10px;left:-6px}
+      .cp-r::before{top:-6px}.cp-r::after{bottom:-6px}
+    }
+</style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
@@ -704,6 +796,7 @@
         <button class="wish-nav" onclick="openWishlistDialog()" title="আপনার পছন্দের শাড়ির তালিকা">❤️ উইশলিস্ট (<span id="wishlistCount">0</span>)</button>
         <button onclick="openCart()">🛒 কার্ট (<span id="cartCount">0</span>)</button>
         <button onclick="document.querySelector('#trackDialog').showModal()">📦 আমার অর্ডার</button>
+        <button type="button" class="dt-nav-btn" id="dtItem" onclick="toggleDesktopMode()">🖥️ <span id="dtLabel">ডেক্সটপ মোড</span></button>
         <button class="admin-nav-btn" id="headerAdminBtn" onclick="openAdminPanelDirectly()">👑 অ্যাডমিন</button>
       </nav>
     </div>
@@ -1004,10 +1097,6 @@
         <i class="ci ci-fb"><svg><use href="#ic-fb"/></svg></i>
         <span><b>ফেসবুক পেজে মেসেজ করুন</b><em>Sari Bilash পেজে মেসেজ দিন</em></span>
       </a>
-      <button type="button" class="care-item" id="dtItem" onclick="toggleDesktopMode()" role="menuitem">
-        <i class="ci ci-dt">🖥️</i>
-        <span><b id="dtLabel">ডেক্সটপ মোড চালু করুন</b><em id="dtSub">কম্পিউটারের মতো বড় পেজে দেখুন</em></span>
-      </button>
     </div>
     <button type="button" class="care-btn" id="careBtn" onclick="toggleCare()" aria-expanded="false" aria-controls="careMenu" aria-label="কাস্টমার সাপোর্ট">
       <span class="care-logo"><svg><use href="#ic-care"/></svg><u class="care-dot"></u></span>
@@ -1426,6 +1515,26 @@
       return `<div class="variant-thumbs">${colors.map((c, i) => `<button type="button" class="variant-thumb ${i === selIdx ? "selected" : ""}" onclick="${handler}(${i}${handler === "renderVariant" ? "" : ""})" data-vt="${esc(p.id)}">${images[i] ? `<img src="${esc(images[i])}" alt="${esc(c)}" loading="lazy">` : ""}<span>${esc(c)}${stockLabel(p, c)}</span></button>`).join("")}</div>`;
     }
 
+    // কার্ডের ভেতরে ছোট অফার লাইন (ফ্রি ডেলিভারি + কুপন)
+    function cardOfferHtml(p) {
+      const out = [];
+      const fm = numOrNull(p.free_min);
+      if (p.free_delivery) out.push('<div class="co co-free"><span>🚚 ফ্রি ডেলিভারি</span></div>');
+      else if (fm > 0) out.push(`<div class="co co-free"><span>🚚 ${taka(fm)}/- বা বেশি নিলে ফ্রি ডেলিভারি</span></div>`);
+      productCoupons(p).forEach(code => {
+        const ci = couponInfo[code];
+        if (ci === undefined) { out.push('<div class="co co-cp"><span>🎟️ কুপন চলবে</span></div>'); return; }
+        if (!ci) return;
+        const amt = couponAmt(p.price, ci);
+        if (!(amt > 0)) return;
+        const c = esc(code);
+        out.push(`<div class="cp-ticket" onclick="event.stopPropagation();copyCoupon('${c}')" title="কোড কপি করতে ট্যাপ করুন"><div class="cp-l"><small>🎟️ কুপন কোড · ট্যাপে কপি</small><b>${c}</b></div><div class="cp-r"><b>${taka(amt)}/-</b><small>ছাড়</small></div></div>`);
+      });
+      // ফাঁকা জায়গা ভরাতে: ফ্রি ডেলিভারি না থাকলে হোম ডেলিভারি, কুপন না থাকলে ক্যাশ অন ডেলিভারি লাইন
+      if (!out.some(x => x.includes("co-free"))) out.unshift('<div class="co co-info"><span>🏠 সারা দেশে হোম ডেলিভারি সেবা</span></div>');
+      if (!out.some(x => x.includes("co-cp") || x.includes("cp-ticket"))) out.push('<div class="co co-info"><span>📦 ক্যাশ অন ডেলিভারি · ১০০% প্রিমিয়াম কোয়ালিটি</span></div>');
+      return `<div class="card-offers">${out.join("")}</div>`;
+    }
     function cardHtml(p, wl) {
         const id = esc(p.id), images = productImages(p), colors = productColors(p);
         const sel = Math.min(cardSel[p.id] || 0, Math.max(0, colors.length - 1));
@@ -1437,6 +1546,7 @@
           <div class="card-head">
             <h3>${esc(p.name)}</h3>
             ${priceHtml(p)}
+            ${cardOfferHtml(p)}
           </div>
           <div class="image-container" onclick="openProduct('${id}')">
             ${badgesHtml(p)}
@@ -1445,7 +1555,8 @@
             <img class="product-main-image" id="mainimg-${id}" src="${esc(images[sel] || images[0] || "")}" alt="${esc(p.name)}" loading="lazy">
           </div>
           <div class="card-body">
-            <button type="button" class="card-view-btn" ${sold ? 'data-sold="1"' : ""}>${sold ? "স্টক শেষ" : "🛍️ অর্ডার করুন"}</button>
+            <button type="button" class="card-view-btn" ${sold ? 'data-sold="1"' : ""}>${sold ? "স্টক শেষ" : `<svg class="ord-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18 2 7l5.2 4.6L12 4l4.8 7.6L22 7l-1 11z" fill="#f3e5ad" stroke="#d4af37" stroke-width="1" stroke-linejoin="round"/><rect x="3" y="19" width="18" height="2.4" rx="1" fill="#d4af37"/><circle cx="2" cy="6.5" r="1.4" fill="#d4af37"/><circle cx="12" cy="3.6" r="1.5" fill="#d4af37"/><circle cx="22" cy="6.5" r="1.4" fill="#d4af37"/><circle cx="12" cy="14.5" r="1.7" fill="#c8102e"/></svg> অর্ডার করুন`}</button>
+            ${sold ? "" : `<button type="button" class="card-cart-btn" onclick="event.stopPropagation();cardAdd('${id}')">🛒 কার্টে যোগ করুন</button>`}
           </div>
         </article>`;
     }
@@ -1574,7 +1685,7 @@
           <div class="product-actions">
             <div class="action-row">
               <button class="cart-btn" ${soldColor ? "disabled" : ""} onclick="detailAdd(false)">${soldColor ? "স্টক শেষ" : "🛒 কার্টে রাখুন"}</button>
-              <button class="buy-btn" ${soldColor ? "disabled" : ""} onclick="detailAdd(true)">${soldColor ? "স্টক শেষ" : "🛍️ এখনই অর্ডার করুন" + (totalPcs ? " (" + taka(totalPcs) + " পিস)" : "")}</button>
+              <button class="buy-btn" ${soldColor ? "disabled" : ""} onclick="detailAdd(true)">${soldColor ? "স্টক শেষ" : `<svg class="ord-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18 2 7l5.2 4.6L12 4l4.8 7.6L22 7l-1 11z" fill="#f3e5ad" stroke="#d4af37" stroke-width="1" stroke-linejoin="round"/><rect x="3" y="19" width="18" height="2.4" rx="1" fill="#d4af37"/><circle cx="2" cy="6.5" r="1.4" fill="#d4af37"/><circle cx="12" cy="3.6" r="1.5" fill="#d4af37"/><circle cx="22" cy="6.5" r="1.4" fill="#d4af37"/><circle cx="12" cy="14.5" r="1.7" fill="#c8102e"/></svg> এখনই অর্ডার করুন` + (totalPcs ? " (" + taka(totalPcs) + " পিস)" : "")}</button>
             </div>
             <div class="action-row">
               <button class="btn wish-big ${isW ? "active" : ""}" onclick="toggleWishlist('${id}')" data-card-wish-btn="${id}">${isW ? "❤️ উইশলিস্টে আছে" : "🤍 উইশলিস্টে রাখুন"}</button>
