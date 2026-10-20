@@ -482,6 +482,11 @@
     .rv-form input,.rv-form textarea{width:100%;padding:12px;border:1.5px solid #e2e8f0;border-radius:12px;font:inherit;font-size:16px}
     .rv-form textarea{min-height:120px;resize:vertical}
     .rv-count{font-size:12px;color:#94a3b8;text-align:right}
+    .rv-star-pick{display:flex;justify-content:center;gap:6px;margin-top:4px}
+    .rv-star-pick button{background:none;border:0;padding:2px 4px;font-size:38px;line-height:1;color:#d6dbe3;cursor:pointer;transition:transform .15s,color .15s;-webkit-tap-highlight-color:transparent}
+    .rv-star-pick button.on{color:#f59e0b;text-shadow:0 2px 8px rgba(245,158,11,.35)}
+    .rv-star-pick button:active{transform:scale(1.2)}
+    .rv-star-label{text-align:center;font-size:13px;color:#64748b;margin-top:2px;min-height:18px;font-weight:600}
     .review-card.rv-real{border-top:3px solid #d4af37}
     .review-card .rv-q{color:#d4af37;font-size:28px;line-height:.6;font-family:Georgia,serif}
     .rv-adm{border:1px solid #e2e8f0;border-radius:12px;padding:12px;margin-bottom:10px;background:#fff}
@@ -503,6 +508,94 @@
     @keyframes waShine{0%,55%{left:-60%}100%{left:130%}}
     .wa-order.wa-full{width:100%;margin-top:8px}
     .action-row:has(.wa-order) .facebook-order-btn{grid-column:1/-1}
+
+    /* ===== ফিক্স: নিচের মাঝখানে টাচ কাজ না করার সমস্যা =====
+       কাস্টমার সাপোর্ট কন্টেইনার (মেনু বন্ধ থাকলেও জায়গা নেয়) স্বচ্ছ বক্স হয়ে টাচ আটকে দিত।
+       এখন কন্টেইনার টাচ ছাড়ে, শুধু বাটন ও খোলা মেনু টাচ নেয়। */
+    .care-fab{pointer-events:none}
+    .care-btn{pointer-events:auto}
+    .care-fab.open .care-menu{pointer-events:auto}
+    .care-menu{position:absolute;right:0;bottom:calc(100% + 12px)}
+    .care-fab{position:fixed}
+    .install-bar{pointer-events:auto}
+    .ios-help:not(.show),.install-bar:not(.show){pointer-events:none}
+
+    /* ===== মোবাইলে সব ছোট ও কমপ্যাক্ট (২ কলাম) ===== */
+    @media(max-width:550px){
+      .announcement-bar{padding:5px 10px;font-size:12px}
+      header{padding:7px 3%}
+      .header-top{gap:5px}
+      .brand{font-size:18px}
+      .brand-logo{width:28px;height:28px;border-radius:8px}
+      .nav{gap:5px}
+      .nav>a:not(.admin-nav-btn),.nav>button:not(.admin-nav-btn){font-size:11.5px;padding:3px 8px}
+      .nav .tp-nav .ic{width:14px;height:14px}
+      .header-filters{margin-top:7px;gap:6px}
+      .hf-search input{padding:6px 12px;font-size:12.5px}
+      .hf-toggle{padding:6px 10px;font-size:12px}
+      .hf-panel select,.hf-budget input{padding:6px 10px;font-size:12.5px}
+      .hf-budget .budget-label,.hf-clear{font-size:12px}
+      .banner-wrap{margin-top:10px}
+      .banner-slide{aspect-ratio:16/7}
+      .banner-arrow{width:28px;height:28px;font-size:18px}
+      .hero{margin:10px 12px;min-height:150px;padding:20px 16px;border-radius:16px}
+      .hero h1{font-size:22px;margin-bottom:6px}
+      .hero p{font-size:12.5px;line-height:1.55;margin-bottom:10px}
+      .hero .btn{padding:7px 12px;font-size:12.5px;border-radius:8px}
+      .hero-btns{gap:6px}
+      .features-container{margin:0 auto 12px;padding:0 12px;gap:6px;grid-template-columns:repeat(3,1fr)}
+      .feature-box{padding:8px 4px;border-radius:10px}
+      .feature-box span{font-size:18px;margin-bottom:1px}
+      .feature-box h4{font-size:11px;margin:0;line-height:1.35}
+      .feature-box p{display:none}
+      section{margin:22px auto;padding:0 12px}
+      .section-title{font-size:20px;margin-bottom:12px}
+
+      .grid,.reviews-grid.grid{grid-template-columns:1fr 1fr;gap:10px}
+      .card{border-radius:12px}
+      .card-head{padding:8px 9px 4px}
+      .card h3{font-size:14px;margin:0 0 3px}
+      .card .desc,.card .help-note{display:none}
+      .code-chip{font-size:10.5px;padding:2px 7px}
+      .spec-tag{font-size:10.5px;padding:2px 6px}
+      .spec-tags{gap:4px;margin-bottom:4px}
+      .price-container{gap:5px;margin-bottom:3px}
+      .price{font-size:15px}
+      .original-price{font-size:11.5px}
+      .pill{font-size:10.5px;padding:2px 7px;margin:0 3px 4px 0;gap:3px}
+      .image-container{min-height:120px}
+      .product-main-image{max-height:210px}
+      .badge{font-size:10.5px;padding:2px 7px}
+      .badges{top:6px;left:6px;gap:3px}
+      .wishlist-btn{top:6px;right:6px;height:26px;padding:0 8px 0 6px;font-size:10.5px;gap:3px}
+      .wishlist-btn .wl-ic{font-size:13px}
+      .card-body{padding:8px 9px 10px}
+      .product-actions{gap:5px}
+      .action-row{grid-template-columns:1fr;gap:5px}
+      .action-row .cart-btn,.action-row .buy-btn,.facebook-order-btn,.whatsapp-order-btn{padding:7px 4px!important;font-size:12px!important;border-radius:8px!important}
+      .whatsapp-order-btn.wa-order{padding:5px 6px 5px 5px!important;gap:5px;font-size:11px!important;border-radius:30px!important}
+      .wa-order .wa-ic{width:22px;height:22px}
+      .wa-order .wa-ic svg{width:13px;height:13px}
+      .wa-order .wa-txt{white-space:nowrap}
+      .wa-order .wa-txt::after{display:none}
+      .variant-thumbs{gap:5px;padding:5px 6px 3px}
+      .variant-thumb{font-size:10px}
+      .variant-thumb img{width:30px;height:36px}
+      .care-btn{height:44px;padding:4px 12px 4px 4px;font-size:13px}
+      .care-logo{width:36px;height:36px}
+      .care-logo svg{width:21px;height:21px}
+      .care-fab{right:10px}
+    }
+
+    /* ===== মোবাইলে পণ্য ডান থেকে বামে স্লাইড করে দেখা (নিচে স্ক্রল না করে) ===== */
+    @media(max-width:550px){
+      #products.grid,#tpProducts.grid{display:flex;flex-wrap:nowrap;gap:10px;overflow-x:auto;overflow-y:hidden;
+        scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;
+        padding:2px 12px 14px;margin:0 -12px;align-items:flex-start;scrollbar-width:none}
+      #products.grid::-webkit-scrollbar,#tpProducts.grid::-webkit-scrollbar{display:none}
+      #products.grid>.card,#tpProducts.grid>.card{flex:0 0 46%;max-width:46%;scroll-snap-align:start}
+      #products.grid>:not(.card),#tpProducts.grid>:not(.card){flex:0 0 calc(100% - 24px)}
+    }
   </style>
 </head>
 <body>
@@ -759,9 +852,13 @@
         <label for="rvText">আপনার মতামত</label>
         <textarea id="rvText" maxlength="500" placeholder="শাড়ি, কোয়ালিটি বা ডেলিভারি সম্পর্কে লিখুন..."></textarea>
         <div class="rv-count"><span id="rvCount">0</span>/500</div>
+        <label>আপনার রেটিং</label>
+        <div class="rv-star-pick" id="rvStarPick" role="radiogroup" aria-label="রেটিং দিন">
+          <button type="button" data-v="1" role="radio" aria-label="১ স্টার">★</button><button type="button" data-v="2" role="radio" aria-label="২ স্টার">★</button><button type="button" data-v="3" role="radio" aria-label="৩ স্টার">★</button><button type="button" data-v="4" role="radio" aria-label="৪ স্টার">★</button><button type="button" data-v="5" role="radio" aria-label="৫ স্টার">★</button>
+        </div>
+        <div class="rv-star-label" id="rvStarLabel">স্টার ট্যাপ করে রেটিং দিন</div>
         <button type="button" class="rv-write" id="rvSubmit" style="width:100%;justify-content:center;margin-top:12px;padding:12px 20px;" onclick="submitReview()">📨 রিভিউ পাঠান</button>
         <div id="rvMsg" class="small" style="margin-top:10px;text-align:center;"></div>
-        <p class="small" style="margin-top:10px;text-align:center;">আপনার মতামত আমরা দেখে অনুমোদন দিলে সাইটে দেখা যাবে।</p>
       </div>
     </div>
   </dialog>
@@ -924,7 +1021,7 @@
       const fill = real.length >= 3 ? [] : [...allReviewsPool].sort(() => 0.5 - Math.random());
       const picked = [...real.map(r => ({ ...r, real: true })), ...fill].slice(0, 3);
       container.innerHTML = picked.map(r => r.real
-        ? `<div class="review-card rv-real"><div class="rv-q">“</div><p>${esc(r.text)}</p><p style="margin-top:8px;"><b>— ${esc(r.name)}</b></p></div>`
+        ? `<div class="review-card rv-real">${parseRv(r.text).stars ? `<div class="stars">${starsHtml(parseRv(r.text).stars)}</div>` : '<div class="rv-q">“</div>'}<p>${esc(parseRv(r.text).text)}</p><p style="margin-top:8px;"><b>— ${esc(r.name)}</b></p></div>`
         : `<div class="review-card"><div class="stars">⭐⭐⭐⭐⭐</div><p><b>${esc(r.name)}:</b> "${esc(r.text)}"</p></div>`).join("");
     }
     async function loadApprovedReviews() {
@@ -940,20 +1037,33 @@
       if (!reviewTimer) reviewTimer = setInterval(renderReviewCards, 6000);
     }
     function openReviewForm() {
-      $("#rvMsg").textContent = ""; $("#rvFormBox").style.display = "block"; $("#rvThanks").style.display = "none";
+      $("#rvMsg").textContent = ""; setRvRating(0); $("#rvFormBox").style.display = "block"; $("#rvThanks").style.display = "none";
       try { const c = JSON.parse(localStorage.getItem("sari_customer") || "{}"); if (c.name && !$("#rvName").value) $("#rvName").value = c.name; } catch {}
       const d = $("#reviewDialog"); if (!d.open) d.showModal();
     }
     $("#rvText").addEventListener("input", e => { $("#rvCount").textContent = e.target.value.length; });
+    // ---------- রিভিউ স্টার রেটিং (১–৫) ----------
+    let rvRating = 0;
+    const RV_LABELS = ["", "১ স্টার — খুব খারাপ", "২ স্টার — খারাপ", "৩ স্টার — মোটামুটি", "৪ স্টার — ভালো", "৫ স্টার — চমৎকার"];
+    function setRvRating(n) {
+      rvRating = n;
+      document.querySelectorAll("#rvStarPick button").forEach(b => { const on = +b.dataset.v <= n; b.classList.toggle("on", on); b.setAttribute("aria-checked", +b.dataset.v === n ? "true" : "false"); });
+      $("#rvStarLabel").textContent = n ? RV_LABELS[n] : "স্টার ট্যাপ করে রেটিং দিন";
+    }
+    $("#rvStarPick").addEventListener("click", e => { const b = e.target.closest("button[data-v]"); if (b) setRvRating(+b.dataset.v); });
+    // রেটিং টেক্সটের শুরুতে [★N] হিসেবে সেভ হয় (ডাটাবেসে নতুন কলাম লাগে না)
+    function parseRv(t) { const m = /^\[★([1-5])\]\s*/.exec(t || ""); return m ? { stars: +m[1], text: (t || "").slice(m[0].length) } : { stars: 0, text: t || "" }; }
+    function starsHtml(n) { return n ? "★".repeat(n) + '<span style="color:#d6dbe3">' + "★".repeat(5 - n) + "</span>" : ""; }
     async function submitReview() {
       const name = $("#rvName").value.trim(), text = $("#rvText").value.trim(), msg = $("#rvMsg"), btn = $("#rvSubmit");
       if (name.length < 2) { msg.className = "small msg-err"; msg.textContent = "আপনার নাম লিখুন"; return; }
       if (text.length < 5) { msg.className = "small msg-err"; msg.textContent = "আপনার মতামত একটু বিস্তারিত লিখুন"; return; }
+      if (!rvRating) { msg.className = "small msg-err"; msg.textContent = "স্টার ট্যাপ করে রেটিং দিন (১ থেকে ৫)"; return; }
       btn.disabled = true; msg.className = "small"; msg.textContent = "পাঠানো হচ্ছে...";
-      const { error } = await db.rpc("submit_review", { p_name: name, p_text: text });
+      const { error } = await db.rpc("submit_review", { p_name: name, p_text: "[★" + rvRating + "] " + text });
       btn.disabled = false;
       if (error) { msg.className = "small msg-err"; msg.textContent = isMissingFn(error) ? "রিভিউ সিস্টেম এখনো চালু হয়নি (অ্যাডমিন supabase-upgrade-10.sql চালান)।" : "পাঠানো যায়নি: " + errText(error); return; }
-      $("#rvText").value = ""; $("#rvCount").textContent = "0";
+      $("#rvText").value = ""; $("#rvCount").textContent = "0"; setRvRating(0);
       $("#rvFormBox").style.display = "none"; $("#rvThanks").style.display = "block";
     }
 
@@ -964,7 +1074,7 @@
       const { data, error } = await db.from("reviews").select("*").order("created_at", { ascending: false }).limit(200);
       if (error) { box.innerHTML = `<div class="admin-card"><h3>⭐ ক্রেতাদের রিভিউ</h3><p class="small msg-err">${esc(isMissingFn(error) || /relation .* does not exist|schema cache/i.test(error.message || "") ? "রিভিউ টেবিল নেই — supabase-upgrade-10.sql একবার Run করুন।" : errText(error))}</p></div>`; return; }
       const pending = data.filter(r => !r.approved), done = data.filter(r => r.approved);
-      const card = (r, ok) => `<div class="rv-adm"><div class="small" style="margin-bottom:4px;"><b>${esc(r.name)}</b> · ${esc(new Date(r.created_at).toLocaleDateString("bn-BD"))}</div><div style="margin-bottom:10px;white-space:pre-wrap;">${esc(r.text)}</div>
+      const card = (r, ok) => `<div class="rv-adm"><div class="small" style="margin-bottom:4px;"><b>${esc(r.name)}</b> · ${esc(new Date(r.created_at).toLocaleDateString("bn-BD"))}</div>${parseRv(r.text).stars ? `<div class="stars" style="margin-bottom:4px;">${starsHtml(parseRv(r.text).stars)}</div>` : ""}<div style="margin-bottom:10px;white-space:pre-wrap;">${esc(parseRv(r.text).text)}</div>
         ${ok ? "" : `<button type="button" class="btn" style="padding:7px 14px;font-size:14px;background:#059669;" onclick="reviewAction(${r.id},'approve')">✅ অনুমোদন</button> `}${ok ? `<button type="button" class="btn" style="padding:7px 14px;font-size:14px;background:#64748b;" onclick="reviewAction(${r.id},'hide')">🙈 লুকান</button> ` : ""}<button type="button" class="btn" style="padding:7px 14px;font-size:14px;background:#dc2626;" onclick="reviewAction(${r.id},'delete')">🗑️ মুছুন</button></div>`;
       box.innerHTML = `<div class="admin-card"><h3>⭐ অপেক্ষায় আছে (${taka(pending.length)})</h3>${pending.length ? pending.map(r => card(r, false)).join("") : '<p class="small">নতুন কোনো রিভিউ নেই।</p>'}</div>
         <div class="admin-card"><h3>✅ সাইটে দেখা যাচ্ছে (${taka(done.length)})</h3>${done.length ? done.map(r => card(r, true)).join("") : '<p class="small">এখনো কোনো রিভিউ অনুমোদন করা হয়নি।</p>'}</div>`;
