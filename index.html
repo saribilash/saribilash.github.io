@@ -856,7 +856,62 @@
       .cp-r::before,.cp-r::after{width:10px;height:10px;left:-6px}
       .cp-r::before{top:-6px}.cp-r::after{bottom:-6px}
     }
-</style>
+
+    /* ===== order page: compact, colour-wise pcs ===== */
+    #cartDialog .cl-card{padding:9px;margin:0 0 8px;border-radius:14px}
+    #cartDialog .cl-top{grid-template-columns:46px 1fr auto;gap:9px;align-items:center}
+    #cartDialog .cl-top img,#cartDialog .cl-ph{width:46px;height:56px;border-radius:8px}
+    #cartDialog .cl-name{font-size:14.5px}
+    #cartDialog .cl-del{width:30px;height:30px;font-size:14px;border-radius:9px}
+    #cartDialog .cq-list{display:flex;flex-direction:column;gap:5px;margin-top:4px}
+    #cartDialog .cq-row{display:flex;align-items:center;gap:8px;border:1.5px solid #e2e8f0;border-radius:11px;padding:3px 6px 3px 3px;background:#fff}
+    #cartDialog .cq-row.on{border-color:var(--gold);background:#fff8e7}
+    #cartDialog .cq-row.out{opacity:.55}
+    #cartDialog .cq-row img{width:28px;height:34px;object-fit:cover;border-radius:6px;flex:none}
+    #cartDialog .cq-row .color-dot{flex:none;margin-left:4px}
+    #cartDialog .cq-t{flex:1;min-width:0;line-height:1.2}
+    #cartDialog .cq-t b{display:block;font-size:13.5px;color:var(--navy);padding-left:2px}
+    #cartDialog .cq-t small{font-size:11px;color:var(--muted);padding-left:2px}
+    #cartDialog .cq-row .qty-box button{width:30px;height:30px;font-size:17px}
+    #cartDialog .cq-row .qty-box b{min-width:30px!important;font-size:14px}
+    #cartDialog .cl-total{display:flex;justify-content:space-between;align-items:center;margin-top:7px;padding-top:6px;border-top:1px dashed #e5dcc3;font-size:12.5px;color:var(--muted)}
+    #cartDialog .cl-total b{font-size:18px;color:#b8860b}
+    #cartDialog .cart-head{margin:0 2px 6px;font-size:13px}
+    #cartDialog .fb{padding:7px 10px;font-size:12.5px;border-radius:10px;margin-bottom:8px}
+    #cartDialog h3#cartTitle{margin:0 0 8px;padding-right:44px}
+    #cartDialog .coupon-card{padding:9px 12px}
+    #cartDialog .coupon-card summary{cursor:pointer;font-weight:700;font-size:13.5px;color:var(--navy);list-style:none}
+    #cartDialog .coupon-card summary::-webkit-details-marker{display:none}
+    #cartDialog .two-col{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    #cartDialog .two-col input{width:100%;box-sizing:border-box}
+    @media(max-width:360px){#cartDialog .two-col{grid-template-columns:1fr}}
+    /* ===== info tabs: why / how / faq ===== */
+    .info-wrap{max-width:900px;margin:0 auto;padding:0 14px}
+    .info-tabs{display:flex;gap:4px;background:#0f1c2e;padding:4px;border-radius:14px;border:1px solid rgba(212,175,55,.55)}
+    .info-tabs .it{flex:1;border:0;background:transparent;color:#cbd5e1;font:inherit;font-size:13px;font-weight:700;padding:9px 4px;border-radius:10px;cursor:pointer;white-space:nowrap}
+    .info-tabs .it.on{background:linear-gradient(135deg,#f3e5ad,#d4af37);color:#0f1c2e;box-shadow:0 2px 8px rgba(212,175,55,.35)}
+    .info-panel{display:none;margin-top:10px;background:#fff;border:1px solid #eadfc2;border-radius:16px;padding:10px;box-shadow:0 4px 16px rgba(15,28,46,.06)}
+    .info-panel.on{display:block}
+    .why-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+    .why-t{display:flex;gap:8px;align-items:flex-start;background:linear-gradient(135deg,#fffdf6,#fff8e7);border:1px solid #f2e2b8;border-radius:12px;padding:8px 9px}
+    .why-t .ic{flex:none;width:28px;height:28px;border-radius:50%;background:#0f1c2e;display:flex;align-items:center;justify-content:center;font-size:14px}
+    .why-t b{display:block;font-size:12.5px;color:var(--navy);line-height:1.25}
+    .why-t small{display:block;font-size:11px;color:#64748b;line-height:1.35;margin-top:2px}
+    .how-list{margin:0;padding:0;list-style:none;counter-reset:s}
+    .how-list li{counter-increment:s;display:flex;gap:10px;align-items:flex-start;padding:8px 2px;border-bottom:1px dashed #eadfc2;font-size:13.5px;line-height:1.5;color:#334155}
+    .how-list li:last-child{border-bottom:0}
+    .how-list li::before{content:counter(s,bengali);flex:none;width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#f3e5ad,#d4af37);color:#0f1c2e;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+    .info-panel .faq-wrap{max-width:none;margin:0;padding:0}
+    .info-panel .faq-wrap details{margin:5px 0}
+    @media(max-width:380px){.why-grid{grid-template-columns:1fr}}
+      .ask-box{display:flex;flex-direction:column;gap:8px;text-align:center;padding:4px}
+    .ask-box b{color:var(--navy);font-size:14.5px}
+    .ask-box small{color:#64748b;font-size:12.5px;line-height:1.5}
+    .ask-btn{display:block;padding:11px;border-radius:12px;font-weight:700;font-size:14px;text-decoration:none;color:#fff}
+    .ask-btn.wa{background:linear-gradient(135deg,#128c4a,#25d366)}
+    .ask-btn.fb{background:linear-gradient(135deg,#1558b0,#1877f2)}
+    .info-tabs .it{font-size:12.5px;padding:9px 2px}
+  </style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
@@ -941,32 +996,30 @@
   </section>
 
   <section id="policySection">
-    <div class="pol-grid">
-    <div class="policy-banner">
-      <h3>🛍️ শপ করার সহজ নিয়মাবলী:</h3>
-      <ul>
-        <li>পছন্দের শাড়ির ছবি বা নামে ট্যাপ করে পূর্ণ বিবরণ দেখুন, ছবিতে ট্যাপ করে বড় করে জুম করুন।</li>
-        <li>একাধিক শাড়ি <b>"🛒 কার্টে রাখুন"</b> দিয়ে জমা করে একসাথে অর্ডার করতে পারবেন। কার্ট আপনার ব্রাউজারে সেভ থাকবে।</li>
-        <li>সারা বাংলাদেশে ক্যাশ অন ডেলিভারি ও হোম ডেলিভারির সুব্যবস্থা রয়েছে। bKash-এ আগে পেমেন্ট করলে Transaction ID দিন।</li>
-        <li>পছন্দের শাড়ি রাখতে ছবির ওপরের <b>"🤍 উইশলিস্টে রাখুন"</b> বাটনে ট্যাপ করুন এবং উপরের <b>"❤️ উইশলিস্ট"</b> থেকে লিংক শেয়ার করুন।</li>
-        <li>যেকোনো প্রয়োজনে বা বিস্তারিত জানতে চাইলে, কিংবা সরাসরি কথা বলে অর্ডার করতে চাইলে WhatsApp অথবা ফেসবুক পেজ বাটন ব্যবহার করুন।</li>
-      </ul>
+    <div class="info-wrap">
+      <div class="info-tabs" role="tablist">
+        <button type="button" class="it on" data-t="why" onclick="infoTab('why')">💎 কেন আমরা</button>
+        <button type="button" class="it" data-t="how" onclick="infoTab('how')">🛍️ নিয়ম</button>
+        <button type="button" class="it" data-t="faq" onclick="infoTab('faq')">❓ প্রশ্ন</button>
+        <button type="button" class="it" data-t="ask" onclick="infoTab('ask')">💬 জানুন</button>
+      </div>
+      <div class="info-panel on" id="ip-why"><div class="why-grid"><div class="why-t"><span class="ic">✨</span><div><b>১০০% প্রিমিয়াম কোয়ালিটি</b><small>সেরা সুতা ও সুনিপুণ কারুকাজ</small></div></div><div class="why-t"><span class="ic">🎨</span><div><b>রংয়ের গ্যারান্টি</b><small>ছবির রংয়েই শাড়ি পাঠানো হয়</small></div></div><div class="why-t"><span class="ic">📦</span><div><b>ক্যাশ অন ডেলিভারি</b><small>হাতে পেয়ে টাকা দিন, চাইলে bKash</small></div></div><div class="why-t"><span class="ic">🚚</span><div><b>সারা দেশে ডেলিভারি</b><small>নির্বাচিত শাড়িতে ফ্রি ডেলিভারি</small></div></div><div class="why-t"><span class="ic">🎟️</span><div><b>কুপন ছাড়</b><small>কুপন কোডে বাড়তি ডিসকাউন্ট</small></div></div><div class="why-t"><span class="ic">📍</span><div><b>লাইভ অর্ডার ট্র্যাকিং</b><small>ফোন নম্বর দিয়ে অবস্থা দেখুন</small></div></div><div class="why-t"><span class="ic">❌</span><div><b>সহজ অর্ডার বাতিল</b><small>কনফার্মের আগে নিজেই বাতিল</small></div></div><div class="why-t"><span class="ic">💬</span><div><b>সরাসরি সাহায্য</b><small>WhatsApp বা ফেসবুকে উত্তর</small></div></div></div></div>
+      <div class="info-panel" id="ip-how">
+        <ol class="how-list">
+          <li><span>পছন্দের শাড়ির ছবি বা নামে ট্যাপ করে বিবরণ দেখুন ও জুম করুন। পরে কিনতে <b>“🤍 উইশলিস্ট”</b> ব্যবহার করুন।</span></li>
+          <li><span><b>“অর্ডার করুন”</b> চেপে রং ও পিস বেছে নিন। একাধিক শাড়ি একসাথে নিতে <b>“🛒 কার্টে রাখুন”</b> দিন।</span></li>
+          <li><span>নাম, ফোন ও ঠিকানা দিন। ক্যাশ অন ডেলিভারি অথবা bKash (Transaction ID সহ) বেছে নিন।</span></li>
+          <li><span>যেকোনো প্রয়োজনে WhatsApp বা ফেসবুক পেজ বাটনে সরাসরি কথা বলে অর্ডার করতে পারবেন।</span></li>
+        </ol>
+      </div>
+      <div class="info-panel" id="ip-faq"><div class="faq-wrap"><details><summary>📦 ডেলিভারি কত দিনে পাব?</summary><p>অর্ডার কনফার্মের পর সর্বোচ্চ ২-৩ দিনের মধ্যে ডেলিভারি পেয়ে যাবেন। উপরের “📦 আমার অর্ডার” থেকে ফোন নম্বর দিয়ে যেকোনো সময় অর্ডারের অবস্থা দেখতে পারবেন।</p></details><details><summary>🎨 রং কি ছবির মতোই হবে?</summary><p>হ্যাঁ, ছবির রংয়ের সাথে মিলিয়েই শাড়ি পাঠানো হয়। প্রতিটা রংয়ের আলাদা ছবি ও স্টক দেওয়া থাকে। শুধু মোবাইলের স্ক্রিন বা আলোর কারণে সামান্য তফাত দেখা যেতে পারে।</p></details><details><summary>🚚 ডেলিভারি চার্জ কত?</summary><p>সারা বাংলাদেশে একই ডেলিভারি চার্জ। নির্বাচিত শাড়িতে ফ্রি ডেলিভারি আছে। ফ্রি না হলে ডেলিভারি চার্জ কত নেওয়া হবে সেটা অর্ডারের পর আপনাকে জানানো হবে, আর “আমার অর্ডার” পেজেও লাইভ দেখতে পাবেন।</p></details><details><summary>💳 পেমেন্ট কীভাবে করব?</summary><p>ক্যাশ অন ডেলিভারিতে পণ্য হাতে পেয়ে টাকা দিতে পারবেন। অথবা অর্ডার ফর্মে bKash বেছে নিলে দেখানো নম্বরে টাকা পাঠিয়ে Transaction ID দিন।</p></details><details><summary>❌ অর্ডার করে বাতিল করা যাবে?</summary><p>অর্ডার কনফার্ম হওয়ার আগে “📦 আমার অর্ডার” থেকে নিজেই বাতিল করতে পারবেন। কনফার্মের পর বাতিল করতে চাইলে WhatsApp-এ জানান।</p></details><details><summary>🔍 অর্ডারের অবস্থা কীভাবে দেখব?</summary><p>উপরের “📦 আমার অর্ডার” চাপুন, অর্ডারের সময় দেওয়া ফোন নম্বর লিখুন। অর্ডারের অবস্থা, ডেলিভারি চার্জ ও মোট টাকা নিজে থেকেই আপডেট হয়ে দেখাবে।</p></details><div class="faq-more">আরও কিছু জানার থাকলে নিচের WhatsApp বা ফেসবুক বাটনে মেসেজ করুন।</div></div></div>
+      <div class="info-panel" id="ip-ask">
+        <div class="ask-box"><b>কিছু জানার আছে? সরাসরি মেসেজ করুন 😊</b><small>শাড়ির রং, সাইজ, ডেলিভারি বা অর্ডার — যেকোনো প্রশ্নে আমরা উত্তর দেব।</small>
+          <a class="ask-btn wa" href="https://wa.me/8801628182808" target="_blank" rel="noopener">💬 WhatsApp-এ মেসেজ করুন</a>
+          <a class="ask-btn fb" href="https://www.facebook.com/SariBilash02" target="_blank" rel="noopener">📘 ফেসবুক পেজে মেসেজ করুন</a>
+        </div>
+      </div>
     </div>
-    <div class="why-box">
-      <h3>💎 কেন আমাদের থেকেই অর্ডার করবেন?</h3>
-      <ul>
-        <li><b>✨ ১০০% প্রিমিয়াম কোয়ালিটি</b> — সেরা সুতা ও সুনিপুণ কারুকাজে তৈরি এক্সক্লুসিভ কালেকশন।</li>
-        <li><b>🎨 রংয়ের গ্যারান্টি</b> — ছবিতে যে রং দেখছেন, সেই রংয়ের শাড়িই পাঠানো হয়। প্রতিটা রংয়ের আলাদা ছবি ও স্টক দেখে বেছে নিন।</li>
-        <li><b>📦 ক্যাশ অন ডেলিভারি</b> — পণ্য হাতে পেয়ে দেখে শুনে টাকা দিন। চাইলে bKash-এও পেমেন্ট করতে পারবেন।</li>
-        <li><b>🚚 সারা বাংলাদেশে হোম ডেলিভারি</b> — নির্বাচিত শাড়িতে ফ্রি ডেলিভারি।</li>
-        <li><b>🎟️ কুপন ছাড়</b> — কুপন কোড দিয়ে অতিরিক্ত ডিসকাউন্ট।</li>
-        <li><b>📍 লাইভ অর্ডার ট্র্যাকিং</b> — ফোন নম্বর দিয়ে অর্ডারের অবস্থা ও ডেলিভারি চার্জ নিজেই দেখুন।</li>
-        <li><b>❌ সহজ অর্ডার বাতিল</b> — অর্ডার কনফার্মের আগে নিজেই বাতিল করতে পারবেন।</li>
-        <li><b>💬 সরাসরি সাহায্য</b> — যেকোনো প্রশ্নে WhatsApp বা ফেসবুক পেজে মেসেজ করলেই উত্তর পাবেন।</li>
-      </ul>
-    </div>
-    </div>
-    <div class="faq-wrap"><h3>❓ সাধারণ প্রশ্নোত্তর</h3><details><summary>📦 ডেলিভারি কত দিনে পাব?</summary><p>অর্ডার কনফার্মের পর সর্বোচ্চ ২-৩ দিনের মধ্যে ডেলিভারি পেয়ে যাবেন। উপরের “📦 আমার অর্ডার” থেকে ফোন নম্বর দিয়ে যেকোনো সময় অর্ডারের অবস্থা দেখতে পারবেন।</p></details><details><summary>🎨 রং কি ছবির মতোই হবে?</summary><p>হ্যাঁ, ছবির রংয়ের সাথে মিলিয়েই শাড়ি পাঠানো হয়। প্রতিটা রংয়ের আলাদা ছবি ও স্টক দেওয়া থাকে। শুধু মোবাইলের স্ক্রিন বা আলোর কারণে সামান্য তফাত দেখা যেতে পারে।</p></details><details><summary>🚚 ডেলিভারি চার্জ কত?</summary><p>সারা বাংলাদেশে একই ডেলিভারি চার্জ। নির্বাচিত শাড়িতে ফ্রি ডেলিভারি আছে। ফ্রি না হলে ডেলিভারি চার্জ কত নেওয়া হবে সেটা অর্ডারের পর আপনাকে জানানো হবে, আর “আমার অর্ডার” পেজেও লাইভ দেখতে পাবেন।</p></details><details><summary>💳 পেমেন্ট কীভাবে করব?</summary><p>ক্যাশ অন ডেলিভারিতে পণ্য হাতে পেয়ে টাকা দিতে পারবেন। অথবা অর্ডার ফর্মে bKash বেছে নিলে দেখানো নম্বরে টাকা পাঠিয়ে Transaction ID দিন।</p></details><details><summary>❌ অর্ডার করে বাতিল করা যাবে?</summary><p>অর্ডার কনফার্ম হওয়ার আগে “📦 আমার অর্ডার” থেকে নিজেই বাতিল করতে পারবেন। কনফার্মের পর বাতিল করতে চাইলে WhatsApp-এ জানান।</p></details><details><summary>🔍 অর্ডারের অবস্থা কীভাবে দেখব?</summary><p>উপরের “📦 আমার অর্ডার” চাপুন, অর্ডারের সময় দেওয়া ফোন নম্বর লিখুন। অর্ডারের অবস্থা, ডেলিভারি চার্জ ও মোট টাকা নিজে থেকেই আপডেট হয়ে দেখাবে।</p></details><div class="faq-more">আরও কিছু জানার থাকলে নিচের WhatsApp বা ফেসবুক বাটনে মেসেজ করুন।</div></div>
   </section>
 
   <section>
@@ -1100,21 +1153,20 @@
     <div id="freeBar"></div>
     <div id="cartItems"></div>
     <div id="cartCheckout" style="display:none;">
-      <div class="admin-card coupon-card" id="couponCard">
-        <label class="field-label" for="couponInput" style="margin-top:0;">🎟️ কুপন কোড (থাকলে)</label>
-        <div class="row"><input id="couponInput" placeholder="কুপন কোড লিখুন" style="margin:0;text-transform:uppercase;" autocomplete="off"><button type="button" class="btn order-btn" style="padding:10px 14px;white-space:nowrap;flex:0 0 auto;font-size:15px;" onclick="applyCoupon()">প্রয়োগ করুন</button></div>
+      <details class="admin-card coupon-card" id="couponCard">
+        <summary>🎟️ কুপন কোড আছে? এখানে ট্যাপ করুন</summary>
+        <div class="row" style="margin-top:8px;"><input id="couponInput" placeholder="কুপন কোড লিখুন" style="margin:0;text-transform:uppercase;" autocomplete="off"><button type="button" class="btn order-btn" style="padding:10px 14px;white-space:nowrap;flex:0 0 auto;font-size:15px;" onclick="applyCoupon()">প্রয়োগ করুন</button></div>
         <div id="couponChips"></div>
         <div id="couponMsg" class="small" style="margin-top:6px;"></div>
-      </div>
+      </details>
       <div id="cartSummary" class="admin-card"></div>
       <form id="checkoutForm">
-        <label class="field-label" for="orderName">আপনার নাম</label>
-        <input id="orderName" name="name" placeholder="সম্পূর্ণ নাম লিখুন" required maxlength="100" autocomplete="name">
-
-        <label class="field-label" for="orderPhone">ফোন নম্বর</label>
-        <input id="orderPhone" name="phone" type="tel" placeholder="01XXXXXXXXX" required pattern="01[0-9]{9}" title="১১ সংখ্যার মোবাইল নম্বর দিন (যেমন: 01XXXXXXXXX)" autocomplete="tel">
-
-        
+        <div class="two-col">
+          <div><label class="field-label" for="orderName">আপনার নাম</label>
+          <input id="orderName" name="name" placeholder="সম্পূর্ণ নাম" required maxlength="100" autocomplete="name"></div>
+          <div><label class="field-label" for="orderPhone">ফোন নম্বর</label>
+          <input id="orderPhone" name="phone" type="tel" placeholder="01XXXXXXXXX" required pattern="01[0-9]{9}" title="১১ সংখ্যার মোবাইল নম্বর দিন (যেমন: 01XXXXXXXXX)" autocomplete="tel"></div>
+        </div>
 
         <label class="field-label" for="orderAddress">সম্পূর্ণ ঠিকানা</label>
         <textarea id="orderAddress" name="address" placeholder="গ্রাম/মহল্লা, থানা, জেলাসহ সম্পূর্ণ ঠিকানা লিখুন" required minlength="5" maxlength="500" autocomplete="street-address"></textarea>
@@ -2206,29 +2258,51 @@
       const hasCp = lines.some(({ p }) => productCoupons(p).some(c => couponInfo[c] !== null));
       $("#couponCard").style.display = hasCp ? "" : "none"; renderCouponChips(lines);
       if (!hasCp && appliedCoupon) { appliedCoupon = null; $("#couponInput").value = ""; $("#couponMsg").textContent = ""; }
-      box.innerHTML = cartHeadHtml(lines) + lines.map(({ i, idx, p }) => {
+      box.innerHTML = cartHeadHtml(lines) + cartGroups().map(({ pid, p }, gi) => {
         const colors = productColors(p), images = productImages(p);
-        const ci = Math.max(0, colors.indexOf(i.color));
-        const img = images[ci] || images[0] || "";
-        const colorSel = (colors.length < 2 && i.color !== NO_COLOR ? `<div class="color-big">${colorDot(i.color)}🎨 রং: ${esc(i.color)}</div>` : "") + (colors.length > 1 ? `<div class="pick-label">🎨 রং বাছুন</div><div class="color-chips">${colors.map((c, k) => `<button type="button" class="color-chip ${c === i.color ? "sel" : ""}" onclick="pickCartColor(${idx},${k})">${images[k] ? `<img src="${esc(images[k])}" alt="">` : colorDot(c)}<span class="cc-t"><b>${esc(c)}</b><small>${stockShort(p, c)}</small></span></button>`).join("")}</div>` : "");
-        const other = colors.length > 1 && colors.some(c => c !== i.color && colorMax(p, c) > 0 && !cart.some(o => o.pid === i.pid && o.color === c));
+        const list = colors.length ? colors : [NO_COLOR];
+        const pcs = qtyInCart(pid);
+        const sel = list.findIndex(c => cartQty(pid, c) > 0);
+        const img = images[Math.max(0, sel)] || images[0] || "";
+        const rows = list.map((c, k) => {
+          const q = cartQty(pid, c), out = colorMax(p, c) <= 0, named = c !== NO_COLOR;
+          const th = named ? (images[k] ? `<img src="${esc(images[k])}" alt="">` : colorDot(c)) : "";
+          const ctl = out ? `<span class="small" style="font-weight:700;color:#b91c1c;">স্টক শেষ</span>`
+            : `<div class="qty-box"><button type="button" onclick="setColorQty(${gi},${k},-1)" aria-label="কমান">−</button><b>${taka(q)}</b><button type="button" onclick="setColorQty(${gi},${k},1)" aria-label="বাড়ান">+</button></div>`;
+          return `<div class="cq-row ${q > 0 ? "on" : ""} ${out ? "out" : ""}">${th}<div class="cq-t"><b>${named ? esc(c) : "কত পিস নিবেন"}</b>${named ? `<small>${stockShort(p, c)}</small>` : ""}</div>${ctl}</div>`;
+        }).join("");
         return `<div class="cl-card">
           <div class="cl-top">
             ${img ? `<img src="${esc(img)}" alt="${esc(p.name)}">` : `<div class="cl-ph"></div>`}
-            <div><b class="cl-name">${esc(p.name)}</b><span class="small">কোড: ${esc(productCode(p.id))}</span><div class="cl-unit">${taka(p.price)}/- প্রতি পিস</div></div>
-            <button type="button" class="cl-del" onclick="removeCartItem(${idx})" aria-label="মুছুন">🗑️</button>
+            <div><b class="cl-name">${esc(p.name)}</b><span class="small">কোড: ${esc(productCode(p.id))} · <span class="cl-unit" style="display:inline;margin:0;">${taka(p.price)}/- প্রতি পিস</span></span></div>
+            <button type="button" class="cl-del" onclick="removeCartProduct(${gi})" aria-label="মুছুন">🗑️</button>
           </div>
-          ${colorSel}
-          <div class="cl-bottom">
-            <div><div class="pick-label" style="margin-top:0;">কত পিস নিবেন</div><div class="qty-box"><button type="button" onclick="changeCartQty(${idx},-1)" aria-label="কমান">−</button><b style="min-width:64px;">${taka(i.qty)} পিস</b><button type="button" onclick="changeCartQty(${idx},1)" aria-label="বাড়ান">+</button></div></div>
-            <div class="cl-sub">${taka(p.price)}/- × ${taka(i.qty)}<b>${taka(p.price * i.qty)}/-</b></div>
-          </div>
-          ${other ? `<button type="button" class="cl-more" onclick="addOtherColor(${idx})">➕ এই শাড়ির আরেকটা রং যোগ করুন</button>` : ""}
+          ${list.length > 1 || list[0] !== NO_COLOR ? `<div class="pick-label">🎨 রং বেছে পিস দিন <span style="font-weight:400;color:var(--muted);">(একাধিক রংও নিতে পারবেন)</span></div>` : ""}
+          <div class="cq-list">${rows}</div>
+          <div class="cl-total"><span>${taka(pcs)} পিস × ${taka(p.price)}/-</span><b>${taka(p.price * pcs)}/-</b></div>
         </div>`;
       }).join("");
       renderCartSummary();
     }
 
+    function cartQty(pid, color) { return cart.filter(o => String(o.pid) === String(pid) && o.color === color).reduce((a, o) => a + o.qty, 0); }
+    function cartGroups() { const out = []; cart.forEach(i => { const p = getProduct(i.pid); if (p && !out.some(g => String(g.pid) === String(i.pid))) out.push({ pid: i.pid, p }); }); return out; }
+    function setColorQty(gi, k, d) {
+      const g = cartGroups()[gi]; if (!g) return;
+      const colors = productColors(g.p), c = (colors.length ? colors : [NO_COLOR])[k]; if (c === undefined) return;
+      const idx = cart.findIndex(o => String(o.pid) === String(g.pid) && o.color === c);
+      if (idx < 0) { if (d > 0) addToCart(g.pid, c, 1); return; }
+      if (cart[idx].qty + d < 1) {
+        if (checkoutMode === "buy" && qtyInCart(g.pid) - cart[idx].qty <= 0) { toast("অন্তত ১ পিস রাখতে হবে"); return; }
+        removeCartItem(idx); return;
+      }
+      changeCartQty(idx, d);
+    }
+    function removeCartProduct(gi) { const g = cartGroups()[gi]; if (!g) return; cart = cart.filter(o => String(o.pid) !== String(g.pid)); saveCart(); renderCart(); }
+    function infoTab(t) {
+      document.querySelectorAll("#policySection .it").forEach(b => b.classList.toggle("on", b.dataset.t === t));
+      document.querySelectorAll("#policySection .info-panel").forEach(p => p.classList.toggle("on", p.id === "ip-" + t));
+    }
     function cartHeadHtml(lines) {
       const pcs = lines.reduce((a, x) => a + x.i.qty, 0);
       return `<div class="cart-head">আপনার বাছাই করা শাড়ি <span>${taka(lines.length)} লাইন · ${taka(pcs)} পিস</span></div>`;
@@ -2311,7 +2385,7 @@
     const productCoupons = p => String(p.coupon_codes || "").split(",").map(x => x.trim().toUpperCase()).filter(Boolean);
     async function applyCoupon() {
       const code = $("#couponInput").value.trim().toUpperCase().replace(/\s+/g, "");
-      const cm = $("#couponMsg");
+      const cm = $("#couponMsg"); $("#couponCard").open = true;
       if (!code) { appliedCoupon = null; cm.textContent = ""; renderCartSummary(); return; }
       cm.className = "small"; cm.textContent = "যাচাই হচ্ছে...";
       const { data, error } = await db.rpc("get_coupon", { p_code: code });
@@ -2395,7 +2469,7 @@
         ${delRow}
         <div class="sum-row sum-total"><span>${t.unknown ? "সর্বমোট (ডেলিভারি চার্জ ছাড়া)" : "সর্বমোট"}</span><span>${taka(t.total)}/-</span></div>
         ${t.unknown ? `<div class="need-note">ডেলিভারি চার্জ অর্ডার কনফার্মের সময় আপনাকে জানানো হবে।</div>` : ""}
-        <div class="small" style="margin-top:6px;">চূড়ান্ত দাম, ছাড় ও ডেলিভারি চার্জ অর্ডারের সময় সার্ভার ঠিক করে দেবে।</div>`;
+        <div class="small" style="margin-top:4px;font-size:11.5px;">ℹ️ চূড়ান্ত দাম ও ডেলিভারি চার্জ অর্ডারের সময় নিশ্চিত হবে।</div>`;
       $("#bkashAmountDisplay").textContent = taka(t.total) + "/-";
     }
 
