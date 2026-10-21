@@ -325,6 +325,58 @@
     .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
     .stat{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:14px;text-align:center}
     .stat b{display:block;font-size:24px;color:var(--navy)}
+
+    /* আমার অর্ডার (ট্র্যাকিং) */
+    #trackDialog{padding:20px 16px 22px;background:var(--cream)}
+    #trackDialog .close-modal-btn{width:36px;height:36px;font-size:26px;top:12px;right:12px;z-index:3}
+    .trk-h{display:flex;align-items:center;gap:10px;margin:2px 44px 6px 0;color:var(--navy);font-size:22px;font-weight:800}
+    .trk-h svg{width:34px;height:34px;color:#987121;flex:none}
+    .trk-sub{color:#334155;font-size:15.5px;line-height:1.6;margin:6px 0 14px}
+    .trk-phone{display:flex;align-items:center;gap:10px;background:#fff;border:1.5px solid #cbd5e1;border-radius:12px;padding:0 14px}
+    .trk-phone input{border:0!important;margin:0!important;padding:14px 0!important;flex:1;min-width:0;background:none;outline:none;font-size:16px}
+    .trk-btn{width:100%;margin-top:12px;background:var(--navy);color:#fff;border:0;border-radius:12px;padding:15px;font-size:17px;font-weight:700;cursor:pointer}
+    .trk-note{display:flex;gap:8px;align-items:flex-start;font-size:13.5px;color:#475569;margin:14px 2px 0;line-height:1.5}
+    .trk-illu{text-align:center;color:#64748b;margin:26px 0 6px}
+    .trk-illu svg{width:150px;height:120px}
+    .trk-illu b{display:block;color:var(--navy);font-size:17px;margin-top:4px}
+    .trk-found{display:flex;gap:12px;align-items:center;background:#ecfdf5;border:1px solid #bbf7d0;border-radius:12px;padding:12px 14px;margin:6px 0 14px}
+    .trk-found .ok{width:30px;height:30px;border-radius:50%;background:#059669;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;flex:none}
+    .trk-found b.ph{color:#059669}
+    .trk-card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:14px;margin:12px 0;box-shadow:0 2px 8px rgba(15,28,46,.05)}
+    .trk-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+    .trk-top b{color:var(--navy);font-size:15.5px;word-break:break-all}
+    .trk-date{color:#64748b;font-size:13.5px;margin:3px 0 10px}
+    .trk-row{display:flex;gap:12px;align-items:center}
+    .trk-row img,.trk-row .ph{width:58px;height:68px;object-fit:cover;border-radius:8px;background:#eee;flex:none;display:flex;align-items:center;justify-content:center;font-size:10px;color:#888}
+    .trk-row .nm{font-weight:700;color:var(--navy);font-size:15px}
+    .trk-row .mt{color:#64748b;font-size:13px;margin-top:2px}
+    .trk-row .tt{color:var(--navy);font-weight:800;margin-top:5px}
+    .trk-more{width:100%;margin-top:12px;background:#fff;border:1.5px solid #cbd5e1;border-radius:10px;padding:11px;font-size:15px;font-weight:700;color:var(--navy);cursor:pointer}
+    .trk-back{background:none;border:0;font-size:19px;font-weight:800;color:var(--navy);padding:0;cursor:pointer;margin:2px 44px 10px 0;display:block}
+    .trk-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-weight:700;font-size:13px;white-space:nowrap}
+    .trk-steps{display:flex;margin:16px 0 4px}
+    .trk-step{flex:1;text-align:center;position:relative;font-size:12.5px;color:#94a3b8}
+    .trk-step::before{content:"";position:absolute;top:16px;left:-50%;width:100%;height:3px;background:#e2e8f0;z-index:0}
+    .trk-step:first-child::before{display:none}
+    .trk-step.done::before,.trk-step.cur::before{background:#059669}
+    .trk-dot{position:relative;z-index:1;width:34px;height:34px;border-radius:50%;margin:0 auto 6px;background:#e2e8f0;color:#94a3b8;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800}
+    .trk-step.done .trk-dot{background:#059669;color:#fff}
+    .trk-step.cur .trk-dot{background:#f59e0b;color:#fff;box-shadow:0 0 0 5px rgba(245,158,11,.2)}
+    .trk-step.done,.trk-step.cur{color:var(--navy);font-weight:700}
+    .trk-sec{font-weight:800;color:var(--navy);font-size:16px;margin:0 0 8px;padding-bottom:8px;border-bottom:1px solid #eef2f7}
+    .trk-sum{display:flex;justify-content:space-between;gap:10px;padding:6px 0;font-size:15px;color:#334155}
+    .trk-sum.total{background:#ecfdf5;margin:8px -8px 0;padding:10px 8px;border-radius:8px;font-weight:800;color:#065f46;font-size:17px}
+    .trk-free{color:#059669;font-weight:700}.trk-pend{color:#b45309;font-weight:700}
+    .trk-warn{background:#fffbeb;border:1px solid #fde68a;color:#92400e;border-radius:10px;padding:10px 12px;font-size:13.5px;line-height:1.55;margin-top:8px}
+    .trk-live{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#15803d;background:#dcfce7;border-radius:20px;padding:3px 10px;font-weight:700}
+    .trk-live::before{content:"";width:7px;height:7px;border-radius:50%;background:#16a34a;animation:trkPulse 1.6s infinite}
+    @keyframes trkPulse{0%,100%{opacity:1}50%{opacity:.25}}
+    .trk-flash{animation:trkFlash 2s ease 1}
+    @keyframes trkFlash{0%{background:#fef08a}100%{background:transparent}}
+    .trk-info div{padding:4px 0;font-size:14.5px;color:#334155}
+    /* স্ক্রল করলে হেডার (সার্চ/অর্ডার বক্স) লুকায়, উপরে উঠলে আবার আসে */
+    header{transition:transform .28s ease}
+    header.hdr-hide{transform:translateY(-110%);box-shadow:none}
     .status-badge{display:inline-block;padding:5px 12px;border-radius:20px;font-weight:bold;font-size:13px}
     .status-pending{background:#fef3c7;color:#d97706}.status-confirmed{background:#e0f2fe;color:#0284c7}.status-shipped{background:#f3e8ff;color:#7e22ce}.status-delivered{background:#dcfce7;color:#15803d}.status-cancelled{background:#fee2e2;color:#b91c1c}
     .live-dot{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;padding:4px 10px;border-radius:20px;background:#fee2e2;color:#b91c1c}
@@ -798,7 +850,7 @@
         <a href="#three-piece" class="tp-nav"><svg class="ic" aria-hidden="true"><use href="#ic-three"/></svg><span>থ্রি পিস</span></a>
         <button class="wish-nav" onclick="openWishlistDialog()" title="আপনার পছন্দের শাড়ির তালিকা">❤️ উইশলিস্ট (<span id="wishlistCount">0</span>)</button>
         <button onclick="openCart()">🛒 কার্ট (<span id="cartCount">0</span>)</button>
-        <button onclick="document.querySelector('#trackDialog').showModal()">📦 আমার অর্ডার</button>
+        <button onclick="openTrack()">📦 আমার অর্ডার</button>
         <button type="button" class="dt-nav-btn" id="dtItem" onclick="toggleDesktopMode()">🖥️ <span id="dtLabel">ডেক্সটপ মোড</span></button>
         <button class="admin-nav-btn" id="headerAdminBtn" onclick="openAdminPanelDirectly()">👑 অ্যাডমিন</button>
       </nav>
@@ -891,7 +943,7 @@
           <a href="#three-piece" class="tp-nav"><svg class="ic" aria-hidden="true"><use href="#ic-three"/></svg><span>থ্রি পিস</span></a>
           <button class="wish-nav" onclick="openWishlistDialog()" title="আপনার পছন্দের তালিকা">❤️ উইশলিস্ট (<span id="wishlistCount2">0</span>)</button>
           <button onclick="openCart()">🛒 কার্ট (<span id="cartCount2">0</span>)</button>
-          <button onclick="document.querySelector('#trackDialog').showModal()">📦 আমার অর্ডার</button>
+          <button onclick="openTrack()">📦 আমার অর্ডার</button>
           <button class="admin-nav-btn" id="headerAdminBtn2" style="display:none" onclick="closeThreePiece();openAdminPanelDirectly()">👑 অ্যাডমিন</button>
         </nav>
       </div>
@@ -1071,13 +1123,16 @@
 
   <dialog id="trackDialog">
     <button class="close-modal-btn" onclick="document.querySelector('#trackDialog').close()" aria-label="বন্ধ করুন">&times;</button>
-    <h3 style="color:var(--navy);margin:0 40px 15px 0;">📦 আমার অর্ডার ও স্ট্যাটাস</h3>
-    <label class="field-label" for="trackPhone">অর্ডারের সময় দেওয়া ফোন নম্বর</label>
-    <div class="row">
-      <input id="trackPhone" type="tel" placeholder="01XXXXXXXXX" style="margin:0;">
-      <button class="btn order-btn" style="padding:10px 16px;white-space:nowrap;" onclick="checkOrderStatus()">অর্ডার দেখুন</button>
+    <div id="trkSearch">
+      <div class="trk-h"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3 4 9v14l12 6 12-6V9z"/><path d="M4 9l12 6 12-6M16 15v14"/></svg><span>আমার অর্ডারসমূহ</span></div>
+      <p class="trk-sub">আপনার অর্ডারের বর্তমান অবস্থা দেখতে এখানে আপনার ফোন নম্বর দিন।</p>
+      <div class="trk-phone"><span aria-hidden="true">📞</span><input id="trackPhone" type="tel" inputmode="numeric" placeholder="মোবাইল নম্বর লিখুন (যেমন: 01XXXXXXXXX)" onkeydown="if(event.key==='Enter')checkOrderStatus()"></div>
+      <button type="button" class="trk-btn" id="trkGo" onclick="checkOrderStatus()">🔍 অর্ডার খুঁজুন</button>
+      <div class="trk-note"><span aria-hidden="true">🛡️</span><span>আপনার তথ্য নিরাপদে সংরক্ষিত আছে। আমরা শুধু আপনার অর্ডার দেখার জন্য ব্যবহার করি।</span></div>
+      <div id="trkMsg"></div>
+      <div class="trk-illu" id="trkIllu"><svg viewBox="0 0 150 120" fill="none" stroke="#c8a04b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M55 22 25 36v34l30 15 30-15V36z" fill="#fbf3dd"/><path d="M25 36l30 15 30-15M55 51v34"/><circle cx="95" cy="68" r="20" fill="#fff"/><path d="M109 83l17 17" stroke-width="5"/><path d="M20 100c-8-10-8-24 0-34M130 40c8 10 8 24 0 34" stroke="#d9c58f" stroke-width="1.6"/></svg><b>সহজে খুঁজুন</b>আপনার অর্ডারের সব তথ্য</div>
     </div>
-    <div id="trackResult" style="margin-top:15px;"></div>
+    <div id="trackResult" style="display:none;"></div>
   </dialog>
 
   <dialog id="adminDialog">
@@ -2313,7 +2368,7 @@
 
     async function cancelMyOrder(id) {
       if (!confirm("আপনি কি এই অর্ডারটি বাতিল করতে চান?")) return;
-      const phone = ($("#trackPhone").value || "").trim();
+      const phone = bn2en($("#trackPhone").value);
       const { data, error } = await db.rpc("cancel_order", { p_id: String(id), p_phone: phone });
       if (error) {
         if (isMissingFn(error)) alert("অর্ডার বাতিলের সিস্টেম এখনো চালু করা হয়নি। অনুগ্রহ করে WhatsApp-এ জানান।");
@@ -2322,7 +2377,7 @@
       }
       if (data === true || data === "true" || (data && data.ok)) toast("✅ অর্ডার বাতিল হয়েছে");
       else alert("এই অর্ডার বাতিল করা যায়নি — হয়তো অ্যাডমিন কনফার্ম করে ফেলেছেন। অনুগ্রহ করে WhatsApp-এ জানান।");
-      checkOrderStatus();
+      trkSig = ""; checkOrderStatus(true);
     }
 
     // ---------- অর্ডার ট্র্যাক ----------
@@ -2338,29 +2393,113 @@
       if (st.includes("নিশ্চিত")) return "status-confirmed";
       return "status-pending";
     }
-    async function checkOrderStatus() {
-      const phone = $("#trackPhone").value.trim();
-      const resBox = $("#trackResult");
-      if (!phone) return;
-      resBox.innerHTML = "<p class='small'>খোঁজা হচ্ছে...</p>";
-      const { data, error } = await db.rpc("track_orders", { p_phone: phone });
-      if (error) { console.error(error); resBox.innerHTML = `<p class="msg-err">অর্ডার খোঁজা যায়নি। পরে আবার চেষ্টা করুন।</p>`; return; }
-      if (!data || !data.length) { resBox.innerHTML = "<p style='color:red;'>কোনো অর্ডার পাওয়া যায়নি। সঠিক ফোন নম্বর দিন।</p>"; return; }
-      resBox.innerHTML = data.map(o => {
-        const itemHtml = parseItems(o.items).map(i => `
-          <div style="display:flex;align-items:center;gap:10px;margin:8px 0;background:#fff;padding:8px;border-radius:8px;border:1px solid #e2e8f0;">
-            ${i.image ? `<img src="${esc(i.image)}" alt="${esc(i.name)}" style="width:55px;height:65px;object-fit:cover;border-radius:6px;">` : `<div style="width:55px;height:65px;background:#eee;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#888;">ছবি নেই</div>`}
-            <div><b>${esc(i.name || "শাড়ি")}</b><br><span class="small" style="color:#0284c7;font-weight:bold;">রং: ${esc(i.color || "সাধারণ")} | পরিমাণ: ${taka(i.qty || 1)}টি</span></div>
-          </div>`).join("");
-        return `<div class="admin-card">
-          <b>অর্ডার আইডি:</b> ${esc(o.id || "N/A")}<br>
-          <b>তারিখ:</b> ${new Date(o.created_at || Date.now()).toLocaleDateString("bn-BD")}<br>
-          <b>বর্তমান অবস্থা:</b> <span class="status-badge ${statusClassFor(o.status)}">${esc(o.status)}</span>
-          <div style="margin:8px 0;">${itemHtml}</div>
-          <b>মোট টাকা:</b> <strong style="color:var(--green);">${taka(o.total)}/-</strong>
-          ${(String(o.status || "").startsWith("নতুন অর্ডার") || /pending/i.test(String(o.status || ""))) && !String(o.status || "").includes("বাতিল") ? `<div style="margin-top:8px;"><button class="danger" onclick="cancelMyOrder('${esc(o.id)}')">❌ অর্ডার বাতিল করুন</button></div>` : ""}
-        </div>`;
-      }).join("");
+    // ===== আমার অর্ডার (লাইভ) =====
+    let trkData = [], trkSel = null, trkTimer = null, trkSig = "", trkPhoneUsed = "";
+    const bn2en = v => String(v || "").replace(/[০-৯]/g, d => "০১২৩৪৫৬৭৮৯".indexOf(d)).trim();
+    function openTrack() {
+      const dlg = $("#trackDialog");
+      try { const c = JSON.parse(localStorage.getItem("sari_customer") || "{}"); if (c.phone && !$("#trackPhone").value) $("#trackPhone").value = c.phone; } catch {}
+      if (!dlg.open) dlg.showModal();
+      if (trkData.length && trkPhoneUsed) startTrkTimer();
+    }
+    function startTrkTimer() { clearInterval(trkTimer); trkTimer = setInterval(() => { if (!$("#trackDialog").open) { clearInterval(trkTimer); return; } checkOrderStatus(true); }, 8000); }
+    $("#trackDialog").addEventListener("close", () => clearInterval(trkTimer));
+    function trkStage(st = "") {
+      if (/বাতিল|cancel/i.test(st)) return -1;
+      if (/সম্পন্ন|deliver/i.test(st)) return 3;
+      if (/কুরিয়ার|ship/i.test(st)) return 2;
+      if (/নিশ্চিত|confirm/i.test(st)) return 1;
+      return 0;
+    }
+    const TRK_SHORT = { "-1": "বাতিল", 0: "নতুন", 1: "কনফার্মড", 2: "শিপমেন্টে", 3: "ডেলিভারড" };
+    const TRK_MSG = { "-1": "এই অর্ডারটি বাতিল করা হয়েছে।", 0: "আপনার অর্ডারটি আমরা পেয়েছি, শীঘ্রই কনফার্ম করা হবে।", 1: "আপনার অর্ডারটি কনফার্ম হয়েছে, প্রস্তুত করা হচ্ছে।", 2: "আপনার অর্ডারটি কুরিয়ারে পাঠানো হয়েছে।", 3: "অর্ডার ডেলিভারি সম্পন্ন হয়েছে। ধন্যবাদ!" };
+    function trkMoney(o) {
+      const items = parseItems(o.items);
+      const hasDel = !(o.delivery_charge === null || o.delivery_charge === undefined || o.delivery_charge === "");
+      const del = hasDel ? Number(o.delivery_charge) || 0 : null;
+      const disc = Number(o.discount) || 0;
+      let sub = Number(o.subtotal);
+      if (!(sub > 0)) { const sm = items.reduce((t, i) => t + (Number(i.subtotal) || (Number(i.price) || 0) * (Number(i.qty) || 1)), 0); sub = sm > 0 ? sm : (Number(o.total) || 0) - (del || 0) + disc; }
+      return { sub, del, disc, total: Number(o.total) || (sub - disc + (del || 0)) };
+    }
+    const trkDate = d => { const x = new Date(d || Date.now()); return x.toLocaleDateString("bn-BD", { day: "numeric", month: "long", year: "numeric" }) + ", " + x.toLocaleTimeString("bn-BD", { hour: "2-digit", minute: "2-digit" }); };
+    const trkAddr = a => String(a || "").split("\n").filter(l => !/^\s*\[.*\]\s*$/.test(l)).join(", ").trim();
+    const trkThumb = i => i && i.image ? `<img src="${esc(i.image)}" alt="${esc(i.name)}" loading="lazy">` : `<div class="ph">ছবি নেই</div>`;
+
+    async function fetchTrack(phone) {
+      let r = await db.rpc("track_my_orders", { p_phone: phone });
+      if (r.error && isMissingFn(r.error)) r = await db.rpc("track_orders", { p_phone: phone });
+      return r;
+    }
+    async function checkOrderStatus(silent) {
+      const phone = bn2en($("#trackPhone").value);
+      const msg = $("#trkMsg");
+      if (!phone) { if (!silent) { msg.innerHTML = "<p class='msg-err' style='margin-top:10px'>ফোন নম্বর লিখুন</p>"; } return; }
+      if (!silent) { msg.innerHTML = "<p class='small' style='margin-top:10px'>খোঁজা হচ্ছে...</p>"; $("#trkGo").disabled = true; }
+      const { data, error } = await fetchTrack(phone);
+      if (!silent) $("#trkGo").disabled = false;
+      if (error) { if (!silent) { console.error(error); msg.innerHTML = `<p class="msg-err" style="margin-top:10px">অর্ডার খোঁজা যায়নি। পরে আবার চেষ্টা করুন।</p>`; } return; }
+      if (!data || !data.length) { trkData = []; if (!silent) { msg.innerHTML = "<p class='msg-err' style='margin-top:10px'>কোনো অর্ডার পাওয়া যায়নি। সঠিক ফোন নম্বর দিন।</p>"; } else renderTrack(); return; }
+      msg.innerHTML = "";
+      const sig = JSON.stringify(data.map(o => [o.id, o.status, o.delivery_charge, o.total, o.discount]));
+      if (silent && sig === trkSig) return;
+      if (silent) data.forEach(o => { const old = trkData.find(x => String(x.id) === String(o.id)); if (old && String(old.delivery_charge) !== String(o.delivery_charge)) toast("🚚 ডেলিভারি চার্জ আপডেট হয়েছে"); else if (old && old.status !== o.status) toast("📦 অর্ডারের অবস্থা বদলেছে"); });
+      trkSig = sig; trkData = data; trkPhoneUsed = phone;
+      if (!silent) trkSel = data.length === 1 ? String(data[0].id) : null;
+      renderTrack(silent);
+      startTrkTimer();
+    }
+    function trkShowSearch() { clearInterval(trkTimer); trkData = []; trkSel = null; trkSig = ""; $("#trackResult").style.display = "none"; $("#trkSearch").style.display = ""; }
+    function trkOpen(id) { trkSel = String(id); renderTrack(); $("#trackDialog").scrollTop = 0; }
+    function trkBack() { trkSel = null; renderTrack(); $("#trackDialog").scrollTop = 0; }
+    function renderTrack(silent) {
+      const res = $("#trackResult"), keep = $("#trackDialog").scrollTop;
+      $("#trkSearch").style.display = "none"; res.style.display = "block";
+      const live = `<span class="trk-live">লাইভ</span>`;
+      const sel = trkSel ? trkData.find(o => String(o.id) === trkSel) : null;
+      if (!trkData.length) { res.innerHTML = `<button type="button" class="trk-back" onclick="trkShowSearch()">← আবার খুঁজুন</button><p class="msg-err">কোনো অর্ডার পাওয়া যায়নি।</p>`; return; }
+      if (sel) { res.innerHTML = trkDetailHtml(sel, live); if (silent) $("#trackDialog").scrollTop = keep; return; }
+      res.innerHTML = `<div class="trk-h">${$("#trkSearch .trk-h svg").outerHTML}<span>আমার অর্ডারসমূহ</span></div>
+        <div class="trk-found"><span class="ok">✓</span><div><div><b>মোবাইল নম্বর:</b> <b class="ph">${esc(trkPhoneUsed)}</b></div><div style="font-size:14px;color:#334155;">মোট ${taka(trkData.length)}টি অর্ডার পাওয়া গেছে &nbsp;${live}</div></div></div>
+        ${trkData.map(o => {
+          const st = trkStage(o.status), items = parseItems(o.items), first = items[0] || {}, m = trkMoney(o);
+          const qty = items.reduce((t, i) => t + (Number(i.qty) || 1), 0) || 1;
+          return `<div class="trk-card"><div class="trk-top"><b>অর্ডার নং: ${esc(o.id)}</b><span class="trk-badge ${statusClassFor(o.status)}">${TRK_SHORT[st]}</span></div>
+            <div class="trk-date">তারিখ: ${trkDate(o.created_at)}</div>
+            <div class="trk-row">${trkThumb(first)}<div><div class="nm">${esc(first.name || "শাড়ি")}${items.length > 1 ? ` <span class="mt">+ আরও ${taka(items.length - 1)}টি</span>` : ""}</div><div class="mt">(${taka(qty)}টি পণ্য)</div><div class="tt">মোট: ৳ ${taka(m.total)}</div></div></div>
+            <button type="button" class="trk-more" onclick="trkOpen('${esc(o.id)}')">বিস্তারিত দেখুন ›</button></div>`;
+        }).join("")}
+        <button type="button" class="trk-more" style="background:none;margin-top:6px;" onclick="trkShowSearch()">← অন্য নম্বর দিয়ে খুঁজুন</button>`;
+      if (silent) $("#trackDialog").scrollTop = keep;
+    }
+    function trkDetailHtml(o, live) {
+      const st = trkStage(o.status), items = parseItems(o.items), m = trkMoney(o);
+      const labels = ["অর্ডার গৃহীত", "কনফার্মড", "শিপমেন্ট", "ডেলিভারড"], icons = ["📝", "✓", "🚚", "🏠"];
+      const steps = st < 0 ? "" : `<div class="trk-steps">${labels.map((l, i) => `<div class="trk-step ${i < st || st === 3 ? "done" : i === st ? "cur" : ""}"><div class="trk-dot">${i < st || st === 3 ? "✓" : icons[i]}</div>${l}${i === 0 ? `<div style="font-size:11px;font-weight:400;color:#64748b;margin-top:2px;">${new Date(o.created_at || Date.now()).toLocaleDateString("bn-BD", { day: "numeric", month: "short" })}</div>` : ""}</div>`).join("")}</div>`;
+      const delRow = m.del === null
+        ? `<div class="trk-sum"><span>ডেলিভারি চার্জ</span><span class="trk-pend">এখনো নির্ধারিত নয়</span></div>`
+        : `<div class="trk-sum ${"trk-flash"}"><span>ডেলিভারি চার্জ</span>${m.del === 0 ? `<span class="trk-free">৳ ০ (ফ্রি ডেলিভারি)</span>` : `<b>৳ ${taka(m.del)}</b>`}</div>`;
+      const warn = (m.del === null && st >= 0) ? `<div class="trk-warn">🚚 ডেলিভারি চার্জ এখনো নির্ধারিত হয়নি। অ্যাডমিন চার্জ বসালেই এখানে লাইভ দেখতে পাবেন — নিচের মোট টাকা ডেলিভারি চার্জ ছাড়া।</div>` : "";
+      const canCancel = st === 0;
+      const pay = o.payment_method ? (o.payment_method === "bkash" ? "bKash" : "ক্যাশ অন ডেলিভারি") : "";
+      const waTxt = encodeURIComponent(`হ্যালো শাড়ি বিলাশ! আমার অর্ডার আইডি: ${o.id}`);
+      return `<button type="button" class="trk-back" onclick="trkBack()">${trkData.length > 1 ? "←" : "←"} অর্ডার বিস্তারিত</button>
+        <div class="trk-card"><div class="trk-top"><b>অর্ডার নং: ${esc(o.id)}</b>${live}</div>
+          <div class="trk-date">তারিখ: ${trkDate(o.created_at)}</div>
+          ${st < 0 ? `<span class="trk-badge status-cancelled">${esc(o.status)}</span>` : `<span class="trk-badge ${statusClassFor(o.status)}">${TRK_SHORT[st]}</span>`}
+          <div style="margin-top:8px;color:#334155;font-size:14.5px;">${TRK_MSG[st]}</div>${steps}
+          ${canCancel ? `<button type="button" class="danger" style="margin-top:12px;width:100%;" onclick="cancelMyOrder('${esc(o.id)}')">❌ অর্ডার বাতিল করুন</button>` : ""}</div>
+        <div class="trk-card"><div class="trk-sec">📦 অর্ডার আইটেমস</div>
+          ${items.map(i => `<div class="trk-row" style="margin:8px 0;">${trkThumb(i)}<div style="flex:1"><div class="nm">${esc(i.name || "শাড়ি")}</div><div class="mt">পরিমাণ: ${taka(i.qty || 1)}টি</div><div class="mt">রং: ${esc(i.color || "সাধারণ")}</div></div>${Number(i.price) ? `<b style="color:var(--navy)">৳ ${taka((Number(i.subtotal) || Number(i.price) * (Number(i.qty) || 1)))}</b>` : ""}</div>`).join("")}</div>
+        <div class="trk-card"><div class="trk-sec">🧾 অর্ডার সারাংশ</div>
+          <div class="trk-sum"><span>পণ্যের মোট মূল্য</span><b>৳ ${taka(m.sub)}</b></div>
+          ${delRow}
+          ${m.disc > 0 ? `<div class="trk-sum"><span>কুপন ডিসকাউন্ট${o.coupon_code ? " (" + esc(o.coupon_code) + ")" : ""}</span><b style="color:#059669">- ৳ ${taka(m.disc)}</b></div>` : ""}
+          <div class="trk-sum total"><span>মোট পরিশোধ${m.del === null ? " (ডেলিভারি ছাড়া)" : ""}</span><span>৳ ${taka(m.total)}</span></div>${warn}
+          ${pay ? `<div class="small" style="margin-top:8px;">💳 পেমেন্ট: ${pay}</div>` : ""}</div>
+        <div class="trk-card trk-info"><div class="trk-sec">👤 গ্রাহকের তথ্য</div>
+          ${o.customer_name ? `<div>নাম: ${esc(o.customer_name)}</div>` : ""}<div>মোবাইল: ${esc(o.phone || trkPhoneUsed)}</div>${trkAddr(o.address) ? `<div>ঠিকানা: ${esc(trkAddr(o.address))}</div>` : ""}</div>
+        <a class="trk-more" style="display:block;text-align:center;text-decoration:none;" target="_blank" rel="noopener" href="https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${waTxt}">📞 যোগাযোগ করুন</a>`;
     }
 
     // ---------- অ্যাডমিন ----------
@@ -2390,19 +2529,19 @@
           <div class="admin-card">
             <h3 id="formTitle">${tpMode ? "👗 নতুন থ্রি পিস যোগ করুন" : "নতুন শাড়ি যোগ করুন"}</h3>
             <label class="field-label" for="pname">${tpMode ? "থ্রি পিসের নাম" : "শাড়ির নাম"}</label><input id="pname" required>
-            <label class="field-label" for="pdesc">বিবরণ</label><input id="pdesc">
+            <label class="field-label" for="pdesc">বিবরণ</label><input id="pdesc" placeholder="${tpMode ? 'যেমন: কামিজ + সালোয়ার + ওড়না, প্রিন্টেড ডিজাইন' : 'শাড়ির সংক্ষিপ্ত বিবরণ'}">
             <div class="row">
               <div${tpMode ? ' style="display:none"' : ""}><label class="field-label" for="pcategory">ক্যাটাগরি</label><input id="pcategory" list="catList" placeholder="যেমন: জামদানি, কাতান"></div>
-              <div><label class="field-label" for="pfabric">ধরন / কাপড় (থ্রি পিসেও এটা দিয়ে ভাগ হয়)</label><input id="pfabric" placeholder="যেমন: সুতি, সিল্ক, কটন, জর্জেট"></div>
+              <div><label class="field-label" for="pfabric">${tpMode ? "কাপড়ের ধরন" : "ধরন / কাপড়"}</label><input id="pfabric" placeholder="${tpMode ? 'যেমন: কটন, জর্জেট, লিনেন' : 'যেমন: সুতি, সিল্ক, কটন'}"></div>
               <div${tpMode ? "" : ' style="display:none"'}><label class="field-label" for="ptpcat">👗 থ্রি পিসের ক্যাটাগরি (ফাঁকা রাখলে শুধু "থ্রি পিস" হবে)</label><input id="ptpcat" list="tpCatList" placeholder="যেমন: কটন, জর্জেট, পার্টি"></div>
             </div>
             <datalist id="tpCatList">${tpSubs.map(c => `<option value="${esc(c)}">`).join("")}</datalist>
             <datalist id="catList">${cats.map(c => `<option value="${esc(c)}">`).join("")}</datalist>
             <div class="row">
-              <div><label class="field-label" for="plength">দৈর্ঘ্য (ফাঁকা রাখলে সাইটে দেখাবে না)</label><input id="plength" placeholder="যেমন: ১২ হাত"></div>
-              <div><label class="field-label" for="pfreemin">এই শাড়িতে এত টাকা বা বেশি নিলে ফ্রি ডেলিভারি (ফাঁকা = নেই)</label><input id="pfreemin" type="number" min="0" placeholder="যেমন: 3000"></div>
+              <div><label class="field-label" for="plength">${tpMode ? "সাইজ / সেট (ফাঁকা রাখলে সাইটে দেখাবে না)" : "দৈর্ঘ্য (ফাঁকা রাখলে সাইটে দেখাবে না)"}</label><input id="plength" placeholder="${tpMode ? 'যেমন: ফ্রি সাইজ, আনস্টিচড' : 'যেমন: ১২ হাত'}"></div>
+              <div><label class="field-label" for="pfreemin">${tpMode ? "এই থ্রি পিসে" : "এই শাড়িতে"} এত টাকা বা বেশি নিলে ফ্রি ডেলিভারি (ফাঁকা = নেই)</label><input id="pfreemin" type="number" min="0" placeholder="যেমন: 3000"></div>
             </div>
-            <div style="margin:12px 0;display:flex;align-items:center;gap:8px;">
+            <div style="margin:12px 0;display:${tpMode ? "none" : "flex"};align-items:center;gap:8px;">
               <input type="checkbox" id="pblouse" style="width:20px;height:20px;margin:0;cursor:pointer;">
               <label for="pblouse" style="font-weight:bold;color:var(--navy);cursor:pointer;">👚 ব্লাউজ পিস ফ্রি (টিক দিলে সাইটে দেখাবে)</label>
             </div>
@@ -2417,9 +2556,9 @@
             </div>
             <div style="margin:12px 0;display:flex;align-items:center;gap:8px;">
               <input type="checkbox" id="pactive" checked style="width:20px;height:20px;margin:0;cursor:pointer;">
-              <label for="pactive" style="font-weight:bold;color:var(--navy);cursor:pointer;">👁️ সাইটে দেখাবে (বন্ধ করলে শাড়ি কাস্টমারের কাছে লুকানো থাকবে, মুছে যাবে না)</label>
+              <label for="pactive" style="font-weight:bold;color:var(--navy);cursor:pointer;">👁️ সাইটে দেখাবে (বন্ধ করলে কাস্টমারের কাছে লুকানো থাকবে, মুছে যাবে না)</label>
             </div>
-            <div class="field-label">🎟️ কুপন চলবে (এই শাড়িতে যে কুপন দিতে চান তাতে টিক দিন)</div>
+            <div class="field-label">🎟️ কুপন চলবে (এতে যে কুপন দিতে চান তাতে টিক দিন)</div>
             <div id="couponChecks" class="small" style="margin:8px 0 12px;">লোড হচ্ছে...</div>
             <label class="field-label" for="pcolors">রঙের নাম (কমা দিয়ে, ছবির ক্রম অনুযায়ী)</label><input id="pcolors" placeholder="লাল, নীল" oninput="renderColorStockInputs()">
             <div id="colorStockBox" style="margin:6px 0 12px;"></div>
@@ -2629,9 +2768,9 @@
       msg.className = "small msg-ok"; msg.textContent = "✅ সেভ হয়েছে — সবার সাইটে এখনই আপডেট হবে";
     }
 
-    async function setOrderDelivery(id, subtotal) {
+    async function setOrderDelivery(id, subtotal, forced) {
       const inp = document.querySelector(`[data-del-for="${CSS.escape(id)}"]`);
-      const v = inp ? numOrNull(inp.value) : null;
+      const v = forced !== undefined ? forced : (inp ? numOrNull(inp.value) : null);
       if (v === null || v < 0) { toast("সঠিক চার্জ লিখুন"); return; }
       const { data, error } = await db.from("orders").update({ delivery_charge: v, total: Number(subtotal) + v }).eq("id", id).select();
       if (error || !data || !data.length) { alert("আপডেট হয়নি: " + errText(error || "permission denied")); return; }
@@ -3158,8 +3297,10 @@
         const cur = o.status || ORDER_STATUSES[0][0];
         const wa = o.phone ? `https://wa.me/880${String(o.phone).replace(/^0/, "")}` : "";
         const delTxt = (o.delivery_charge === null || o.delivery_charge === undefined) ? "<b style='color:#b45309;'>এখনো নির্ধারিত নয় — কাস্টমারকে জানিয়ে নিচে বসান</b>" : (Number(o.delivery_charge) ? taka(o.delivery_charge) + "/-" : "ফ্রি");
-        const extra = o.zone ? `<div class="small" style="margin-top:4px;">শাড়ির দাম: ${taka(o.subtotal)}/-${Number(o.discount) > 0 ? ` − কুপন ${esc(o.coupon_code || "")}: ${taka(o.discount)}/-` : ""} + ডেলিভারি: ${delTxt}${o.payment_method ? " | " + (o.payment_method === "bkash" ? "bKash" : "COD") : ""}
-          ${(o.delivery_charge !== null && o.delivery_charge !== undefined && Number(o.delivery_charge) === 0) ? "" : `<div style="display:flex;gap:6px;align-items:center;margin-top:6px;"><input data-del-for="${esc(o.id)}" type="number" min="0" placeholder="ডেলিভারি চার্জ" style="margin:0;padding:6px;width:130px;"><button type="button" class="edit-btn" style="margin:0;" onclick="setOrderDelivery('${esc(o.id)}', ${(Number(o.subtotal) - Number(o.discount || 0)) || 0})">চার্জ বসান</button></div>`}</div>` : "";
+        const isCx = /বাতিল|cancel/i.test(o.status || "");
+        const base = (() => { const sb = Number(o.subtotal); if (sb > 0) return sb - Number(o.discount || 0); const sm = parseItems(o.items).reduce((t, i) => t + (Number(i.subtotal) || (Number(i.price) || 0) * (Number(i.qty) || 1)), 0); if (sm > 0) return sm - Number(o.discount || 0); return (Number(o.total) || 0) - (Number(o.delivery_charge) || 0); })();
+        const extra = `<div class="small" style="margin-top:4px;">${o.subtotal ? `শাড়ির দাম: ${taka(o.subtotal)}/-${Number(o.discount) > 0 ? ` − কুপন ${esc(o.coupon_code || "")}: ${taka(o.discount)}/-` : ""} + ` : ""}ডেলিভারি: ${delTxt}${o.payment_method ? " | " + (o.payment_method === "bkash" ? "bKash" : "COD") : ""}
+          ${isCx ? "" : `<div style="display:flex;gap:6px;align-items:center;margin-top:6px;flex-wrap:wrap;"><input data-del-for="${esc(o.id)}" type="number" min="0" value="${(o.delivery_charge === null || o.delivery_charge === undefined) ? "" : Number(o.delivery_charge)}" placeholder="ডেলিভারি চার্জ" style="margin:0;padding:6px;width:130px;"><button type="button" class="edit-btn" style="margin:0;" onclick="setOrderDelivery('${esc(o.id)}', ${base || 0})">চার্জ বসান / বদলান</button><button type="button" class="edit-btn" style="margin:0;background:#0f766e;" onclick="setOrderDelivery('${esc(o.id)}', ${base || 0}, 0)">ফ্রি করুন</button></div><div class="small" style="color:#64748b;margin-top:3px;">বসালেই কাস্টমার "আমার অর্ডার" এ লাইভ দেখতে পাবে।</div>`}</div>`;
                 return `<div class="admin-card" style="border-left:5px solid var(--navy);">
           <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
             <h4 style="margin:0;color:var(--navy);">📦 কাস্টমার: ${esc(o.customer_name || "নাম নেই")}</h4>
@@ -3607,5 +3748,32 @@
       }, { passive: true });
     })();
   </script>
+<script>
+(function () {
+  function autoHide(scroller, hdr) {
+    if (!hdr) return;
+    var last = 0, ticking = false;
+    var getY = function () { return scroller === window ? (window.pageYOffset || 0) : scroller.scrollTop; };
+    function busy() {
+      var a = document.activeElement;
+      if (a && hdr.contains(a) && /INPUT|SELECT|TEXTAREA/.test(a.tagName)) return true;
+      var p = hdr.querySelector(".hf-panel.open");
+      return !!p;
+    }
+    function update() {
+      ticking = false;
+      var y = getY(), dy = y - last;
+      if (Math.abs(dy) < 8) return;
+      if (y < 90 || dy < 0 || busy()) hdr.classList.remove("hdr-hide");
+      else hdr.classList.add("hdr-hide");
+      last = y;
+    }
+    scroller.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  }
+  autoHide(window, document.querySelector("header"));
+  var tp = document.getElementById("threePiecePage");
+  if (tp) autoHide(tp, tp.querySelector("header.tp-head"));
+})();
+</script>
 </body>
 </html>
