@@ -151,6 +151,34 @@
     .review-card{background:#fff;padding:22px;border-radius:16px;box-shadow:0 6px 20px rgba(0,0,0,.04);border:1px solid #eee}
     .stars{color:#f59e0b;font-size:18px;margin-bottom:8px}
     .policy-banner{background:#fff8e7;border:1px solid #f2e2b8;border-radius:18px;padding:25px}
+    .pol-grid{max-width:1200px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:stretch}
+    .pol-grid .policy-banner{margin:0}
+    .why-box{background:linear-gradient(135deg,#0f1c2e,#182e4a);border:1.5px solid rgba(212,175,55,.6);border-radius:18px;padding:25px;color:#e2e8f0}
+    .why-box h3{margin:0 0 10px;color:#f3e5ad;font-size:20px}
+    .why-box ul{margin:0;padding:0;list-style:none;line-height:1.65;font-size:14.5px}
+    .why-box li{padding:7px 0;border-bottom:1px solid rgba(212,175,55,.18)}
+    .why-box li:last-child{border-bottom:0}
+    .why-box li b{color:#f3e5ad}
+    @media(max-width:850px){.pol-grid{grid-template-columns:1fr;padding:0 12px}}
+    .faq-wrap{max-width:1200px;margin:14px auto 0;padding:0 20px}
+    .faq-wrap h3{margin:0 0 8px;color:var(--navy);font-size:16px}
+    .faq-wrap details{background:#fff;border:1px solid #e2e8f0;border-radius:12px;margin:6px 0;overflow:hidden}
+    .faq-wrap summary{cursor:pointer;padding:11px 14px;font-weight:700;font-size:14px;color:var(--navy);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:8px}
+    .faq-wrap summary::-webkit-details-marker{display:none}
+    .faq-wrap summary::after{content:"+";font-size:20px;color:#987121;font-weight:800;flex:none}
+    .faq-wrap details[open] summary::after{content:"−"}
+    .faq-wrap details[open]{border-color:rgba(212,175,55,.6);background:#fffdf6}
+    .faq-wrap details p{margin:0;padding:0 14px 12px;color:#475569;font-size:13.5px;line-height:1.65}
+    .faq-more{font-size:12.5px;color:#64748b;margin-top:6px;text-align:center}
+    @media(max-width:850px){.faq-wrap{padding:0 12px}}
+    .pol-grid{gap:12px}
+    .pol-grid .policy-banner,.why-box{padding:14px 16px;border-radius:14px}
+    .pol-grid .policy-banner h3,.why-box h3{font-size:16px;margin:0 0 6px}
+    .pol-grid .policy-banner ul{font-size:13px;line-height:1.5;padding-left:18px}
+    .pol-grid .policy-banner li{margin:2px 0}
+    .why-box ul{font-size:13px;line-height:1.45}
+    .why-box li{padding:4px 0}
+    @media(max-width:850px){.pol-grid .policy-banner ul,.why-box ul{font-size:12.5px}.pol-grid .policy-banner,.why-box{padding:12px 13px}}
     .policy-banner h3{margin:0 0 10px;color:var(--navy);font-size:20px}
     .policy-banner ul{margin:0;padding-left:20px;color:#555;line-height:1.8;font-size:15px}
 
@@ -377,6 +405,17 @@
     /* স্ক্রল করলে হেডার (সার্চ/অর্ডার বক্স) লুকায়, উপরে উঠলে আবার আসে */
     header{transition:transform .28s ease}
     header.hdr-hide{transform:translateY(-110%);box-shadow:none}
+    /* কার্ড থেকে সরাসরি অর্ডার (কুইক অর্ডার) */
+    #quickDialog{max-width:460px;padding:16px 14px 18px}
+    #quickDialog .close-modal-btn{width:34px;height:34px;font-size:24px;top:10px;right:10px}
+    .qo-head{display:flex;gap:12px;align-items:center;margin:0 40px 12px 0}
+    .qo-head img{width:56px;height:68px;object-fit:cover;border-radius:10px;background:#eee;flex:none}
+    .qo-head h3{margin:0 0 4px;font-size:17px;color:var(--navy);line-height:1.3}
+    .qo-actions{display:flex;gap:8px;margin-top:10px}
+    .qo-actions button{flex:1;border-radius:12px;padding:13px 8px;font:inherit;font-weight:800;font-size:15px;cursor:pointer}
+    .qo-cart{background:#fff;border:1.5px solid var(--gold);color:var(--navy)}
+    .qo-buy{background:linear-gradient(135deg,#0f1c2e,#182e4a);border:1.5px solid var(--gold);color:#f3e5ad}
+    .qo-actions button:disabled{opacity:.5}
     .status-badge{display:inline-block;padding:5px 12px;border-radius:20px;font-weight:bold;font-size:13px}
     .status-pending{background:#fef3c7;color:#d97706}.status-confirmed{background:#e0f2fe;color:#0284c7}.status-shipped{background:#f3e8ff;color:#7e22ce}.status-delivered{background:#dcfce7;color:#15803d}.status-cancelled{background:#fee2e2;color:#b91c1c}
     .live-dot{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;padding:4px 10px;border-radius:20px;background:#fee2e2;color:#b91c1c}
@@ -902,6 +941,7 @@
   </section>
 
   <section id="policySection">
+    <div class="pol-grid">
     <div class="policy-banner">
       <h3>🛍️ শপ করার সহজ নিয়মাবলী:</h3>
       <ul>
@@ -912,6 +952,21 @@
         <li>যেকোনো প্রয়োজনে বা বিস্তারিত জানতে চাইলে, কিংবা সরাসরি কথা বলে অর্ডার করতে চাইলে WhatsApp অথবা ফেসবুক পেজ বাটন ব্যবহার করুন।</li>
       </ul>
     </div>
+    <div class="why-box">
+      <h3>💎 কেন আমাদের থেকেই অর্ডার করবেন?</h3>
+      <ul>
+        <li><b>✨ ১০০% প্রিমিয়াম কোয়ালিটি</b> — সেরা সুতা ও সুনিপুণ কারুকাজে তৈরি এক্সক্লুসিভ কালেকশন।</li>
+        <li><b>🎨 রংয়ের গ্যারান্টি</b> — ছবিতে যে রং দেখছেন, সেই রংয়ের শাড়িই পাঠানো হয়। প্রতিটা রংয়ের আলাদা ছবি ও স্টক দেখে বেছে নিন।</li>
+        <li><b>📦 ক্যাশ অন ডেলিভারি</b> — পণ্য হাতে পেয়ে দেখে শুনে টাকা দিন। চাইলে bKash-এও পেমেন্ট করতে পারবেন।</li>
+        <li><b>🚚 সারা বাংলাদেশে হোম ডেলিভারি</b> — নির্বাচিত শাড়িতে ফ্রি ডেলিভারি।</li>
+        <li><b>🎟️ কুপন ছাড়</b> — কুপন কোড দিয়ে অতিরিক্ত ডিসকাউন্ট।</li>
+        <li><b>📍 লাইভ অর্ডার ট্র্যাকিং</b> — ফোন নম্বর দিয়ে অর্ডারের অবস্থা ও ডেলিভারি চার্জ নিজেই দেখুন।</li>
+        <li><b>❌ সহজ অর্ডার বাতিল</b> — অর্ডার কনফার্মের আগে নিজেই বাতিল করতে পারবেন।</li>
+        <li><b>💬 সরাসরি সাহায্য</b> — যেকোনো প্রশ্নে WhatsApp বা ফেসবুক পেজে মেসেজ করলেই উত্তর পাবেন।</li>
+      </ul>
+    </div>
+    </div>
+    <div class="faq-wrap"><h3>❓ সাধারণ প্রশ্নোত্তর</h3><details><summary>📦 ডেলিভারি কত দিনে পাব?</summary><p>অর্ডার কনফার্মের পর সর্বোচ্চ ২-৩ দিনের মধ্যে ডেলিভারি পেয়ে যাবেন। উপরের “📦 আমার অর্ডার” থেকে ফোন নম্বর দিয়ে যেকোনো সময় অর্ডারের অবস্থা দেখতে পারবেন।</p></details><details><summary>🎨 রং কি ছবির মতোই হবে?</summary><p>হ্যাঁ, ছবির রংয়ের সাথে মিলিয়েই শাড়ি পাঠানো হয়। প্রতিটা রংয়ের আলাদা ছবি ও স্টক দেওয়া থাকে। শুধু মোবাইলের স্ক্রিন বা আলোর কারণে সামান্য তফাত দেখা যেতে পারে।</p></details><details><summary>🚚 ডেলিভারি চার্জ কত?</summary><p>সারা বাংলাদেশে একই ডেলিভারি চার্জ। নির্বাচিত শাড়িতে ফ্রি ডেলিভারি আছে। ফ্রি না হলে ডেলিভারি চার্জ কত নেওয়া হবে সেটা অর্ডারের পর আপনাকে জানানো হবে, আর “আমার অর্ডার” পেজেও লাইভ দেখতে পাবেন।</p></details><details><summary>💳 পেমেন্ট কীভাবে করব?</summary><p>ক্যাশ অন ডেলিভারিতে পণ্য হাতে পেয়ে টাকা দিতে পারবেন। অথবা অর্ডার ফর্মে bKash বেছে নিলে দেখানো নম্বরে টাকা পাঠিয়ে Transaction ID দিন।</p></details><details><summary>❌ অর্ডার করে বাতিল করা যাবে?</summary><p>অর্ডার কনফার্ম হওয়ার আগে “📦 আমার অর্ডার” থেকে নিজেই বাতিল করতে পারবেন। কনফার্মের পর বাতিল করতে চাইলে WhatsApp-এ জানান।</p></details><details><summary>🔍 অর্ডারের অবস্থা কীভাবে দেখব?</summary><p>উপরের “📦 আমার অর্ডার” চাপুন, অর্ডারের সময় দেওয়া ফোন নম্বর লিখুন। অর্ডারের অবস্থা, ডেলিভারি চার্জ ও মোট টাকা নিজে থেকেই আপডেট হয়ে দেখাবে।</p></details><div class="faq-more">আরও কিছু জানার থাকলে নিচের WhatsApp বা ফেসবুক বাটনে মেসেজ করুন।</div></div>
   </section>
 
   <section>
@@ -1119,6 +1174,11 @@
       <a id="successWa" class="whatsapp-order-btn wa-order wa-full" style="margin:0 0 8px;" href="#" target="_blank" rel="noopener"><span class="wa-ic"><svg><use href="#ic-wa"/></svg></span><span class="wa-txt">WhatsApp-এ অর্ডার আইডি পাঠান</span></a>
       <button class="btn" style="width:100%;" onclick="document.querySelector('#successDialog').close()">ঠিক আছে</button>
     </div>
+  </dialog>
+
+  <dialog id="quickDialog">
+    <button class="close-modal-btn" onclick="document.querySelector('#quickDialog').close()" aria-label="বন্ধ করুন">&times;</button>
+    <div id="quickBody"></div>
   </dialog>
 
   <dialog id="trackDialog">
@@ -1636,7 +1696,7 @@
             <img class="product-main-image" id="mainimg-${id}" src="${esc(images[sel] || images[0] || "")}" alt="${esc(p.name)}" loading="lazy">
           </div>
           <div class="card-body">
-            <button type="button" class="card-view-btn" ${sold ? 'data-sold="1"' : ""}>${sold ? "স্টক শেষ" : `<svg class="ord-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18 2 7l5.2 4.6L12 4l4.8 7.6L22 7l-1 11z" fill="#f3e5ad" stroke="#d4af37" stroke-width="1" stroke-linejoin="round"/><rect x="3" y="19" width="18" height="2.4" rx="1" fill="#d4af37"/><circle cx="2" cy="6.5" r="1.4" fill="#d4af37"/><circle cx="12" cy="3.6" r="1.5" fill="#d4af37"/><circle cx="22" cy="6.5" r="1.4" fill="#d4af37"/><circle cx="12" cy="14.5" r="1.7" fill="#c8102e"/></svg> অর্ডার করুন`}</button>
+            <button type="button" class="card-view-btn" ${sold ? 'data-sold="1"' : `onclick="event.stopPropagation();openQuick('${id}')"`}>${sold ? "স্টক শেষ" : `<svg class="ord-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18 2 7l5.2 4.6L12 4l4.8 7.6L22 7l-1 11z" fill="#f3e5ad" stroke="#d4af37" stroke-width="1" stroke-linejoin="round"/><rect x="3" y="19" width="18" height="2.4" rx="1" fill="#d4af37"/><circle cx="2" cy="6.5" r="1.4" fill="#d4af37"/><circle cx="12" cy="3.6" r="1.5" fill="#d4af37"/><circle cx="22" cy="6.5" r="1.4" fill="#d4af37"/><circle cx="12" cy="14.5" r="1.7" fill="#c8102e"/></svg> অর্ডার করুন`}</button>
             ${sold ? "" : `<button type="button" class="card-cart-btn" onclick="event.stopPropagation();cardAdd('${id}')">🛒 কার্টে যোগ করুন</button>`}
           </div>
         </article>`;
@@ -1731,6 +1791,74 @@
     function cardAdd(id, buy) {
       if (buy) { startBuyNow(id, cardColor(id), 1); return; }
       if (addToCart(id, cardColor(id), 1)) toast("🛒 কার্টে যোগ হয়েছে");
+    }
+
+    // ---------- কার্ড থেকে সরাসরি অর্ডার (ডিটেইল পেজ না খুলে) ----------
+    let qo = { id: null, q: {} };
+    function openQuick(id) {
+      const p = getProduct(id);
+      if (!p) return;
+      qo = { id: p.id, q: {} };
+      const colors = productColors(p), list = colors.length ? colors : [NO_COLOR];
+      const first = colors.length ? (colors[Math.min(cardSel[p.id] || 0, colors.length - 1)] || colors[0]) : NO_COLOR;
+      const start = colorMax(p, first) > 0 ? first : (list.find(c => colorMax(p, c) > 0) || first);
+      if (colorMax(p, start) > 0) qo.q[start] = 1;
+      renderQuick();
+      const d = $("#quickDialog");
+      if (!d.open) d.showModal();
+      d.scrollTop = 0;
+    }
+    function renderQuick() {
+      const p = getProduct(qo.id);
+      if (!p) return;
+      const images = productImages(p), colors = productColors(p), clist = colors.length ? colors : [NO_COLOR];
+      const totalPcs = clist.reduce((a, c) => a + (qo.q[c] || 0), 0);
+      const soldAll = isSoldOut(p) || clist.every(c => colorMax(p, c) <= 0);
+      const firstSel = clist.findIndex(c => (qo.q[c] || 0) > 0);
+      const headImg = images[firstSel >= 0 ? firstSel : 0] || images[0] || "";
+      $("#quickBody").innerHTML = `<div class="qo-head">${headImg ? `<img src="${esc(headImg)}" alt="${esc(p.name)}">` : ""}<div><h3>${esc(p.name)}</h3>${priceHtml(p)}</div></div>
+        <div class="ord-box">
+          <div class="ob-title">🎨 রং ও 🧮 পিস বাছুন</div>
+          <div class="small" style="margin-bottom:4px;">যে রংয়ের যতটি লাগবে, সেই রংয়ের পাশে + চাপুন</div>
+          ${clist.map((c, i) => { const q = qo.q[c] || 0, out = colorMax(p, c) <= 0; return `<div class="cr ${q > 0 ? "on" : ""} ${out ? "out" : ""}">
+            ${colors.length && images[i] ? `<img src="${esc(images[i])}" alt="" onclick="openZoomModal(this.src)">` : ""}
+            <div class="cr-t"><b>${colors.length ? colorDot(c) + esc(c) : "পিস সংখ্যা"}</b><small>${out ? "স্টক শেষ" : stockShort(p, c)}</small></div>
+            <div class="qty-box"><button type="button" ${out ? "disabled" : ""} onclick="qoQty(${i},-1)" aria-label="কমান">−</button><b>${taka(q)}</b><button type="button" ${out ? "disabled" : ""} onclick="qoQty(${i},1)" aria-label="বাড়ান">+</button></div>
+          </div>`; }).join("")}
+          <div class="ord-total"><span>মোট ${taka(totalPcs)} পিস × ${taka(p.price)}/-</span><b>${taka(Number(p.price) * totalPcs)}/-</b></div>
+        </div>
+        <div class="qo-actions">
+          <button type="button" class="qo-cart" ${soldAll ? "disabled" : ""} onclick="qoAdd(false)">🛒 কার্টে রাখুন</button>
+          <button type="button" class="qo-buy" ${soldAll ? "disabled" : ""} onclick="qoAdd(true)">${soldAll ? "স্টক শেষ" : "অর্ডার করুন"}</button>
+        </div>`;
+    }
+    function qoQty(i, d) {
+      const p = getProduct(qo.id); if (!p) return;
+      const colors = productColors(p), list = colors.length ? colors : [NO_COLOR], c = list[i];
+      if (c === undefined) return;
+      const cur = qo.q[c] || 0, next = cur + d;
+      if (next < 0) return;
+      if (d > 0) {
+        if (next > colorMax(p, c)) { toast(`এই রংয়ের সর্বোচ্চ ${taka(colorMax(p, c))} টি নেওয়া যাবে`); return; }
+        const total = Object.values(qo.q).reduce((a, b) => a + b, 0);
+        if (total + d > maxQty(p)) { toast(`এই পণ্য সর্বমোট সর্বোচ্চ ${taka(maxQty(p))} টি নেওয়া যাবে`); return; }
+      }
+      qo.q[c] = next; renderQuick();
+    }
+    function qoItems() {
+      const p = getProduct(qo.id); if (!p) return [];
+      const colors = productColors(p), list = colors.length ? colors : [NO_COLOR];
+      return list.map(c => ({ color: c, qty: qo.q[c] || 0 })).filter(x => x.qty > 0);
+    }
+    function qoAdd(buy) {
+      const p = getProduct(qo.id); if (!p) return;
+      const items = qoItems();
+      if (!items.length) { toast("কমপক্ষে ১ পিস বাছুন — রংয়ের পাশে + চাপুন"); return; }
+      if (buy) { startBuyNowMulti(p.id, items, () => $("#quickDialog").close()); return; }
+      let n = 0;
+      for (const it of items) { if (addToCart(p.id, it.color, it.qty)) { n += it.qty; qo.q[it.color] = 0; } else break; }
+      if (n === items.reduce((a, x) => a + x.qty, 0)) { $("#quickDialog").close(); toast(`🛒 ${taka(n)} পিস কার্টে যোগ হয়েছে`); }
+      else if (n) renderQuick();
     }
 
     // ---------- বিস্তারিত পেজ ----------
@@ -3298,9 +3426,10 @@
         const wa = o.phone ? `https://wa.me/880${String(o.phone).replace(/^0/, "")}` : "";
         const delTxt = (o.delivery_charge === null || o.delivery_charge === undefined) ? "<b style='color:#b45309;'>এখনো নির্ধারিত নয় — কাস্টমারকে জানিয়ে নিচে বসান</b>" : (Number(o.delivery_charge) ? taka(o.delivery_charge) + "/-" : "ফ্রি");
         const isCx = /বাতিল|cancel/i.test(o.status || "");
+        const isFreeDel = o.delivery_charge !== null && o.delivery_charge !== undefined && o.delivery_charge !== "" && Number(o.delivery_charge) === 0;
         const base = (() => { const sb = Number(o.subtotal); if (sb > 0) return sb - Number(o.discount || 0); const sm = parseItems(o.items).reduce((t, i) => t + (Number(i.subtotal) || (Number(i.price) || 0) * (Number(i.qty) || 1)), 0); if (sm > 0) return sm - Number(o.discount || 0); return (Number(o.total) || 0) - (Number(o.delivery_charge) || 0); })();
         const extra = `<div class="small" style="margin-top:4px;">${o.subtotal ? `শাড়ির দাম: ${taka(o.subtotal)}/-${Number(o.discount) > 0 ? ` − কুপন ${esc(o.coupon_code || "")}: ${taka(o.discount)}/-` : ""} + ` : ""}ডেলিভারি: ${delTxt}${o.payment_method ? " | " + (o.payment_method === "bkash" ? "bKash" : "COD") : ""}
-          ${isCx ? "" : `<div style="display:flex;gap:6px;align-items:center;margin-top:6px;flex-wrap:wrap;"><input data-del-for="${esc(o.id)}" type="number" min="0" value="${(o.delivery_charge === null || o.delivery_charge === undefined) ? "" : Number(o.delivery_charge)}" placeholder="ডেলিভারি চার্জ" style="margin:0;padding:6px;width:130px;"><button type="button" class="edit-btn" style="margin:0;" onclick="setOrderDelivery('${esc(o.id)}', ${base || 0})">চার্জ বসান / বদলান</button><button type="button" class="edit-btn" style="margin:0;background:#0f766e;" onclick="setOrderDelivery('${esc(o.id)}', ${base || 0}, 0)">ফ্রি করুন</button></div><div class="small" style="color:#64748b;margin-top:3px;">বসালেই কাস্টমার "আমার অর্ডার" এ লাইভ দেখতে পাবে।</div>`}</div>`;
+          ${isFreeDel ? `<div class="small" style="margin-top:4px;color:#059669;font-weight:700;">🚚 ফ্রি ডেলিভারি অর্ডার — চার্জ বসানোর দরকার নেই</div>` : isCx ? "" : `<div style="display:flex;gap:6px;align-items:center;margin-top:6px;flex-wrap:wrap;"><input data-del-for="${esc(o.id)}" type="number" min="0" value="${(o.delivery_charge === null || o.delivery_charge === undefined) ? "" : Number(o.delivery_charge)}" placeholder="ডেলিভারি চার্জ" style="margin:0;padding:6px;width:130px;"><button type="button" class="edit-btn" style="margin:0;" onclick="setOrderDelivery('${esc(o.id)}', ${base || 0})">চার্জ বসান / বদলান</button><button type="button" class="edit-btn" style="margin:0;background:#0f766e;" onclick="setOrderDelivery('${esc(o.id)}', ${base || 0}, 0)">ফ্রি করুন</button></div><div class="small" style="color:#64748b;margin-top:3px;">বসালেই কাস্টমার "আমার অর্ডার" এ লাইভ দেখতে পাবে।</div>`}</div>`;
                 return `<div class="admin-card" style="border-left:5px solid var(--navy);">
           <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
             <h4 style="margin:0;color:var(--navy);">📦 কাস্টমার: ${esc(o.customer_name || "নাম নেই")}</h4>
