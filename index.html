@@ -1198,6 +1198,12 @@
           <input id="orderPhone" name="phone" type="tel" placeholder="01XXXXXXXXX" required pattern="01[0-9]{9}" title="১১ সংখ্যার মোবাইল নম্বর দিন (যেমন: 01XXXXXXXXX)" autocomplete="tel"></div>
         </div>
 
+        <div id="refCheckoutBox" style="margin:2px 0 10px;">
+          <label class="field-label" for="refOrderCode">🎁 রেফারেল কোড (থাকলে ছাড় পাবেন)</label>
+          <div class="row"><input id="refOrderCode" placeholder="যেমন: SBAB12CD" maxlength="12" autocomplete="off" style="margin:0;text-transform:uppercase;"><button type="button" class="btn order-btn" style="padding:10px 14px;font-size:14px;" onclick="refCheckCode()">প্রয়োগ</button></div>
+          <div id="refOrderMsg" class="small" style="margin-top:4px;"></div>
+        </div>
+
         <label class="field-label" for="orderAddress">সম্পূর্ণ ঠিকানা</label>
         <textarea id="orderAddress" name="address" placeholder="গ্রাম/মহল্লা, থানা, জেলাসহ সম্পূর্ণ ঠিকানা লিখুন" required minlength="5" maxlength="500" autocomplete="street-address"></textarea>
 
@@ -2485,7 +2491,8 @@
       const free = (n > 0 || (checkoutMode === "buy" && !!buyPid)) && !!freeBy;
       let charge = 0, unknown = false;
       if (n && !free) { if (base === null) unknown = true; else charge = base; }
-      return { subtotal, discount, charge, total: net + charge, free, unknown, net, freeBy, nearest };
+      const refDisc = Math.min(window.refDiscAmt || 0, Math.max(0, net + charge));
+      return { subtotal, discount, charge, total: net + charge - refDisc, refDisc, free, unknown, net, freeBy, nearest };
     }
 
     function renderCartSummary() {
@@ -2507,6 +2514,7 @@
         <div class="sum-row"><span>শাড়ির দাম</span><b>${taka(t.subtotal)}/-</b></div>
         ${t.discount > 0 ? `<div class="sum-row" style="color:#047857;"><span>🎟️ কুপন (${esc(appliedCoupon.code)} — ${couponLabel(appliedCoupon)})</span><b>− ${taka(t.discount)}/-</b></div>` : ""}
         ${delRow}
+        ${t.refDisc > 0 ? `<div class="sum-row" style="color:#047857;"><span>🎁 রেফারেল ছাড়</span><b>− ${taka(t.refDisc)}/-</b></div>` : ""}
         <div class="sum-row sum-total"><span>${t.unknown ? "সর্বমোট (ডেলিভারি চার্জ ছাড়া)" : "সর্বমোট"}</span><span>${taka(t.total)}/-</span></div>
         ${t.unknown ? `<div class="need-note">ডেলিভারি চার্জ অর্ডার কনফার্মের সময় আপনাকে জানানো হবে।</div>` : ""}
         <div class="small" style="margin-top:4px;font-size:11.5px;">ℹ️ চূড়ান্ত দাম ও ডেলিভারি চার্জ অর্ডারের সময় নিশ্চিত হবে।</div>`;
@@ -2583,7 +2591,7 @@
         const { error: insErr } = await db.from("orders").insert([{
           id: orderId, customer_name: name, phone, address,
           items: lines.map(({ i, p }, k) => ({ id: p.id, name: p.name, color: i.color, price: Number(p.price), qty: i.qty, subtotal: Number(p.price) * i.qty, image: items[k].image })),
-          total: t.total, status: "নতুন অর্ডার (Pending)"
+          total: t.total + (t.refDisc || 0), status: "নতুন অর্ডার (Pending)"
         }]);
         if (insErr) { done(); msg.className = "small msg-err"; msg.textContent = (isPermErr(insErr) ? "অর্ডার সিস্টেমের অনুমতি ঠিক করা হয়নি (অ্যাডমিন supabase-upgrade-3.sql চালান)। " : "অর্ডার জমা হয়নি: " + errText(insErr) + " ") + "এখনকার জন্য WhatsApp-এ অর্ডার করুন।"; return; }
         result = { id: orderId, total: t.total, delivery_charge: t.unknown ? null : t.charge };
@@ -2596,6 +2604,7 @@
       }
 
       done();
+      if (window.refAfterOrder) { try { result = (await window.refAfterOrder(result, phone)) || result; } catch {} }
       try { localStorage.setItem("sari_customer", JSON.stringify({ name, phone, address: addr, zone })); } catch {}
       cart = []; saveCart();
       $("#cartDialog").close();
@@ -3916,18 +3925,18 @@
 
   // ---------- নিয়ম ও শর্ত ----------
   function termsHtml(d) {
-    const b = bn((d && d.bonus_amount) || 20);
-    const per = d && d.first_order_only ? "রেফার করা বন্ধুর প্রথম ডেলিভারি হওয়া অর্ডারের জন্য" : "রেফার করা বন্ধুর প্রতিটি ডেলিভারি হওয়া অর্ডারের জন্য";
+    const b = bn((d && d.bonus_amount) || 20), fd = bn((d && d.friend_discount) || 20);
+    const per = d && d.first_order_only ? "সেই ফোন নম্বরের প্রথম ডেলিভারি হওয়া অর্ডারের জন্য" : "প্রতিটি ডেলিভারি হওয়া অর্ডারের জন্য";
     return `<ol class="ref-terms">
-      <li>আপনার রেফারেল কোড দিয়ে বন্ধু <b>নতুন অ্যাকাউন্ট খুলতে</b> হবে এবং অর্ডারের সময় <b>অ্যাকাউন্টের একই মোবাইল নম্বর</b> ব্যবহার করতে হবে।</li>
-      <li>শুধু অ্যাকাউন্ট খুললে বোনাস পাওয়া যাবে না। অর্ডার <b>“ডেলিভারি সম্পন্ন”</b> হলে তবেই ${per} <b>${b} টাকা</b> বোনাস যোগ হবে।</li>
+      <li>অর্ডার করার সময় ফর্মে আপনার <b>রেফারেল কোড</b> লিখলে ঐ অর্ডারে <b>${fd} টাকা ছাড়</b> পাওয়া যাবে। কোড না লিখলে ঐ অর্ডারে ছাড় ও বোনাস কোনোটাই নেই। বন্ধুর অ্যাকাউন্ট খুলতে হবে না।</li>
+      <li>কোড লেখা অর্ডার <b>“ডেলিভারি সম্পন্ন”</b> হলে তবেই ${per} আপনি <b>${b} টাকা</b> বোনাস পাবেন। শুধু কোড ব্যবহার করলে বা অ্যাকাউন্ট খুললে বোনাস হয় না।</li>
       <li>অর্ডার কনফার্ম বা কুরিয়ারে থাকা অবস্থায় বোনাস যোগ হয় না। অর্ডার <b>বাতিল</b> হলে বা ডেলিভারি থেকে সরিয়ে নিলে বোনাস পাওয়া যাবে না (যোগ হয়ে থাকলে কেটে নেওয়া হবে)।</li>
-      <li>একই অর্ডারের জন্য বোনাস <b>একবারই</b> পাওয়া যাবে।</li>
-      <li>এক নম্বর থেকে <b>যত খুশি বন্ধুকে বারবার রেফার</b> করা যাবে — কোনো সীমা নেই।</li>
-      <li>অ্যাকাউন্ট খোলার <b>আগের</b> অর্ডারে এবং নিজের কোডে নিজের অ্যাকাউন্ট/অর্ডারে বোনাস হবে না।</li>
+      <li>একই অর্ডারের জন্য ছাড় ও বোনাস <b>একবারই</b> পাওয়া যাবে।</li>
+      <li>এক নম্বর থেকে <b>যত খুশি বন্ধুকে বারবার রেফার</b> করা যাবে এবং একই ফোন নম্বর থেকে <b>বারবার অর্ডার</b> করে প্রতিবার কোড লিখলে প্রতিবারই বোনাস পাওয়া যাবে — কোনো সীমা নেই।</li>
+      <li>নিজের কোড নিজের অর্ডারেও ব্যবহার করা যাবে।</li>
       <li><b>টাকা তোলার নিয়ম:</b> ব্যালেন্স থেকে <b>২০ বা ৫০ টাকা</b> হলে <b>মোবাইল রিচার্জ</b> নেওয়া যাবে। <b>১০০ টাকা বা তার বেশি</b> হলে <b>বিকাশে</b> (পার্সোনাল নম্বরে) নেওয়া যাবে।</li>
       <li>টাকা তোলার অনুরোধ অ্যাডমিন যাচাই করে রিচার্জ/বিকাশে পাঠাবেন। অনুরোধ করা টাকা ব্যালেন্স থেকে আলাদা করে রাখা হয়।</li>
-      <li>ভুয়া অ্যাকাউন্ট বা ভুয়া অর্ডার ধরা পড়লে বোনাস বাতিল ও অ্যাকাউন্ট বন্ধ করার অধিকার শাড়ি বিলাশ সংরক্ষণ করে।</li>
+      <li>ভুয়া অর্ডার বা অপব্যবহার ধরা পড়লে বোনাস বাতিল ও অ্যাকাউন্ট বন্ধ করার অধিকার শাড়ি বিলাশ সংরক্ষণ করে।</li>
     </ol>`;
   }
 
@@ -3941,7 +3950,6 @@
 
   function renderAuth(m, msg) {
     mode = m;
-    let pre = ""; try { pre = localStorage.getItem("sari_ref_pending") || ""; } catch {}
     const su = m === "signup";
     R("#refBody").innerHTML = `
       <h2 class="ref-h">🎁 রেফার করুন, বোনাস জিতুন</h2>
@@ -3954,8 +3962,7 @@
         ${su ? `<label for="refName">আপনার নাম</label><input id="refName" autocomplete="name" placeholder="যেমন: রহিমা বেগম" maxlength="60">` : ""}
         <label for="refPhone">মোবাইল নম্বর</label><input id="refPhone" type="tel" inputmode="numeric" autocomplete="username" placeholder="01XXXXXXXXX" maxlength="14">
         <label for="refPass">পাসওয়ার্ড${su ? " (কমপক্ষে ৬ অক্ষর)" : ""}</label><input id="refPass" type="password" autocomplete="${su ? "new-password" : "current-password"}" placeholder="••••••">
-        ${su ? `<label for="refCode">রেফারেল কোড (থাকলে দিন, না থাকলে ফাঁকা রাখুন)</label><input id="refCode" placeholder="যেমন: SBAB12CD" maxlength="12" style="text-transform:uppercase" value="${e(pre)}">
-        <div class="small" style="margin-top:6px;">ℹ️ বন্ধুর কোড দিলে সে বোনাস পাবে। অর্ডারের সময় এই একই মোবাইল নম্বর দিতে হবে।</div>` : ""}
+        ${su ? `<div class="small" style="margin-top:6px;">ℹ️ অ্যাকাউন্ট শুধু তাদের জন্য যারা অন্যদের রেফার করে বোনাস নিতে চান। শাড়ি কিনতে অ্যাকাউন্ট লাগে না।</div>` : ""}
         <button type="submit" class="ref-go" id="refAuthBtn">${su ? "সাইন আপ করুন" : "লগইন করুন"}</button>
         <div class="ref-msg ${msg ? "err" : ""}" id="refAuthMsg">${e(msg || "")}</div>
       </form>
@@ -3976,7 +3983,7 @@
     if (su) {
       const name = R("#refName").value.trim();
       if (name.length < 2) { btn.disabled = false; say("refAuthMsg", "আপনার নাম লিখুন", "err"); return; }
-      r = await db.rpc("ref_signup", { p_name: name, p_phone: phone, p_password: pass, p_code: R("#refCode").value.trim().toUpperCase() || null });
+      r = await db.rpc("ref_signup", { p_name: name, p_phone: phone, p_password: pass, p_code: null });
     } else {
       r = await db.rpc("ref_login", { p_phone: phone, p_password: pass });
     }
@@ -4011,9 +4018,9 @@
 
   function renderAccount(d) {
     const link = location.origin + location.pathname + "?ref=" + d.ref_code;
-    const msg = `শাড়ি বিলাশ থেকে সুন্দর শাড়ি কিনুন! অ্যাকাউন্ট খোলার সময় আমার রেফারেল কোড ব্যবহার করুন: ${d.ref_code}\n${link}`;
+    const msg = `শাড়ি বিলাশ থেকে সুন্দর শাড়ি কিনুন! অর্ডারের সময় আমার রেফারেল কোড দিলে ${bn(d.friend_discount || 20)} টাকা ছাড় পাবেন: ${d.ref_code}\n${link}`;
     const refs = (d.referrals || []).map(r => `<div class="ref-row"><div><b>${e(r.name)}</b><small>${e(r.phone)} · ${dt(r.joined)}</small></div>
-      <div style="text-align:right;">${r.delivered_orders > 0 ? `<span class="ref-pill ok">✅ সফল · +${bn(r.bonus)}/-</span>` : `<span class="ref-pill wait">⏳ ডেলিভারির অপেক্ষায়</span>`}</div></div>`).join("");
+      <div style="text-align:right;"><small>কোড দিয়ে ${bn(r.orders_with_code || 0)}টি অর্ডার</small>${r.delivered_orders > 0 ? `<span class="ref-pill ok">✅ ${bn(r.delivered_orders)}টি ডেলিভারি · +${bn(r.bonus)}/-</span>` : `<span class="ref-pill wait">⏳ ডেলিভারির অপেক্ষায়</span>`}</div></div>`).join("");
     const wds = (d.withdrawals || []).map(w => { const l = wdLabel[w.status] || [w.status, "wait"]; return `<div class="ref-row"><div><b>${bn(w.amount)}/-</b> · ${w.method === "bkash" ? "বিকাশ" : "মোবাইল রিচার্জ"}<small>${e(w.number)} · ${dt(w.created_at)}${w.note ? " · " + e(w.note) : ""}</small></div><span class="ref-pill ${l[1]}">${l[0]}</span></div>`; }).join("");
     R("#refBody").innerHTML = `
       <h2 class="ref-h">🎁 আমার রেফারেল</h2>
@@ -4114,13 +4121,14 @@
     if (error) { box.innerHTML = `<div class="admin-card"><b style="color:#b91c1c;">${e(rpcErr(error))}</b></div>`; return; }
     const s = data.summary, st = data.settings;
     const wd = (data.withdrawals || []).map(w => { const l = wdLabel[w.status] || [w.status, "wait"]; return `<tr>
-      <td>#${w.id}<br><small>${dt(w.created_at)}</small></td><td><b>${e(w.name)}</b><br>${e(w.phone)}</td>
+      <td>#${w.id}<br><small>${dt(w.created_at)}</small></td><td><b>${e(w.name)}</b><br>${e(w.phone)}<br><small>অর্জিত বোনাস: <b>${bn(w.bonus_earned)}/-</b><br>আগে পরিশোধ: ${bn(w.paid_before)}/-</small><br>${w.available >= w.amount ? `<span class="ref-pill ok">✅ ব্যালেন্স আছে: ${bn(w.available)}/-</span>` : `<span class="ref-pill bad">⚠️ ব্যালেন্স কম: ${bn(Math.max(0, w.available))}/-</span>`}</td>
       <td><b>${bn(w.amount)}/-</b><br>${w.method === "bkash" ? "💸 বিকাশ" : "📱 রিচার্জ"}</td><td><b>${e(w.number)}</b></td>
       <td><span class="ref-pill ${l[1]}">${l[0]}</span>${w.note ? `<br><small>${e(w.note)}</small>` : ""}</td>
       <td>${w.status === "pending" ? `<button class="btn" style="padding:5px 10px;font-size:12.5px;" onclick="adminRefWd(${w.id},'paid')">✅ পরিশোধ হয়েছে</button> <button class="danger" style="padding:5px 10px;font-size:12.5px;" onclick="adminRefWd(${w.id},'rejected')">বাতিল</button>` : `<button class="btn" style="padding:4px 9px;font-size:12px;background:#e2e8f0;box-shadow:none;" onclick="adminRefWd(${w.id},'pending')">↩️ অপেক্ষমাণে ফেরান</button>`}</td></tr>`; }).join("");
     const bo = (data.bonuses || []).map(b => { const l = bStat[b.status] || [b.status, "wait"]; return `<tr>
       <td>${dt(b.created_at)}</td><td><b>${e(b.order_id)}</b></td><td>${e(b.referrer_name)}<br><small>${e(b.referrer_phone)}</small></td>
       <td>${e(b.referred_name)}<br><small>${e(b.referred_phone)}</small></td><td><b>${bn(b.amount)}/-</b></td><td><span class="ref-pill ${l[1]}">${l[0]}</span></td></tr>`; }).join("");
+    const fr = (data.friends || []).map(f => `<tr><td>${dt(f.linked_at)}</td><td><b>${e(f.name || "—")}</b><br>${e(f.phone)}</td><td><b>${e(f.code)}</b><br>${e(f.referrer_name)} <small>${e(f.referrer_phone)}</small></td><td>${e(f.first_order_id || "—")}</td><td>${bn(f.discount)}/-</td><td>${f.bonus_status === "credited" ? `<span class="ref-pill ok">যোগ হয়েছে</span>` : f.bonus_status === "reversed" ? `<span class="ref-pill bad">বাতিল</span>` : `<span class="ref-pill wait">ডেলিভারির অপেক্ষায়</span>`}</td></tr>`).join("");
     const cu = (data.customers || []).map(c => `<tr>
       <td><b>${e(c.name)}</b><br>${e(c.phone)}<br><small>${dt(c.created_at)}</small></td><td><b>${e(c.ref_code)}</b></td>
       <td>${c.referred_by ? e(c.referred_by) : "—"}</td><td>${bn(c.total_referrals)} / <b>${bn(c.successful_referrals)}</b></td>
@@ -4132,6 +4140,7 @@
           <div class="ref-stat"><b>${bn(s.referrals)}</b><span>মোট রেফারেল</span></div>
           <div class="ref-stat"><b>${bn(s.successful_referrals)}</b><span>সফল রেফারেল</span></div>
           <div class="ref-stat"><b>${bn(s.bonus_total)}/-</b><span>মোট বোনাস দেওয়া হয়েছে</span></div>
+          <div class="ref-stat"><b>${bn(s.discount_total)}/-</b><span>বন্ধুদের ছাড় দেওয়া হয়েছে</span></div>
           <div class="ref-stat"><b>${bn(s.paid_total)}/-</b><span>পরিশোধ করা হয়েছে</span></div>
           <div class="ref-stat"><b style="color:#b45309;">${bn(s.pending_total)}/-</b><span>অপেক্ষমাণ (${bn(s.pending_count)}টি অনুরোধ)</span></div>
         </div>
@@ -4144,10 +4153,13 @@
           <label style="display:flex;gap:6px;align-items:center;font-weight:700;cursor:pointer;"><input type="checkbox" id="admRefFirst" ${st.first_order_only ? "checked" : ""} style="width:18px;height:18px;margin:0;"> শুধু বন্ধুর প্রথম ডেলিভারিতে বোনাস</label>
           <button class="btn" style="padding:6px 14px;font-size:13.5px;" onclick="adminRefSave()">সেভ</button>
         </div>
-        <div class="small" style="margin-top:6px;">ডিফল্ট: ২০ টাকা, রেফার করা কাস্টমারের প্রতিটি ডেলিভারি হওয়া অর্ডারে একবার করে। ডেলিভারি সম্পন্ন করলে বোনাস নিজে নিজেই যোগ হয়।</div>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:8px;"><label style="font-weight:700;">প্রতি অর্ডারে ছাড় (টাকা):</label><input id="admRefDisc" type="number" min="0" value="${st.friend_discount ?? 20}" style="width:100px;margin:0;"></div>
+        <div class="small" style="margin-top:6px;">ডিফল্ট: ২০ টাকা, কোড ব্যবহারকারী বন্ধুর প্রতিটি ডেলিভারি হওয়া অর্ডারে একবার করে। ডেলিভারি সম্পন্ন করলে বোনাস নিজে নিজেই যোগ হয়।</div>
       </div>
       <div class="admin-card"><h3 style="margin:0 0 8px;">💸 টাকা তোলার অনুরোধ (${bn((data.withdrawals || []).length)})</h3>
         <div class="ref-tbl-wrap"><table class="ref-tbl"><thead><tr><th>আইডি</th><th>কাস্টমার</th><th>পরিমাণ</th><th>পাঠানোর নম্বর</th><th>অবস্থা</th><th>অ্যাকশন</th></tr></thead><tbody>${wd || `<tr><td colspan="6">কোনো অনুরোধ নেই</td></tr>`}</tbody></table></div></div>
+      <div class="admin-card"><h3 style="margin:0 0 8px;">🤝 কোড ব্যবহার করা অর্ডার (${bn((data.friends || []).length)})</h3>
+        <div class="ref-tbl-wrap"><table class="ref-tbl"><thead><tr><th>তারিখ</th><th>ক্রেতা</th><th>কোড / রেফারকারী</th><th>অর্ডার</th><th>ছাড়</th><th>বোনাস</th></tr></thead><tbody>${fr || `<tr><td colspan="6">এখনো কেউ কোড ব্যবহার করেনি</td></tr>`}</tbody></table></div></div>
       <div class="admin-card"><h3 style="margin:0 0 8px;">🧾 বোনাসের তালিকা (সর্বশেষ ৫০০)</h3>
         <div class="ref-tbl-wrap"><table class="ref-tbl"><thead><tr><th>তারিখ</th><th>অর্ডার</th><th>রেফারকারী</th><th>রেফার করা কাস্টমার</th><th>বোনাস</th><th>অবস্থা</th></tr></thead><tbody>${bo || `<tr><td colspan="6">এখনো কোনো বোনাস নেই</td></tr>`}</tbody></table></div></div>
       <div class="admin-card"><h3 style="margin:0 0 8px;">👥 সব অ্যাকাউন্ট ও রেফারেল (${bn((data.customers || []).length)})</h3>
@@ -4165,18 +4177,57 @@
 
   window.adminRefSave = async function () {
     const amt = parseInt(R("#admRefAmt").value, 10), first = R("#admRefFirst").checked;
-    const { error } = await db.rpc("admin_ref_save_settings", { p_amount: amt, p_first_only: first });
+    const { error } = await db.rpc("admin_ref_save_settings", { p_amount: amt, p_first_only: first, p_friend_discount: parseInt(R("#admRefDisc").value, 10) });
     if (error) { alert("সেভ হয়নি: " + rpcErr(error)); return; }
     if (typeof toast === "function") toast("✅ সেটিং সেভ হয়েছে");
   };
 
-  // ---------- রেফারেল লিংক (?ref=CODE) ----------
+  // ---------- অর্ডার ফর্মে রেফারেল কোড ----------
+  window.refDiscAmt = 0;
+  const codeEl = () => R("#refOrderCode");
+  window.refCheckCode = async function () {
+    const code = (codeEl().value || "").trim().toUpperCase(), phone = nd((R("#orderPhone") || {}).value || "");
+    window.refDiscAmt = 0;
+    if (!code) { say("refOrderMsg", ""); if (typeof renderCartSummary === "function") renderCartSummary(); return; }
+    say("refOrderMsg", "যাচাই হচ্ছে...");
+    const { data, error } = await db.rpc("ref_check_order_code", { p_code: code, p_phone: phone });
+    if (error) { say("refOrderMsg", rpcErr(error), "err"); return; }
+    if (!data || !data.ok) { say("refOrderMsg", (data && data.reason) || "কোডটি সঠিক নয়", "err"); }
+    else {
+      window.refDiscAmt = Number(data.discount) || 0;
+      say("refOrderMsg", `✅ কোড ঠিক আছে (${data.name}-এর রেফারেল) — ${bn(window.refDiscAmt)} টাকা ছাড় পাবেন${/^01[3-9]\d{8}$/.test(phone.slice(-11)) ? "" : " (ফোন নম্বর দিলে নিশ্চিত হবে)"}`, "ok");
+    }
+    if (typeof renderCartSummary === "function") renderCartSummary();
+  };
+  const resetDisc = () => { if (window.refDiscAmt) { window.refDiscAmt = 0; say("refOrderMsg", "কোড/নম্বর বদলেছে — আবার “প্রয়োগ” চাপুন"); if (typeof renderCartSummary === "function") renderCartSummary(); } };
+  if (codeEl()) codeEl().addEventListener("input", resetDisc);
+  if (R("#orderPhone")) R("#orderPhone").addEventListener("input", resetDisc);
+
+  window.refAfterOrder = async function (result, phone) {
+    const code = codeEl() ? codeEl().value.trim().toUpperCase() : "";
+    window.refDiscAmt = 0;
+    if (!code || !result || !result.id) return result;
+    const { data, error } = await db.rpc("ref_apply_order", { p_order_id: String(result.id), p_phone: phone, p_code: code });
+    let note, ok = false;
+    if (error) note = "⚠️ রেফারেল ছাড় বসানো যায়নি: " + rpcErr(error);
+    else { ok = true; note = `🎁 রেফারেল ছাড় ${bn(data.discount)}/- যোগ হয়েছে`; result = { ...result, total: data.total }; }
+    setTimeout(() => {
+      const box = R("#successDialog > div"); if (!box) return;
+      let p = R("#refSuccNote"); if (!p) { p = document.createElement("p"); p.id = "refSuccNote"; p.className = "small"; p.style.cssText = "margin-bottom:12px;font-weight:700;"; const ref = R("#successWa"); box.insertBefore(p, ref); }
+      p.style.color = ok ? "#047857" : "#b91c1c"; p.textContent = note;
+    }, 30);
+    return result;
+  };
+
+  // রেফারেল লিংক (?ref=CODE) — কোড সেভ হয়ে অর্ডার ফর্মে নিজে বসবে
+  const prefill = () => { try { const c = localStorage.getItem("sari_ref_pending"); if (c && codeEl() && !codeEl().value) codeEl().value = c; } catch {} };
+  prefill();
+  if (typeof window.openCart === "function") { const _oc = window.openCart; window.openCart = function () { const r = _oc.apply(this, arguments); prefill(); return r; }; }
   try {
     const code = (new URLSearchParams(location.search).get("ref") || "").trim().toUpperCase();
     if (/^[A-Z0-9]{4,12}$/.test(code)) {
-      localStorage.setItem("sari_ref_pending", code);
-      mode = "signup";
-      if (!getTok()) setTimeout(() => { if (typeof toast === "function") toast("🎁 রেফারেল কোড সেভ হয়েছে — সাইন আপ করলে ব্যবহার হবে"); openRef("signup"); }, 1500);
+      localStorage.setItem("sari_ref_pending", code); prefill();
+      setTimeout(() => { if (typeof toast === "function") toast("🎁 রেফারেল কোড সেভ হয়েছে — অর্ডারের সময় ছাড় পাবেন"); }, 1500);
     }
   } catch {}
 })();
