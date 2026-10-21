@@ -348,11 +348,82 @@
     .stock-ctl input{width:90px;margin:0;padding:6px}
     .stock-ctl .edit-btn{margin:0}
     /* অ্যাডমিন */
-    #adminFullPage{display:none;position:fixed;inset:0;background:#f1f5f9;z-index:1000;overflow-y:auto;padding:25px 5%}
+    #adminFullPage{display:none;position:fixed;inset:0;background:#f6f1e6;z-index:1000;overflow-y:auto;padding:0}
     .admin-container{max-width:1000px;margin:0 auto;background:#fff;padding:30px;border-radius:20px;box-shadow:0 10px 40px rgba(0,0,0,.1)}
     .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
     .stat{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:14px;text-align:center}
     .stat b{display:block;font-size:24px;color:var(--navy)}
+
+    /* ===== নতুন অ্যাডমিন ডিজাইন (নেভি + গোল্ড, সাইডবার) ===== */
+    #adminFullPage{--adm-w:250px;scroll-behavior:smooth}
+    .adm-side{position:fixed;left:0;top:0;bottom:0;width:var(--adm-w);background:linear-gradient(180deg,#0a1626 0%,#0f1c2e 55%,#0b1829 100%);color:#e8edf5;display:flex;flex-direction:column;padding:16px 14px 16px;z-index:1002;overflow-y:auto;border-right:1px solid rgba(212,175,55,.18)}
+    .adm-brand{display:flex;align-items:center;gap:10px;padding:4px 6px 16px}
+    .adm-leaf{font-size:30px;line-height:1;background:var(--gold-gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+    .adm-brand b{display:block;font-size:19px;background:var(--gold-gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+    .adm-brand small{display:block;font-size:12px;color:#93a3ba}
+    .adm-nav-list{display:flex;flex-direction:column;gap:5px}
+    .adm-nav{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:transparent;border:0;color:#e8edf5;padding:11px 12px;border-radius:12px;font:inherit;font-size:15.5px;font-weight:600;transition:background .2s,color .2s}
+    .adm-nav svg{width:21px;height:21px;flex:none;opacity:.95}
+    .adm-nav span{flex:1;min-width:0}
+    .adm-nav .adm-chev{font-style:normal;font-size:20px;line-height:1;opacity:0;transition:opacity .2s}
+    .adm-nav:hover{background:rgba(255,255,255,.07)}
+    .adm-nav.on{background:var(--gold-gradient);color:#0f1c2e;box-shadow:0 6px 18px rgba(212,175,55,.28)}
+    .adm-nav.on .adm-chev{opacity:1}
+    .adm-badge{font-style:normal;background:#ef4444;color:#fff;border-radius:99px;min-width:24px;height:24px;padding:0 7px;display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
+    .adm-sep{height:1px;background:rgba(255,255,255,.14);margin:8px 6px}
+    .adm-quote{margin:auto 0 0;padding:22px 6px 10px;text-align:center;color:#d4af37}
+    .adm-quote span{font-size:44px;line-height:1;display:block;opacity:.9}
+    .adm-quote p{margin:8px 0 6px;font-size:15px;line-height:1.7;color:#e1bf6a}
+    .adm-quote em{font-style:normal;font-size:16px}
+    .adm-logout{display:flex;align-items:center;gap:10px;justify-content:center;width:100%;margin-top:10px;background:transparent;border:1px solid rgba(255,255,255,.28);color:#fff;border-radius:12px;padding:11px;font:inherit;font-weight:600;font-size:15px}
+    .adm-logout svg{width:19px;height:19px}
+    .adm-logout:hover{background:rgba(239,68,68,.16);border-color:#ef4444}
+    .adm-main{margin-left:var(--adm-w);padding:22px 26px 40px;min-height:100%}
+    .adm-top{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,#09121f 0%,#0f1c2e 60%,#182e4a 100%);color:#fff;border-radius:20px;padding:20px 24px;margin-bottom:20px;border:1px solid rgba(212,175,55,.3);box-shadow:0 10px 30px rgba(15,28,46,.22);position:relative;overflow:hidden}
+    .adm-top::after{content:"";position:absolute;right:-40px;top:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(212,175,55,.28),transparent 70%);pointer-events:none}
+    .adm-top-txt{flex:1;min-width:0;position:relative;z-index:1}
+    .adm-top h2{margin:0 0 6px;font-size:23px;color:#fff}
+    .adm-top-sub{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    #admTitle{background:rgba(212,175,55,.18);border:1px solid rgba(212,175,55,.55);color:#f3e5ad;border-radius:99px;padding:3px 12px;font-size:13.5px;font-weight:700}
+    .adm-home{position:relative;z-index:1;display:inline-flex;align-items:center;gap:8px;background:var(--gold-gradient);color:#0f1c2e;border:0;border-radius:12px;padding:10px 16px;font-weight:700;font-size:14.5px;box-shadow:0 6px 18px rgba(212,175,55,.3)}
+    .adm-home svg{width:18px;height:18px}
+    .adm-burger{display:none;position:relative;z-index:1;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:10px;width:42px;height:42px;align-items:center;justify-content:center;flex:none}
+    .adm-burger svg{width:22px;height:22px}
+    .adm-overlay{display:none;position:fixed;inset:0;background:rgba(6,12,22,.55);z-index:1001}
+
+    #adminFullPage .admin-card{background:#fff;border:1px solid #eee5d0;border-radius:18px;padding:20px;margin:0 0 16px;box-shadow:0 4px 18px rgba(15,28,46,.06)}
+    #adminFullPage .admin-card>h3{margin:0 0 6px;color:var(--navy);font-size:19px;display:flex;align-items:center;gap:8px}
+    #adminFullPage .admin-card>h3::before{content:"";width:5px;height:20px;border-radius:4px;background:var(--gold-gradient);flex:none}
+    #adminFullPage .admin-card.admin-row{padding:12px 14px}
+    #adminFullPage input,#adminFullPage textarea,#adminFullPage select{background:#fbfcfe;border:1.5px solid #dde4ee;border-radius:12px}
+    #adminFullPage input:focus,#adminFullPage textarea:focus,#adminFullPage select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,175,55,.18);background:#fff}
+    #adminFullPage input[type=checkbox]{width:20px;height:20px;padding:0;accent-color:#b8902f}
+    #adminFullPage .field-label{color:var(--navy)}
+    #adminFullPage .btn{border-radius:12px}
+    #adminFullPage .order-btn{background:linear-gradient(135deg,#0f1c2e,#182e4a);border:1px solid rgba(212,175,55,.45);color:#f3e5ad}
+    #adminFullPage .danger{background:#fff;color:#dc2626;border:1.5px solid #fca5a5;border-radius:10px}
+    #adminFullPage .danger:hover{background:#dc2626;color:#fff}
+    #adminFullPage .stat{background:#fff;border:1px solid #eee5d0;border-top:4px solid #d4af37;border-radius:16px;padding:16px 12px;box-shadow:0 4px 14px rgba(15,28,46,.06)}
+    #adminFullPage .stat b{font-size:26px}
+    #adminFullPage .chip-btn{background:#fff;border:1.5px solid #e6d9b3;color:var(--navy)}
+    #adminFullPage .chip-btn:hover{background:var(--gold-gradient);border-color:var(--gold)}
+    #adminFullPage .dash-table{border:1px solid #eee5d0}
+    #adminFullPage .dash-table th,#adminFullPage .ref-tbl th{background:#0f1c2e;color:#f3e5ad}
+    #adminFullPage .hidden-tag{background:#fee2e2;border-radius:99px;padding:1px 8px}
+
+    @media(max-width:900px){
+      .adm-side{transform:translateX(-102%);transition:transform .28s ease;box-shadow:12px 0 40px rgba(0,0,0,.35)}
+      #adminFullPage.nav-open .adm-side{transform:none}
+      #adminFullPage.nav-open .adm-overlay{display:block}
+      .adm-main{margin-left:0;padding:12px 12px 40px}
+      .adm-burger{display:inline-flex}
+      .adm-top{padding:14px;border-radius:16px;flex-wrap:wrap}
+      .adm-top h2{font-size:18px}
+      .adm-home span{display:none}
+      .adm-home{padding:10px 12px}
+      #adminFullPage .admin-card{padding:14px;border-radius:16px}
+      #adminFullPage .row{flex-direction:column;gap:0}
+    }
 
     /* আমার অর্ডার (ট্র্যাকিং) */
     #trackDialog{padding:20px 16px 22px;background:var(--cream)}
@@ -1123,33 +1194,38 @@
 
   <!-- অ্যাডমিন -->
   <div id="adminFullPage">
-    <div class="admin-container">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px;">
-        <div>
-          <h2 style="color:var(--navy);margin:0 0 6px;">👑 শাড়ি বিলাশ — অ্যাডমিন ড্যাশবোর্ড</h2>
-          <span id="liveStatus" class="live-dot">Live সংযোগ হচ্ছে...</span>
+    <div class="adm-overlay" id="admOverlay" onclick="admToggleNav(false)"></div>
+    <aside class="adm-side" id="admSidebar">
+      <div class="adm-brand"><span class="adm-leaf">❀</span><div><b>শাড়ি বিলাশ</b><small>অ্যাডমিন প্যানেল</small></div></div>
+      <nav class="adm-nav-list">
+<button type="button" class="adm-nav" data-tab="dashboard" onclick="showAdminTab('dashboard');admScrollTop()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>ড্যাশবোর্ড (সারসংক্ষেপ)</span><i class="adm-chev">›</i></button>
+<button type="button" class="adm-nav" data-tab="products" onclick="showAdminTab('products');admScrollTop()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg><span>শাড়ি আপলোড</span><i class="adm-chev">›</i></button>
+<button type="button" class="adm-nav" data-tab="threepiece" onclick="showAdminTab('threepiece');admScrollTop()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3 3 6l2 4 3-1v12h8V9l3 1 2-4-5-3a4 4 0 0 1-8 0z"/></svg><span>থ্রি পিস আপলোড</span><i class="adm-chev">›</i></button>
+<button type="button" class="adm-nav" data-tab="orders" onclick="showAdminTab('orders');admScrollTop()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4h6v3H9zM9 12h6M9 16h6"/></svg><span>অর্ডার দেখুন</span><em class="adm-badge" id="admOrderBadge" style="display:none">0</em><i class="adm-chev">›</i></button>
+<button type="button" class="adm-nav" data-tab="coupons" onclick="showAdminTab('coupons');admScrollTop()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9V6a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v3a3 3 0 0 0 0 6v3a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-3a3 3 0 0 0 0-6z"/><path d="M14 6v12" stroke-dasharray="2 3"/></svg><span>কুপন</span><i class="adm-chev">›</i></button>
+<button type="button" class="adm-nav" data-tab="reviews" onclick="showAdminTab('reviews');admScrollTop()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.8 5.8 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 3 1.1-6.2L3 9.7l6.2-.9z"/></svg><span>রিভিউ</span><i class="adm-chev">›</i></button>
+<button type="button" class="adm-nav" data-tab="banners" onclick="showAdminTab('banners');admScrollTop()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 8"/></svg><span>ব্যানার</span><i class="adm-chev">›</i></button>
+<button type="button" class="adm-nav" data-tab="notify" onclick="showAdminTab('notify');admScrollTop()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/></svg><span>নোটিফিকেশন</span><i class="adm-chev">›</i></button>
+<button type="button" class="adm-nav" data-tab="referrals" onclick="showAdminTab('referrals');admScrollTop()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v8h14v-8M12 8v12M12 8c-3 0-5-1-5-3s3-2 5 3c2-5 5-5 5-3s-2 3-5 3z"/></svg><span>রেফারেল ও বোনাস</span><i class="adm-chev">›</i></button>
+<button type="button" class="adm-nav" data-tab="delivery" onclick="showAdminTab('delivery');admScrollTop()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 6h11v10H2zM13 9h4l4 4v3h-8z"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg><span>ডেলিভারি সেটিং</span><i class="adm-chev">›</i></button>
+      <div class="adm-sep"></div>
+<button type="button" class="adm-nav" data-tab="settings" onclick="showAdminTab('settings');admScrollTop()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span>পাসওয়ার্ড পরিবর্তন</span><i class="adm-chev">›</i></button>
+      <button type="button" class="adm-nav" onclick="window.open('https://saribilash.goatcounter.com','_blank')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><span>ভিজিটর দেখুন</span><i class="adm-chev">↗</i></button>
+      </nav>
+      <div class="adm-quote"><span>❀</span><p>“প্রতিটি শাড়িতে<br>লুকিয়ে আছে<br>এক টুকরো গল্প…”</p><em>♥</em></div>
+      <button type="button" class="adm-logout" onclick="logoutAdmin()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h4M16 8l4 4-4 4M20 12H9"/></svg><span>লগ আউট</span></button>
+    </aside>
+    <main class="adm-main">
+      <header class="adm-top">
+        <button type="button" class="adm-burger" onclick="admToggleNav()" aria-label="মেনু"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+        <div class="adm-top-txt">
+          <h2>👑 শাড়ি বিলাশ — অ্যাডমিন</h2>
+          <div class="adm-top-sub"><span id="admTitle">ড্যাশবোর্ড</span><span id="liveStatus" class="live-dot">Live সংযোগ হচ্ছে...</span></div>
         </div>
-        <div style="display:flex;gap:10px;">
-          <button class="btn" style="padding:8px 16px;font-size:14px;" onclick="goToHomeSite()">🔙 মূল সাইটে ফিরে যান</button>
-          <button class="danger" onclick="logoutAdmin()">লগ আউট</button>
-        </div>
-      </div>
-      <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;">
-        <button class="btn" style="padding:8px 14px;font-size:14px;" onclick="showAdminTab('dashboard')">📊 সারসংক্ষেপ</button>
-        <button class="btn" style="padding:8px 14px;font-size:14px;" onclick="showAdminTab('products')">👘 শাড়ি আপলোড</button>
-        <button class="btn" style="padding:8px 14px;font-size:14px;" onclick="showAdminTab('threepiece')">👗 থ্রি পিস আপলোড</button>
-        <button class="btn" style="padding:8px 14px;font-size:14px;" onclick="showAdminTab('orders')">অর্ডার দেখুন</button>
-        <button class="btn" style="padding:8px 14px;font-size:14px;" onclick="showAdminTab('coupons')">🎟️ কুপন</button>
-        <button class="btn" style="padding:8px 14px;font-size:14px;" onclick="showAdminTab('reviews')">⭐ রিভিউ</button>
-        <button class="btn" style="padding:8px 14px;font-size:14px;" onclick="showAdminTab('banners')">🖼️ ব্যানার</button>
-        <button class="btn" style="padding:8px 14px;font-size:14px;" onclick="showAdminTab('notify')">🔔 নোটিফিকেশন</button>
-        <button class="btn" style="padding:8px 14px;font-size:14px;" onclick="showAdminTab('referrals')">🎁 রেফারেল ও বোনাস</button>
-        <button class="btn" style="padding:8px 14px;font-size:14px;" onclick="showAdminTab('delivery')">🚚 ডেলিভারি সেটিং</button>
-        <button class="btn" style="padding:8px 14px;font-size:14px;" onclick="showAdminTab('settings')">পাসওয়ার্ড পরিবর্তন</button>
-        <button class="btn" style="padding:8px 14px;font-size:14px;" onclick="window.open('https://saribilash.goatcounter.com','_blank')">👁️ ভিজিটর দেখুন</button>
-      </div>
+        <button type="button" class="adm-home" onclick="goToHomeSite()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg><span>মূল সাইটে ফিরে যান</span></button>
+      </header>
       <div id="adminContent"></div>
-    </div>
+    </main>
   </div>
 
   <!-- ছবি জুম -->
@@ -1570,6 +1646,7 @@
       localStorage.setItem("sari_admin_view", "true");
       $("#adminFullPage").style.display = "block";
       showAdminTab(currentAdminTabName);
+      admRefreshBadge();
     }
     function goToHomeSite() {
       localStorage.removeItem("sari_admin_view");
@@ -2753,11 +2830,32 @@
         <a class="trk-more" style="display:block;text-align:center;text-decoration:none;" target="_blank" rel="noopener" href="https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${waTxt}">📞 যোগাযোগ করুন</a>`;
     }
 
+    // ---------- অ্যাডমিন সাইডবার ----------
+    const ADM_TITLES = { dashboard: "ড্যাশবোর্ড (সারসংক্ষেপ)", products: "শাড়ি আপলোড", threepiece: "থ্রি পিস আপলোড", orders: "অর্ডার দেখুন", coupons: "কুপন", reviews: "রিভিউ", banners: "ব্যানার", notify: "নোটিফিকেশন", referrals: "রেফারেল ও বোনাস", delivery: "ডেলিভারি সেটিং", settings: "পাসওয়ার্ড পরিবর্তন" };
+    function admMarkNav(tab) {
+      document.querySelectorAll("#admSidebar .adm-nav[data-tab]").forEach(b => b.classList.toggle("on", b.dataset.tab === tab));
+      const t = $("#admTitle"); if (t) t.textContent = ADM_TITLES[tab] || "";
+      admToggleNav(false);
+    }
+    function admToggleNav(force) {
+      const p = $("#adminFullPage"); if (!p) return;
+      p.classList.toggle("nav-open", typeof force === "boolean" ? force : !p.classList.contains("nav-open"));
+    }
+    function admScrollTop() { try { $("#adminFullPage").scrollTo({ top: 0, behavior: "smooth" }); } catch {} }
+    async function admRefreshBadge() {
+      try {
+        const { count, error } = await db.from("orders").select("id", { count: "exact", head: true }).ilike("status", "%Pending%");
+        const b = $("#admOrderBadge"); if (!b || error) return;
+        b.textContent = taka(count || 0); b.style.display = count ? "inline-flex" : "none";
+      } catch {}
+    }
+
     // ---------- অ্যাডমিন ----------
     async function showAdminTab(tab) {
       if (!isAdmin) return;
       currentAdminTabName = tab;
       localStorage.setItem("sari_admin_active_tab", tab);
+      admMarkNav(tab);
       const box = $("#adminContent");
       if (tab === "dashboard") {
         renderDashboard();
@@ -3860,6 +3958,7 @@
         if (!isAdmin) return;
         if (payload.eventType === "INSERT") notifyNewOrder(payload.new || {});
         if ($("#adminFullPage").style.display === "block") {
+          admRefreshBadge();
           if (currentAdminTabName === "orders") listOrders();
           else if (currentAdminTabName === "dashboard") renderDashboard();
         }
