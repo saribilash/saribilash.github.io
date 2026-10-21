@@ -911,6 +911,10 @@
     .ask-btn.wa{background:linear-gradient(135deg,#128c4a,#25d366)}
     .ask-btn.fb{background:linear-gradient(135deg,#1558b0,#1877f2)}
     .info-tabs .it{font-size:12.5px;padding:9px 2px}
+      #cartDialog .cq-row img{width:34px;height:42px;cursor:zoom-in;transition:all .15s}
+    #cartDialog .cq-row.on img{width:62px;height:78px;border-radius:9px;border:2px solid var(--gold)}
+    #cartDialog .cq-row.on{padding:5px 8px 5px 5px}
+    #cartDialog .cq-row.on .cq-t b{font-size:14.5px}
   </style>
 </head>
 <body>
@@ -1022,16 +1026,6 @@
     </div>
   </section>
 
-  <section>
-    <div class="contact-band">
-      <h3>✨ কিছু জানার আছে? আমরা আছি আপনার পাশে</h3>
-      <p>শাড়ির কাপড়, রং, দাম, ডেলিভারি বা অর্ডার — যেকোনো প্রয়োজনে বা যেকোনো কিছু বিস্তারিত জানতে সরাসরি আমাদের <b>WhatsApp</b> অথবা <b>ফেসবুক পেজে</b> মেসেজ করুন। আপনার পছন্দের শাড়ি বেছে নিতে আমরা সাহায্য করব।</p>
-      <div class="contact-btns">
-        <a class="whatsapp-order-btn" href="https://api.whatsapp.com/send?phone=8801628182808&amp;text=%E0%A6%B9%E0%A7%8D%E0%A6%AF%E0%A6%BE%E0%A6%B2%E0%A7%8B%20%E0%A6%B6%E0%A6%BE%E0%A6%A1%E0%A6%BC%E0%A6%BF%20%E0%A6%AC%E0%A6%BF%E0%A6%B2%E0%A6%BE%E0%A6%B6!" target="_blank" rel="noopener">💬 WhatsApp-এ মেসেজ করুন</a>
-        <a class="facebook-order-btn" href="https://www.facebook.com/SariBilash02" target="_blank" rel="noopener">📘 ফেসবুক পেজে মেসেজ করুন</a>
-      </div>
-    </div>
-  </section>
 
   <footer id="siteFooter">
     <div class="f-title">শাড়ি বিলাশ — ঐতিহ্যের বুননে অনন্য সৌন্দর্য</div>
@@ -1079,16 +1073,6 @@
     <div class="grid" id="tpProducts"></div>
     <div id="tpSlotReviews"></div>
     <div id="tpSlotPolicy"></div>
-    <section>
-      <div class="contact-band">
-        <h3>✨ কিছু জানার আছে? আমরা আছি আপনার পাশে</h3>
-        <p>থ্রি পিসের কাপড়, সাইজ, রং, দাম বা ডেলিভারি — যেকোনো কিছু জানতে WhatsApp অথবা ফেসবুক পেজে মেসেজ করুন।</p>
-        <div class="contact-btns">
-          <a class="whatsapp-order-btn" href="https://api.whatsapp.com/send?phone=8801628182808" target="_blank" rel="noopener">💬 WhatsApp-এ মেসেজ করুন</a>
-          <a class="facebook-order-btn" href="https://www.facebook.com/SariBilash02" target="_blank" rel="noopener">📘 ফেসবুক পেজে মেসেজ করুন</a>
-        </div>
-      </div>
-    </section>
     <div id="tpSlotFooter"></div>
   </div>
 
@@ -1153,8 +1137,8 @@
     <div id="freeBar"></div>
     <div id="cartItems"></div>
     <div id="cartCheckout" style="display:none;">
-      <details class="admin-card coupon-card" id="couponCard">
-        <summary>🎟️ কুপন কোড আছে? এখানে ট্যাপ করুন</summary>
+      <details class="admin-card coupon-card" id="couponCard" open>
+        <summary>🎟️ কুপন কোড (থাকলে)</summary>
         <div class="row" style="margin-top:8px;"><input id="couponInput" placeholder="কুপন কোড লিখুন" style="margin:0;text-transform:uppercase;" autocomplete="off"><button type="button" class="btn order-btn" style="padding:10px 14px;white-space:nowrap;flex:0 0 auto;font-size:15px;" onclick="applyCoupon()">প্রয়োগ করুন</button></div>
         <div id="couponChips"></div>
         <div id="couponMsg" class="small" style="margin-top:6px;"></div>
@@ -1847,19 +1831,7 @@
 
     // ---------- কার্ড থেকে সরাসরি অর্ডার (ডিটেইল পেজ না খুলে) ----------
     let qo = { id: null, q: {} };
-    function openQuick(id) {
-      const p = getProduct(id);
-      if (!p) return;
-      qo = { id: p.id, q: {} };
-      const colors = productColors(p), list = colors.length ? colors : [NO_COLOR];
-      const first = colors.length ? (colors[Math.min(cardSel[p.id] || 0, colors.length - 1)] || colors[0]) : NO_COLOR;
-      const start = colorMax(p, first) > 0 ? first : (list.find(c => colorMax(p, c) > 0) || first);
-      if (colorMax(p, start) > 0) qo.q[start] = 1;
-      renderQuick();
-      const d = $("#quickDialog");
-      if (!d.open) d.showModal();
-      d.scrollTop = 0;
-    }
+    function openQuick(id) { startBuyNowEmpty(id); }
     function renderQuick() {
       const p = getProduct(qo.id);
       if (!p) return;
@@ -2195,8 +2167,18 @@
       openCart();
       return true;
     }
+    let buyPid = null; // সরাসরি অর্ডারে যে শাড়ির পেজ খোলা (সব রংয়ে ০ পিস দিয়ে শুরু)
+    function startBuyNowEmpty(pid) {
+      const p = getProduct(pid);
+      if (!p || p.active === false || isSoldOut(p)) { toast("দুঃখিত, এই শাড়ির স্টক শেষ"); return false; }
+      if (checkoutMode === "buy") return false;
+      checkoutMode = "buy"; stashedCart = cart; cart = []; buyPid = String(pid);
+      openCart();
+      return true;
+    }
     function endBuyNow() {
       if (checkoutMode !== "buy") return;
+      buyPid = null;
       cart = stashedCart || []; stashedCart = null; checkoutMode = "cart";
       updateCartBadge();
       pruneCart();
@@ -2239,7 +2221,7 @@
       if ($("#cartDialog").open) renderCart();
     }
 
-    function openCart() { pruneCart(); renderCart(); prefillCustomer(); togglePaymentFields(); $("#orderMsg").textContent = ""; if (!$("#cartDialog").open) $("#cartDialog").showModal(); }
+    function openCart() { $("#couponCard").open = true; pruneCart(); renderCart(); prefillCustomer(); togglePaymentFields(); $("#orderMsg").textContent = ""; if (!$("#cartDialog").open) $("#cartDialog").showModal(); }
 
     function renderCart() {
       const box = $("#cartItems");
@@ -2249,14 +2231,15 @@
       bn.style.display = buyMode && realN ? "block" : "none";
       if (buyMode && realN) bn.textContent = "ℹ️ এটা শুধু এই শাড়িটির অর্ডার। কার্টে রাখা অন্য শাড়ি এর সাথে যুক্ত হয়নি — সেগুলো উপরের \"🛒 কার্ট\" থেকে আলাদাভাবে অর্ডার করতে পারবেন।";
       const lines = cart.map((i, idx) => ({ i, idx, p: getProduct(i.pid) })).filter(x => x.p);
-      if (!lines.length) {
+      if (!lines.length && !(buyMode && buyPid && getProduct(buyPid))) {
         box.innerHTML = buyMode ? "<p style='text-align:center;color:var(--muted);padding:24px 0;'>এই অর্ডারে কোনো শাড়ি নেই।</p>" : "<p style='text-align:center;color:var(--muted);padding:24px 0;'>আপনার কার্ট এখন খালি। পছন্দের শাড়ি কার্টে রাখুন।</p>";
         $("#cartCheckout").style.display = "none"; $("#freeBar").innerHTML = ""; $("#couponChips").innerHTML = "";
         return;
       }
       $("#cartCheckout").style.display = "block";
-      const hasCp = lines.some(({ p }) => productCoupons(p).some(c => couponInfo[c] !== null));
-      $("#couponCard").style.display = hasCp ? "" : "none"; renderCouponChips(lines);
+      const cLines = couponLines();
+      const hasCp = cLines.some(({ p }) => productCoupons(p).some(c => couponInfo[c] !== null));
+      $("#couponCard").style.display = hasCp ? "" : "none"; renderCouponChips(cLines);
       if (!hasCp && appliedCoupon) { appliedCoupon = null; $("#couponInput").value = ""; $("#couponMsg").textContent = ""; }
       box.innerHTML = cartHeadHtml(lines) + cartGroups().map(({ pid, p }, gi) => {
         const colors = productColors(p), images = productImages(p);
@@ -2266,7 +2249,7 @@
         const img = images[Math.max(0, sel)] || images[0] || "";
         const rows = list.map((c, k) => {
           const q = cartQty(pid, c), out = colorMax(p, c) <= 0, named = c !== NO_COLOR;
-          const th = named ? (images[k] ? `<img src="${esc(images[k])}" alt="">` : colorDot(c)) : "";
+          const th = named ? (images[k] ? `<img src="${esc(images[k])}" alt="" onclick="openZoomModal(this.src)">` : colorDot(c)) : "";
           const ctl = out ? `<span class="small" style="font-weight:700;color:#b91c1c;">স্টক শেষ</span>`
             : `<div class="qty-box"><button type="button" onclick="setColorQty(${gi},${k},-1)" aria-label="কমান">−</button><b>${taka(q)}</b><button type="button" onclick="setColorQty(${gi},${k},1)" aria-label="বাড়ান">+</button></div>`;
           return `<div class="cq-row ${q > 0 ? "on" : ""} ${out ? "out" : ""}">${th}<div class="cq-t"><b>${named ? esc(c) : "কত পিস নিবেন"}</b>${named ? `<small>${stockShort(p, c)}</small>` : ""}</div>${ctl}</div>`;
@@ -2275,9 +2258,9 @@
           <div class="cl-top">
             ${img ? `<img src="${esc(img)}" alt="${esc(p.name)}">` : `<div class="cl-ph"></div>`}
             <div><b class="cl-name">${esc(p.name)}</b><span class="small">কোড: ${esc(productCode(p.id))} · <span class="cl-unit" style="display:inline;margin:0;">${taka(p.price)}/- প্রতি পিস</span></span></div>
-            <button type="button" class="cl-del" onclick="removeCartProduct(${gi})" aria-label="মুছুন">🗑️</button>
+            ${buyMode ? "" : `<button type="button" class="cl-del" onclick="removeCartProduct(${gi})" aria-label="মুছুন">🗑️</button>`}
           </div>
-          ${list.length > 1 || list[0] !== NO_COLOR ? `<div class="pick-label">🎨 রং বেছে পিস দিন <span style="font-weight:400;color:var(--muted);">(একাধিক রংও নিতে পারবেন)</span></div>` : ""}
+          ${list.length > 1 || list[0] !== NO_COLOR ? `<div class="pick-label">🎨 যে রংয়ের যতটি লাগবে, সেই রংয়ের পাশে + চাপুন</div>` : ""}
           <div class="cq-list">${rows}</div>
           <div class="cl-total"><span>${taka(pcs)} পিস × ${taka(p.price)}/-</span><b>${taka(p.price * pcs)}/-</b></div>
         </div>`;
@@ -2286,14 +2269,18 @@
     }
 
     function cartQty(pid, color) { return cart.filter(o => String(o.pid) === String(pid) && o.color === color).reduce((a, o) => a + o.qty, 0); }
-    function cartGroups() { const out = []; cart.forEach(i => { const p = getProduct(i.pid); if (p && !out.some(g => String(g.pid) === String(i.pid))) out.push({ pid: i.pid, p }); }); return out; }
+    function cartGroups() {
+      const out = []; cart.forEach(i => { const p = getProduct(i.pid); if (p && !out.some(g => String(g.pid) === String(i.pid))) out.push({ pid: i.pid, p }); });
+      if (checkoutMode === "buy" && buyPid && !out.some(g => String(g.pid) === buyPid)) { const bp = getProduct(buyPid); if (bp) out.push({ pid: buyPid, p: bp }); }
+      return out;
+    }
+    function couponLines() { const l = cart.map(i => ({ i, p: getProduct(i.pid) })).filter(x => x.p); return l.length ? l : cartGroups().map(g => ({ i: { pid: g.pid, color: NO_COLOR, qty: 0 }, p: g.p })); }
     function setColorQty(gi, k, d) {
       const g = cartGroups()[gi]; if (!g) return;
       const colors = productColors(g.p), c = (colors.length ? colors : [NO_COLOR])[k]; if (c === undefined) return;
       const idx = cart.findIndex(o => String(o.pid) === String(g.pid) && o.color === c);
       if (idx < 0) { if (d > 0) addToCart(g.pid, c, 1); return; }
       if (cart[idx].qty + d < 1) {
-        if (checkoutMode === "buy" && qtyInCart(g.pid) - cart[idx].qty <= 0) { toast("অন্তত ১ পিস রাখতে হবে"); return; }
         removeCartItem(idx); return;
       }
       changeCartQty(idx, d);
@@ -2442,7 +2429,8 @@
       }
       const net = subtotal - discount;
       const base = settings.dhaka_charge;
-      const free = n > 0 && !!freeBy;
+      if (!n && checkoutMode === "buy" && buyPid) { const bp = getProduct(buyPid); if (bp && bp.free_delivery) freeBy = bp.name; }
+      const free = (n > 0 || (checkoutMode === "buy" && !!buyPid)) && !!freeBy;
       let charge = 0, unknown = false;
       if (n && !free) { if (base === null) unknown = true; else charge = base; }
       return { subtotal, discount, charge, total: net + charge, free, unknown, net, freeBy, nearest };
@@ -2458,7 +2446,7 @@
         if (t.discount > 0) { cm.className = "small msg-ok"; cm.textContent = `✅ কুপন চালু: ${couponLabel(appliedCoupon)} (শুধু কুপন চলা শাড়িতে)`; }
         else { cm.className = "small msg-err"; cm.textContent = "এই কুপন আপনার কার্টের কোনো শাড়িতে প্রযোজ্য নয়।"; }
       }
-      renderCouponChips(cart.map(i => ({ i, p: getProduct(i.pid) })).filter(x => x.p));
+      renderCouponChips(couponLines());
       const fb = $("#freeBar");
       if (fb) fb.innerHTML = t.free ? `<div class="fb ok">🎉 অভিনন্দন! “${esc(t.freeBy)}” শাড়ির জন্য আপনার ডেলিভারি ফ্রি</div>`
         : (t.nearest ? `<div class="fb go">🚚 “${esc(t.nearest.name)}” শাড়িতে আরও ${taka(t.nearest.need)}/- টাকার নিলে ডেলিভারি ফ্রি!<div class="fb-track"><div class="fb-fill" style="width:${Math.max(6, Math.min(100, Math.round(t.nearest.net / t.nearest.min * 100)))}%"></div></div></div>` : "");
@@ -2483,7 +2471,7 @@
 
     function whatsappCart() {
       const lines = cart.map(i => ({ i, p: getProduct(i.pid) })).filter(x => x.p);
-      if (!lines.length) return;
+      if (!lines.length) { toast("আগে কোন রংয়ের কত পিস লাগবে বেছে নিন"); return; }
       const t = calcTotals();
       const val = id => { const el = document.getElementById(id); return el ? String(el.value || "").trim() : ""; };
       const nm = val("orderName"), ph = val("orderPhone"), ad = val("orderAddress");
@@ -2515,7 +2503,7 @@
       const btn = $("#submitOrderBtn"), msg = $("#orderMsg");
       pruneCart();
       const lines = cart.map(i => ({ i, p: getProduct(i.pid) })).filter(x => x.p);
-      if (!lines.length) { msg.className = "small msg-err"; msg.textContent = "কার্ট খালি বা শাড়ির স্টক শেষ হয়ে গেছে।"; return; }
+      if (!lines.length) { msg.className = "small msg-err"; msg.textContent = checkoutMode === "buy" ? "👆 আগে ওপর থেকে কোন রংয়ের কত পিস লাগবে বেছে নিন।" : "কার্ট খালি বা শাড়ির স্টক শেষ হয়ে গেছে।"; return; }
       const f = new FormData(e.target);
       const name = String(f.get("name")).trim(), phone = String(f.get("phone")).trim(), addr = String(f.get("address")).trim();
       const zone = "all", payment = String(f.get("payment_method")), trx = String(f.get("transaction_id") || "").trim();
