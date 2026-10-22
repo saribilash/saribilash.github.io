@@ -1536,6 +1536,8 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
     #cartDialog .ck-box{padding:12px 14px;margin:8px 0;border-radius:12px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.35)}
     #cartDialog .ck-disc{margin:16px 0 0;border:1.5px dashed var(--gold,#d4af37);border-radius:12px;padding:10px 14px}
     #cartDialog .ck-disc-t{font-weight:700;font-size:14.5px;color:var(--navy);margin-bottom:4px}
+    #cartDialog .ref-info{font-size:13.5px;font-weight:700;color:#047857;line-height:1.5;margin:6px 0 2px;padding:8px 12px;border-radius:12px;background:rgba(16,185,129,.12)}
+    #cartDialog .ref-info:empty{display:none}
     #cartDialog .cp-save-t{font-size:13px;font-weight:700;color:#047857;margin:2px 0 4px}
     #cartDialog .ck-or{display:flex;align-items:center;gap:10px;margin:10px 0;font-size:12.5px;opacity:.7}
     #cartDialog .ck-or::before,#cartDialog .ck-or::after{content:"";flex:1;height:1px;background:rgba(148,163,184,.5)}
@@ -2761,7 +2763,7 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
       const box = $("#couponChips"); if (!box) return;
       const codes = [...new Set(lines.flatMap(({ p }) => productCoupons(p)))].filter(c => couponInfo[c] && (!appliedCoupon || appliedCoupon.code !== c));
       const save = c => lines.reduce((t, { i, p }) => t + (productCoupons(p).includes(c) ? couponAmt(p.price, couponInfo[c]) * Math.max(1, Number(i && i.qty) || 0) : 0), 0);
-      box.innerHTML = codes.length ? `<div class="cp-save-t">এই কার্টে কুপন ব্যবহার করলে সাশ্রয়:</div>` + codes.map(c => { const sv = save(c); return `<button type="button" class="chip-btn" onclick="quickCoupon('${esc(c)}')">🎟️ ${esc(c)} ব্যবহার করলে ${sv > 0 ? taka(sv) + " টাকা সাশ্রয়" : "ছাড় পাবেন"}</button>`; }).join("") : "";
+      box.innerHTML = codes.length ? `<div class="cp-save-t">এই কার্টে কুপন ব্যবহার করলে সাশ্রয়:</div>` + codes.map(c => { const sv = save(c); return `<button type="button" class="chip-btn" onclick="quickCoupon('${esc(c)}')">🎟️ ${esc(c)} — এই কোড ব্যবহার করলে ${sv > 0 ? taka(sv) + " টাকা সাশ্রয়" : "ছাড় পাবেন"}</button>`; }).join("") : "";
     }
     function quickCoupon(code) { $("#couponInput").value = code; applyCoupon(); }
 
@@ -4694,8 +4696,23 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
     return r;
   };
 
+  var refInfoTxt = null;
+  function showRefInfo() {
+    var el = document.getElementById("refInfo"); if (!el) return;
+    if (refInfoTxt !== null) { el.textContent = "🎁 " + refInfoTxt; return; }
+    var fallback = "রেফারেল কোড ব্যবহার করলে আপনি ছাড় পাবেন, আর যার কোড তিনি ডেলিভারি কনফার্মের পর টাকা পাবেন";
+    el.textContent = "🎁 " + fallback;
+    try {
+      db.rpc("ref_public_info").then(function (r) {
+        var d = r && r.data; if (!d || r.error || !(Number(d.friend_discount) > 0)) { refInfoTxt = fallback; return; }
+        refInfoTxt = "রেফারেল কোড ব্যবহার করলে আপনি " + bn(d.friend_discount) + " টাকা ছাড় পাবেন, আর যার কোড তিনি ডেলিভারি কনফার্মের পর " + (Number(d.bonus_amount) > 0 ? bn(d.bonus_amount) + " টাকা " : "") + "বোনাস পাবেন";
+        el.textContent = "🎁 " + refInfoTxt;
+      }, function () { refInfoTxt = fallback; });
+    } catch (e) { refInfoTxt = fallback; }
+  }
   var _o = window.openCart; window.openCart = function () {
     var r = _o.apply(this, arguments);
+    showRefInfo();
     if (rc.value && !window.refDiscAmt) window.refCheckCode(); // লিংক থেকে এলে কোড নিজে প্রয়োগ হবে
     sync(); return r;
   };
