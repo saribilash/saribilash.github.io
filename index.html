@@ -46,6 +46,14 @@
   <meta property="og:title" content="শাড়ি বিলাশ — শাড়ির রাজকীয় আভিজাত্য">
   <meta property="og:description" content="এক্সক্লুসিভ শাড়ির কালেকশন। সারা বাংলাদেশে হোম ডেলিভারি।">
   <meta property="og:type" content="website">
+  <link rel="canonical" href="https://saribilash.github.io/">
+  <meta property="og:url" content="https://saribilash.github.io/">
+  <meta property="og:site_name" content="শাড়ি বিলাশ">
+  <meta property="og:locale" content="bn_BD">
+  <meta property="og:image" content="https://saribilash.github.io/icon-192.png">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="keywords" content="শাড়ি বিলাশ, Shari Bilash, Sari Bilash, শাড়ি, জামদানি শাড়ি, কাতান শাড়ি, থ্রি পিস, অনলাইন শাড়ি, ক্যাশ অন ডেলিভারি, বাংলাদেশ">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"OnlineStore","name":"শাড়ি বিলাশ","alternateName":["Shari Bilash","Sari Bilash"],"url":"https://saribilash.github.io/","logo":"https://saribilash.github.io/icon-192.png","description":"জামদানি, কাতান ও আরও অনেক এক্সক্লুসিভ শাড়ি ও থ্রি পিসের অনলাইন শপ। সারা বাংলাদেশে ক্যাশ অন ডেলিভারি।","telephone":"+8801628182808","areaServed":"BD","sameAs":["https://www.facebook.com/SariBilash02"]}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&display=swap" rel="stylesheet">
@@ -67,6 +75,7 @@
   </script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>if(!window.supabase){document.write('<script src="https://unpkg.com/@supabase/supabase-js@2"><\/script>')}</script>
+<script>try{if(localStorage.getItem("sari_theme")==="dark")document.documentElement.setAttribute("data-theme","dark");if(localStorage.getItem("sari_lang")==="en")document.documentElement.lang="en"}catch(e){}</script>
   <style>
     :root { --navy:#0f1c2e; --navy-light:#182e4a; --cream:#fbf8f3; --gold:#d4af37; --gold-gradient:linear-gradient(135deg,#f3e5ad 0%,#c8a04b 50%,#987121 100%); --gold-glow:rgba(212,175,55,.3); --ink:#1a1e24; --muted:#64748b; --green:#059669; --red:#ef4444; }
     *{box-sizing:border-box}
@@ -556,6 +565,7 @@
     .tp-hero p{margin:0 auto;max-width:640px;color:#e2e8f0;font-size:16.5px;line-height:1.7}
     .tp-perks{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
     .tp-perks span{background:rgba(255,255,255,.08);border:1px solid rgba(212,175,55,.45);color:#f3e5ad;padding:7px 14px;border-radius:30px;font-size:13.5px}
+    #threePiecePage .header-filters{margin-top:10px}
     .tp-tools{max-width:1200px;margin:18px auto 4px;padding:0 20px;display:grid;grid-template-columns:1fr 240px;gap:10px}
     .tp-tools input,.tp-tools select{margin:0;padding:12px 16px;border-radius:30px;border:1.5px solid rgba(212,175,55,.5);font:inherit;font-size:15px;background:#fff;min-width:0;width:100%}
     #tpCount{max-width:1200px;margin:8px auto 4px;padding:0 20px}
@@ -606,8 +616,8 @@
     }
   
     /* ===== কাস্টমার সাপোর্ট ফ্লোটিং বাটন ===== */
-    .care-fab{position:fixed;right:14px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:120;display:flex;flex-direction:column;align-items:flex-end;gap:12px}
-    body:has(.install-bar.show) .care-fab{bottom:calc(98px + env(safe-area-inset-bottom,0px))}
+    .care-fab{position:fixed;right:14px;bottom:calc(50px + env(safe-area-inset-bottom,0px));z-index:120;display:flex;flex-direction:column;align-items:flex-end;gap:12px}
+    body:has(.install-bar.show) .care-fab{bottom:calc(132px + env(safe-area-inset-bottom,0px))}
     .care-btn{display:flex;align-items:center;gap:10px;height:58px;padding:5px 18px 5px 5px;border-radius:40px;color:#fff;font-family:inherit;font-size:15.5px;font-weight:700;letter-spacing:.2px;cursor:pointer;
       background:linear-gradient(135deg,#0b1626 0%,#182e4a 100%);border:1.5px solid transparent;
       background-image:linear-gradient(135deg,#0b1626,#182e4a),linear-gradient(135deg,#f3e5ad,#c8a04b 50%,#987121);background-origin:border-box;background-clip:padding-box,border-box;
@@ -989,6 +999,8 @@
 
     /* ===== রেফারেল সিস্টেম (নতুন) ===== */
     .ref-nav-btn{color:#f3e5ad!important;font-weight:700!important}
+    .ref-foot-btn{display:inline-block;margin:10px auto 4px;padding:12px 26px;border:0;border-radius:30px;background:linear-gradient(135deg,#987121 0%,#e6c46a 100%);color:#1b1405;font:inherit;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.28)}
+    .ref-foot-btn:active{transform:scale(.97)}
     #refDialog{padding:20px 16px 22px;background:var(--cream);max-width:560px}
     #refDialog .close-modal-btn{width:36px;height:36px;font-size:26px;top:12px;right:12px;z-index:3}
     .ref-h{font-size:21px;font-weight:800;color:var(--navy);margin:0 40px 4px 0}
@@ -1030,6 +1042,258 @@
     .ref-tbl th,.ref-tbl td{padding:7px 9px;border-bottom:1px solid #eef1f5;text-align:left;vertical-align:top}
     .ref-tbl th{background:#f1f5f9;color:var(--navy);position:sticky;top:0}
   </style>
+<style id="darkThemeCss">
+html[data-theme="dark"] .admin-nav-btn{color:#f1e6c3}
+html[data-theme="dark"] .btn{color:#e0e8f2}
+html[data-theme="dark"] .feature-box{background:#171717;border:1px solid #33415c}
+html[data-theme="dark"] .feature-box h4{color:#f1e6c3}
+html[data-theme="dark"] .section-title{color:#f1e6c3}
+html[data-theme="dark"] .card{background:#171717;border:1px solid #33415c}
+html[data-theme="dark"] .image-container{background:#2e2a21}
+html[data-theme="dark"] .wishlist-btn{color:#f1e6c3}
+html[data-theme="dark"] .wishlist-btn.active{color:#ea97ac}
+html[data-theme="dark"] .card h3{color:#f1e6c3}
+html[data-theme="dark"] .spec-tag{background:#1a2026;color:#f1e6c3}
+html[data-theme="dark"] .price{color:#eed69b}
+html[data-theme="dark"] .p-stock{background:#152c21;color:#baf5e4;border:1px solid #33415c}
+html[data-theme="dark"] .p-low{background:#2e2912;color:#efc09d}
+html[data-theme="dark"] .p-out{background:#1a2026;color:#c1c8d2;border:1px solid #33415c}
+html[data-theme="dark"] .variant-thumb{background:#171717;color:#dedede;border:2px solid #33415c}
+html[data-theme="dark"] .variant-thumb img{background:#262626}
+html[data-theme="dark"] .review-card{background:#171717;border:1px solid #33415c}
+html[data-theme="dark"] .stars{color:#ebc27c}
+html[data-theme="dark"] .policy-banner{background:#312813;border:1px solid #33415c}
+html[data-theme="dark"] .faq-wrap h3{color:#f1e6c3}
+html[data-theme="dark"] .faq-wrap details{background:#171717;border:1px solid #33415c}
+html[data-theme="dark"] .faq-wrap summary{color:#f1e6c3}
+html[data-theme="dark"] .faq-wrap summary::after{color:#e4d1aa}
+html[data-theme="dark"] .faq-wrap details[open]{background:#27220f}
+html[data-theme="dark"] .faq-wrap details p{color:#c1c8d2}
+html[data-theme="dark"] .faq-more{color:#afb7c1}
+html[data-theme="dark"] .policy-banner h3{color:#f1e6c3}
+html[data-theme="dark"] .policy-banner ul{color:#cbcbcb}
+html[data-theme="dark"] .field-label{color:#f1e6c3}
+html[data-theme="dark"] input{background:#171717;border:1.5px solid #33415c}
+html[data-theme="dark"] textarea{background:#171717;border:1.5px solid #33415c}
+html[data-theme="dark"] select{background:#171717;border:1.5px solid #33415c}
+html[data-theme="dark"] dialog{background:#171717}
+html[data-theme="dark"] .close-modal-btn{background:#1a2026;color:#c1c8d2}
+html[data-theme="dark"] .zoom-close-btn{border:2px solid #33415c}
+html[data-theme="dark"] .detail-img{background:#2e2a21}
+html[data-theme="dark"] .detail h2{color:#f1e6c3}
+html[data-theme="dark"] .qty-box{border:1.5px solid #33415c}
+html[data-theme="dark"] .qty-box button{background:#1a2026;color:#f1e6c3}
+html[data-theme="dark"] .admin-card{background:#171b20;border:1px solid #33415c}
+html[data-theme="dark"] /* কার্ট */
+    .cart-line{border-bottom:1px solid #33415c}
+html[data-theme="dark"] .cart-line img{background:#262626}
+html[data-theme="dark"] .sum-total{color:#f1e6c3;border-top:1px dashed #33415c}
+html[data-theme="dark"] .free-note{background:#152c21;color:#baf5e4}
+html[data-theme="dark"] .need-note{background:#2e2912;color:#eec6ad}
+html[data-theme="dark"] .desc{color:#c1c8d2}
+html[data-theme="dark"] .buy-btn{color:#e0e8f2}
+html[data-theme="dark"] .buy-btn:disabled{background:#353b43;color:#afb7c1}
+html[data-theme="dark"] .cart-btn{background:#171717;color:#f1e6c3}
+html[data-theme="dark"] .budget-row{background:#171717;border:1.5px solid #33415c}
+html[data-theme="dark"] .budget-label{color:#f1e6c3}
+html[data-theme="dark"] .banner-slider{background:#2e2a21}
+html[data-theme="dark"] .dash-table{background:#171717}
+html[data-theme="dark"] .dash-table th{border-bottom:1px solid #33415c}
+html[data-theme="dark"] .dash-table td{border-bottom:1px solid #33415c}
+html[data-theme="dark"] .dash-table th{background:#1a2026;color:#f1e6c3}
+html[data-theme="dark"] .chip-btn{background:#252a31;color:#f1e6c3}
+html[data-theme="dark"] .p-coupon{background:#463d1b;color:#eec6ad}
+html[data-theme="dark"] .cb-code{color:#e0e8f2}
+html[data-theme="dark"] .hf-search input{background:#171717}
+html[data-theme="dark"] .hf-clear:hover{color:#f1e6c3}
+html[data-theme="dark"] .nav .wish-nav:hover{color:#f1e6c3}
+html[data-theme="dark"] .btn.wish-big{background:#171717;color:#f1e6c3}
+html[data-theme="dark"] .btn.wish-big.active{color:#ea97ac}
+html[data-theme="dark"] .admin-thumb{background:#262626;color:#afafaf}
+html[data-theme="dark"] .admin-row-name{color:#f1e6c3}
+html[data-theme="dark"] #cartTitle{color:#f1e6c3}
+html[data-theme="dark"] #cartDialog .cart-line img{border:1px solid #33415c}
+html[data-theme="dark"] #cartDialog #cartSummary{background:#171717;border:1px solid #33415c}
+html[data-theme="dark"] #cartDialog .sum-total span:last-child{color:#eed69b}
+html[data-theme="dark"] #submitOrderBtn{color:#f1e6c3}
+html[data-theme="dark"] #submitOrderBtn:hover{color:#f1e6c3}
+html[data-theme="dark"] .buy-note{background:#10202b;color:#b4ddf3;border:1px solid #33415c}
+html[data-theme="dark"] .detail-head h2{color:#f1e6c3}
+html[data-theme="dark"] .color-chip{background:#171717;color:#f1e6c3;border:2.5px solid #33415c}
+html[data-theme="dark"] .color-chip img{background:#262626}
+html[data-theme="dark"] .color-chip.sel{background:#312813}
+html[data-theme="dark"] .color-big{background:#312813;color:#f1e6c3}
+html[data-theme="dark"] /* অ্যাডমিন */
+    #adminFullPage{background:#2e291e}
+html[data-theme="dark"] .admin-container{background:#171717}
+html[data-theme="dark"] .stat{background:#171b20;border:1px solid #33415c}
+html[data-theme="dark"] .stat b{color:#f1e6c3}
+html[data-theme="dark"] .adm-nav.on{color:#e0e8f2}
+html[data-theme="dark"] .adm-quote{color:#d9c688}
+html[data-theme="dark"] .adm-home{color:#e0e8f2}
+html[data-theme="dark"] #adminFullPage .admin-card{background:#171717;border:1px solid #33415c}
+html[data-theme="dark"] #adminFullPage .admin-card>h3{color:#f1e6c3}
+html[data-theme="dark"] #adminFullPage input{background:#121720;border:1.5px solid #33415c}
+html[data-theme="dark"] #adminFullPage textarea{background:#121720;border:1.5px solid #33415c}
+html[data-theme="dark"] #adminFullPage select{background:#121720;border:1.5px solid #33415c}
+html[data-theme="dark"] #adminFullPage input:focus{background:#171717}
+html[data-theme="dark"] #adminFullPage textarea:focus{background:#171717}
+html[data-theme="dark"] #adminFullPage select:focus{background:#171717}
+html[data-theme="dark"] #adminFullPage .field-label{color:#f1e6c3}
+html[data-theme="dark"] #adminFullPage .danger{background:#171717;color:#df8787;border:1.5px solid #33415c}
+html[data-theme="dark"] #adminFullPage .stat{background:#171717;border:1px solid #33415c}
+html[data-theme="dark"] #adminFullPage .chip-btn{background:#171717;color:#f1e6c3;border:1.5px solid #33415c}
+html[data-theme="dark"] #adminFullPage .dash-table{border:1px solid #33415c}
+html[data-theme="dark"] #adminFullPage .hidden-tag{background:#341515}
+html[data-theme="dark"] .trk-h{color:#f1e6c3}
+html[data-theme="dark"] .trk-h svg{color:#e4d1aa}
+html[data-theme="dark"] .trk-sub{color:#ccd3dd}
+html[data-theme="dark"] .trk-phone{background:#171717;border:1.5px solid #33415c}
+html[data-theme="dark"] .trk-note{color:#c1c8d2}
+html[data-theme="dark"] .trk-illu{color:#afb7c1}
+html[data-theme="dark"] .trk-illu b{color:#f1e6c3}
+html[data-theme="dark"] .trk-found{background:#152c21;border:1px solid #33415c}
+html[data-theme="dark"] .trk-found b.ph{color:#acf3dd}
+html[data-theme="dark"] .trk-card{background:#171717;border:1px solid #33415c}
+html[data-theme="dark"] .trk-top b{color:#f1e6c3}
+html[data-theme="dark"] .trk-date{color:#afb7c1}
+html[data-theme="dark"] .trk-row img{background:#262626;color:#afafaf}
+html[data-theme="dark"] .trk-row .ph{background:#262626;color:#afafaf}
+html[data-theme="dark"] .trk-row .nm{color:#f1e6c3}
+html[data-theme="dark"] .trk-row .mt{color:#afb7c1}
+html[data-theme="dark"] .trk-row .tt{color:#f1e6c3}
+html[data-theme="dark"] .trk-more{background:#171717;color:#f1e6c3;border:1.5px solid #33415c}
+html[data-theme="dark"] .trk-back{color:#f1e6c3}
+html[data-theme="dark"] .trk-step::before{background:#252a31}
+html[data-theme="dark"] .trk-dot{background:#252a31}
+html[data-theme="dark"] .trk-step.done{color:#f1e6c3}
+html[data-theme="dark"] .trk-step.cur{color:#f1e6c3}
+html[data-theme="dark"] .trk-sec{color:#f1e6c3;border-bottom:1px solid #33415c}
+html[data-theme="dark"] .trk-sum{color:#ccd3dd}
+html[data-theme="dark"] .trk-sum.total{background:#152c21;color:#c7f5e8}
+html[data-theme="dark"] .trk-free{color:#acf3dd}
+html[data-theme="dark"] .trk-pend{color:#efc09d}
+html[data-theme="dark"] .trk-warn{background:#2e2912;color:#eec6ad}
+html[data-theme="dark"] .trk-live{background:#193723;color:#b6ebca}
+html[data-theme="dark"] .trk-info div{color:#ccd3dd}
+html[data-theme="dark"] .qo-head img{background:#262626}
+html[data-theme="dark"] .qo-head h3{color:#f1e6c3}
+html[data-theme="dark"] .qo-cart{background:#171717;color:#f1e6c3}
+html[data-theme="dark"] .status-pending{background:#463d1b;color:#efc08a}
+html[data-theme="dark"] .status-confirmed{background:#162935;color:#93d2f2}
+html[data-theme="dark"] .status-shipped{background:#211230;color:#bb8fe1}
+html[data-theme="dark"] .status-delivered{background:#193723;color:#b6ebca}
+html[data-theme="dark"] .status-cancelled{background:#341515;color:#e59a9a}
+html[data-theme="dark"] .live-dot{background:#341515;color:#e59a9a}
+html[data-theme="dark"] .live-dot.on{background:#193723;color:#b6ebca}
+html[data-theme="dark"] .nav>a:not(.admin-nav-btn):hover{color:#f1e6c3}
+html[data-theme="dark"] .nav>button:not(.admin-nav-btn):hover{color:#f1e6c3}
+html[data-theme="dark"] #cartDialog .pick-label{color:#f1e6c3}
+html[data-theme="dark"] .tp-nav:hover{color:#f1e6c3}
+html[data-theme="dark"] .tp-promo .go{color:#f1e6c3}
+html[data-theme="dark"] .tp-top button:hover{color:#f1e6c3}
+html[data-theme="dark"] .tp-eyebrow{color:#f1e6c3}
+html[data-theme="dark"] .tp-tools input{background:#171717}
+html[data-theme="dark"] .tp-tools select{background:#171717}
+html[data-theme="dark"] .tp-budget{background:#171717}
+html[data-theme="dark"] .tp-budget input{border:1.5px solid #33415c}
+html[data-theme="dark"] .tp-budget .budget-label{color:#f1e6c3}
+html[data-theme="dark"] .tp-chip{background:#171717;color:#f1e6c3}
+html[data-theme="dark"] .tp-empty b{color:#f1e6c3}
+html[data-theme="dark"] .install-nav-btn{color:#f1e6c3}
+html[data-theme="dark"] .install-bar .ib-go{color:#e0e8f2}
+html[data-theme="dark"] .ios-help .ib-go{color:#e0e8f2}
+html[data-theme="dark"] .care-logo{color:#e0e8f2}
+html[data-theme="dark"] /* ===== রিভিউ লেখার বাটন ও ফর্ম ===== */
+    .rv-write{color:#fbf2df}
+html[data-theme="dark"] .rv-form label{color:#f1e6c3}
+html[data-theme="dark"] .rv-form input{border:1.5px solid #33415c}
+html[data-theme="dark"] .rv-form textarea{border:1.5px solid #33415c}
+html[data-theme="dark"] .rv-star-pick button.on{color:#ebc27c}
+html[data-theme="dark"] .rv-star-label{color:#afb7c1}
+html[data-theme="dark"] .review-card .rv-q{color:#d9c688}
+html[data-theme="dark"] .rv-adm{background:#171717;border:1px solid #33415c}
+html[data-theme="dark"] /* ===== WhatsApp এ অর্ডার করুন বাটন — স্বচ্ছ গ্লাস + সোনালি-সবুজ গ্রেডিয়েন্ট বর্ডার ===== */
+    .whatsapp-order-btn.wa-order{color:#caf3df}
+html[data-theme="dark"] .offer-pending{background:#463d1b;color:#eec6ad}
+html[data-theme="dark"] .ord-box .ob-title{color:#f1e6c3}
+html[data-theme="dark"] .cc-t small{color:#baf5e4}
+html[data-theme="dark"] .ord-total{color:#f1e6c3;border-top:1px dashed #33415c}
+html[data-theme="dark"] .ord-total b{color:#eed69b}
+html[data-theme="dark"] .fb.go{background:#2e2912;color:#eec6ad}
+html[data-theme="dark"] .cart-head{color:#f1e6c3}
+html[data-theme="dark"] .cl-card{background:#171717;border:1px solid #33415c}
+html[data-theme="dark"] .cl-top img{background:#262626;border:1px solid #33415c}
+html[data-theme="dark"] .cl-ph{background:#262626;border:1px solid #33415c}
+html[data-theme="dark"] .cl-name{color:#f1e6c3}
+html[data-theme="dark"] .cl-unit{color:#eed69b}
+html[data-theme="dark"] .cl-del{background:#341515;color:#e59a9a}
+html[data-theme="dark"] .cl-bottom{border-top:1px dashed #33415c}
+html[data-theme="dark"] .cl-sub b{color:#eed69b}
+html[data-theme="dark"] .cl-more{background:#312813;color:#f1e6c3}
+html[data-theme="dark"] .cr{background:#171717;border:2px solid #33415c}
+html[data-theme="dark"] .cr.on{background:#312813}
+html[data-theme="dark"] .cr img{background:#262626}
+html[data-theme="dark"] .cr-t b{color:#f1e6c3}
+html[data-theme="dark"] .cr-t small{color:#baf5e4}
+html[data-theme="dark"] .co-cp{background:#463d1b;color:#eec6ad}
+html[data-theme="dark"] .co-cp b{color:#efcebb}
+html[data-theme="dark"] .card-cart-btn{color:#e0e8f2}
+html[data-theme="dark"] /* ===== প্রিমিয়াম বড় অর্ডার বাটন ===== */
+    #productDialog .action-row .buy-btn{color:#e0e8f2;border:1.5px solid #33415c!important}
+html[data-theme="dark"] #productDialog .action-row .buy-btn:disabled{background:#353b43;color:#afb7c1}
+html[data-theme="dark"] .cp-r{color:#e0e8f2}
+html[data-theme="dark"] .cp-r::before{background:#171717}
+html[data-theme="dark"] .cp-r::after{background:#171717}
+html[data-theme="dark"] #cartDialog .cq-row{background:#171717;border:1.5px solid #33415c}
+html[data-theme="dark"] #cartDialog .cq-row.on{background:#312813}
+html[data-theme="dark"] #cartDialog .cq-t b{color:#f1e6c3}
+html[data-theme="dark"] #cartDialog .cl-total{border-top:1px dashed #33415c}
+html[data-theme="dark"] #cartDialog .cl-total b{color:#eed69b}
+html[data-theme="dark"] #cartDialog .coupon-card summary{color:#f1e6c3}
+html[data-theme="dark"] .info-tabs .it.on{color:#e0e8f2}
+html[data-theme="dark"] .info-panel{background:#171717;border:1px solid #33415c}
+html[data-theme="dark"] .why-t{border:1px solid #33415c}
+html[data-theme="dark"] .why-t b{color:#f1e6c3}
+html[data-theme="dark"] .why-t small{color:#afb7c1}
+html[data-theme="dark"] .how-list li{color:#ccd3dd;border-bottom:1px dashed #33415c}
+html[data-theme="dark"] .how-list li::before{color:#e0e8f2}
+html[data-theme="dark"] .ask-box b{color:#f1e6c3}
+html[data-theme="dark"] .ask-box small{color:#afb7c1}
+html[data-theme="dark"] .ref-h{color:#f1e6c3}
+html[data-theme="dark"] .ref-tabs{background:#1f2327}
+html[data-theme="dark"] .ref-tabs button{color:#c1c8d2}
+html[data-theme="dark"] .ref-box{background:#171717;border:1px solid #33415c}
+html[data-theme="dark"] .ref-box label{color:#f1e6c3}
+html[data-theme="dark"] .ref-go{color:#f1e6c3}
+html[data-theme="dark"] .ref-msg.err{color:#e59a9a}
+html[data-theme="dark"] .ref-msg.ok{color:#baf5e4}
+html[data-theme="dark"] .ref-code-card .acts button{color:#f1e6c3}
+html[data-theme="dark"] .ref-code-card .acts a{color:#f1e6c3}
+html[data-theme="dark"] .ref-stat{background:#171717;border:1px solid #33415c}
+html[data-theme="dark"] .ref-stat b{color:#f1e6c3}
+html[data-theme="dark"] .ref-bal{border:1px solid #33415c}
+html[data-theme="dark"] .ref-bal b{color:#baf5e4}
+html[data-theme="dark"] .ref-sec{color:#f1e6c3}
+html[data-theme="dark"] .ref-row{background:#171717;border:1px solid #33415c}
+html[data-theme="dark"] .ref-pill.ok{background:#1d3f2d;color:#baf5e4}
+html[data-theme="dark"] .ref-pill.wait{background:#463d1b;color:#eec6ad}
+html[data-theme="dark"] .ref-pill.bad{background:#341515;color:#e59a9a}
+html[data-theme="dark"] .ref-terms{background:#2b2210;color:#c1c8d2;border:1px solid #33415c}
+html[data-theme="dark"] .ref-logout{color:#e59a9a}
+html[data-theme="dark"] .ref-tbl-wrap{background:#171717;border:1px solid #33415c}
+html[data-theme="dark"] .ref-tbl th{border-bottom:1px solid #33415c}
+html[data-theme="dark"] .ref-tbl td{border-bottom:1px solid #33415c}
+html[data-theme="dark"] .ref-tbl th{background:#1a2026;color:#f1e6c3}
+html[data-theme="dark"]{color-scheme:dark}
+html[data-theme="dark"] body{background:#0b111c;color:#e7ebf2}
+html[data-theme="dark"] input::placeholder,html[data-theme="dark"] textarea::placeholder{color:#7f8da3}
+html[data-theme="dark"] input,html[data-theme="dark"] textarea,html[data-theme="dark"] select{color:#e7ebf2}
+html[data-theme="dark"] dialog{color:#e7ebf2}
+html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3,html[data-theme="dark"] label,html[data-theme="dark"] .small{color:#e7ebf2}
+.nav .tl-btn{font-weight:700}
+
+</style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
@@ -1063,7 +1327,9 @@
         <button class="wish-nav" onclick="openWishlistDialog()" title="আপনার পছন্দের শাড়ির তালিকা">❤️ উইশলিস্ট (<span id="wishlistCount">0</span>)</button>
         <button onclick="openCart()">🛒 কার্ট (<span id="cartCount">0</span>)</button>
         <button onclick="openTrack()">📦 আমার অর্ডার</button>
-        <button class="ref-nav-btn" onclick="openRef()">🎁 রেফার করুন</button>
+        <button class="ref-nav-btn" onclick="openRef()">💰 রেফার করে ইনকাম করুন</button>
+        <button type="button" class="tl-btn" id="themeBtn" onclick="toggleTheme()" aria-label="Dark / Light">🌙</button>
+        <button type="button" class="tl-btn" id="langBtn" onclick="toggleLang()" aria-label="Language">EN</button>
         <button type="button" class="dt-nav-btn" id="dtItem" onclick="toggleDesktopMode()">🖥️ <span id="dtLabel">ডেক্সটপ মোড</span></button>
         <button class="admin-nav-btn" id="headerAdminBtn" onclick="openAdminPanelDirectly()">👑 অ্যাডমিন</button>
       </nav>
@@ -1131,7 +1397,7 @@
           <li><span>যেকোনো প্রয়োজনে WhatsApp বা ফেসবুক পেজ বাটনে সরাসরি কথা বলে অর্ডার করতে পারবেন।</span></li>
         </ol>
       </div>
-      <div class="info-panel" id="ip-faq"><div class="faq-wrap"><details><summary>📦 ডেলিভারি কত দিনে পাব?</summary><p>অর্ডার কনফার্মের পর সর্বোচ্চ ২-৩ দিনের মধ্যে ডেলিভারি পেয়ে যাবেন। উপরের “📦 আমার অর্ডার” থেকে ফোন নম্বর দিয়ে যেকোনো সময় অর্ডারের অবস্থা দেখতে পারবেন।</p></details><details><summary>🎨 রং কি ছবির মতোই হবে?</summary><p>হ্যাঁ, ছবির রংয়ের সাথে মিলিয়েই শাড়ি পাঠানো হয়। প্রতিটা রংয়ের আলাদা ছবি ও স্টক দেওয়া থাকে। শুধু মোবাইলের স্ক্রিন বা আলোর কারণে সামান্য তফাত দেখা যেতে পারে।</p></details><details><summary>🚚 ডেলিভারি চার্জ কত?</summary><p>সারা বাংলাদেশে একই ডেলিভারি চার্জ। নির্বাচিত শাড়িতে ফ্রি ডেলিভারি আছে। ফ্রি না হলে ডেলিভারি চার্জ কত নেওয়া হবে সেটা অর্ডারের পর আপনাকে জানানো হবে, আর “আমার অর্ডার” পেজেও লাইভ দেখতে পাবেন।</p></details><details><summary>💳 পেমেন্ট কীভাবে করব?</summary><p>ক্যাশ অন ডেলিভারিতে পণ্য হাতে পেয়ে টাকা দিতে পারবেন। অথবা অর্ডার ফর্মে bKash বেছে নিলে দেখানো নম্বরে টাকা পাঠিয়ে Transaction ID দিন।</p></details><details><summary>❌ অর্ডার করে বাতিল করা যাবে?</summary><p>অর্ডার কনফার্ম হওয়ার আগে “📦 আমার অর্ডার” থেকে নিজেই বাতিল করতে পারবেন। কনফার্মের পর বাতিল করতে চাইলে WhatsApp-এ জানান।</p></details><details><summary>🔍 অর্ডারের অবস্থা কীভাবে দেখব?</summary><p>উপরের “📦 আমার অর্ডার” চাপুন, অর্ডারের সময় দেওয়া ফোন নম্বর লিখুন। অর্ডারের অবস্থা, ডেলিভারি চার্জ ও মোট টাকা নিজে থেকেই আপডেট হয়ে দেখাবে।</p></details><div class="faq-more">আরও কিছু জানার থাকলে নিচের WhatsApp বা ফেসবুক বাটনে মেসেজ করুন।</div></div></div>
+      <div class="info-panel" id="ip-faq"><div class="faq-wrap"><details><summary>📦 ডেলিভারি কত দিনে পাব?</summary><p>অর্ডার কনফার্মের পর সর্বোচ্চ ২-৩ দিনের মধ্যে ডেলিভারি পেয়ে যাবেন। উপরের “📦 আমার অর্ডার” থেকে ফোন নম্বর দিয়ে যেকোনো সময় অর্ডারের অবস্থা দেখতে পারবেন।</p></details><details><summary>🎨 রং কি ছবির মতোই হবে?</summary><p>হ্যাঁ, ছবির রংয়ের সাথে মিলিয়েই শাড়ি পাঠানো হয়। প্রতিটা রংয়ের আলাদা ছবি ও স্টক দেওয়া থাকে। শুধু মোবাইলের স্ক্রিন বা আলোর কারণে সামান্য তফাত দেখা যেতে পারে।</p></details><details><summary>🚚 ডেলিভারি চার্জ কত?</summary><p>সারা বাংলাদেশে একই ডেলিভারি চার্জ। নির্বাচিত শাড়িতে ফ্রি ডেলিভারি আছে। ফ্রি না হলে ডেলিভারি চার্জ কত নেওয়া হবে সেটা অর্ডারের পর আপনাকে জানানো হবে, আর “আমার অর্ডার” পেজেও লাইভ দেখতে পাবেন।</p></details><details><summary>💳 পেমেন্ট কীভাবে করব?</summary><p>ক্যাশ অন ডেলিভারিতে পণ্য হাতে পেয়ে টাকা দিতে পারবেন। অথবা অর্ডার ফর্মে bKash বেছে নিলে দেখানো নম্বরে টাকা পাঠিয়ে Transaction ID দিন।</p></details><details><summary>❌ অর্ডার করে বাতিল করা যাবে?</summary><p>অর্ডার কনফার্ম হওয়ার আগে “📦 আমার অর্ডার” থেকে নিজেই বাতিল করতে পারবেন। কনফার্মের পর বাতিল করতে চাইলে WhatsApp-এ জানান।</p></details><details><summary>🔍 অর্ডারের অবস্থা কীভাবে দেখব?</summary><p>উপরের “📦 আমার অর্ডার” চাপুন, অর্ডারের সময় দেওয়া ফোন নম্বর লিখুন। অর্ডারের অবস্থা, ডেলিভারি চার্জ ও মোট টাকা নিজে থেকেই আপডেট হয়ে দেখাবে।</p></details><details><summary>🎁 রেফার করলে কী পাব?</summary><p>“💰 রেফার করে ইনকাম করুন” বাটনে ফোন নম্বর দিয়ে নিজের রেফারেল কোড ও লিংক নিন। আপনার কোড বা লিংক দিয়ে কেউ অর্ডার করলে সে ঐ অর্ডারে ছাড় পাবে, আর অর্ডারটি ডেলিভারি সম্পন্ন হলে আপনি বোনাস পাবেন। জমানো বোনাস পরে তুলে নেওয়ার অনুরোধ করা যায়।</p></details><details><summary>🎟️ রেফারেল কোড কীভাবে ব্যবহার করব?</summary><p>কারও রেফারেল লিংকে ঢুকলে কোড নিজে থেকেই অর্ডার ফর্মে বসে যাবে। লিংক না থাকলে অর্ডার ফর্মের “রেফারেল কোড” ঘরে কোডটি লিখে “প্রয়োগ” চাপুন। কোড ব্যবহার করে অর্ডার করলে পরের অর্ডারে ঘরটি ফাঁকা থাকবে — আবার ছাড় চাইলে কোড নতুন করে লিখতে হবে।</p></details><div class="faq-more">আরও কিছু জানার থাকলে নিচের WhatsApp বা ফেসবুক বাটনে মেসেজ করুন।</div></div></div>
       <div class="info-panel" id="ip-ask">
         <div class="ask-box"><b>কিছু জানার আছে? সরাসরি মেসেজ করুন 😊</b><small>শাড়ির রং, সাইজ, ডেলিভারি বা অর্ডার — যেকোনো প্রশ্নে আমরা উত্তর দেব।</small>
           <a class="ask-btn wa" href="https://wa.me/8801628182808" target="_blank" rel="noopener">💬 WhatsApp-এ মেসেজ করুন</a>
@@ -1147,6 +1413,7 @@
     <p>জরুরি প্রয়োজনে কল করুন: 01628182808</p>
     <p>যেকোনো প্রয়োজনে বা বিস্তারিত জানতে WhatsApp অথবা ফেসবুক পেজে মেসেজ করুন।</p>
     <p><a href="https://www.facebook.com/SariBilash02" target="_blank" rel="noopener">ফেসবুক পেজ: Sari Bilash</a></p>
+    <button type="button" class="ref-foot-btn" onclick="openRef()">💰 রেফার করে ইনকাম করুন</button>
   </footer>
 
   <!-- থ্রি পিস পেজ -->
@@ -1161,9 +1428,23 @@
           <button class="wish-nav" onclick="openWishlistDialog()" title="আপনার পছন্দের তালিকা">❤️ উইশলিস্ট (<span id="wishlistCount2">0</span>)</button>
           <button onclick="openCart()">🛒 কার্ট (<span id="cartCount2">0</span>)</button>
           <button onclick="openTrack()">📦 আমার অর্ডার</button>
-        <button class="ref-nav-btn" onclick="openRef()">🎁 রেফার করুন</button>
+        <button class="ref-nav-btn" onclick="openRef()">💰 রেফার করে ইনকাম করুন</button>
           <button class="admin-nav-btn" id="headerAdminBtn2" style="display:none" onclick="closeThreePiece();openAdminPanelDirectly()">👑 অ্যাডমিন</button>
         </nav>
+      </div>
+      <div class="header-filters">
+        <div class="hf-search"><input id="tpSearch" type="search" placeholder="🔍 থ্রি পিস খুঁজুন — নাম, রং বা কোড" aria-label="থ্রি পিস খুঁজুন" oninput="renderThreePiece()" onkeydown="if(event.key==='Enter'){this.blur();}"></div>
+        <button type="button" class="hf-toggle" id="tpHfToggle" onclick="document.getElementById('tpHfPanel').classList.toggle('open')" aria-label="ক্যাটাগরি ও বাজেট ফিল্টার">⚙️ ক্যাটাগরি / বাজেট <span class="hf-dot" id="tpHfDot"></span></button>
+        <div class="hf-panel" id="tpHfPanel">
+          <select id="tpCat" onchange="tpGroup=this.value;renderThreePiece()" aria-label="ক্যাটাগরি"><option value="">সব ক্যাটাগরি</option></select>
+          <div class="hf-budget">
+            <span class="budget-label">💰 বাজেট:</span>
+            <input id="tpMin" type="number" min="0" inputmode="numeric" placeholder="কত টাকা থেকে" aria-label="সর্বনিম্ন বাজেট" oninput="renderThreePiece()">
+            <span>—</span>
+            <input id="tpMax" type="number" min="0" inputmode="numeric" placeholder="কত টাকা পর্যন্ত" aria-label="সর্বোচ্চ বাজেট" oninput="renderThreePiece()">
+            <button type="button" class="hf-clear" onclick="$('#tpMin').value='';$('#tpMax').value='';renderThreePiece()">মুছুন</button>
+          </div>
+        </div>
       </div>
     </header>
     <div id="tpSlotBanner"></div>
@@ -1175,16 +1456,6 @@
       </div>
     </div>
     <div id="tpSlotFeat"></div>
-    <div class="tp-tools">
-      <input id="tpSearch" type="search" placeholder="🔍 থ্রি পিস খুঁজুন — নাম, রং বা কোড" aria-label="থ্রি পিস খুঁজুন" oninput="renderThreePiece()">
-      <select id="tpCat" onchange="tpGroup=this.value;renderThreePiece()" aria-label="ক্যাটাগরি"><option value="">সব ক্যাটাগরি</option></select>
-    </div>
-    <div class="tp-budget"><span class="budget-label">💰 বাজেট:</span>
-      <input id="tpMin" type="number" min="0" inputmode="numeric" placeholder="কত টাকা থেকে" aria-label="সর্বনিম্ন বাজেট" oninput="renderThreePiece()">
-      <span>—</span>
-      <input id="tpMax" type="number" min="0" inputmode="numeric" placeholder="কত টাকা পর্যন্ত" aria-label="সর্বোচ্চ বাজেট" oninput="renderThreePiece()">
-      <button type="button" class="hf-clear" onclick="$('#tpMin').value='';$('#tpMax').value='';renderThreePiece()">মুছুন</button>
-    </div>
     <div class="result-count" id="tpCount"></div>
     <div class="grid" id="tpProducts"></div>
     <div id="tpSlotReviews"></div>
@@ -1905,6 +2176,7 @@
       $("#tpCat").innerHTML = `<option value="">সব ক্যাটাগরি</option>` + groups.map(g => `<option value="${esc(g)}"${g === tpGroup ? " selected" : ""}>${esc(g)}</option>`).join("");
       const lo = numOrNull($("#tpMin").value), hi = numOrNull($("#tpMax").value);
       let list = all.filter(p => (lo === null || Number(p.price) >= lo) && (hi === null || Number(p.price) <= hi) && (!tpGroup || tpGroupOf(p) === tpGroup) && (!q || [p.name, p.description, p.category, p.fabric, productCode(p.id), ...productColors(p)].join(" ").toLowerCase().includes(q)));
+      { const d = $("#tpHfDot"); if (d) d.style.display = (lo !== null || hi !== null || tpGroup) ? "inline-block" : "none"; }
       $("#tpCount").textContent = all.length ? `${taka(list.length)}টি থ্রি পিস পাওয়া গেছে` : "";
       const box = $("#tpProducts");
       if (!all.length) { box.innerHTML = '<div class="tp-empty"><b>থ্রি পিস কালেকশন শীঘ্রই আসছে</b>নতুন থ্রি পিস যোগ হলেই এখানে দেখতে পাবেন।</div>'; return; }
@@ -2682,6 +2954,7 @@
 
       done();
       if (window.refAfterOrder) { try { result = (await window.refAfterOrder(result, phone)) || result; } catch {} }
+      try { localStorage.removeItem("sari_ref_pending"); localStorage.setItem("sari_ordered", "1"); const rc = document.getElementById("refOrderCode"); if (rc) rc.value = ""; const rm = document.getElementById("refOrderMsg"); if (rm) rm.textContent = ""; window.refDiscAmt = 0; } catch {}
       try { localStorage.setItem("sari_customer", JSON.stringify({ name, phone, address: addr, zone })); } catch {}
       cart = []; saveCart();
       $("#cartDialog").close();
@@ -4325,7 +4598,9 @@
   try {
     const code = (new URLSearchParams(location.search).get("ref") || "").trim().toUpperCase();
     if (/^[A-Z0-9]{4,12}$/.test(code)) {
+      // সরাসরি রেফারেল লিংক থেকে এলে (আগে অর্ডার করা থাকলেও) কোড আবার অটো বসবে
       localStorage.setItem("sari_ref_pending", code); prefill();
+      try { const u = new URL(location.href); u.searchParams.delete("ref"); history.replaceState(null, "", u.pathname + (u.search || "") + u.hash); } catch {}
       setTimeout(() => { if (typeof toast === "function") toast("🎁 রেফারেল কোড সেভ হয়েছে — অর্ডারের সময় ছাড় পাবেন"); }, 1500);
     }
   } catch {}
@@ -4453,6 +4728,48 @@
   autoHide(window, document.querySelector("header"));
   var tp = document.getElementById("threePiecePage");
   if (tp) autoHide(tp, tp.querySelector("header.tp-head"));
+})();
+</script>
+<script>
+(function(){
+  var root=document.documentElement;
+  function setTL(){var t=root.getAttribute("data-theme")==="dark",b=document.getElementById("themeBtn");if(b)b.textContent=t?"☀️":"🌙";var l=document.getElementById("langBtn");if(l)l.textContent=(root.lang==="en")?"বাং":"EN";}
+  window.toggleTheme=function(){var d=root.getAttribute("data-theme")!=="dark";if(d)root.setAttribute("data-theme","dark");else root.removeAttribute("data-theme");try{localStorage.setItem("sari_theme",d?"dark":"light")}catch(e){}setTL();var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute("content",d?"#0b111c":"#0f1c2e");};
+  var D={"🎁 রেফার করলে কী পাব?": "🎁 What do I get for referring?", "🎟️ রেফারেল কোড কীভাবে ব্যবহার করব?": "🎟️ How do I use a referral code?", "শাড়ি বিলাশ": "Shari Bilash", "📲 অ্যাপ ইনস্টল": "📲 Install App", "শাড়ির কালেকশন": "Saree Collection", "থ্রি পিস": "Three Piece", "❤️ উইশলিস্ট (": "❤️ Wishlist (", "🛒 কার্ট (": "🛒 Cart (", "📦 আমার অর্ডার": "📦 My Orders", "💰 রেফার করে ইনকাম করুন": "💰 Refer & Earn Income", "ডেক্সটপ মোড": "Desktop mode", "মোবাইল মোড": "Mobile mode", "👑 অ্যাডমিন": "👑 Admin", "⚙️ ক্যাটাগরি / বাজেট": "⚙️ Category / Budget", "সব ক্যাটাগরি": "All categories", "💰 বাজেট:": "💰 Budget:", "মুছুন": "Clear", "নিজস্ব আভিজাত্যে উজ্জ্বল": "Radiant in Its Own Elegance", "শাড়ির কালেকশন দেখুন": "View Saree Collection", "থ্রি পিস দেখুন": "View Three Piece", "১০০% প্রিমিয়াম কোয়ালিটি": "100% Premium Quality", "সেরা সুতা ও সুনিপুণ কারুকাজে তৈরি এক্সক্লুসিভ কালেকশন": "Exclusive collection made with the finest thread and craftsmanship", "ক্যাশ অন ডেলিভারি": "Cash on Delivery", "পণ্য হাতে পেয়ে দেখে শুনে টাকা পরিশোধের সুব্যবস্থা": "Pay after you receive and inspect the product", "হোম ডেলিভারি সেবা": "Home Delivery", "সারা বাংলাদেশে নিরাপদ হোম ডেলিভারি সুবিধা": "Safe home delivery all over Bangladesh", "আমাদের এক্সক্লুসিভ শাড়ির কালেকশন": "Our Exclusive Saree Collection", "প্রোডাক্ট লোড হচ্ছে...": "Loading products...", "আমাদের সম্মানিত ক্রেতাদের মতামত": "What Our Valued Customers Say", "আপনার মতামত লিখুন": "Write your review", "শাড়ি বিলাশ সম্পর্কে দুটো কথা": "A Few Words About Shari Bilash", "💎 কেন আমরা": "💎 Why Us", "🛍️ নিয়ম": "🛍️ How to Order", "❓ প্রশ্ন": "❓ FAQ", "💬 জানুন": "💬 Contact", "সেরা সুতা ও সুনিপুণ কারুকাজ": "Finest thread & craftsmanship", "রংয়ের গ্যারান্টি": "Colour guarantee", "ছবির রংয়েই শাড়ি পাঠানো হয়": "Sent in the colour shown in the photo", "হাতে পেয়ে টাকা দিন, চাইলে bKash": "Pay on receipt, or use bKash", "সারা দেশে ডেলিভারি": "Nationwide delivery", "নির্বাচিত শাড়িতে ফ্রি ডেলিভারি": "Free delivery on selected sarees", "কুপন ছাড়": "Coupon discount", "কুপন কোডে বাড়তি ডিসকাউন্ট": "Extra discount with a coupon code", "লাইভ অর্ডার ট্র্যাকিং": "Live order tracking", "ফোন নম্বর দিয়ে অবস্থা দেখুন": "Check status with your phone number", "সহজ অর্ডার বাতিল": "Easy cancellation", "কনফার্মের আগে নিজেই বাতিল": "Cancel yourself before confirmation", "সরাসরি সাহায্য": "Direct help", "WhatsApp বা ফেসবুকে উত্তর": "Answers on WhatsApp or Facebook", "📦 ডেলিভারি কত দিনে পাব?": "📦 How long does delivery take?", "🎨 রং কি ছবির মতোই হবে?": "🎨 Will the colour match the photo?", "🚚 ডেলিভারি চার্জ কত?": "🚚 What is the delivery charge?", "💳 পেমেন্ট কীভাবে করব?": "💳 How do I pay?", "❌ অর্ডার করে বাতিল করা যাবে?": "❌ Can I cancel an order?", "🔍 অর্ডারের অবস্থা কীভাবে দেখব?": "🔍 How do I check my order status?", "কিছু জানার আছে? সরাসরি মেসেজ করুন 😊": "Have a question? Message us directly 😊", "💬 WhatsApp-এ মেসেজ করুন": "💬 Message on WhatsApp", "📘 ফেসবুক পেজে মেসেজ করুন": "📘 Message on Facebook Page", "শাড়ি বিলাশ — ঐতিহ্যের বুননে অনন্য সৌন্দর্য": "Shari Bilash — Unique beauty woven in tradition", "জরুরি প্রয়োজনে কল করুন:": "Urgent? Call:", "ফেসবুক পেজ:": "Facebook Page:", "← শাড়ির কালেকশন": "← Saree Collection", "থ্রি পিস কালেকশন": "Three Piece Collection", "লগ আউট": "Log out", "ছবিতে ট্যাপ করলে জুম হবে, আবার ট্যাপ করলে ছোট হবে": "Tap the image to zoom, tap again to shrink", "❤️ আপনার পছন্দের শাড়িগুলো": "❤️ Your favourite sarees", "🔗 আমার উইশলিস্ট লিংক কপি করুন": "🔗 Copy my wishlist link", "🛒 আপনার কার্ট": "🛒 Your Cart", "🎟️ কুপন কোড (থাকলে)": "🎟️ Coupon code (if any)", "প্রয়োগ করুন": "Apply", "আপনার নাম": "Your name", "ফোন নম্বর": "Phone number", "🎁 রেফারেল কোড (থাকলে ছাড় পাবেন)": "🎁 Referral code (get a discount if you have one)", "প্রয়োগ": "Apply", "সম্পূর্ণ ঠিকানা": "Full address", "পেমেন্ট পদ্ধতি": "Payment method", "Cash on Delivery — শাড়ি হাতে পেয়ে টাকা দেব": "Cash on Delivery — pay when I receive the saree", "bKash — আগে টাকা পাঠাব": "bKash — pay in advance", "bKash পেমেন্ট নির্দেশিকা": "bKash payment instructions", "যে নম্বরে টাকা পাঠাবেন:": "Send money to:", "মোট টাকা:": "Total:", "অর্ডার নিশ্চিত করুন": "Confirm Order", "WhatsApp-এ পাঠিয়ে অর্ডার করুন": "Order via WhatsApp", "✍️ আপনার মতামত লিখুন": "✍️ Write your review", "ধন্যবাদ!": "Thank you!", "ঠিক আছে": "OK", "আপনার মতামত": "Your review", "আপনার রেটিং": "Your rating", "স্টার ট্যাপ করে রেটিং দিন": "Tap a star to rate", "📨 রিভিউ পাঠান": "📨 Submit Review", "আপনার অর্ডার সফলভাবে জমা হয়েছে!": "Your order was placed successfully!", "অর্ডার আইডি:": "Order ID:", "সর্বমোট:": "Grand total:", "WhatsApp-এ অর্ডার আইডি পাঠান": "Send Order ID on WhatsApp", "আমার অর্ডারসমূহ": "My Orders", "🔍 অর্ডার খুঁজুন": "🔍 Find Order", "সহজে খুঁজুন": "Search easily", "আপনার অর্ডারের সব তথ্য": "All your order details", "কাস্টমার সাপোর্ট": "Customer Support", "যেকোনো প্রয়োজনে আমাদের সঙ্গে কথা বলুন": "Talk to us anytime you need", "WhatsApp এ মেসেজ করুন": "Message on WhatsApp", "সরাসরি চ্যাটে কথা বলুন": "Chat with us directly", "ফেসবুক পেজে মেসেজ করুন": "Message on Facebook Page", "Sari Bilash পেজে মেসেজ দিন": "Message the Sari Bilash page", "আপনার পছন্দের শাড়ির তালিকা": "Your favourite sarees", "🔍 শাড়ি খুঁজুন — নাম, রং বা ধরন (যেমন: জামদানি, লাল)": "🔍 Search sarees — name, colour or type (e.g. Jamdani, red)", "শাড়ি খুঁজুন": "Search sarees", "ক্যাটাগরি ও বাজেট ফিল্টার": "Category & budget filter", "ক্যাটাগরি": "Category", "কত টাকা থেকে": "From (price)", "সর্বনিম্ন বাজেট": "Minimum budget", "কত টাকা পর্যন্ত": "Up to (price)", "সর্বোচ্চ বাজেট": "Maximum budget", "🔍 থ্রি পিস খুঁজুন — নাম, রং বা কোড": "🔍 Search three piece — name, colour or code", "থ্রি পিস খুঁজুন": "Search three piece", "মেনু": "Menu", "বন্ধ করুন": "Close", "কুপন কোড লিখুন": "Enter coupon code", "সম্পূর্ণ নাম": "Full name", "১১ সংখ্যার মোবাইল নম্বর দিন (যেমন: 01XXXXXXXXX)": "Enter 11-digit mobile number (e.g. 01XXXXXXXXX)", "যেমন: SBAB12CD": "e.g. SBAB12CD", "গ্রাম/মহল্লা, থানা, জেলাসহ সম্পূর্ণ ঠিকানা লিখুন": "Full address with village/area, thana and district", "যেমন: রিনা আক্তার": "e.g. Rina Akter", "শাড়ি, কোয়ালিটি বা ডেলিভারি সম্পর্কে লিখুন...": "Write about the saree, quality or delivery...", "রেটিং দিন": "Give a rating", "মোবাইল নম্বর লিখুন (যেমন: 01XXXXXXXXX)": "Enter mobile number (e.g. 01XXXXXXXXX)", "যাচাই হচ্ছে...": "Checking...", "রেফারেল কোডটি সঠিক নয়": "Referral code is not valid", "কোডটি সঠিক নয়": "Code is not valid", "🎁 রেফারেল কোড সেভ হয়েছে — অর্ডারের সময় ছাড় পাবেন": "🎁 Referral code saved — you'll get a discount when you order", "অর্ডার করুন": "Order Now", "🛒 কার্টে রাখুন": "🛒 Add to Cart", "🤍 উইশলিস্ট": "🤍 Wishlist", "WhatsApp এ অর্ডার করুন": "Order on WhatsApp", "টাকা ছাড় পাবেন": "taka discount", "ডেলিভারি চার্জ": "Delivery charge", "মোট": "Total"}, P=[["কারও রেফারেল লিংকে ঢুকলে", "If you open someone's referral link, the code fills in the order form automatically. Otherwise type the code in the “Referral code” box and tap “Apply”. After you order with a code, the box stays empty next time — type the code again if you want the discount again."], ["“💰 রেফার করে ইনকাম করুন” বাটনে", "Tap “💰 Refer & Earn Income”, enter your phone number and get your own referral code and link. When someone orders with your code they get a discount on that order, and once that order is delivered you earn a bonus. You can later request to withdraw your saved bonus."],["শিল্পীর হাতে বোনা", "Tradition and beauty come together in hand-woven sarees. Choose your favourite saree now."], ["পছন্দের শাড়ির ছবি বা", "Tap a saree's photo or name to see details and zoom. Use “🤍 Wishlist” to buy later."], ["নাম, ফোন ও ঠিকানা দিন", "Enter your name, phone and address. Choose Cash on Delivery or bKash (with Transaction ID)."], ["যেকোনো প্রয়োজনে WhatsApp বা ফেসবুক পেজ বাটনে", "You can also order by talking directly through the WhatsApp or Facebook Page buttons."], ["অর্ডার কনফার্মের পর সর্বোচ্চ", "You'll receive delivery within 2-3 days of order confirmation. Check your order status anytime from “📦 My Orders” using your phone number."], ["হ্যাঁ, ছবির রংয়ের সাথে", "Yes, sarees are sent matching the photo colour. Each colour has its own photo and stock. A slight difference may appear due to screen or lighting."], ["সারা বাংলাদেশে একই ডেলিভারি", "Delivery charge is the same all over Bangladesh. Selected sarees have free delivery. If not free, we'll tell you the charge after you order, and you can also see it live on “My Orders”."], ["ক্যাশ অন ডেলিভারিতে পণ্য হাতে", "Pay on receipt with Cash on Delivery. Or choose bKash in the order form, send money to the number shown and enter the Transaction ID."], ["অর্ডার কনফার্ম হওয়ার আগে", "You can cancel yourself from “📦 My Orders” before the order is confirmed. To cancel after confirmation, tell us on WhatsApp."], ["উপরের “📦 আমার অর্ডার” চাপুন", "Tap “📦 My Orders” above and enter the phone number you used. Order status, delivery charge and total update automatically."], ["আরও কিছু জানার থাকলে", "For anything else, message us using the WhatsApp or Facebook buttons below."], ["শাড়ির রং, সাইজ, ডেলিভারি", "We'll answer any question about colour, size, delivery or orders."], ["যেকোনো প্রয়োজনে বা বিস্তারিত", "For any need or more details, message us on WhatsApp or the Facebook Page."], ["আরামদায়ক কাপড়, সুন্দর", "Comfortable fabric, beautiful design — choose your favourite three piece now."], ["আপনার মতামত জমা হয়েছে", "Your review has been submitted. It will appear on the site once we approve it."], ["ধন্যবাদ, শাড়ি বিলাশের সঙ্গে", "Thank you for being with Shari Bilash. We'll contact you shortly to confirm delivery. Check status from “My Orders” with your phone number."], ["আপনার অর্ডারের বর্তমান অবস্থা", "Enter your phone number here to see your order's current status."], ["আপনার তথ্য নিরাপদে সংরক্ষিত", "Your information is stored safely. We only use it to show you your orders."], ["🔥 শাড়ি বিলাশ কালেকশনে", "🔥 Exclusive discounts and special offers on the Shari Bilash collection!"], ["🚚 নির্বাচিত শাড়িতে ফ্রি", "🚚 Free delivery on selected sarees"], ["👚 নির্বাচিত শাড়িতে ব্লাউজ", "👚 Free blouse piece on selected sarees"], ["🎟️ কুপন কোড ব্যবহার করে", "🎟️ Use a coupon code for extra discount"], ["👗 নতুন থ্রি পিস", "👗 New three piece collection is here — take a look"], ["📦 ক্যাশ অন ডেলিভারি — পণ্য", "📦 Cash on Delivery — pay after you receive"], ["💳 bKash-এ পেমেন্টের", "💳 Pay easily with bKash"], ["🏠 সারা বাংলাদেশে হোম", "🏠 Home delivery all over Bangladesh"], ["💬 WhatsApp-এ সরাসরি অর্ডার", "💬 Order & ask directly on WhatsApp"]], keys=Object.keys(D).sort(function(a,b){return b.length-a.length;});
+  var BN=/[\u0980-\u09FF]/, DG="০১২৩৪৫৬৭৮৯", busy=false;
+  function dig(s){return s.replace(/[০-৯]/g,function(c){return DG.indexOf(c);});}
+  function tr(s){
+    if(!BN.test(s))return s;
+    var t=s.replace(/\s+/g," ").trim(), lead=s.match(/^\s*/)[0], trail=s.match(/\s*$/)[0];
+    if(D[t]!==undefined)return lead+D[t]+trail;
+    for(var i=0;i<P.length;i++)if(t.indexOf(P[i][0])===0)return lead+P[i][1]+trail;
+    var o=s;for(var j=0;j<keys.length;j++)if(o.indexOf(keys[j])>-1)o=o.split(keys[j]).join(D[keys[j]]);
+    return dig(o);
+  }
+  var AT=["placeholder","title","aria-label","alt"];
+  function skip(n){var p=n.parentNode;return !p||/^(SCRIPT|STYLE|TEXTAREA)$/.test(p.nodeName)||(p.closest&&p.closest("#adminFullPage"));}
+  function walk(el){
+    if(el.nodeType===3){if(!skip(el)){var v=tr(el.nodeValue);if(v!==el.nodeValue)el.nodeValue=v;}return;}
+    if(el.nodeType!==1||/^(SCRIPT|STYLE)$/.test(el.nodeName)||el.id==="adminFullPage")return;
+    AT.forEach(function(a){if(el.hasAttribute(a)){var x=el.getAttribute(a),y=tr(x);if(x!==y)el.setAttribute(a,y);}});
+    for(var c=el.firstChild;c;c=c.nextSibling)walk(c);
+  }
+  var obs=new MutationObserver(function(ms){
+    if(root.lang!=="en"||busy)return;busy=true;
+    ms.forEach(function(m){
+      if(m.type==="childList")m.addedNodes.forEach(walk);
+      else if(m.type==="characterData")walk(m.target);
+      else if(m.type==="attributes")walk(m.target);
+    });
+    busy=false;obs.takeRecords();
+  });
+  function applyEn(){busy=true;walk(document.body);document.title=tr(document.title);busy=false;
+    obs.observe(document.body,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:AT});}
+  window.toggleLang=function(){
+    var en=root.lang!=="en";try{localStorage.setItem("sari_lang",en?"en":"bn")}catch(e){}
+    if(en){root.lang="en";applyEn();setTL();}else{location.reload();}
+  };
+  document.addEventListener("DOMContentLoaded",function(){setTL();if(root.lang==="en")applyEn();});
 })();
 </script>
 </body>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://saribilash.github.io/sitemap.xml
