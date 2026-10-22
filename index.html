@@ -1523,6 +1523,38 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
     <button class="btn order-btn" style="margin-top:15px;width:100%;" onclick="shareWishlistLink()">🔗 আমার উইশলিস্ট লিংক কপি করুন</button>
   </dialog>
 
+  <style>
+    #cartDialog .ck-step{display:flex;align-items:center;gap:10px;margin:20px 0 6px;padding-top:14px;border-top:1px solid rgba(148,163,184,.35)}
+    #cartDialog .ck-step:first-child{border-top:0;margin-top:6px;padding-top:0}
+    #cartDialog .ck-n{width:26px;height:26px;border-radius:50%;background:var(--gold,#d4af37);color:#fff;font-weight:800;font-size:14px;display:grid;place-items:center;flex:0 0 auto}
+    #cartDialog .ck-step h4{margin:0;font-size:16px;color:var(--navy)}
+    #cartDialog .pay-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:6px 0}
+    #cartDialog .pay-opt{display:flex;flex-direction:column;gap:3px;text-align:left;padding:12px;border:1.5px solid rgba(148,163,184,.55);border-radius:12px;background:transparent;color:inherit;font:inherit;cursor:pointer}
+    #cartDialog .pay-opt b{font-size:14px}
+    #cartDialog .pay-opt small{font-size:12px;opacity:.75}
+    #cartDialog .pay-opt.on{border-color:var(--gold,#d4af37);background:rgba(212,175,55,.14);box-shadow:0 0 0 2px rgba(212,175,55,.25)}
+    #cartDialog .ck-box{padding:12px 14px;margin:8px 0;border-radius:12px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.35)}
+    #cartDialog .ck-disc{margin:16px 0 0;border:1.5px dashed var(--gold,#d4af37);border-radius:12px;padding:10px 14px}
+    #cartDialog .ck-disc-t{font-weight:700;font-size:14.5px;color:var(--navy);margin-bottom:4px}
+    #cartDialog .cp-save-t{font-size:13px;font-weight:700;color:#047857;margin:2px 0 4px}
+    #cartDialog .ck-or{display:flex;align-items:center;gap:10px;margin:10px 0;font-size:12.5px;opacity:.7}
+    #cartDialog .ck-or::before,#cartDialog .ck-or::after{content:"";flex:1;height:1px;background:rgba(148,163,184,.5)}
+    #cartDialog #freeLive:empty{display:none}
+    #cartDialog .fl{position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:12px;font-weight:800;font-size:14px;margin:6px 0;animation:flPulse 1.8s ease-in-out infinite}
+    #cartDialog .fl.ok{background:linear-gradient(135deg,#047857,#10b981);color:#fff}
+    #cartDialog .fl.go{background:#fffbeb;border:1.5px solid #f59e0b;color:#92400e}
+    #cartDialog .fl::after{content:"";position:absolute;top:0;bottom:0;width:60px;left:-80px;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);animation:flShine 2.6s linear infinite}
+    #cartDialog .fl-truck{font-size:24px;display:inline-block;animation:flDrive 1.4s ease-in-out infinite}
+    #cartDialog .fl-txt{flex:1;line-height:1.35}
+    #cartDialog .fl-txt em{font-style:normal;background:#dc2626;color:#fff;border-radius:6px;padding:1px 7px;margin:0 2px;animation:flBlink 1.1s steps(2,start) infinite}
+    #cartDialog .fl-track{height:7px;background:rgba(146,64,14,.18);border-radius:20px;overflow:hidden;margin-top:6px}
+    #cartDialog .fl-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,#d4af37,#f59e0b)}
+    @keyframes flPulse{0%,100%{box-shadow:0 0 0 0 rgba(245,158,11,.5)}50%{box-shadow:0 0 0 7px rgba(245,158,11,0)}}
+    @keyframes flShine{to{left:110%}}
+    @keyframes flDrive{0%,100%{transform:translateX(-4px)}50%{transform:translateX(5px)}}
+    @keyframes flBlink{50%{opacity:.55}}
+    @media(prefers-reduced-motion:reduce){#cartDialog .fl,#cartDialog .fl::after,#cartDialog .fl-truck,#cartDialog .fl-txt em{animation:none}}
+  </style>
   <!-- কার্ট ও চেকআউট -->
   <dialog id="cartDialog">
     <button class="close-modal-btn" onclick="document.querySelector('#cartDialog').close()" aria-label="বন্ধ করুন">&times;</button>
@@ -1531,37 +1563,28 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
     <div id="freeBar"></div>
     <div id="cartItems"></div>
     <div id="cartCheckout" style="display:none;">
-      <details class="admin-card coupon-card" id="couponCard" open>
-        <summary>🎟️ কুপন কোড (থাকলে)</summary>
-        <div class="row" style="margin-top:8px;"><input id="couponInput" placeholder="কুপন কোড লিখুন" style="margin:0;text-transform:uppercase;" autocomplete="off"><button type="button" class="btn order-btn" style="padding:10px 14px;white-space:nowrap;flex:0 0 auto;font-size:15px;" onclick="applyCoupon()">প্রয়োগ করুন</button></div>
-        <div id="couponChips"></div>
-        <div id="couponMsg" class="small" style="margin-top:6px;"></div>
-      </details>
-      <div id="cartSummary" class="admin-card"></div>
       <form id="checkoutForm">
+        <div class="ck-step"><span class="ck-n">১</span><h4>আপনার তথ্য</h4></div>
         <div class="two-col">
           <div><label class="field-label" for="orderName">আপনার নাম</label>
           <input id="orderName" name="name" placeholder="সম্পূর্ণ নাম" required maxlength="100" autocomplete="name"></div>
           <div><label class="field-label" for="orderPhone">ফোন নম্বর</label>
           <input id="orderPhone" name="phone" type="tel" placeholder="01XXXXXXXXX" required pattern="01[0-9]{9}" title="১১ সংখ্যার মোবাইল নম্বর দিন (যেমন: 01XXXXXXXXX)" autocomplete="tel"></div>
         </div>
-
-        <div id="refCheckoutBox" style="margin:2px 0 10px;">
-          <label class="field-label" for="refOrderCode">🎁 রেফারেল কোড (থাকলে ছাড় পাবেন)</label>
-          <div class="row"><input id="refOrderCode" placeholder="যেমন: SBAB12CD" maxlength="12" autocomplete="off" style="margin:0;text-transform:uppercase;"><button type="button" class="btn order-btn" style="padding:10px 14px;font-size:14px;" onclick="refCheckCode()">প্রয়োগ</button></div>
-          <div id="refOrderMsg" class="small" style="margin-top:4px;"></div>
-        </div>
-
         <label class="field-label" for="orderAddress">সম্পূর্ণ ঠিকানা</label>
         <textarea id="orderAddress" name="address" placeholder="গ্রাম/মহল্লা, থানা, জেলাসহ সম্পূর্ণ ঠিকানা লিখুন" required minlength="5" maxlength="500" autocomplete="street-address"></textarea>
 
-        <label class="field-label" for="paymentMethod">পেমেন্ট পদ্ধতি</label>
-        <select name="payment_method" id="paymentMethod" onchange="togglePaymentFields()">
+        <div class="ck-step"><span class="ck-n">২</span><h4>পেমেন্ট</h4></div>
+        <label class="field-label" for="paymentMethod" style="display:none">পেমেন্ট পদ্ধতি</label>
+        <select name="payment_method" id="paymentMethod" onchange="togglePaymentFields()" style="display:none">
           <option value="cod">Cash on Delivery — শাড়ি হাতে পেয়ে টাকা দেব</option>
           <option value="bkash">bKash — আগে টাকা পাঠাব</option>
         </select>
-
-        <div id="bkashFields" class="admin-card" style="display:none;background:#f0fdf4;">
+        <div class="pay-opts" id="payOpts">
+          <button type="button" class="pay-opt on" data-v="cod"><b>💵 ক্যাশ অন ডেলিভারি</b><small>হাতে পেয়ে টাকা দিন</small></button>
+          <button type="button" class="pay-opt" data-v="bkash"><b>📲 bKash</b><small>আগে টাকা পাঠান</small></button>
+        </div>
+        <div id="bkashFields" class="ck-box" style="display:none;">
           <b style="color:var(--green);">bKash পেমেন্ট নির্দেশিকা</b>
           <p style="margin:6px 0;">যে নম্বরে টাকা পাঠাবেন: <strong id="bkashNumberDisplay"></strong></p>
           <p style="margin:6px 0;">মোট টাকা: <strong id="bkashAmountDisplay" style="color:#b8860b;">0/-</strong></p>
@@ -1569,7 +1592,22 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
           <input name="transaction_id" id="transactionId" placeholder="যেমন: ABC123XYZ" maxlength="40">
         </div>
 
+        <div class="ck-disc" id="discBox">
+          <div class="ck-disc-t">🎁 ছাড়ের কোড আছে?</div>
+          <div id="couponCard"><div id="couponChips"></div></div>
+          <label class="field-label" for="couponInput">🎟️ কুপন বা রেফারেল কোড</label>
+          <div class="row"><input id="couponInput" placeholder="কোডটি এখানে লিখুন" style="margin:0;text-transform:uppercase;" autocomplete="off" maxlength="30"><button type="button" class="btn order-btn" style="padding:10px 14px;white-space:nowrap;flex:0 0 auto;font-size:15px;" onclick="applyAnyCode()">প্রয়োগ করুন</button></div>
+          <input type="hidden" id="refOrderCode">
+          <div id="couponMsg" class="small" style="margin-top:6px;"></div>
+          <div id="refOrderMsg" class="small" style="margin-top:4px;"></div>
+        </div>
+
+        <div class="ck-step"><span class="ck-n">৩</span><h4>অর্ডারের হিসাব</h4></div>
+        <div id="freeLive"></div>
+        <div id="cartSummary" class="admin-card"></div>
+
         <button class="btn order-btn" id="submitOrderBtn" type="submit" style="margin-top:8px;width:100%;">অর্ডার নিশ্চিত করুন</button>
+        <div class="ck-or"><span>অথবা</span></div>
         <button class="whatsapp-order-btn wa-order wa-full" type="button" onclick="whatsappCart()"><span class="wa-ic"><svg><use href="#ic-wa"/></svg></span><span class="wa-txt">WhatsApp-এ পাঠিয়ে অর্ডার করুন</span></button>
         <div id="orderMsg" class="small" style="margin-top:10px;"></div>
       </form>
@@ -2711,9 +2749,10 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
     function renderCouponChips(lines) {
       const box = $("#couponChips"); if (!box) return;
       const codes = [...new Set(lines.flatMap(({ p }) => productCoupons(p)))].filter(c => couponInfo[c] && (!appliedCoupon || appliedCoupon.code !== c));
-      box.innerHTML = codes.length ? codes.map(c => `<button type="button" class="chip-btn" onclick="quickCoupon('${esc(c)}')">🎟️ ${esc(c)} ব্যবহার করুন</button>`).join("") : "";
+      const save = c => lines.reduce((t, { i, p }) => t + (productCoupons(p).includes(c) ? couponAmt(p.price, couponInfo[c]) * Math.max(1, Number(i && i.qty) || 0) : 0), 0);
+      box.innerHTML = codes.length ? `<div class="cp-save-t">এই কার্টে কুপন ব্যবহার করলে সাশ্রয়:</div>` + codes.map(c => { const sv = save(c); return `<button type="button" class="chip-btn" onclick="quickCoupon('${esc(c)}')">🎟️ ${esc(c)} ব্যবহার করলে ${sv > 0 ? taka(sv) + " টাকা সাশ্রয়" : "ছাড় পাবেন"}</button>`; }).join("") : "";
     }
-    function quickCoupon(code) { $("#couponInput").value = code; applyCoupon(); }
+    function quickCoupon(code) { $("#couponInput").value = code; applyAnyCode(); }
 
     function changeCartColor(idx, color) {
       const it = cart[idx]; if (!it) return;
@@ -2955,7 +2994,7 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
 
       done();
       if (window.refAfterOrder) { try { result = (await window.refAfterOrder(result, phone)) || result; } catch {} }
-      try { localStorage.removeItem("sari_ref_pending"); localStorage.setItem("sari_ordered", "1"); const rc = document.getElementById("refOrderCode"); if (rc) rc.value = ""; const rm = document.getElementById("refOrderMsg"); if (rm) rm.textContent = ""; window.refDiscAmt = 0; } catch {}
+      try { sessionStorage.removeItem("sari_ref_pending"); localStorage.removeItem("sari_ref_pending"); localStorage.setItem("sari_ordered", "1"); const rc = document.getElementById("refOrderCode"); if (rc) rc.value = ""; const rm = document.getElementById("refOrderMsg"); if (rm) rm.textContent = ""; window.refDiscAmt = 0; } catch {}
       try { localStorage.setItem("sari_customer", JSON.stringify({ name, phone, address: addr, zone })); } catch {}
       cart = []; saveCart();
       $("#cartDialog").close();
@@ -4365,7 +4404,7 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
     if (r.data && r.data.error) { say("refAuthMsg", r.data.error, "err"); return; }
     if (!r.data || !r.data.token) { say("refAuthMsg", "সমস্যা হয়েছে, আবার চেষ্টা করুন", "err"); return; }
     setTok(r.data.token);
-    try { localStorage.removeItem("sari_ref_pending"); } catch {}
+    try { sessionStorage.removeItem("sari_ref_pending"); localStorage.removeItem("sari_ref_pending"); } catch {}
     // অর্ডার ফর্মে ফোন নম্বর নিজে থেকে বসানোর জন্য
     try {
       const c = JSON.parse(localStorage.getItem("sari_customer") || "{}");
@@ -4601,18 +4640,62 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
   };
 
   // রেফারেল লিংক (?ref=CODE) — কোড সেভ হয়ে অর্ডার ফর্মে নিজে বসবে
-  const prefill = () => { try { const c = localStorage.getItem("sari_ref_pending"); if (c && codeEl() && !codeEl().value) codeEl().value = c; } catch {} };
+  try { localStorage.removeItem("sari_ref_pending"); } catch {} // আগের সেভ হওয়া পুরনো কোড মুছে ফেলা
+  const prefill = () => { try { const c = sessionStorage.getItem("sari_ref_pending"); if (c && codeEl() && !codeEl().value) codeEl().value = c; } catch {} };
   prefill();
   if (typeof window.openCart === "function") { const _oc = window.openCart; window.openCart = function () { const r = _oc.apply(this, arguments); prefill(); return r; }; }
   try {
     const code = (new URLSearchParams(location.search).get("ref") || "").trim().toUpperCase();
     if (/^[A-Z0-9]{4,12}$/.test(code)) {
       // সরাসরি রেফারেল লিংক থেকে এলে (আগে অর্ডার করা থাকলেও) কোড আবার অটো বসবে
-      localStorage.setItem("sari_ref_pending", code); prefill();
+      sessionStorage.setItem("sari_ref_pending", code); prefill();
       try { const u = new URL(location.href); u.searchParams.delete("ref"); history.replaceState(null, "", u.pathname + (u.search || "") + u.hash); } catch {}
       setTimeout(() => { if (typeof toast === "function") toast("🎁 রেফারেল কোড সেভ হয়েছে — অর্ডারের সময় ছাড় পাবেন"); }, 1500);
     }
   } catch {}
+})();
+</script>
+<script>
+(function () {
+  var sel = document.getElementById("paymentMethod"), box = document.getElementById("payOpts");
+  function sync() { box.querySelectorAll(".pay-opt").forEach(function (b) { b.classList.toggle("on", b.dataset.v === sel.value); }); }
+  box.addEventListener("click", function (e) { var b = e.target.closest(".pay-opt"); if (!b) return; sel.value = b.dataset.v; sel.dispatchEvent(new Event("change")); sync(); });
+  var _t = window.togglePaymentFields; window.togglePaymentFields = function () { var r = _t.apply(this, arguments); sync(); return r; };
+
+  var ci = document.getElementById("couponInput"), rc = document.getElementById("refOrderCode");
+  var cm = document.getElementById("couponMsg"), rm = document.getElementById("refOrderMsg");
+  // একটাই বক্স: আগে কুপন দেখে, কুপন না হলে রেফারেল কোড হিসেবে যাচাই করে
+  window.applyAnyCode = async function () {
+    var code = ci.value.trim().toUpperCase().replace(/\s+/g, "");
+    ci.value = code; rm.textContent = "";
+    if (!code) { rc.value = ""; window.refDiscAmt = 0; await window.applyCoupon(); return; }
+    await window.applyCoupon();
+    if (typeof appliedCoupon !== "undefined" && appliedCoupon) { rc.value = ""; window.refDiscAmt = 0; rm.textContent = ""; if (window.renderCartSummary) renderCartSummary(); return; }
+    cm.textContent = ""; cm.className = "small";
+    rc.value = code; await window.refCheckCode();
+  };
+  ci.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); window.applyAnyCode(); } });
+  // কোড বদলালে আগের রেফারেল ছাড় সরে যাবে
+  ci.addEventListener("input", function () { if (rc.value || window.refDiscAmt) { rc.value = ""; window.refDiscAmt = 0; rm.textContent = ""; if (window.renderCartSummary) renderCartSummary(); } });
+
+
+  var _r = window.renderCartSummary; window.renderCartSummary = function () {
+    var r = _r.apply(this, arguments), el = document.getElementById("freeLive"); if (!el) return r;
+    try {
+      var t = calcTotals();
+      if (t.free) el.innerHTML = '<div class="fl ok"><span class="fl-truck">🚚</span><span class="fl-txt">🎉 <em>ফ্রি ডেলিভারি!</em> “' + esc(t.freeBy) + '” শাড়ির জন্য আপনার ডেলিভারি চার্জ লাগবে না</span></div>';
+      else if (t.nearest) el.innerHTML = '<div class="fl go"><span class="fl-truck">🚚</span><span class="fl-txt">আর মাত্র <em>' + taka(t.nearest.need) + '/-</em> টাকার “' + esc(t.nearest.name) + '” নিলেই ডেলিভারি <b>ফ্রি!</b><div class="fl-track"><div class="fl-fill" style="width:' + Math.max(6, Math.min(100, Math.round(t.nearest.net / t.nearest.min * 100))) + '%"></div></div></span></div>';
+      else el.innerHTML = "";
+    } catch (e) { el.innerHTML = ""; }
+    return r;
+  };
+
+  var _o = window.openCart; window.openCart = function () {
+    var r = _o.apply(this, arguments);
+    // রেফারেল লিংক থেকে এলে কোড বক্সে বসে নিজে নিজে প্রয়োগ হবে
+    if (rc.value && !ci.value) { ci.value = rc.value; rc.value = ""; window.applyAnyCode(); }
+    sync(); return r;
+  };
 })();
 </script>
 <script data-goatcounter="https://saribilash.goatcounter.com/count"
@@ -4744,7 +4827,7 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
   var root=document.documentElement;
   function setTL(){var t=root.getAttribute("data-theme")==="dark",b=document.getElementById("themeBtn");if(b)b.textContent=t?"☀️":"🌙";var l=document.getElementById("langBtn");if(l)l.textContent=(root.lang==="en")?"বাং":"EN";}
   window.toggleTheme=function(){var d=root.getAttribute("data-theme")!=="dark";if(d)root.setAttribute("data-theme","dark");else root.removeAttribute("data-theme");try{localStorage.setItem("sari_theme",d?"dark":"light")}catch(e){}setTL();var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute("content",d?"#0b111c":"#0f1c2e");};
-  var D={"🎁 রেফার করলে কী পাব?": "🎁 What do I get for referring?", "🎟️ রেফারেল কোড কীভাবে ব্যবহার করব?": "🎟️ How do I use a referral code?", "শাড়ি বিলাশ": "Shari Bilash", "📲 অ্যাপ ইনস্টল": "📲 Install App", "শাড়ির কালেকশন": "Saree Collection", "থ্রি পিস": "Three Piece", "❤️ উইশলিস্ট (": "❤️ Wishlist (", "🛒 কার্ট (": "🛒 Cart (", "📦 আমার অর্ডার": "📦 My Orders", "💰 রেফার করে ইনকাম করুন": "💰 Refer & Earn Income", "ডেক্সটপ মোড": "Desktop mode", "মোবাইল মোড": "Mobile mode", "👑 অ্যাডমিন": "👑 Admin", "⚙️ ক্যাটাগরি / বাজেট": "⚙️ Category / Budget", "সব ক্যাটাগরি": "All categories", "💰 বাজেট:": "💰 Budget:", "মুছুন": "Clear", "নিজস্ব আভিজাত্যে উজ্জ্বল": "Radiant in Its Own Elegance", "শাড়ির কালেকশন দেখুন": "View Saree Collection", "থ্রি পিস দেখুন": "View Three Piece", "১০০% প্রিমিয়াম কোয়ালিটি": "100% Premium Quality", "সেরা সুতা ও সুনিপুণ কারুকাজে তৈরি এক্সক্লুসিভ কালেকশন": "Exclusive collection made with the finest thread and craftsmanship", "ক্যাশ অন ডেলিভারি": "Cash on Delivery", "পণ্য হাতে পেয়ে দেখে শুনে টাকা পরিশোধের সুব্যবস্থা": "Pay after you receive and inspect the product", "হোম ডেলিভারি সেবা": "Home Delivery", "সারা বাংলাদেশে নিরাপদ হোম ডেলিভারি সুবিধা": "Safe home delivery all over Bangladesh", "আমাদের এক্সক্লুসিভ শাড়ির কালেকশন": "Our Exclusive Saree Collection", "প্রোডাক্ট লোড হচ্ছে...": "Loading products...", "আমাদের সম্মানিত ক্রেতাদের মতামত": "What Our Valued Customers Say", "আপনার মতামত লিখুন": "Write your review", "শাড়ি বিলাশ সম্পর্কে দুটো কথা": "A Few Words About Shari Bilash", "💎 কেন আমরা": "💎 Why Us", "🛍️ নিয়ম": "🛍️ How to Order", "❓ প্রশ্ন": "❓ FAQ", "💬 জানুন": "💬 Contact", "সেরা সুতা ও সুনিপুণ কারুকাজ": "Finest thread & craftsmanship", "রংয়ের গ্যারান্টি": "Colour guarantee", "ছবির রংয়েই শাড়ি পাঠানো হয়": "Sent in the colour shown in the photo", "হাতে পেয়ে টাকা দিন, চাইলে bKash": "Pay on receipt, or use bKash", "সারা দেশে ডেলিভারি": "Nationwide delivery", "নির্বাচিত শাড়িতে ফ্রি ডেলিভারি": "Free delivery on selected sarees", "কুপন ছাড়": "Coupon discount", "কুপন কোডে বাড়তি ডিসকাউন্ট": "Extra discount with a coupon code", "লাইভ অর্ডার ট্র্যাকিং": "Live order tracking", "ফোন নম্বর দিয়ে অবস্থা দেখুন": "Check status with your phone number", "সহজ অর্ডার বাতিল": "Easy cancellation", "কনফার্মের আগে নিজেই বাতিল": "Cancel yourself before confirmation", "সরাসরি সাহায্য": "Direct help", "WhatsApp বা ফেসবুকে উত্তর": "Answers on WhatsApp or Facebook", "📦 ডেলিভারি কত দিনে পাব?": "📦 How long does delivery take?", "🎨 রং কি ছবির মতোই হবে?": "🎨 Will the colour match the photo?", "🚚 ডেলিভারি চার্জ কত?": "🚚 What is the delivery charge?", "💳 পেমেন্ট কীভাবে করব?": "💳 How do I pay?", "❌ অর্ডার করে বাতিল করা যাবে?": "❌ Can I cancel an order?", "🔍 অর্ডারের অবস্থা কীভাবে দেখব?": "🔍 How do I check my order status?", "কিছু জানার আছে? সরাসরি মেসেজ করুন 😊": "Have a question? Message us directly 😊", "💬 WhatsApp-এ মেসেজ করুন": "💬 Message on WhatsApp", "📘 ফেসবুক পেজে মেসেজ করুন": "📘 Message on Facebook Page", "শাড়ি বিলাশ — ঐতিহ্যের বুননে অনন্য সৌন্দর্য": "Shari Bilash — Unique beauty woven in tradition", "জরুরি প্রয়োজনে কল করুন:": "Urgent? Call:", "ফেসবুক পেজ:": "Facebook Page:", "← শাড়ির কালেকশন": "← Saree Collection", "থ্রি পিস কালেকশন": "Three Piece Collection", "লগ আউট": "Log out", "ছবিতে ট্যাপ করলে জুম হবে, আবার ট্যাপ করলে ছোট হবে": "Tap the image to zoom, tap again to shrink", "❤️ আপনার পছন্দের শাড়িগুলো": "❤️ Your favourite sarees", "🔗 আমার উইশলিস্ট লিংক কপি করুন": "🔗 Copy my wishlist link", "🛒 আপনার কার্ট": "🛒 Your Cart", "🎟️ কুপন কোড (থাকলে)": "🎟️ Coupon code (if any)", "প্রয়োগ করুন": "Apply", "আপনার নাম": "Your name", "ফোন নম্বর": "Phone number", "🎁 রেফারেল কোড (থাকলে ছাড় পাবেন)": "🎁 Referral code (get a discount if you have one)", "প্রয়োগ": "Apply", "সম্পূর্ণ ঠিকানা": "Full address", "পেমেন্ট পদ্ধতি": "Payment method", "Cash on Delivery — শাড়ি হাতে পেয়ে টাকা দেব": "Cash on Delivery — pay when I receive the saree", "bKash — আগে টাকা পাঠাব": "bKash — pay in advance", "bKash পেমেন্ট নির্দেশিকা": "bKash payment instructions", "যে নম্বরে টাকা পাঠাবেন:": "Send money to:", "মোট টাকা:": "Total:", "অর্ডার নিশ্চিত করুন": "Confirm Order", "WhatsApp-এ পাঠিয়ে অর্ডার করুন": "Order via WhatsApp", "✍️ আপনার মতামত লিখুন": "✍️ Write your review", "ধন্যবাদ!": "Thank you!", "ঠিক আছে": "OK", "আপনার মতামত": "Your review", "আপনার রেটিং": "Your rating", "স্টার ট্যাপ করে রেটিং দিন": "Tap a star to rate", "📨 রিভিউ পাঠান": "📨 Submit Review", "আপনার অর্ডার সফলভাবে জমা হয়েছে!": "Your order was placed successfully!", "অর্ডার আইডি:": "Order ID:", "সর্বমোট:": "Grand total:", "WhatsApp-এ অর্ডার আইডি পাঠান": "Send Order ID on WhatsApp", "আমার অর্ডারসমূহ": "My Orders", "🔍 অর্ডার খুঁজুন": "🔍 Find Order", "সহজে খুঁজুন": "Search easily", "আপনার অর্ডারের সব তথ্য": "All your order details", "কাস্টমার সাপোর্ট": "Customer Support", "যেকোনো প্রয়োজনে আমাদের সঙ্গে কথা বলুন": "Talk to us anytime you need", "WhatsApp এ মেসেজ করুন": "Message on WhatsApp", "সরাসরি চ্যাটে কথা বলুন": "Chat with us directly", "ফেসবুক পেজে মেসেজ করুন": "Message on Facebook Page", "Sari Bilash পেজে মেসেজ দিন": "Message the Sari Bilash page", "আপনার পছন্দের শাড়ির তালিকা": "Your favourite sarees", "🔍 শাড়ি খুঁজুন — নাম, রং বা ধরন (যেমন: জামদানি, লাল)": "🔍 Search sarees — name, colour or type (e.g. Jamdani, red)", "শাড়ি খুঁজুন": "Search sarees", "ক্যাটাগরি ও বাজেট ফিল্টার": "Category & budget filter", "ক্যাটাগরি": "Category", "কত টাকা থেকে": "From (price)", "সর্বনিম্ন বাজেট": "Minimum budget", "কত টাকা পর্যন্ত": "Up to (price)", "সর্বোচ্চ বাজেট": "Maximum budget", "🔍 থ্রি পিস খুঁজুন — নাম, রং বা কোড": "🔍 Search three piece — name, colour or code", "থ্রি পিস খুঁজুন": "Search three piece", "মেনু": "Menu", "বন্ধ করুন": "Close", "কুপন কোড লিখুন": "Enter coupon code", "সম্পূর্ণ নাম": "Full name", "১১ সংখ্যার মোবাইল নম্বর দিন (যেমন: 01XXXXXXXXX)": "Enter 11-digit mobile number (e.g. 01XXXXXXXXX)", "যেমন: SBAB12CD": "e.g. SBAB12CD", "গ্রাম/মহল্লা, থানা, জেলাসহ সম্পূর্ণ ঠিকানা লিখুন": "Full address with village/area, thana and district", "যেমন: রিনা আক্তার": "e.g. Rina Akter", "শাড়ি, কোয়ালিটি বা ডেলিভারি সম্পর্কে লিখুন...": "Write about the saree, quality or delivery...", "রেটিং দিন": "Give a rating", "মোবাইল নম্বর লিখুন (যেমন: 01XXXXXXXXX)": "Enter mobile number (e.g. 01XXXXXXXXX)", "যাচাই হচ্ছে...": "Checking...", "রেফারেল কোডটি সঠিক নয়": "Referral code is not valid", "কোডটি সঠিক নয়": "Code is not valid", "🎁 রেফারেল কোড সেভ হয়েছে — অর্ডারের সময় ছাড় পাবেন": "🎁 Referral code saved — you'll get a discount when you order", "অর্ডার করুন": "Order Now", "🛒 কার্টে রাখুন": "🛒 Add to Cart", "🤍 উইশলিস্ট": "🤍 Wishlist", "WhatsApp এ অর্ডার করুন": "Order on WhatsApp", "টাকা ছাড় পাবেন": "taka discount", "ডেলিভারি চার্জ": "Delivery charge", "মোট": "Total"}, P=[["কারও রেফারেল লিংকে ঢুকলে", "If you open someone's referral link, the code fills in the order form automatically. Otherwise type the code in the “Referral code” box and tap “Apply”. After you order with a code, the box stays empty next time — type the code again if you want the discount again."], ["“💰 রেফার করে ইনকাম করুন” বাটনে", "Tap “💰 Refer & Earn Income”, enter your phone number and get your own referral code and link. When someone orders with your code they get a discount on that order, and once that order is delivered you earn a bonus. You can later request to withdraw your saved bonus."],["শিল্পীর হাতে বোনা", "Tradition and beauty come together in hand-woven sarees. Choose your favourite saree now."], ["পছন্দের শাড়ির ছবি বা", "Tap a saree's photo or name to see details and zoom. Use “🤍 Wishlist” to buy later."], ["নাম, ফোন ও ঠিকানা দিন", "Enter your name, phone and address. Choose Cash on Delivery or bKash (with Transaction ID)."], ["যেকোনো প্রয়োজনে WhatsApp বা ফেসবুক পেজ বাটনে", "You can also order by talking directly through the WhatsApp or Facebook Page buttons."], ["অর্ডার কনফার্মের পর সর্বোচ্চ", "You'll receive delivery within 2-3 days of order confirmation. Check your order status anytime from “📦 My Orders” using your phone number."], ["হ্যাঁ, ছবির রংয়ের সাথে", "Yes, sarees are sent matching the photo colour. Each colour has its own photo and stock. A slight difference may appear due to screen or lighting."], ["সারা বাংলাদেশে একই ডেলিভারি", "Delivery charge is the same all over Bangladesh. Selected sarees have free delivery. If not free, we'll tell you the charge after you order, and you can also see it live on “My Orders”."], ["ক্যাশ অন ডেলিভারিতে পণ্য হাতে", "Pay on receipt with Cash on Delivery. Or choose bKash in the order form, send money to the number shown and enter the Transaction ID."], ["অর্ডার কনফার্ম হওয়ার আগে", "You can cancel yourself from “📦 My Orders” before the order is confirmed. To cancel after confirmation, tell us on WhatsApp."], ["উপরের “📦 আমার অর্ডার” চাপুন", "Tap “📦 My Orders” above and enter the phone number you used. Order status, delivery charge and total update automatically."], ["আরও কিছু জানার থাকলে", "For anything else, message us using the WhatsApp or Facebook buttons below."], ["শাড়ির রং, সাইজ, ডেলিভারি", "We'll answer any question about colour, size, delivery or orders."], ["যেকোনো প্রয়োজনে বা বিস্তারিত", "For any need or more details, message us on WhatsApp or the Facebook Page."], ["আরামদায়ক কাপড়, সুন্দর", "Comfortable fabric, beautiful design — choose your favourite three piece now."], ["আপনার মতামত জমা হয়েছে", "Your review has been submitted. It will appear on the site once we approve it."], ["ধন্যবাদ, শাড়ি বিলাশের সঙ্গে", "Thank you for being with Shari Bilash. We'll contact you shortly to confirm delivery. Check status from “My Orders” with your phone number."], ["আপনার অর্ডারের বর্তমান অবস্থা", "Enter your phone number here to see your order's current status."], ["আপনার তথ্য নিরাপদে সংরক্ষিত", "Your information is stored safely. We only use it to show you your orders."], ["🔥 শাড়ি বিলাশ কালেকশনে", "🔥 Exclusive discounts and special offers on the Shari Bilash collection!"], ["🚚 নির্বাচিত শাড়িতে ফ্রি", "🚚 Free delivery on selected sarees"], ["👚 নির্বাচিত শাড়িতে ব্লাউজ", "👚 Free blouse piece on selected sarees"], ["🎟️ কুপন কোড ব্যবহার করে", "🎟️ Use a coupon code for extra discount"], ["👗 নতুন থ্রি পিস", "👗 New three piece collection is here — take a look"], ["📦 ক্যাশ অন ডেলিভারি — পণ্য", "📦 Cash on Delivery — pay after you receive"], ["💳 bKash-এ পেমেন্টের", "💳 Pay easily with bKash"], ["🏠 সারা বাংলাদেশে হোম", "🏠 Home delivery all over Bangladesh"], ["💬 WhatsApp-এ সরাসরি অর্ডার", "💬 Order & ask directly on WhatsApp"]], keys=Object.keys(D).sort(function(a,b){return b.length-a.length;});
+  var D={"🎟️ কুপন বা রেফারেল কোড": "🎟️ Coupon or referral code", "কোডটি এখানে লিখুন": "Enter your code here", "আপনার তথ্য": "Your details", "পেমেন্ট": "Payment", "অর্ডারের হিসাব": "Order summary", "🎁 ছাড়ের কোড আছে?": "🎁 Have a discount code?", "💵 ক্যাশ অন ডেলিভারি": "💵 Cash on Delivery", "হাতে পেয়ে টাকা দিন": "Pay when you receive", "আগে টাকা পাঠান": "Pay in advance", "অথবা": "or", "🎁 রেফার করলে কী পাব?": "🎁 What do I get for referring?", "🎟️ রেফারেল কোড কীভাবে ব্যবহার করব?": "🎟️ How do I use a referral code?", "শাড়ি বিলাশ": "Shari Bilash", "📲 অ্যাপ ইনস্টল": "📲 Install App", "শাড়ির কালেকশন": "Saree Collection", "থ্রি পিস": "Three Piece", "❤️ উইশলিস্ট (": "❤️ Wishlist (", "🛒 কার্ট (": "🛒 Cart (", "📦 আমার অর্ডার": "📦 My Orders", "💰 রেফার করে ইনকাম করুন": "💰 Refer & Earn Income", "ডেক্সটপ মোড": "Desktop mode", "মোবাইল মোড": "Mobile mode", "👑 অ্যাডমিন": "👑 Admin", "⚙️ ক্যাটাগরি / বাজেট": "⚙️ Category / Budget", "সব ক্যাটাগরি": "All categories", "💰 বাজেট:": "💰 Budget:", "মুছুন": "Clear", "নিজস্ব আভিজাত্যে উজ্জ্বল": "Radiant in Its Own Elegance", "শাড়ির কালেকশন দেখুন": "View Saree Collection", "থ্রি পিস দেখুন": "View Three Piece", "১০০% প্রিমিয়াম কোয়ালিটি": "100% Premium Quality", "সেরা সুতা ও সুনিপুণ কারুকাজে তৈরি এক্সক্লুসিভ কালেকশন": "Exclusive collection made with the finest thread and craftsmanship", "ক্যাশ অন ডেলিভারি": "Cash on Delivery", "পণ্য হাতে পেয়ে দেখে শুনে টাকা পরিশোধের সুব্যবস্থা": "Pay after you receive and inspect the product", "হোম ডেলিভারি সেবা": "Home Delivery", "সারা বাংলাদেশে নিরাপদ হোম ডেলিভারি সুবিধা": "Safe home delivery all over Bangladesh", "আমাদের এক্সক্লুসিভ শাড়ির কালেকশন": "Our Exclusive Saree Collection", "প্রোডাক্ট লোড হচ্ছে...": "Loading products...", "আমাদের সম্মানিত ক্রেতাদের মতামত": "What Our Valued Customers Say", "আপনার মতামত লিখুন": "Write your review", "শাড়ি বিলাশ সম্পর্কে দুটো কথা": "A Few Words About Shari Bilash", "💎 কেন আমরা": "💎 Why Us", "🛍️ নিয়ম": "🛍️ How to Order", "❓ প্রশ্ন": "❓ FAQ", "💬 জানুন": "💬 Contact", "সেরা সুতা ও সুনিপুণ কারুকাজ": "Finest thread & craftsmanship", "রংয়ের গ্যারান্টি": "Colour guarantee", "ছবির রংয়েই শাড়ি পাঠানো হয়": "Sent in the colour shown in the photo", "হাতে পেয়ে টাকা দিন, চাইলে bKash": "Pay on receipt, or use bKash", "সারা দেশে ডেলিভারি": "Nationwide delivery", "নির্বাচিত শাড়িতে ফ্রি ডেলিভারি": "Free delivery on selected sarees", "কুপন ছাড়": "Coupon discount", "কুপন কোডে বাড়তি ডিসকাউন্ট": "Extra discount with a coupon code", "লাইভ অর্ডার ট্র্যাকিং": "Live order tracking", "ফোন নম্বর দিয়ে অবস্থা দেখুন": "Check status with your phone number", "সহজ অর্ডার বাতিল": "Easy cancellation", "কনফার্মের আগে নিজেই বাতিল": "Cancel yourself before confirmation", "সরাসরি সাহায্য": "Direct help", "WhatsApp বা ফেসবুকে উত্তর": "Answers on WhatsApp or Facebook", "📦 ডেলিভারি কত দিনে পাব?": "📦 How long does delivery take?", "🎨 রং কি ছবির মতোই হবে?": "🎨 Will the colour match the photo?", "🚚 ডেলিভারি চার্জ কত?": "🚚 What is the delivery charge?", "💳 পেমেন্ট কীভাবে করব?": "💳 How do I pay?", "❌ অর্ডার করে বাতিল করা যাবে?": "❌ Can I cancel an order?", "🔍 অর্ডারের অবস্থা কীভাবে দেখব?": "🔍 How do I check my order status?", "কিছু জানার আছে? সরাসরি মেসেজ করুন 😊": "Have a question? Message us directly 😊", "💬 WhatsApp-এ মেসেজ করুন": "💬 Message on WhatsApp", "📘 ফেসবুক পেজে মেসেজ করুন": "📘 Message on Facebook Page", "শাড়ি বিলাশ — ঐতিহ্যের বুননে অনন্য সৌন্দর্য": "Shari Bilash — Unique beauty woven in tradition", "জরুরি প্রয়োজনে কল করুন:": "Urgent? Call:", "ফেসবুক পেজ:": "Facebook Page:", "← শাড়ির কালেকশন": "← Saree Collection", "থ্রি পিস কালেকশন": "Three Piece Collection", "লগ আউট": "Log out", "ছবিতে ট্যাপ করলে জুম হবে, আবার ট্যাপ করলে ছোট হবে": "Tap the image to zoom, tap again to shrink", "❤️ আপনার পছন্দের শাড়িগুলো": "❤️ Your favourite sarees", "🔗 আমার উইশলিস্ট লিংক কপি করুন": "🔗 Copy my wishlist link", "🛒 আপনার কার্ট": "🛒 Your Cart", "🎟️ কুপন কোড (থাকলে)": "🎟️ Coupon code (if any)", "প্রয়োগ করুন": "Apply", "আপনার নাম": "Your name", "ফোন নম্বর": "Phone number", "🎁 রেফারেল কোড (থাকলে ছাড় পাবেন)": "🎁 Referral code (get a discount if you have one)", "প্রয়োগ": "Apply", "সম্পূর্ণ ঠিকানা": "Full address", "পেমেন্ট পদ্ধতি": "Payment method", "Cash on Delivery — শাড়ি হাতে পেয়ে টাকা দেব": "Cash on Delivery — pay when I receive the saree", "bKash — আগে টাকা পাঠাব": "bKash — pay in advance", "bKash পেমেন্ট নির্দেশিকা": "bKash payment instructions", "যে নম্বরে টাকা পাঠাবেন:": "Send money to:", "মোট টাকা:": "Total:", "অর্ডার নিশ্চিত করুন": "Confirm Order", "WhatsApp-এ পাঠিয়ে অর্ডার করুন": "Order via WhatsApp", "✍️ আপনার মতামত লিখুন": "✍️ Write your review", "ধন্যবাদ!": "Thank you!", "ঠিক আছে": "OK", "আপনার মতামত": "Your review", "আপনার রেটিং": "Your rating", "স্টার ট্যাপ করে রেটিং দিন": "Tap a star to rate", "📨 রিভিউ পাঠান": "📨 Submit Review", "আপনার অর্ডার সফলভাবে জমা হয়েছে!": "Your order was placed successfully!", "অর্ডার আইডি:": "Order ID:", "সর্বমোট:": "Grand total:", "WhatsApp-এ অর্ডার আইডি পাঠান": "Send Order ID on WhatsApp", "আমার অর্ডারসমূহ": "My Orders", "🔍 অর্ডার খুঁজুন": "🔍 Find Order", "সহজে খুঁজুন": "Search easily", "আপনার অর্ডারের সব তথ্য": "All your order details", "কাস্টমার সাপোর্ট": "Customer Support", "যেকোনো প্রয়োজনে আমাদের সঙ্গে কথা বলুন": "Talk to us anytime you need", "WhatsApp এ মেসেজ করুন": "Message on WhatsApp", "সরাসরি চ্যাটে কথা বলুন": "Chat with us directly", "ফেসবুক পেজে মেসেজ করুন": "Message on Facebook Page", "Sari Bilash পেজে মেসেজ দিন": "Message the Sari Bilash page", "আপনার পছন্দের শাড়ির তালিকা": "Your favourite sarees", "🔍 শাড়ি খুঁজুন — নাম, রং বা ধরন (যেমন: জামদানি, লাল)": "🔍 Search sarees — name, colour or type (e.g. Jamdani, red)", "শাড়ি খুঁজুন": "Search sarees", "ক্যাটাগরি ও বাজেট ফিল্টার": "Category & budget filter", "ক্যাটাগরি": "Category", "কত টাকা থেকে": "From (price)", "সর্বনিম্ন বাজেট": "Minimum budget", "কত টাকা পর্যন্ত": "Up to (price)", "সর্বোচ্চ বাজেট": "Maximum budget", "🔍 থ্রি পিস খুঁজুন — নাম, রং বা কোড": "🔍 Search three piece — name, colour or code", "থ্রি পিস খুঁজুন": "Search three piece", "মেনু": "Menu", "বন্ধ করুন": "Close", "কুপন কোড লিখুন": "Enter coupon code", "সম্পূর্ণ নাম": "Full name", "১১ সংখ্যার মোবাইল নম্বর দিন (যেমন: 01XXXXXXXXX)": "Enter 11-digit mobile number (e.g. 01XXXXXXXXX)", "যেমন: SBAB12CD": "e.g. SBAB12CD", "গ্রাম/মহল্লা, থানা, জেলাসহ সম্পূর্ণ ঠিকানা লিখুন": "Full address with village/area, thana and district", "যেমন: রিনা আক্তার": "e.g. Rina Akter", "শাড়ি, কোয়ালিটি বা ডেলিভারি সম্পর্কে লিখুন...": "Write about the saree, quality or delivery...", "রেটিং দিন": "Give a rating", "মোবাইল নম্বর লিখুন (যেমন: 01XXXXXXXXX)": "Enter mobile number (e.g. 01XXXXXXXXX)", "যাচাই হচ্ছে...": "Checking...", "রেফারেল কোডটি সঠিক নয়": "Referral code is not valid", "কোডটি সঠিক নয়": "Code is not valid", "🎁 রেফারেল কোড সেভ হয়েছে — অর্ডারের সময় ছাড় পাবেন": "🎁 Referral code saved — you'll get a discount when you order", "অর্ডার করুন": "Order Now", "🛒 কার্টে রাখুন": "🛒 Add to Cart", "🤍 উইশলিস্ট": "🤍 Wishlist", "WhatsApp এ অর্ডার করুন": "Order on WhatsApp", "টাকা ছাড় পাবেন": "taka discount", "ডেলিভারি চার্জ": "Delivery charge", "মোট": "Total"}, P=[["কারও রেফারেল লিংকে ঢুকলে", "If you open someone's referral link, the code fills in the order form automatically. Otherwise type the code in the “Referral code” box and tap “Apply”. After you order with a code, the box stays empty next time — type the code again if you want the discount again."], ["“💰 রেফার করে ইনকাম করুন” বাটনে", "Tap “💰 Refer & Earn Income”, enter your phone number and get your own referral code and link. When someone orders with your code they get a discount on that order, and once that order is delivered you earn a bonus. You can later request to withdraw your saved bonus."],["শিল্পীর হাতে বোনা", "Tradition and beauty come together in hand-woven sarees. Choose your favourite saree now."], ["পছন্দের শাড়ির ছবি বা", "Tap a saree's photo or name to see details and zoom. Use “🤍 Wishlist” to buy later."], ["নাম, ফোন ও ঠিকানা দিন", "Enter your name, phone and address. Choose Cash on Delivery or bKash (with Transaction ID)."], ["যেকোনো প্রয়োজনে WhatsApp বা ফেসবুক পেজ বাটনে", "You can also order by talking directly through the WhatsApp or Facebook Page buttons."], ["অর্ডার কনফার্মের পর সর্বোচ্চ", "You'll receive delivery within 2-3 days of order confirmation. Check your order status anytime from “📦 My Orders” using your phone number."], ["হ্যাঁ, ছবির রংয়ের সাথে", "Yes, sarees are sent matching the photo colour. Each colour has its own photo and stock. A slight difference may appear due to screen or lighting."], ["সারা বাংলাদেশে একই ডেলিভারি", "Delivery charge is the same all over Bangladesh. Selected sarees have free delivery. If not free, we'll tell you the charge after you order, and you can also see it live on “My Orders”."], ["ক্যাশ অন ডেলিভারিতে পণ্য হাতে", "Pay on receipt with Cash on Delivery. Or choose bKash in the order form, send money to the number shown and enter the Transaction ID."], ["অর্ডার কনফার্ম হওয়ার আগে", "You can cancel yourself from “📦 My Orders” before the order is confirmed. To cancel after confirmation, tell us on WhatsApp."], ["উপরের “📦 আমার অর্ডার” চাপুন", "Tap “📦 My Orders” above and enter the phone number you used. Order status, delivery charge and total update automatically."], ["আরও কিছু জানার থাকলে", "For anything else, message us using the WhatsApp or Facebook buttons below."], ["শাড়ির রং, সাইজ, ডেলিভারি", "We'll answer any question about colour, size, delivery or orders."], ["যেকোনো প্রয়োজনে বা বিস্তারিত", "For any need or more details, message us on WhatsApp or the Facebook Page."], ["আরামদায়ক কাপড়, সুন্দর", "Comfortable fabric, beautiful design — choose your favourite three piece now."], ["আপনার মতামত জমা হয়েছে", "Your review has been submitted. It will appear on the site once we approve it."], ["ধন্যবাদ, শাড়ি বিলাশের সঙ্গে", "Thank you for being with Shari Bilash. We'll contact you shortly to confirm delivery. Check status from “My Orders” with your phone number."], ["আপনার অর্ডারের বর্তমান অবস্থা", "Enter your phone number here to see your order's current status."], ["আপনার তথ্য নিরাপদে সংরক্ষিত", "Your information is stored safely. We only use it to show you your orders."], ["🔥 শাড়ি বিলাশ কালেকশনে", "🔥 Exclusive discounts and special offers on the Shari Bilash collection!"], ["🚚 নির্বাচিত শাড়িতে ফ্রি", "🚚 Free delivery on selected sarees"], ["👚 নির্বাচিত শাড়িতে ব্লাউজ", "👚 Free blouse piece on selected sarees"], ["🎟️ কুপন কোড ব্যবহার করে", "🎟️ Use a coupon code for extra discount"], ["👗 নতুন থ্রি পিস", "👗 New three piece collection is here — take a look"], ["📦 ক্যাশ অন ডেলিভারি — পণ্য", "📦 Cash on Delivery — pay after you receive"], ["💳 bKash-এ পেমেন্টের", "💳 Pay easily with bKash"], ["🏠 সারা বাংলাদেশে হোম", "🏠 Home delivery all over Bangladesh"], ["💬 WhatsApp-এ সরাসরি অর্ডার", "💬 Order & ask directly on WhatsApp"]], keys=Object.keys(D).sort(function(a,b){return b.length-a.length;});
   var BN=/[\u0980-\u09FF]/, DG="০১২৩৪৫৬৭৮৯", busy=false;
   function dig(s){return s.replace(/[০-৯]/g,function(c){return DG.indexOf(c);});}
   function tr(s){
