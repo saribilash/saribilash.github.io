@@ -1600,12 +1600,17 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
 
         <div class="ck-disc" id="discBox">
           <div class="ck-disc-t">🎁 ছাড়ের কোড আছে?</div>
-          <div id="couponCard"><div id="couponChips"></div></div>
-          <label class="field-label" for="couponInput">🎟️ কুপন বা রেফারেল কোড</label>
-          <div class="row"><input id="couponInput" placeholder="কোডটি এখানে লিখুন" style="margin:0;text-transform:uppercase;" autocomplete="off" maxlength="30"><button type="button" class="btn order-btn" style="padding:10px 14px;white-space:nowrap;flex:0 0 auto;font-size:15px;" onclick="applyAnyCode()">প্রয়োগ করুন</button></div>
-          <input type="hidden" id="refOrderCode">
-          <div id="couponMsg" class="small" style="margin-top:6px;"></div>
-          <div id="refOrderMsg" class="small" style="margin-top:4px;"></div>
+          <div id="couponCard">
+            <div id="couponChips"></div>
+            <label class="field-label" for="couponInput">🎟️ কুপন কোড (থাকলে)</label>
+            <div class="row"><input id="couponInput" placeholder="কুপন কোড লিখুন" style="margin:0;text-transform:uppercase;" autocomplete="off"><button type="button" class="btn order-btn" style="padding:10px 14px;white-space:nowrap;flex:0 0 auto;font-size:15px;" onclick="applyCoupon()">প্রয়োগ করুন</button></div>
+            <div id="couponMsg" class="small" style="margin-top:6px;"></div>
+          </div>
+          <div id="refCheckoutBox" style="margin-top:14px;padding-top:12px;border-top:1px dashed rgba(148,163,184,.5);">
+            <label class="field-label" for="refOrderCode" style="margin-top:0">🎁 রেফারেল কোড (থাকলে ছাড় পাবেন)</label>
+            <div class="row"><input id="refOrderCode" placeholder="যেমন: SBAB12CD" maxlength="12" autocomplete="off" style="margin:0;text-transform:uppercase;"><button type="button" class="btn order-btn" style="padding:10px 14px;font-size:14px;" onclick="refCheckCode()">প্রয়োগ</button></div>
+            <div id="refOrderMsg" class="small" style="margin-top:4px;"></div>
+          </div>
         </div>
 
         <div class="ck-step"><span class="ck-n">৩</span><h4>অর্ডারের হিসাব</h4></div>
@@ -2691,7 +2696,7 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
       $("#cartCheckout").style.display = "block";
       const cLines = couponLines();
       const hasCp = cLines.some(({ p }) => productCoupons(p).some(c => couponInfo[c] !== null));
-      $("#couponCard").style.display = hasCp ? "" : "none"; renderCouponChips(cLines);
+      $("#couponCard").style.display = ""; renderCouponChips(cLines);
       if (!hasCp && appliedCoupon) { appliedCoupon = null; $("#couponInput").value = ""; $("#couponMsg").textContent = ""; }
       box.innerHTML = cartHeadHtml(lines) + cartGroups().map(({ pid, p }, gi) => {
         const colors = productColors(p), images = productImages(p);
@@ -2758,7 +2763,7 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
       const save = c => lines.reduce((t, { i, p }) => t + (productCoupons(p).includes(c) ? couponAmt(p.price, couponInfo[c]) * Math.max(1, Number(i && i.qty) || 0) : 0), 0);
       box.innerHTML = codes.length ? `<div class="cp-save-t">এই কার্টে কুপন ব্যবহার করলে সাশ্রয়:</div>` + codes.map(c => { const sv = save(c); return `<button type="button" class="chip-btn" onclick="quickCoupon('${esc(c)}')">🎟️ ${esc(c)} ব্যবহার করলে ${sv > 0 ? taka(sv) + " টাকা সাশ্রয়" : "ছাড় পাবেন"}</button>`; }).join("") : "";
     }
-    function quickCoupon(code) { $("#couponInput").value = code; applyAnyCode(); }
+    function quickCoupon(code) { $("#couponInput").value = code; applyCoupon(); }
 
     function changeCartColor(idx, color) {
       const it = cart[idx]; if (!it) return;
@@ -2898,6 +2903,10 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
       const cm = $("#couponMsg");
       if (cm && appliedCoupon) {
         if (t.discount > 0) { cm.className = "small msg-ok"; cm.textContent = `✅ কুপন চালু: ${couponLabel(appliedCoupon)} (শুধু কুপন চলা শাড়িতে)`; }
+        else if (!cart.length && couponLines().some(({ p }) => productCoupons(p).includes(appliedCoupon.code))) {
+          const sv = couponLines().reduce((a, { p }) => a + (productCoupons(p).includes(appliedCoupon.code) ? couponAmt(p.price, { pct: appliedCoupon.percent, amt: appliedCoupon.amount }) : 0), 0);
+          cm.className = "small msg-ok"; cm.textContent = `✅ কুপন চালু: ${couponLabel(appliedCoupon)} — রং ও পিস বেছে নিলে প্রতি পিসে ${taka(sv)} টাকা সাশ্রয় হবে`;
+        }
         else { cm.className = "small msg-err"; cm.textContent = "এই কুপন আপনার কার্টের কোনো শাড়িতে প্রযোজ্য নয়।"; }
       }
       renderCouponChips(couponLines());
@@ -2958,7 +2967,7 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
       const btn = $("#submitOrderBtn"), msg = $("#orderMsg");
       pruneCart();
       const lines = cart.map(i => ({ i, p: getProduct(i.pid) })).filter(x => x.p);
-      if (!lines.length) { msg.className = "small msg-err"; msg.textContent = checkoutMode === "buy" ? "👆 আগে ওপর থেকে কোন রংয়ের কত পিস লাগবে বেছে নিন।" : "কার্ট খালি বা শাড়ির স্টক শেষ হয়ে গেছে।"; return; }
+      if (!lines.length) { msg.className = "small msg-err"; msg.textContent = checkoutMode === "buy" ? "👆 আগে ওপর থেকে কোন রংয়ের কত পিস লাগবে বেছে নিন (কমপক্ষে ১ পিস)।" : "কার্ট খালি বা শাড়ির স্টক শেষ হয়ে গেছে।"; try { $("#cartItems").scrollIntoView({ behavior: "smooth", block: "start" }); } catch {} return; }
       const f = new FormData(e.target);
       const name = String(f.get("name")).trim(), phone = String(f.get("phone")).trim(), addr = String(f.get("address")).trim();
       const zone = "all", payment = String(f.get("payment_method")), trx = String(f.get("transaction_id") || "").trim();
@@ -4621,7 +4630,7 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
     if (!data || !data.ok) { say("refOrderMsg", (data && data.reason) || "কোডটি সঠিক নয়", "err"); }
     else {
       window.refDiscAmt = Number(data.discount) || 0;
-      say("refOrderMsg", `✅ কোড ঠিক আছে (${data.name}-এর রেফারেল) — ${bn(window.refDiscAmt)} টাকা ছাড় পাবেন${/^01[3-9]\d{8}$/.test(phone.slice(-11)) ? "" : " (ফোন নম্বর দিলে নিশ্চিত হবে)"}`, "ok");
+      say("refOrderMsg", `✅ কোড ঠিক আছে — এই কোড ব্যবহার করায় আপনি ${bn(window.refDiscAmt)} টাকা ছাড় পাবেন। অর্ডার ডেলিভারি কনফার্ম হলে ${data.name} বোনাস পাবেন।${/^01[3-9]\d{8}$/.test(phone.slice(-11)) ? "" : " (ফোন নম্বর দিলে নিশ্চিত হবে)"}`, "ok");
     }
     if (typeof renderCartSummary === "function") renderCartSummary();
   };
@@ -4636,7 +4645,7 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
     const { data, error } = await db.rpc("ref_apply_order", { p_order_id: String(result.id), p_phone: phone, p_code: code });
     let note, ok = false;
     if (error) note = "⚠️ রেফারেল ছাড় বসানো যায়নি: " + rpcErr(error);
-    else { ok = true; note = `🎁 রেফারেল ছাড় ${bn(data.discount)}/- যোগ হয়েছে`; result = { ...result, total: data.total }; }
+    else { ok = true; note = `🎁 রেফারেল কোডের জন্য আপনি ${bn(data.discount)}/- ছাড় পেয়েছেন। ডেলিভারি কনফার্ম হলে রেফারকারী বোনাস পাবেন।`; result = { ...result, total: data.total }; }
     setTimeout(() => {
       const box = R("#successDialog > div"); if (!box) return;
       let p = R("#refSuccNote"); if (!p) { p = document.createElement("p"); p.id = "refSuccNote"; p.className = "small"; p.style.cssText = "margin-bottom:12px;font-weight:700;"; const ref = R("#successWa"); box.insertBefore(p, ref); }
@@ -4669,24 +4678,13 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
   var _t = window.togglePaymentFields; window.togglePaymentFields = function () { var r = _t.apply(this, arguments); sync(); return r; };
 
   var ci = document.getElementById("couponInput"), rc = document.getElementById("refOrderCode");
-  var cm = document.getElementById("couponMsg"), rm = document.getElementById("refOrderMsg");
-  // একটাই বক্স: আগে কুপন দেখে, কুপন না হলে রেফারেল কোড হিসেবে যাচাই করে
-  window.applyAnyCode = async function () {
-    var code = ci.value.trim().toUpperCase().replace(/\s+/g, "");
-    ci.value = code; rm.textContent = "";
-    if (!code) { rc.value = ""; window.refDiscAmt = 0; await window.applyCoupon(); return; }
-    await window.applyCoupon();
-    if (typeof appliedCoupon !== "undefined" && appliedCoupon) { rc.value = ""; window.refDiscAmt = 0; rm.textContent = ""; if (window.renderCartSummary) renderCartSummary(); return; }
-    cm.textContent = ""; cm.className = "small";
-    rc.value = code; await window.refCheckCode();
-  };
-  ci.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); window.applyAnyCode(); } });
-  // কোড বদলালে আগের রেফারেল ছাড় সরে যাবে
-  ci.addEventListener("input", function () { if (rc.value || window.refDiscAmt) { rc.value = ""; window.refDiscAmt = 0; rm.textContent = ""; if (window.renderCartSummary) renderCartSummary(); } });
-
+  ci.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); window.applyCoupon(); } });
+  rc.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); window.refCheckCode(); } });
 
   var _r = window.renderCartSummary; window.renderCartSummary = function () {
-    var r = _r.apply(this, arguments), el = document.getElementById("freeLive"); if (!el) return r;
+    var r = _r.apply(this, arguments), el = document.getElementById("freeLive");
+    var sb = document.getElementById("submitOrderBtn"); if (sb) sb.style.opacity = cart.length ? "" : ".55";
+    if (!el) return r;
     try {
       var t = calcTotals();
       if (t.free) el.innerHTML = '<div class="fl ok"><span class="fl-truck">🚚</span><span class="fl-txt">🎉 <em>ফ্রি ডেলিভারি!</em> “' + esc(t.freeBy) + '” শাড়ির জন্য আপনার ডেলিভারি চার্জ লাগবে না</span></div>';
@@ -4698,8 +4696,7 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
 
   var _o = window.openCart; window.openCart = function () {
     var r = _o.apply(this, arguments);
-    // রেফারেল লিংক থেকে এলে কোড বক্সে বসে নিজে নিজে প্রয়োগ হবে
-    if (rc.value && !ci.value) { ci.value = rc.value; rc.value = ""; window.applyAnyCode(); }
+    if (rc.value && !window.refDiscAmt) window.refCheckCode(); // লিংক থেকে এলে কোড নিজে প্রয়োগ হবে
     sync(); return r;
   };
 })();
