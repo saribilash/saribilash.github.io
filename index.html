@@ -57,7 +57,10 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"OnlineStore","name":"শাড়ি বিলাশ","alternateName":["Shari Bilash","Sari Bilash"],"url":"https://saribilash.github.io/","logo":"https://saribilash.github.io/icon-192.png","description":"জামদানি, কাতান ও আরও অনেক এক্সক্লুসিভ শাড়ি ও থ্রি পিসের অনলাইন শপ। সারা বাংলাদেশে ক্যাশ অন ডেলিভারি।","telephone":"+8801628182808","areaServed":"BD","sameAs":["https://www.facebook.com/SariBilash02"]}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://oahfxjoauyvbkrfgbuqi.supabase.co" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&display=swap" rel="stylesheet"></noscript>
   <script>
     // সমস্যা ধরার জন্য: পেজ ঠিকমতো চালু না হলে স্ক্রিনে কারণ লিখে দেখাবে
     window.__errs = [];
@@ -90,7 +93,7 @@
     .nav a,.nav button{color:#f1f5f9;text-decoration:none;background:none;border:0;font:inherit;cursor:pointer;transition:all .3s;font-size:15px;font-weight:500}
     .nav a:hover,.nav button:hover{color:var(--gold)}
     .admin-nav-btn{background:var(--gold-gradient)!important;color:var(--navy)!important;padding:6px 14px!important;border-radius:8px!important;font-weight:700!important;display:none}
-    .hero{margin:28px auto;max-width:1200px;min-height:380px;border-radius:24px;background:linear-gradient(90deg,#0f1c2ee6 0%,#0f1c2ec2 50%,#0f1c2e1a 100%),url('https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1400&q=85') center/cover;color:#fff;padding:60px 8%;display:flex;align-items:center;box-shadow:0 12px 35px rgba(15,28,46,.25);border:1px solid rgba(212,175,55,.15)}
+    .hero{margin:28px auto;max-width:1200px;min-height:380px;border-radius:24px;background:linear-gradient(90deg,#0f1c2ee6 0%,#0f1c2ec2 50%,#0f1c2e1a 100%),url('https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=900&q=70') center/cover;color:#fff;padding:60px 8%;display:flex;align-items:center;box-shadow:0 12px 35px rgba(15,28,46,.25);border:1px solid rgba(212,175,55,.15)}
     .hero-text{max-width:550px;width:100%}
     .hero h1{font-size:clamp(36px,5vw,60px);line-height:1.25;margin:0 0 14px;background:linear-gradient(135deg,#fff 0%,#f3e5ad 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
     .hero p{font-size:19px;line-height:1.7;color:#e2e8f0;margin-bottom:24px}
@@ -120,7 +123,7 @@
     .image-container:hover .product-main-image{transform:scale(1.03)}
     .badges{position:absolute;top:12px;left:12px;display:flex;flex-direction:column;gap:6px;z-index:5;align-items:flex-start}
     .badge{font-size:13px;font-weight:700;padding:5px 12px;border-radius:20px;color:#fff;box-shadow:0 4px 12px rgba(0,0,0,.25)}
-    .b-disc{background:var(--red)} .b-new{background:#7e22ce} .b-sold{background:#334155}
+    .b-disc{background:var(--red)} .b-new{background:#7e22ce} .b-low{background:#ea580c} .b-sold{background:#334155}
     .wishlist-btn{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.96);border:1.5px solid rgba(212,175,55,.7);height:38px;padding:0 15px 0 11px;border-radius:30px;display:flex;align-items:center;gap:7px;box-shadow:0 6px 18px rgba(15,28,46,.22);z-index:6;font-size:13.5px;font-weight:700;color:var(--navy);font-family:inherit;white-space:nowrap;transition:all .3s}
     .wishlist-btn .wl-ic{font-size:18px;line-height:1;display:inline-block}
     .wishlist-btn:hover{transform:translateY(-2px);border-color:var(--gold);box-shadow:0 8px 22px rgba(212,175,55,.4)}
@@ -1294,6 +1297,27 @@ html[data-theme="dark"] dialog{color:#e7ebf2}
 html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3,html[data-theme="dark"] label,html[data-theme="dark"] .small{color:#e7ebf2}
 .nav .tl-btn{font-weight:700}
 
+
+    /* ===== হেডারের লেখা আরও বড় ===== */
+    .announcement-bar{font-size:16px}
+    .brand{font-size:32px}
+    .nav a,.nav button{font-size:16.5px}
+    .hf-toggle{font-size:15px}.hf-budget .budget-label{font-size:15px}.hf-clear{font-size:14px}
+    .hf-search input{font-size:16px}
+    @media(max-width:850px){.nav>a:not(.admin-nav-btn),.nav>button:not(.admin-nav-btn){font-size:14.5px}}
+    @media(max-width:550px){
+      .announcement-bar{font-size:14px}.ann-track{padding:7px 0}
+      .brand{font-size:23px}
+      .brand-logo{width:32px;height:32px}
+      .nav{gap:6px}
+      .nav>a:not(.admin-nav-btn),.nav>button:not(.admin-nav-btn){font-size:13.5px;padding:4px 10px}
+      .nav .tp-nav .ic{width:16px;height:16px}
+      .hf-search input{padding:8px 13px;font-size:14.5px}
+      .hf-toggle{padding:7px 11px;font-size:13.5px}
+      .hf-panel select,.hf-budget input{padding:7px 10px;font-size:14px}
+      .hf-budget .budget-label,.hf-clear{font-size:13.5px}
+      .tp-top .brand{font-size:21px}
+    }
 </style>
 </head>
 <body>
@@ -1570,7 +1594,7 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
     #orderPhone.ph-ok{border-color:#10b981!important}#orderPhone.ph-bad{border-color:#dc2626!important}
     .copy-mini{margin-left:6px;padding:4px 10px;border-radius:8px;border:1.5px solid var(--gold,#d4af37);background:rgba(212,175,55,.15);color:inherit;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
     .det-dots{display:flex;justify-content:center;gap:8px;margin:8px 0 2px}
-    .det-dots button{width:10px;height:10px;padding:0;border-radius:50%;border:0;background:rgba(148,163,184,.6);cursor:pointer}
+    .det-dots button{width:10px;height:10px;padding:0;border-radius:50%;border:0;background:rgba(148,163,184,.6);cursor:pointer;transition:width .3s ease,background .3s ease}
     .det-dots button.on{width:24px;border-radius:6px;background:var(--gold,#d4af37)}
     .detail-img{touch-action:pan-y}
     .rel-sec{margin:20px 0 6px}
@@ -1580,6 +1604,10 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
     .rel-card img{width:100%;height:160px;object-fit:cover;display:block}
     .rel-card b{display:block;font-size:13px;padding:6px 8px 0;line-height:1.3;max-height:2.7em;overflow:hidden}
     .rel-card span{display:block;font-size:13.5px;font-weight:800;color:#b8860b;padding:2px 8px 8px}
+    #recentSec{margin:18px auto 6px;max-width:1200px;padding:0 14px}
+    #recentSec .rc-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+    #recentSec h3{margin:0;font-size:18px;color:var(--navy)}
+    #recentSec .rc-x{background:none;border:0;color:inherit;opacity:.65;font:inherit;font-size:13px;text-decoration:underline;cursor:pointer}
   </style>
   <!-- কার্ট ও চেকআউট -->
   <dialog id="cartDialog">
@@ -2036,12 +2064,14 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
     async function loadProducts() {
       const { data, error } = await db.from("products").select("*").order("created_at", { ascending: false });
       window.__sariProducts = true;
+      if (error && products.length) { console.warn("Products refresh failed, cached list kept:", error.message); return; }
       if (error) {
         console.error("Products load error:", error.message, error.code, error.details);
         $("#products").innerHTML = `<p style="text-align:center;grid-column:1/-1;color:var(--red);">শাড়ি লোড করা যায়নি। ইন্টারনেট সংযোগ দেখে আবার চেষ্টা করুন।<br><span style="font-size:12px;font-weight:400;direction:ltr;display:block;">${esc(error.message || "")} ${esc(error.code || "")}</span></p>`;
         return;
       }
       products = data || [];
+      try { localStorage.setItem("sari_products_cache", JSON.stringify(products)); } catch (e) {}
       try { renderProductsUI(); } catch (e) { console.error(e); $("#products").innerHTML = `<p style="text-align:center;grid-column:1/-1;color:var(--red);">শাড়ি দেখাতে সমস্যা: ${esc(e.message)}</p>`; }
       pruneCart();
       loadCouponInfo();
@@ -2130,8 +2160,8 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
       return t.map(x => `<span class="spec-tag">${esc(x)}</span>`).join("");
     }
     function badgesHtml(p) {
-      const d = discountPercent(p);
-      return `<div class="badges">${isSoldOut(p) ? '<span class="badge b-sold">স্টক শেষ</span>' : ""}${d > 0 ? `<span class="badge b-disc">${taka(d)}% ছাড়</span>` : ""}</div>`;
+      const d = discountPercent(p), st = stockOf(p), sold = isSoldOut(p);
+      return `<div class="badges">${sold ? '<span class="badge b-sold">স্টক শেষ</span>' : ""}${!sold && isNew(p) ? '<span class="badge b-new">🆕 নতুন</span>' : ""}${!sold && st > 0 && st <= 3 ? `<span class="badge b-low">⚡ মাত্র ${taka(st)}টা বাকি</span>` : ""}${d > 0 ? `<span class="badge b-disc">${taka(d)}% ছাড়</span>` : ""}</div>`;
     }
     function pillsHtml(p) {
       const s = stockOf(p);
@@ -2165,7 +2195,7 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
     function thumbsHtml(p, selIdx, handler) {
       const images = productImages(p), colors = productColors(p);
       if (colors.length < 2) return "";
-      return `<div class="variant-thumbs">${colors.map((c, i) => `<button type="button" class="variant-thumb ${i === selIdx ? "selected" : ""}" onclick="${handler}(${i}${handler === "renderVariant" ? "" : ""})" data-vt="${esc(p.id)}">${images[i] ? `<img src="${esc(images[i])}" alt="${esc(c)}" loading="lazy">` : ""}<span>${esc(c)}${stockLabel(p, c)}</span></button>`).join("")}</div>`;
+      return `<div class="variant-thumbs">${colors.map((c, i) => `<button type="button" class="variant-thumb ${i === selIdx ? "selected" : ""}" onclick="${handler}(${i}${handler === "renderVariant" ? "" : ""})" data-vt="${esc(p.id)}">${images[i] ? `<img src="${esc(images[i])}" alt="${esc(c)}" loading="lazy" decoding="async">` : ""}<span>${esc(c)}${stockLabel(p, c)}</span></button>`).join("")}</div>`;
     }
 
     // কার্ডের ভেতরে ছোট অফার লাইন (ফ্রি ডেলিভারি + কুপন)
@@ -2188,10 +2218,10 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
       if (!out.some(x => x.includes("co-cp") || x.includes("cp-ticket"))) out.push('<div class="co co-info"><span>📦 ক্যাশ অন ডেলিভারি · ১০০% প্রিমিয়াম কোয়ালিটি</span></div>');
       return `<div class="card-offers">${out.join("")}</div>`;
     }
-    function cardHtml(p, wl) {
+    function cardHtml(p, wl, ix) {
         const id = esc(p.id), images = productImages(p), colors = productColors(p);
         const sel = Math.min(cardSel[p.id] || 0, Math.max(0, colors.length - 1));
-        const thumbs = colors.length > 1 ? `<div class="variant-thumbs">${colors.map((c, i) => `<button type="button" class="variant-thumb ${i === sel ? "selected" : ""}" data-vt="${id}" onclick="renderVariant('${id}',${i})">${images[i] ? `<img src="${esc(images[i])}" alt="${esc(c)}" loading="lazy">` : ""}<span>${esc(c)}${stockLabel(p, c)}</span></button>`).join("")}</div>` : "";
+        const thumbs = colors.length > 1 ? `<div class="variant-thumbs">${colors.map((c, i) => `<button type="button" class="variant-thumb ${i === sel ? "selected" : ""}" data-vt="${id}" onclick="renderVariant('${id}',${i})">${images[i] ? `<img src="${esc(images[i])}" alt="${esc(c)}" loading="lazy" decoding="async">` : ""}<span>${esc(c)}${stockLabel(p, c)}</span></button>`).join("")}</div>` : "";
         const sold = isSoldOut(p);
         const isW = wl.includes(String(p.id));
         const tags = [p.category, p.fabric].filter(Boolean).map(t => `<span class="spec-tag">${esc(t)}</span>`).join("");
@@ -2205,7 +2235,7 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
             ${badgesHtml(p)}
             <button class="wishlist-btn ${isW ? "active" : ""}" data-card-wish-btn="${id}" onclick="event.stopPropagation();toggleWishlist('${id}')" title="উইশলিস্টে রাখুন" aria-label="উইশলিস্টে রাখুন">${wishInner(isW)}</button>
             ${sold ? '<div class="sold-overlay">স্টক শেষ</div>' : ""}
-            <img class="product-main-image" id="mainimg-${id}" src="${esc(images[sel] || images[0] || "")}" alt="${esc(p.name)}" loading="lazy">
+            <img class="product-main-image" id="mainimg-${id}" src="${esc(images[sel] || images[0] || "")}" alt="${esc(p.name)}" ${ix < 4 ? 'loading="eager"' : 'loading="lazy"'} ${ix < 2 ? 'fetchpriority="high"' : ""} decoding="async">
           </div>
           <div class="card-body">
             <button type="button" class="card-view-btn" ${sold ? 'data-sold="1"' : `onclick="event.stopPropagation();openQuick('${id}')"`}>${sold ? "স্টক শেষ" : `<svg class="ord-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18 2 7l5.2 4.6L12 4l4.8 7.6L22 7l-1 11z" fill="#f3e5ad" stroke="#d4af37" stroke-width="1" stroke-linejoin="round"/><rect x="3" y="19" width="18" height="2.4" rx="1" fill="#d4af37"/><circle cx="2" cy="6.5" r="1.4" fill="#d4af37"/><circle cx="12" cy="3.6" r="1.5" fill="#d4af37"/><circle cx="22" cy="6.5" r="1.4" fill="#d4af37"/><circle cx="12" cy="14.5" r="1.7" fill="#c8102e"/></svg> অর্ডার করুন`}</button>
@@ -2227,7 +2257,7 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
       if (!all.length) { box.innerHTML = "<p style='text-align:center;grid-column:1/-1;'>এখন কোনো শাড়ি এভেইলেবল নেই।</p>"; updateWishlistBadge(); return; }
       if (!list.length) { box.innerHTML = "<p style='text-align:center;grid-column:1/-1;'>এই খোঁজার সাথে মেলে এমন কোনো শাড়ি পাওয়া যায়নি। অন্য শব্দে খুঁজুন।</p>"; updateWishlistBadge(); return; }
       const wl = getWishlist();
-      box.innerHTML = list.map(p => cardHtml(p, wl)).join("");
+      box.innerHTML = list.map((p, ix) => cardHtml(p, wl, ix)).join("");
       updateWishlistBadge();
     }
 
@@ -2252,7 +2282,7 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
       if (!all.length) { box.innerHTML = '<div class="tp-empty"><b>থ্রি পিস কালেকশন শীঘ্রই আসছে</b>নতুন থ্রি পিস যোগ হলেই এখানে দেখতে পাবেন।</div>'; return; }
       if (!list.length) { box.innerHTML = '<div class="tp-empty">এই খোঁজার সাথে মেলে এমন কোনো থ্রি পিস পাওয়া যায়নি।</div>'; return; }
       const wl = getWishlist();
-      box.innerHTML = list.map(p => cardHtml(p, wl)).join("");
+      box.innerHTML = list.map((p, ix) => cardHtml(p, wl, ix)).join("");
       updateWishlistBadge();
     }
     // মূল পেজের অফার বার, ব্যানার, ফিচার, রিভিউ, নিয়ম ও ফুটার থ্রি পিস পেজেও দেখানো হয় (একই জিনিস সরিয়ে আনা হয়)
@@ -4166,7 +4196,7 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
       wrap.innerHTML = `<div class="banner-slider" id="bannerSlider">
         <div class="banner-track" id="bannerTrack">${banners.map((b, i) => `
           <div class="banner-slide ${b.link ? "clickable" : ""}" onclick="bannerClick(${i})">
-            <img src="${esc(b.image_url)}" alt="${esc(b.title || "অফার")}" ${i === 0 ? "" : 'loading="lazy"'} decoding="async">
+            <img src="${esc(b.image_url)}" alt="${esc(b.title || "অফার")}" ${i === 0 ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">
             ${(b.title || b.subtitle) ? `<div class="banner-text">${b.title ? `<h3>${esc(b.title)}</h3>` : ""}${b.subtitle ? `<p>${esc(b.subtitle)}</p>` : ""}</div>` : ""}
           </div>`).join("")}</div>
         ${multi ? `<button class="banner-arrow prev" onclick="bannerMove(-1)" aria-label="আগেরটা">‹</button><button class="banner-arrow next" onclick="bannerMove(1)" aria-label="পরেরটা">›</button>
@@ -4334,6 +4364,11 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
     // ---------- শুরু ----------
     (async () => {
       window.__sariReady = true;
+      try {
+        const c = JSON.parse(localStorage.getItem("sari_products_cache") || "null");
+        if (Array.isArray(c) && c.length) { products = c; window.__sariProducts = true; renderProductsUI(); }
+      } catch (e) {}
+      const prodP = loadProducts();
       syncThreePiece();
       try { initDynamicReviews(); } catch (e) { console.warn(e); }
       updateCartBadge();
@@ -4348,7 +4383,8 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
         checkLoginStatus();
       } catch (e) { console.warn("সেশন পাওয়া যায়নি:", e); }
       logSiteVisit();
-      await loadProducts();
+      await prodP;
+      if (isAdmin && $("#adminProductsList")) { try { listAdminProducts(); } catch (e) {} }
       if (isAdmin && localStorage.getItem("sari_admin_view") === "true") openAdminPanelDirectly();
     })();
   </script>
@@ -4760,6 +4796,16 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
     function fb() { var t = document.createElement("textarea"); t.value = n; t.style.cssText = "position:fixed;opacity:0"; document.body.appendChild(t); t.select(); try { document.execCommand("copy"); ok(); } catch (e) { toast("নম্বর: " + n); } t.remove(); }
   };
 
+  // ছবি বদলের স্লাইড অ্যানিমেশন
+  var _dpv = window.detailPreview; window.detailPreview = function (i, dir) {
+    var old = det.idx; _dpv.call(this, i);
+    try {
+      if (i === old || (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches)) return;
+      var im = document.querySelector("#productDetail .detail-img"); if (!im || !im.animate) return;
+      var d = dir || (i > old ? 1 : -1);
+      im.animate([{ transform: "translateX(" + (d * 70) + "px) scale(.97)", opacity: 0 }, { transform: "none", opacity: 1 }], { duration: 380, easing: "cubic-bezier(.22,.8,.3,1)" });
+    } catch (e) {}
+  };
   // শাড়ির ছবি টেনে (স্লাইড করে) দেখা + মানানসই শাড়ি
   var _rd = window.renderDetail; window.renderDetail = function () {
     var r = _rd.apply(this, arguments);
@@ -4772,11 +4818,19 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
         var dots = document.createElement("div"); dots.className = "det-dots";
         dots.innerHTML = imgs.map(function (_, i) { return '<button type="button" class="' + (i === det.idx ? "on" : "") + '" onclick="detailPreview(' + i + ')" aria-label="ছবি ' + (i + 1) + '"></button>'; }).join("");
         wrap.appendChild(dots);
-        var x0 = null, y0 = 0, swiped = 0;
-        img.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+        var x0 = null, y0 = 0, swiped = 0, drag = false, n = imgs.length;
+        imgs.forEach(function (u) { var pi = new Image(); pi.decoding = "async"; pi.src = u; });
+        img.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; drag = false; img.style.transition = "none"; }, { passive: true });
+        img.addEventListener("touchmove", function (e) {
+          if (x0 === null) return;
+          var dx = e.touches[0].clientX - x0, dy = e.touches[0].clientY - y0;
+          if (!drag && Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)) drag = true;
+          if (drag) { img.style.transform = "translateX(" + (dx * 0.55) + "px)"; img.style.opacity = String(1 - Math.min(Math.abs(dx) / 500, 0.35)); }
+        }, { passive: true });
         img.addEventListener("touchend", function (e) {
           if (x0 === null) return; var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0; x0 = null;
-          if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.3) { swiped = Date.now(); var n = imgs.length; window.detailPreview((det.idx + (dx < 0 ? 1 : -1) + n) % n); }
+          if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.3) { swiped = Date.now(); window.detailPreview((det.idx + (dx < 0 ? 1 : -1) + n) % n, dx < 0 ? 1 : -1); }
+          else { img.style.transition = "transform .25s ease, opacity .25s ease"; img.style.transform = ""; img.style.opacity = ""; }
         }, { passive: true });
         img.addEventListener("click", function (e) { if (Date.now() - swiped < 450) { e.stopImmediatePropagation(); e.preventDefault(); } }, true);
       }
@@ -4795,6 +4849,33 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
     } catch (e) { console.warn(e); }
     return r;
   };
+})();
+</script>
+<script>
+(function () {
+  var KEY = "sari_recent";
+  function read() { try { var a = JSON.parse(localStorage.getItem(KEY) || "[]"); return Array.isArray(a) ? a.map(String) : []; } catch (e) { return []; } }
+  function write(a) { try { localStorage.setItem(KEY, JSON.stringify(a.slice(0, 10))); } catch (e) {} }
+  var sec = document.createElement("section"); sec.id = "recentSec"; sec.style.display = "none";
+  var anchor = document.getElementById("productsSection"); if (anchor && anchor.parentNode) anchor.parentNode.insertBefore(sec, anchor);
+  window.renderRecent = function () {
+    try {
+      var list = read().map(function (id) { return products.find(function (p) { return String(p.id) === id && p.active !== false && productImages(p)[0]; }); }).filter(Boolean).slice(0, 8);
+      if (!list.length) { sec.style.display = "none"; sec.innerHTML = ""; return; }
+      sec.style.display = "";
+      sec.innerHTML = '<div class="rc-h"><h3>🕘 সম্প্রতি দেখেছেন</h3><button type="button" class="rc-x" onclick="clearRecent()">মুছুন</button></div><div class="rel-row">' + list.map(function (o) {
+        return '<button type="button" class="rel-card" onclick="openProduct(\'' + esc(String(o.id)) + '\')"><img loading="lazy" src="' + esc(productImages(o)[0]) + '" alt=""><b>' + esc(o.name) + '</b><span>' + taka(o.price) + '/-</span></button>';
+      }).join("") + "</div>";
+    } catch (e) { sec.style.display = "none"; }
+  };
+  window.clearRecent = function () { write([]); renderRecent(); };
+  var _op = window.openProduct; window.openProduct = function (id) {
+    var r = _op.apply(this, arguments);
+    try { var k = String(id), a = read().filter(function (x) { return x !== k; }); a.unshift(k); write(a); renderRecent(); } catch (e) {}
+    return r;
+  };
+  var _ru = window.renderProductsUI; window.renderProductsUI = function () { var r = _ru.apply(this, arguments); renderRecent(); return r; };
+  if (typeof products !== "undefined" && products.length) renderRecent();
 })();
 </script>
 <script data-goatcounter="https://saribilash.goatcounter.com/count"
