@@ -1563,6 +1563,24 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
     @keyframes flBlink{50%{opacity:.55}}
     @media(prefers-reduced-motion:reduce){#cartDialog .fl,#cartDialog .fl::after,#cartDialog .fl-truck,#cartDialog .fl-txt em{animation:none}}
   </style>
+  <style>
+    .ph-hint{font-size:12.5px;font-weight:700;min-height:0;margin:-2px 0 4px}
+    .ph-hint:empty{display:none}
+    .ph-hint.ok{color:#047857}.ph-hint.wait{color:#b45309}.ph-hint.bad{color:#dc2626}
+    #orderPhone.ph-ok{border-color:#10b981!important}#orderPhone.ph-bad{border-color:#dc2626!important}
+    .copy-mini{margin-left:6px;padding:4px 10px;border-radius:8px;border:1.5px solid var(--gold,#d4af37);background:rgba(212,175,55,.15);color:inherit;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+    .det-dots{display:flex;justify-content:center;gap:8px;margin:8px 0 2px}
+    .det-dots button{width:10px;height:10px;padding:0;border-radius:50%;border:0;background:rgba(148,163,184,.6);cursor:pointer}
+    .det-dots button.on{width:24px;border-radius:6px;background:var(--gold,#d4af37)}
+    .detail-img{touch-action:pan-y}
+    .rel-sec{margin:20px 0 6px}
+    .rel-sec h3{margin:0 0 10px;font-size:18px;color:var(--navy)}
+    .rel-row{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
+    .rel-card{flex:0 0 130px;scroll-snap-align:start;text-align:left;padding:0;border:1px solid rgba(148,163,184,.45);border-radius:12px;background:transparent;color:inherit;font:inherit;cursor:pointer;overflow:hidden}
+    .rel-card img{width:100%;height:160px;object-fit:cover;display:block}
+    .rel-card b{display:block;font-size:13px;padding:6px 8px 0;line-height:1.3;max-height:2.7em;overflow:hidden}
+    .rel-card span{display:block;font-size:13.5px;font-weight:800;color:#b8860b;padding:2px 8px 8px}
+  </style>
   <!-- কার্ট ও চেকআউট -->
   <dialog id="cartDialog">
     <button class="close-modal-btn" onclick="document.querySelector('#cartDialog').close()" aria-label="বন্ধ করুন">&times;</button>
@@ -1577,7 +1595,7 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
           <div><label class="field-label" for="orderName">আপনার নাম</label>
           <input id="orderName" name="name" placeholder="সম্পূর্ণ নাম" required maxlength="100" autocomplete="name"></div>
           <div><label class="field-label" for="orderPhone">ফোন নম্বর</label>
-          <input id="orderPhone" name="phone" type="tel" placeholder="01XXXXXXXXX" required pattern="01[0-9]{9}" title="১১ সংখ্যার মোবাইল নম্বর দিন (যেমন: 01XXXXXXXXX)" autocomplete="tel"></div>
+          <input id="orderPhone" name="phone" type="tel" placeholder="01XXXXXXXXX" required pattern="01[0-9]{9}" title="১১ সংখ্যার মোবাইল নম্বর দিন (যেমন: 01XXXXXXXXX)" autocomplete="tel" inputmode="numeric"><div id="phoneHint" class="ph-hint"></div></div>
         </div>
         <label class="field-label" for="orderAddress">সম্পূর্ণ ঠিকানা</label>
         <textarea id="orderAddress" name="address" placeholder="গ্রাম/মহল্লা, থানা, জেলাসহ সম্পূর্ণ ঠিকানা লিখুন" required minlength="5" maxlength="500" autocomplete="street-address"></textarea>
@@ -1594,7 +1612,7 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
         </div>
         <div id="bkashFields" class="ck-box" style="display:none;">
           <b style="color:var(--green);">bKash পেমেন্ট নির্দেশিকা</b>
-          <p style="margin:6px 0;">যে নম্বরে টাকা পাঠাবেন: <strong id="bkashNumberDisplay"></strong></p>
+          <p style="margin:6px 0;">যে নম্বরে টাকা পাঠাবেন: <strong id="bkashNumberDisplay"></strong> <button type="button" class="copy-mini" onclick="copyBkash()">📋 কপি</button></p>
           <p style="margin:6px 0;">মোট টাকা: <strong id="bkashAmountDisplay" style="color:#b8860b;">0/-</strong></p>
           <label class="field-label" for="transactionId">Transaction ID</label>
           <input name="transaction_id" id="transactionId" placeholder="যেমন: ABC123XYZ" maxlength="40">
@@ -4715,6 +4733,67 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
     showRefInfo();
     if (rc.value && !window.refDiscAmt) window.refCheckCode(); // লিংক থেকে এলে কোড নিজে প্রয়োগ হবে
     sync(); return r;
+  };
+})();
+</script>
+<script>
+(function () {
+  var BN = "০১২৩৪৫৬৭৮৯";
+  function digits(v) { return String(v || "").replace(/[০-৯]/g, function (c) { return BN.indexOf(c); }).replace(/\D/g, ""); }
+  // ফোন নম্বর সাথে সাথে যাচাই
+  var ph = document.getElementById("orderPhone"), hint = document.getElementById("phoneHint");
+  function checkPhone() {
+    var d = digits(ph.value); if (d.length > 11 && d.indexOf("880") === 0) d = d.slice(2);
+    ph.classList.remove("ph-ok", "ph-bad"); hint.className = "ph-hint";
+    if (!d) { hint.textContent = ""; return; }
+    if (d.length < 11) { hint.classList.add("wait"); hint.textContent = (d.charAt(0) !== "0" || (d.length > 1 && d.charAt(1) !== "1")) ? "❌ নম্বর ০১ দিয়ে শুরু হতে হবে" : d.length + "/11 — আর " + (11 - d.length) + " সংখ্যা লাগবে"; if (d.charAt(0) !== "0" || (d.length > 1 && d.charAt(1) !== "1")) { hint.className = "ph-hint bad"; ph.classList.add("ph-bad"); } return; }
+    if (/^01[3-9]\d{8}$/.test(d)) { hint.classList.add("ok"); ph.classList.add("ph-ok"); hint.textContent = "✅ নম্বরটি ঠিক আছে"; }
+    else { hint.classList.add("bad"); ph.classList.add("ph-bad"); hint.textContent = "❌ নম্বরটি ঠিক নয় — ১১ সংখ্যার (01XXXXXXXXX) নম্বর দিন"; }
+  }
+  ph.addEventListener("input", checkPhone); ph.addEventListener("change", checkPhone);
+  var _o2 = window.openCart; window.openCart = function () { var r = _o2.apply(this, arguments); checkPhone(); return r; };
+
+  // bKash নম্বর কপি
+  window.copyBkash = function () {
+    var n = BKASH_NUMBER, ok = function () { toast("✅ bKash নম্বর কপি হয়েছে: " + n); };
+    try { navigator.clipboard.writeText(n).then(ok, fb); } catch (e) { fb(); }
+    function fb() { var t = document.createElement("textarea"); t.value = n; t.style.cssText = "position:fixed;opacity:0"; document.body.appendChild(t); t.select(); try { document.execCommand("copy"); ok(); } catch (e) { toast("নম্বর: " + n); } t.remove(); }
+  };
+
+  // শাড়ির ছবি টেনে (স্লাইড করে) দেখা + মানানসই শাড়ি
+  var _rd = window.renderDetail; window.renderDetail = function () {
+    var r = _rd.apply(this, arguments);
+    try {
+      var p = getProduct(det.id); if (!p) return r;
+      var box = document.getElementById("productDetail"), img = box.querySelector(".detail-img"), imgs = productImages(p);
+      if (img && imgs.length > 1) {
+        var wrap = img.parentElement.parentElement, hintEl = img.parentElement.nextElementSibling;
+        if (hintEl) hintEl.textContent = "🔍 ছবিতে ট্যাপ করলে জুম হবে • ডানে-বামে টেনে অন্য রংয়ের ছবি দেখুন";
+        var dots = document.createElement("div"); dots.className = "det-dots";
+        dots.innerHTML = imgs.map(function (_, i) { return '<button type="button" class="' + (i === det.idx ? "on" : "") + '" onclick="detailPreview(' + i + ')" aria-label="ছবি ' + (i + 1) + '"></button>'; }).join("");
+        wrap.appendChild(dots);
+        var x0 = null, y0 = 0, swiped = 0;
+        img.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+        img.addEventListener("touchend", function (e) {
+          if (x0 === null) return; var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0; x0 = null;
+          if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.3) { swiped = Date.now(); var n = imgs.length; window.detailPreview((det.idx + (dx < 0 ? 1 : -1) + n) % n); }
+        }, { passive: true });
+        img.addEventListener("click", function (e) { if (Date.now() - swiped < 450) { e.stopImmediatePropagation(); e.preventDefault(); } }, true);
+      }
+      if (!box.querySelector(".rel-sec")) {
+        var others = products.filter(function (o) { return String(o.id) !== String(p.id) && !isSoldOut(o) && productImages(o)[0]; });
+        var same = others.filter(function (o) { return o.category && o.category === p.category; }), rest = others.filter(function (o) { return same.indexOf(o) < 0; });
+        var list = same.concat(rest).slice(0, 8);
+        if (list.length) {
+          var sec = document.createElement("div"); sec.className = "rel-sec";
+          sec.innerHTML = "<h3>✨ এই শাড়ির সাথে মানানসই</h3><div class=\"rel-row\">" + list.map(function (o) {
+            return '<button type="button" class="rel-card" onclick="openProduct(\'' + esc(String(o.id)) + '\');document.getElementById(\'productDialog\').scrollTop=0"><img loading="lazy" src="' + esc(productImages(o)[0]) + '" alt=""><b>' + esc(o.name) + '</b><span>' + taka(o.price) + '/-</span></button>';
+          }).join("") + "</div>";
+          box.appendChild(sec);
+        }
+      }
+    } catch (e) { console.warn(e); }
+    return r;
   };
 })();
 </script>
