@@ -4294,7 +4294,7 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
   const missing = er => er && (er.code === "PGRST202" || er.code === "42883" || /could not find the function/i.test(er.message || ""));
   const say = (id, text, kind) => { const el = R("#" + id); if (el) { el.className = "ref-msg" + (kind ? " " + kind : ""); el.textContent = text || ""; } };
   const rpcErr = er => missing(er) ? "রেফারেল সিস্টেম এখনো চালু হয়নি (অ্যাডমিন supabase-upgrade-13-referral.sql Run করেননি)।" : clean(er.message) || "কিছু একটা সমস্যা হয়েছে";
-  let ME = null, mode = "login";
+  let ME = null, mode = "signup";
 
   // ---------- নিয়ম ও শর্ত ----------
   function termsHtml(d) {
@@ -4318,7 +4318,7 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
     const dlg = R("#refDialog"); if (!dlg) return;
     if (!dlg.open) dlg.showModal();
     if (getTok()) { loadAccount(); return; }
-    renderAuth(m || mode);
+    renderAuth(m || "signup");
   };
 
   function renderAuth(m, msg) {
@@ -4328,8 +4328,8 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
       <h2 class="ref-h">🎁 রেফার করুন, বোনাস জিতুন</h2>
       <p class="ref-sub">অ্যাকাউন্ট খুলে বন্ধুদের রেফার করুন। বন্ধুর অর্ডার ডেলিভারি হলেই আপনি পাবেন <b>২০ টাকা</b> বোনাস! (OTP লাগে না — শুধু ফোন নম্বর ও পাসওয়ার্ড)</p>
       <div class="ref-tabs">
-        <button type="button" class="${su ? "" : "on"}" onclick="refMode('login')">🔑 লগইন</button>
         <button type="button" class="${su ? "on" : ""}" onclick="refMode('signup')">✨ সাইন আপ</button>
+        <button type="button" class="${su ? "" : "on"}" onclick="refMode('login')">🔑 লগইন</button>
       </div>
       <form class="ref-box" id="refAuthForm" autocomplete="on" novalidate>
         ${su ? `<label for="refName">আপনার নাম</label><input id="refName" autocomplete="name" placeholder="যেমন: রহিমা বেগম" maxlength="60">` : ""}
@@ -4405,6 +4405,9 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
           <button type="button" onclick="refCopy('${e(d.ref_code)}')">📋 কোড কপি</button>
           <button type="button" onclick="refCopy('${e(link)}')">🔗 লিংক কপি</button>
           <a target="_blank" rel="noopener" href="https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}">💬 WhatsApp-এ পাঠান</a>
+          <a target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}&quote=${encodeURIComponent(msg)}">📘 Facebook-এ শেয়ার</a>
+          <a target="_blank" rel="noopener" href="https://m.me/share?link=${encodeURIComponent(link)}">✉️ Messenger</a>
+          <button type="button" onclick="refShare(${e(JSON.stringify(msg)).replace(/'/g,"&#39;")},'${e(link)}')">📤 শেয়ার করুন</button>
         </div>
       </div>
       <div class="ref-stats">
@@ -4476,6 +4479,11 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
       const i = document.createElement("textarea"); i.value = t; document.body.appendChild(i); i.select(); try { document.execCommand("copy"); } catch {} i.remove();
     }
     if (typeof toast === "function") toast("✅ কপি হয়েছে");
+  };
+
+  window.refShare = function (text, url) {
+    if (navigator.share) navigator.share({ title: "শাড়ি বিলাশ", text, url }).catch(() => {});
+    else refCopy(text);
   };
 
   window.refLogout = async function () {
