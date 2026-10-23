@@ -1515,15 +1515,26 @@ html.dtm[data-theme="dark"] .m-tpbar b{color:#f3e5ad}
 @media(max-width:768px){
 }
 @media(max-width:768px){
-.m-ref{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;gap:5px;width:fit-content;max-width:100%;margin:6px auto 0 0;padding:3px 14px;border:1px solid #fff3c4;border-radius:20px;background:var(--gold-gradient);color:#0f1c2e;font:inherit;font-size:12px;line-height:1.5;box-shadow:0 2px 8px rgba(212,175,55,.4)}
+.m-ref{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;gap:5px;width:fit-content;max-width:100%;margin:0;padding:3px 14px;border:1px solid #fff3c4;border-radius:20px;background:var(--gold-gradient);color:#0f1c2e;font:inherit;font-size:12px;line-height:1.5;box-shadow:0 2px 8px rgba(212,175,55,.4)}
 .m-ref::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.7),transparent);transform:skewX(-18deg);animation:mRefShine 3s ease-in-out infinite}
 @keyframes mRefShine{0%,60%{left:-60%}100%{left:130%}}
 .m-ref-ic{font-size:13px}
 .m-ref b{font-weight:700}
 }
-html.dtm .m-ref{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;gap:5px;width:fit-content;max-width:100%;margin:6px auto 0 0;padding:3px 14px;border:1px solid #fff3c4;border-radius:20px;background:var(--gold-gradient);color:#0f1c2e;font:inherit;font-size:12px;line-height:1.5;box-shadow:0 2px 8px rgba(212,175,55,.4)}
+html.dtm .m-ref{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;gap:5px;width:fit-content;max-width:100%;margin:0;padding:3px 14px;border:1px solid #fff3c4;border-radius:20px;background:var(--gold-gradient);color:#0f1c2e;font:inherit;font-size:12px;line-height:1.5;box-shadow:0 2px 8px rgba(212,175,55,.4)}
 html.dtm .m-ref::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.7),transparent);transform:skewX(-18deg);animation:mRefShine 3s ease-in-out infinite}
 html.dtm .m-ref-ic{font-size:13px}
+@media(max-width:768px){
+.m-acts{display:flex;align-items:center;gap:8px;margin-top:6px;flex-wrap:nowrap}
+.m-ord{display:flex;align-items:center;gap:5px;flex:none;padding:3px 12px;border:1px solid rgba(212,175,55,.8);border-radius:20px;background:rgba(255,255,255,.06);color:#f3e5ad;font:inherit;font-size:12px;line-height:1.5;white-space:nowrap}
+.m-ref{flex:none;white-space:nowrap}
+.m-ord b{font-weight:700}
+}
+html.dtm .m-acts{display:flex;align-items:center;gap:8px;margin-top:6px;flex-wrap:nowrap}
+html.dtm .m-ord{display:flex;align-items:center;gap:5px;flex:none;padding:3px 12px;border:1px solid rgba(212,175,55,.8);border-radius:20px;background:rgba(255,255,255,.06);color:#f3e5ad;font:inherit;font-size:12px;line-height:1.5;white-space:nowrap}
+html.dtm .m-ref{flex:none;white-space:nowrap}
+.m-head{transition:transform .28s ease}
+.m-head.hdr-hide{transform:translateY(-110%);box-shadow:none}
 </style>
 </head>
 <body>
@@ -1557,7 +1568,7 @@ html.dtm .m-ref-ic{font-size:13px}
       <button class="m-ic" onclick="openCart()" aria-label="কার্ট"><svg class="si" viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.5 12h11l2-8H6"/></svg><i class="m-cc z">0</i></button>
     </div>
     <label class="m-search"><svg class="si" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4.5 4.5"/></svg><input id="mSearch" type="search" placeholder="সার্চ করুন..." oninput="mSearch(this.value)" onkeydown="if(event.key==='Enter')this.blur()"></label>
-      <button type="button" class="m-ref" onclick="openRef()"><span class="m-ref-ic">💰</span><b>রেফার করে ইনকাম করুন</b></button>
+      <div class="m-acts"><button type="button" class="m-ref" onclick="openRef()"><span class="m-ref-ic">💰</span><b>রেফার করে ইনকাম করুন</b></button><button type="button" class="m-ord" onclick="openTrack()"><span class="m-ref-ic">📦</span><b>আমার অর্ডার</b></button></div>
   </div>
   <div class="m-chips m-ui" id="mChips"></div>
 
@@ -1703,7 +1714,7 @@ html.dtm .m-ref-ic{font-size:13px}
         <button class="m-ic" onclick="openCart()" aria-label="কার্ট"><svg class="si" viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.5 12h11l2-8H6"/></svg><i class="m-cc z">0</i></button>
       </div>
       <label class="m-search"><svg class="si" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4.5 4.5"/></svg><input id="mTpSearch" type="search" placeholder="থ্রি পিস খুঁজুন..." oninput="mTpSearch(this.value)" onkeydown="if(event.key==='Enter')this.blur()"></label>
-      <button type="button" class="m-ref" onclick="openRef()"><span class="m-ref-ic">💰</span><b>রেফার করে ইনকাম করুন</b></button>
+      <div class="m-acts"><button type="button" class="m-ref" onclick="openRef()"><span class="m-ref-ic">💰</span><b>রেফার করে ইনকাম করুন</b></button><button type="button" class="m-ord" onclick="openTrack()"><span class="m-ref-ic">📦</span><b>আমার অর্ডার</b></button></div>
     </div>
     <div class="m-tpbar m-ui"><button type="button" onclick="closeThreePiece()">← শাড়ি কালেকশন</button><b><svg class="si" style="width:20px;height:20px"><use href="#ic-three"/></svg>থ্রি পিস</b></div>
     <div class="m-chips m-ui" id="mTpChips"></div>
@@ -5398,6 +5409,27 @@ html.dtm .m-ref-ic{font-size:13px}
   });
   window.mWhy=whyBox;
   if(mq.addEventListener)mq.addEventListener("change",whyBox);
+})();
+</script>
+<script>
+(function(){
+  function autoHide(scroller,hdr){
+    if(!hdr)return;
+    var last=0,ticking=false;
+    var getY=function(){return scroller===window?(window.pageYOffset||0):scroller.scrollTop;};
+    function busy(){var a=document.activeElement;return !!(a&&hdr.contains(a)&&/INPUT|SELECT|TEXTAREA/.test(a.tagName));}
+    function update(){
+      ticking=false;
+      var y=getY(),dy=y-last;
+      if(Math.abs(dy)<8)return;
+      if(y<90||dy<0||busy())hdr.classList.remove("hdr-hide");else hdr.classList.add("hdr-hide");
+      last=y;
+    }
+    scroller.addEventListener("scroll",function(){if(!ticking){ticking=true;requestAnimationFrame(update);}},{passive:true});
+  }
+  autoHide(window,document.querySelector(".m-head"));
+  var tp=document.getElementById("threePiecePage");
+  if(tp)autoHide(tp,tp.querySelector(".m-head"));
 })();
 </script>
 </body>
