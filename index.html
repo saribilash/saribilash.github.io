@@ -1535,6 +1535,81 @@ html.dtm .m-ord{display:flex;align-items:center;gap:5px;flex:none;padding:3px 12
 html.dtm .m-ref{flex:none;white-space:nowrap}
 .m-head{transition:transform .28s ease}
 .m-head.hdr-hide{transform:translateY(-110%);box-shadow:none}
+@media(max-width:768px){
+.m-hb{position:relative;overflow:hidden;flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;min-width:50px;height:46px;padding:0 6px;border:1px solid rgba(212,175,55,.8);border-radius:12px;background:rgba(255,255,255,.06);color:#f3e5ad;font:inherit}
+.m-hb span{font-size:19px;line-height:1}
+.m-hb em{font-style:normal;font-size:10.5px;font-weight:700;line-height:1.2}
+.m-hb-ref{background:var(--gold-gradient);color:#0f1c2e;border-color:#fff3c4;box-shadow:0 2px 8px rgba(212,175,55,.4)}
+.m-hb-ref::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.7),transparent);transform:skewX(-18deg);animation:mRefShine 3s ease-in-out infinite}
+}
+html.dtm .m-hb{position:relative;overflow:hidden;flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;min-width:50px;height:46px;padding:0 6px;border:1px solid rgba(212,175,55,.8);border-radius:12px;background:rgba(255,255,255,.06);color:#f3e5ad;font:inherit}
+html.dtm .m-hb span{font-size:19px;line-height:1}
+html.dtm .m-hb em{font-style:normal;font-size:10.5px;font-weight:700;line-height:1.2}
+html.dtm .m-hb-ref{background:var(--gold-gradient);color:#0f1c2e;border-color:#fff3c4;box-shadow:0 2px 8px rgba(212,175,55,.4)}
+html.dtm .m-hb-ref::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.7),transparent);transform:skewX(-18deg);animation:mRefShine 3s ease-in-out infinite}
+@media(max-width:768px){
+.m-hb{flex-direction:row;gap:4px;min-width:0;height:30px;padding:0 10px;border-radius:20px;white-space:nowrap}
+.m-hb span{font-size:14px}
+.m-hb em{font-size:12px}
+.m-brand b{font-size:20px}
+.m-brand img{width:32px;height:32px}
+.m-row{gap:6px}
+.m-row .m-ic{width:36px;height:36px}
+.m-head{padding:6px 12px 8px}
+}
+html.dtm .m-hb{flex-direction:row;gap:4px;min-width:0;height:30px;padding:0 10px;border-radius:20px;white-space:nowrap}
+html.dtm .m-hb span{font-size:14px}
+html.dtm .m-hb em{font-size:12px}
+html.dtm .m-brand b{font-size:20px}
+html.dtm .m-brand img{width:32px;height:32px}
+html.dtm .m-row{gap:6px}
+html.dtm .m-row .m-ic{width:36px;height:36px}
+html.dtm .m-head{padding:6px 12px 8px}
+@media(max-width:768px){
+.m-search input{padding:7px 0}
+.m-acts{margin-top:5px;gap:8px}
+.m-ref,.m-ord{padding:2px 12px;font-size:12px}
+.m-head{padding:6px 12px 7px}
+}
+html.dtm .m-search input{padding:7px 0}
+html.dtm .m-acts{margin-top:5px;gap:8px}
+html.dtm .m-ref,.m-ord{padding:2px 12px;font-size:12px}
+html.dtm .m-head{padding:6px 12px 7px}
+@media(max-width:768px){
+.m-row .m-acts{flex:none;display:flex;flex-direction:column;align-items:stretch;gap:3px;margin:0}
+.m-row .m-ref,.m-row .m-ord{justify-content:center;padding:1px 10px;font-size:11px;line-height:1.5}
+.m-row .m-ref-ic{font-size:12px}
+.m-brand{min-width:0}
+.m-brand b{font-size:19px}
+.m-brand small{font-size:10px}
+}
+html.dtm .m-row .m-acts{flex:none;display:flex;flex-direction:column;align-items:stretch;gap:3px;margin:0}
+html.dtm .m-row .m-ref,.m-row .m-ord{justify-content:center;padding:1px 10px;font-size:11px;line-height:1.5}
+html.dtm .m-row .m-ref-ic{font-size:12px}
+html.dtm .m-brand{min-width:0}
+html.dtm .m-brand b{font-size:19px}
+html.dtm .m-brand small{font-size:10px}
+@media(max-width:430px){.m-brand small{display:none}}
+@media(max-width:768px){
+.m-row2{display:flex;align-items:center;gap:6px;margin-top:6px}
+.m-row2 .m-search{flex:1;min-width:0;margin-top:0}
+.m-row2 .m-ic{width:34px;height:34px}
+.m-row .m-acts{flex-direction:row!important;gap:4px;align-items:center}
+.m-row .m-ref,.m-row .m-ord{padding:2px 8px;font-size:10px;gap:3px;line-height:1.6}
+.m-row .m-ref-ic{font-size:11px}
+.m-brand b{font-size:18px}
+.m-brand img{width:28px;height:28px}
+.m-brand{gap:6px}
+}
+html.dtm .m-row2{display:flex;align-items:center;gap:6px;margin-top:6px}
+html.dtm .m-row2 .m-search{flex:1;min-width:0;margin-top:0}
+html.dtm .m-row2 .m-ic{width:34px;height:34px}
+html.dtm .m-row .m-acts{flex-direction:row!important;gap:4px;align-items:center}
+html.dtm .m-row .m-ref,.m-row .m-ord{padding:2px 8px;font-size:10px;gap:3px;line-height:1.6}
+html.dtm .m-row .m-ref-ic{font-size:11px}
+html.dtm .m-brand b{font-size:18px}
+html.dtm .m-brand img{width:28px;height:28px}
+html.dtm .m-brand{gap:6px}
 </style>
 </head>
 <body>
@@ -1562,13 +1637,10 @@ html.dtm .m-ref{flex:none;white-space:nowrap}
 
   <div class="m-head m-ui">
     <div class="m-row">
-      <button class="m-ic" onclick="mMenu(true)" aria-label="মেনু"><svg class="si" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
       <div class="m-brand" onclick="window.scrollTo({top:0,behavior:'smooth'})"><img src="logo-mark.png" alt=""><div><b>শাড়ি বিলাশ</b><small>শাড়ির রাজকীয় আভিজাত্য</small></div></div>
-      <button class="m-ic" onclick="openWishlistDialog()" aria-label="পছন্দ"><svg class="si" viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.5-9.5A5.3 5.3 0 0 1 12 6.200a5.3 5.3 0 0 1 9.5 5.3C19.5 16.4 12 21 12 21z"/></svg><i class="m-wc z">0</i></button>
-      <button class="m-ic" onclick="openCart()" aria-label="কার্ট"><svg class="si" viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.5 12h11l2-8H6"/></svg><i class="m-cc z">0</i></button>
-    </div>
-    <label class="m-search"><svg class="si" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4.5 4.5"/></svg><input id="mSearch" type="search" placeholder="সার্চ করুন..." oninput="mSearch(this.value)" onkeydown="if(event.key==='Enter')this.blur()"></label>
       <div class="m-acts"><button type="button" class="m-ref" onclick="openRef()"><span class="m-ref-ic">💰</span><b>রেফার করে ইনকাম করুন</b></button><button type="button" class="m-ord" onclick="openTrack()"><span class="m-ref-ic">📦</span><b>আমার অর্ডার</b></button></div>
+    </div>
+    <div class="m-row2"><button class="m-ic" onclick="mMenu(true)" aria-label="মেনু"><svg class="si" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button><label class="m-search"><svg class="si" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4.5 4.5"/></svg><input id="mSearch" type="search" placeholder="সার্চ করুন..." oninput="mSearch(this.value)" onkeydown="if(event.key==='Enter')this.blur()"></label></div>
   </div>
   <div class="m-chips m-ui" id="mChips"></div>
 
@@ -1708,13 +1780,10 @@ html.dtm .m-ref{flex:none;white-space:nowrap}
     <div id="tpSlotAnn"></div>
     <div class="m-head m-ui">
       <div class="m-row">
-        <button class="m-ic" onclick="mMenu(true)" aria-label="মেনু"><svg class="si" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
         <div class="m-brand" onclick="closeThreePiece()"><img src="logo-mark.png" alt=""><div><b>শাড়ি বিলাশ</b><small>শাড়ির রাজকীয় আভিজাত্য</small></div></div>
-        <button class="m-ic" onclick="openWishlistDialog()" aria-label="পছন্দ"><svg class="si" viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.5-9.5A5.3 5.3 0 0 1 12 6.2a5.3 5.3 0 0 1 9.5 5.3C19.5 16.4 12 21 12 21z"/></svg><i class="m-wc z">0</i></button>
-        <button class="m-ic" onclick="openCart()" aria-label="কার্ট"><svg class="si" viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.5 12h11l2-8H6"/></svg><i class="m-cc z">0</i></button>
+        <div class="m-acts"><button type="button" class="m-ref" onclick="openRef()"><span class="m-ref-ic">💰</span><b>রেফার করে ইনকাম করুন</b></button><button type="button" class="m-ord" onclick="openTrack()"><span class="m-ref-ic">📦</span><b>আমার অর্ডার</b></button></div>
       </div>
-      <label class="m-search"><svg class="si" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4.5 4.5"/></svg><input id="mTpSearch" type="search" placeholder="থ্রি পিস খুঁজুন..." oninput="mTpSearch(this.value)" onkeydown="if(event.key==='Enter')this.blur()"></label>
-      <div class="m-acts"><button type="button" class="m-ref" onclick="openRef()"><span class="m-ref-ic">💰</span><b>রেফার করে ইনকাম করুন</b></button><button type="button" class="m-ord" onclick="openTrack()"><span class="m-ref-ic">📦</span><b>আমার অর্ডার</b></button></div>
+      <div class="m-row2"><button class="m-ic" onclick="mMenu(true)" aria-label="মেনু"><svg class="si" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button><label class="m-search"><svg class="si" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4.5 4.5"/></svg><input id="mTpSearch" type="search" placeholder="থ্রি পিস খুঁজুন..." oninput="mTpSearch(this.value)" onkeydown="if(event.key==='Enter')this.blur()"></label></div>
     </div>
     <div class="m-tpbar m-ui"><button type="button" onclick="closeThreePiece()">← শাড়ি কালেকশন</button><b><svg class="si" style="width:20px;height:20px"><use href="#ic-three"/></svg>থ্রি পিস</b></div>
     <div class="m-chips m-ui" id="mTpChips"></div>
