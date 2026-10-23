@@ -1318,6 +1318,91 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
       .hf-budget .budget-label,.hf-clear{font-size:13.5px}
       .tp-top .brand{font-size:21px}
     }
+
+/* ===== মোবাইল অ্যাপ-স্টাইল ইন্টারফেস (≤768px) ===== */
+.m-ui,.m-only{display:none}
+@media(max-width:768px){
+  body{padding-bottom:calc(70px + env(safe-area-inset-bottom,0px))}
+  header:not(.tp-head):not(.adm-top){display:none!important}
+  .m-ui{display:block}.m-only{display:block}
+  .m-head{position:sticky;top:0;z-index:100;background:linear-gradient(180deg,#09121f,#0f1c2e);border-bottom:1px solid rgba(212,175,55,.3);padding:8px 12px 10px;box-shadow:0 4px 16px rgba(0,0,0,.2)}
+  .m-row{display:flex;align-items:center;gap:8px}
+  .m-ic{position:relative;flex:none;width:40px;height:40px;border:0;background:none;color:#f3e5ad;display:flex;align-items:center;justify-content:center;padding:0}
+  .si{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .m-ic i{position:absolute;top:1px;right:0;min-width:18px;height:18px;border-radius:9px;background:var(--gold);color:#0f1c2e;font:700 11px/18px system-ui,sans-serif;text-align:center;font-style:normal;padding:0 4px}
+  .m-ic i.z{display:none}
+  .m-brand{flex:1;display:flex;align-items:center;gap:8px;min-width:0;cursor:pointer}
+  .m-brand img{width:36px;height:36px;border-radius:10px}
+  .m-brand b{display:block;font-size:22px;line-height:1.1;background:var(--gold-gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;white-space:nowrap}
+  .m-brand small{display:block;font-size:10.5px;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .m-search{display:flex;align-items:center;gap:8px;margin-top:8px;border:1.5px solid rgba(212,175,55,.65);border-radius:24px;padding:0 14px;background:rgba(255,255,255,.04);color:#f3e5ad}
+  .m-search .si{width:20px;height:20px}
+  .m-search input{flex:1;min-width:0;border:0;background:none;outline:0;color:#fff;font:inherit;font-size:15px;padding:10px 0;margin:0;box-shadow:none}
+  .m-search input::placeholder{color:#b9c2d0}
+  .m-chips{display:flex!important;gap:10px;overflow-x:auto;padding:12px 12px 4px;scrollbar-width:none}
+  .m-chips::-webkit-scrollbar{display:none}
+  .m-chip{flex:none;display:flex;align-items:center;gap:6px;padding:9px 18px;border-radius:26px;border:1.5px solid rgba(212,175,55,.5);background:#fbf6ea;color:#0f1c2e;font:inherit;font-size:15px;white-space:nowrap}
+  .m-chip .si{width:18px;height:18px}
+  .m-chip.on{background:#0f1c2e;color:#fff;border-color:var(--gold);box-shadow:0 3px 10px rgba(15,28,46,.3)}
+  .hero{margin:12px;min-height:200px;padding:22px 18px;border-radius:18px}
+  .hero h1{font-size:25px}.hero-btns .btn{padding:9px 16px;font-size:14px;border-radius:24px}
+  .banner-wrap{margin-top:12px}
+  section{margin:26px auto;padding:0 12px}
+  .section-title{font-size:22px;display:flex;align-items:center;justify-content:center;gap:10px}
+  .section-title::before{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold));max-width:50px}
+  .section-title::after{content:"◈";background:none;width:auto;height:auto;margin:0;color:var(--gold);font-size:14px}
+  .section-title{text-wrap:balance}
+  #productsSection .grid{grid-template-columns:1fr 1fr;gap:12px}
+  .card{padding:7px;border:1px solid rgba(212,175,55,.5);border-radius:16px;background:#fffdf8;box-shadow:none}
+  .card:hover{transform:none;box-shadow:none}
+  .card .image-container{order:0;border-radius:12px;min-height:0}
+  .card .card-head{order:1;padding:8px 2px 0}
+  .card .card-body{order:2;flex-direction:row;align-items:stretch;gap:6px;padding:8px 0 0;flex-grow:0}
+  .card .card-offers{display:none}
+  .card h3{font-size:15px;margin:0 0 2px;line-height:1.3}
+  .card .price-container{gap:6px;margin:0}
+  .card .badges{top:8px;left:8px;flex-direction:row}
+  .card .badge{background:#0f1c2e;color:var(--gold);border:1px solid var(--gold);font-size:11.5px;padding:3px 9px}
+  .card .wishlist-btn{top:6px;right:6px;width:34px;height:34px;padding:0;justify-content:center;background:none;border:0;box-shadow:none;font-size:0}
+  .card .wishlist-btn .wl-ic{font-size:22px;filter:drop-shadow(0 1px 3px rgba(0,0,0,.5))}
+  .card .card-view-btn{flex:1;min-width:0;background:#0f1c2e;color:#fff;border:0;border-radius:9px;padding:10px 2px;font-size:12.5px}
+  .card .card-cart-btn{flex:none;width:38px;font-size:0;padding:0;background:none;border:1.5px solid var(--gold);border-radius:9px}
+  .card .card-cart-btn::before{content:"🛒";font-size:16px}
+  .features-container{display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:0!important;margin:8px 12px 20px!important;padding:12px 4px 10px!important;background:#f6eedb;border-radius:16px}
+  .features-container .m-why{grid-column:1/-1;text-align:center;margin:0 0 8px;font-size:16px;color:var(--navy)}
+  .feature-box{background:none;border:0;box-shadow:none;padding:2px 4px;border-left:1px solid rgba(212,175,55,.4)}
+  .feature-box:nth-child(2){border-left:0}
+  .feature-box span{font-size:22px;margin-bottom:2px}
+  .feature-box h4{font-size:11px;line-height:1.3}
+  .feature-box p{font-size:9px;line-height:1.3}
+  .m-nav{position:fixed;left:0;right:0;bottom:0;z-index:130;display:flex!important;background:#0f1c2e;border-top:1px solid rgba(212,175,55,.35);padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px))}
+  .m-tab{flex:1;position:relative;background:none;border:0;color:#cbd5e1;font:inherit;font-size:11.5px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 0}
+  .m-tab.on{color:var(--gold)}
+  .m-tab.on::after{content:"";position:absolute;left:22%;right:22%;bottom:-2px;height:2px;background:var(--gold)}
+  .m-tab i{position:absolute;top:-2px;left:56%;min-width:17px;height:17px;border-radius:9px;background:var(--gold);color:#0f1c2e;font:700 10.5px/17px system-ui,sans-serif;font-style:normal;text-align:center}
+  .m-tab i.z{display:none}
+  .care-fab,body:has(.install-bar.show) .care-fab{bottom:calc(82px + env(safe-area-inset-bottom,0px))}
+  .install-bar{bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+  #toast{bottom:90px}
+  .m-ov{position:fixed;inset:0;z-index:2000;background:rgba(5,10,18,.6);opacity:0;pointer-events:none;transition:opacity .25s}
+  .m-ov.on{opacity:1;pointer-events:auto}
+  .m-drawer{position:fixed;top:0;bottom:0;left:0;width:min(84vw,330px);z-index:2001;background:linear-gradient(180deg,#09121f,#0f1c2e 60%,#0b1829);color:#e8edf5;transform:translateX(-102%);transition:transform .28s ease;overflow-y:auto;padding:0 0 24px;border-right:1px solid rgba(212,175,55,.3);display:block}
+  .m-drawer.on{transform:none}
+  .m-dh{display:flex;align-items:center;gap:10px;padding:16px 16px 14px;border-bottom:1px solid rgba(212,175,55,.25)}
+  .m-dh img{width:40px;height:40px;border-radius:10px}.m-dh b{flex:1;font-size:21px;background:var(--gold-gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .m-dh button{background:none;border:0;color:#f3e5ad;font-size:26px;line-height:1}
+  .m-sec{font-size:12px;letter-spacing:.5px;color:var(--gold);padding:14px 18px 4px}
+  .m-it{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:none;border:0;color:#e8edf5;font:inherit;font-size:16px;padding:12px 18px;text-decoration:none}
+  .m-it:active{background:rgba(212,175,55,.12)}
+  .m-it small{display:block;font-size:11.5px;color:#9fb0c6}
+  .m-it span.e{width:26px;text-align:center;font-size:19px}
+  .m-bud{display:flex;gap:8px;align-items:center;padding:6px 18px}
+  .m-bud input{flex:1;min-width:0;padding:9px;border-radius:10px;border:1px solid rgba(212,175,55,.4);background:rgba(255,255,255,.06);color:#fff;font:inherit;font-size:14px}
+  .m-bud button{background:none;border:0;color:var(--gold);font:inherit;font-size:13px}
+  html[data-theme="dark"] .m-chip{background:#1b2740;color:#e6eaf2}
+  html[data-theme="dark"] .card{background:#142036}
+  html[data-theme="dark"] .features-container{background:#16233a}
+}
 </style>
 </head>
 <body>
@@ -1341,6 +1426,48 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
 </svg>
 
   <div class="announcement-bar" id="annBar"><div class="ann-track"><span>🔥 শাড়ি বিলাশ কালেকশনে চলছে এক্সক্লুসিভ ছাড় ও বিশেষ অফার!</span><span>🚚 নির্বাচিত শাড়িতে ফ্রি ডেলিভারি</span><span>👚 নির্বাচিত শাড়িতে ব্লাউজ পিস ফ্রি</span><span>🎟️ কুপন কোড ব্যবহার করে পান অতিরিক্ত ছাড়</span><span>👗 নতুন থ্রি পিস কালেকশন এসেছে — দেখে নিন</span><span>📦 ক্যাশ অন ডেলিভারি — পণ্য হাতে পেয়ে টাকা দিন</span><span>💳 bKash-এ পেমেন্টের সুবিধা</span><span>🏠 সারা বাংলাদেশে হোম ডেলিভারি</span><span>💬 WhatsApp-এ সরাসরি অর্ডার ও জিজ্ঞাসার সুযোগ</span><span aria-hidden="true">🔥 শাড়ি বিলাশ কালেকশনে চলছে এক্সক্লুসিভ ছাড় ও বিশেষ অফার!</span><span aria-hidden="true">🚚 নির্বাচিত শাড়িতে ফ্রি ডেলিভারি</span><span aria-hidden="true">👚 নির্বাচিত শাড়িতে ব্লাউজ পিস ফ্রি</span><span aria-hidden="true">🎟️ কুপন কোড ব্যবহার করে পান অতিরিক্ত ছাড়</span><span aria-hidden="true">👗 নতুন থ্রি পিস কালেকশন এসেছে — দেখে নিন</span><span aria-hidden="true">📦 ক্যাশ অন ডেলিভারি — পণ্য হাতে পেয়ে টাকা দিন</span><span aria-hidden="true">💳 bKash-এ পেমেন্টের সুবিধা</span><span aria-hidden="true">🏠 সারা বাংলাদেশে হোম ডেলিভারি</span><span aria-hidden="true">💬 WhatsApp-এ সরাসরি অর্ডার ও জিজ্ঞাসার সুযোগ</span></div></div>
+
+
+  <div class="m-head m-ui">
+    <div class="m-row">
+      <button class="m-ic" onclick="mMenu(true)" aria-label="মেনু"><svg class="si" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+      <div class="m-brand" onclick="window.scrollTo({top:0,behavior:'smooth'})"><img src="logo-mark.png" alt=""><div><b>শাড়ি বিলাশ</b><small>শাড়ির রাজকীয় আভিজাত্য</small></div></div>
+      <button class="m-ic" onclick="openWishlistDialog()" aria-label="পছন্দ"><svg class="si" viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.5-9.5A5.3 5.3 0 0 1 12 6.200a5.3 5.3 0 0 1 9.5 5.3C19.5 16.4 12 21 12 21z"/></svg><i class="m-wc z">0</i></button>
+      <button class="m-ic" onclick="openCart()" aria-label="কার্ট"><svg class="si" viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.5 12h11l2-8H6"/></svg><i class="m-cc z">0</i></button>
+    </div>
+    <label class="m-search"><svg class="si" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4.5 4.5"/></svg><input id="mSearch" type="search" placeholder="সার্চ করুন..." oninput="mSearch(this.value)" onkeydown="if(event.key==='Enter')this.blur()"></label>
+  </div>
+  <div class="m-chips m-ui" id="mChips"></div>
+
+  <div class="m-ov" id="mOv" onclick="mMenu(false)"></div>
+  <aside class="m-drawer" id="mDrawer" aria-label="মেনু">
+    <div class="m-dh"><img src="logo-mark.png" alt=""><b>শাড়ি বিলাশ</b><button onclick="mMenu(false)" aria-label="বন্ধ">×</button></div>
+    <div class="m-sec">শপিং</div>
+    <a class="m-it" href="#productsSection" onclick="mMenu(false)"><span class="e">🥻</span>শাড়ির কালেকশন</a>
+    <a class="m-it" href="#three-piece" onclick="mMenu(false)"><span class="e">👗</span>থ্রি পিস</a>
+    <button class="m-it" onclick="mGo('openTrack')"><span class="e">📦</span>আমার অর্ডার</button>
+    <button class="m-it" onclick="mGo('openRef')"><span class="e">💰</span><div>রেফার করে ইনকাম করুন</div></button>
+    <div class="m-sec">বাজেট ফিল্টার</div>
+    <div class="m-bud"><input id="mMin" type="number" inputmode="numeric" placeholder="থেকে" oninput="mBud()"><span>—</span><input id="mMax" type="number" inputmode="numeric" placeholder="পর্যন্ত" oninput="mBud()"><button onclick="mBud(1)">মুছুন</button></div>
+    <div class="m-sec">সেটিংস</div>
+    <button class="m-it" id="mInstall" style="display:none" onclick="mGo('installApp')"><span class="e">📲</span>অ্যাপ ইনস্টল</button>
+    <button class="m-it" onclick="toggleTheme()"><span class="e">🌙</span>ডার্ক / লাইট মোড</button>
+    <button class="m-it" onclick="toggleLang()"><span class="e">🌐</span>ভাষা (বাংলা / EN)</button>
+    <button class="m-it" onclick="mGo('toggleDesktopMode')"><span class="e">🖥️</span>ডেক্সটপ মোড</button>
+    <button class="m-it" id="mAdmin" style="display:none" onclick="mGo('openAdminPanelDirectly')"><span class="e">👑</span>অ্যাডমিন</button>
+    <div class="m-sec">যোগাযোগ</div>
+    <a class="m-it" href="tel:01628182808"><span class="e">📞</span>01628182808</a>
+    <a class="m-it" href="https://wa.me/8801628182808" target="_blank" rel="noopener"><span class="e">💬</span>WhatsApp</a>
+    <a class="m-it" href="https://www.facebook.com/SariBilash02" target="_blank" rel="noopener"><span class="e">📘</span>ফেসবুক পেজ</a>
+  </aside>
+
+  <nav class="m-nav m-ui" id="mNav">
+    <button class="m-tab on" onclick="window.scrollTo({top:0,behavior:'smooth'})"><svg class="si" viewBox="0 0 24 24"><path d="M3 11 12 3l9 8v10h-6v-6H9v6H3z"/></svg>হোম</button>
+    <button class="m-tab" onclick="mCats()"><svg class="si" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>ক্যাটাগরি</button>
+    <button class="m-tab" onclick="openWishlistDialog()"><svg class="si" viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.5-9.5A5.3 5.3 0 0 1 12 6.200a5.3 5.3 0 0 1 9.5 5.3C19.5 16.4 12 21 12 21z"/></svg>আমার পছন্দ<i class="m-wc z">0</i></button>
+    <button class="m-tab" onclick="openCart()"><svg class="si" viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.5 12h11l2-8H6"/></svg>কার্ট<i class="m-cc z">0</i></button>
+    <button class="m-tab" onclick="mMenu(true)"><svg class="si" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg>অ্যাকাউন্ট</button>
+  </nav>
 
   <header>
     <div class="header-top">
@@ -1386,9 +1513,11 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
   </div>
 
   <div class="features-container" id="featuresBox">
+    <h3 class="m-why m-only">কেন শাড়ি বিলাশ?</h3>
     <div class="feature-box"><span>✨</span><h4>১০০% প্রিমিয়াম কোয়ালিটি</h4><p>সেরা সুতা ও সুনিপুণ কারুকাজে তৈরি এক্সক্লুসিভ কালেকশন</p></div>
     <div class="feature-box"><span>📦</span><h4>ক্যাশ অন ডেলিভারি</h4><p>পণ্য হাতে পেয়ে দেখে শুনে টাকা পরিশোধের সুব্যবস্থা</p></div>
     <div class="feature-box"><span>🚚</span><h4>হোম ডেলিভারি সেবা</h4><p id="deliveryInfo">সারা বাংলাদেশে নিরাপদ হোম ডেলিভারি সুবিধা</p></div>
+    <div class="feature-box m-only"><span>🎧</span><h4>বিশ্বস্ত সাপোর্ট</h4><p>সর্বদা আপনার পাশে</p></div>
   </div>
 
   <section id="productsSection">
@@ -5042,6 +5171,66 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
     if(en){root.lang="en";applyEn();setTL();}else{location.reload();}
   };
   document.addEventListener("DOMContentLoaded",function(){setTL();if(root.lang==="en")applyEn();});
+})();
+</script>
+
+<script>
+/* মোবাইল ইন্টারফেস: ড্রয়ার, চিপস, সার্চ, কাউন্টার */
+(function(){
+  var $=function(s){return document.querySelector(s)};
+  var mq=window.matchMedia("(max-width:768px)");
+  window.mMenu=function(on){
+    if(on){
+      var a=$("#headerAdminBtn"),i=$("#installNavBtn");
+      $("#mAdmin").style.display=(a&&getComputedStyle(a).display!=="none")?"flex":"none";
+      $("#mInstall").style.display=(i&&getComputedStyle(i).display!=="none")?"flex":"none";
+      $("#mMin").value=$("#minPrice").value;$("#mMax").value=$("#maxPrice").value;
+    }
+    $("#mDrawer").classList.toggle("on",on);$("#mOv").classList.toggle("on",on);
+  };
+  window.mGo=function(fn){mMenu(false);setTimeout(function(){if(typeof window[fn]==="function")window[fn]();},200);};
+  window.mSearch=function(v){$("#searchBox").value=v;onFilterChange();};
+  window.mBud=function(clr){
+    if(clr){$("#mMin").value="";$("#mMax").value="";}
+    $("#minPrice").value=$("#mMin").value;$("#maxPrice").value=$("#mMax").value;
+    onFilterChange("budget");
+  };
+  window.mCats=function(){
+    window.scrollTo({top:0,behavior:"smooth"});
+    var c=$("#mChips");c.style.transition="transform .3s";c.style.transform="scale(1.04)";
+    setTimeout(function(){c.style.transform="";},350);
+  };
+  function chips(){
+    var sel=$("#categoryFilter"),box=$("#mChips");if(!sel||!box)return;
+    var cur=sel.value,h="";
+    Array.prototype.forEach.call(sel.options,function(o){
+      var all=!o.value;
+      h+='<button type="button" class="m-chip'+(o.value===cur?' on':'')+'" data-v="'+o.value.replace(/"/g,"&quot;")+'">'+(all?'<svg class="si"><use href="#ic-saree"/></svg>সব শাড়ি':o.textContent)+'</button>';
+    });
+    box.innerHTML=h;
+  }
+  document.addEventListener("click",function(e){
+    var b=e.target.closest&&e.target.closest(".m-chip");if(!b)return;
+    var sel=$("#categoryFilter");sel.value=b.getAttribute("data-v");
+    sel.dispatchEvent(new Event("change"));chips();
+  });
+  function counts(){
+    var w=($("#wishlistCount")||{}).textContent||"0",c=($("#cartCount")||{}).textContent||"0";
+    document.querySelectorAll(".m-wc").forEach(function(e){e.textContent=w;e.classList.toggle("z",!+w&&w!=="")});
+    document.querySelectorAll(".m-cc").forEach(function(e){e.textContent=c;e.classList.toggle("z",!+c&&c!=="")});
+  }
+  function whyBox(){
+    var f=$("#featuresBox"),p=$("#productsSection");
+    if(f&&p&&mq.matches&&p.nextElementSibling!==f)p.after(f);
+  }
+  window.addEventListener("DOMContentLoaded",function(){
+    var sel=$("#categoryFilter");
+    new MutationObserver(chips).observe(sel,{childList:true});
+    ["#wishlistCount","#cartCount"].forEach(function(s){var n=$(s);if(n)new MutationObserver(counts).observe(n,{childList:true,characterData:true,subtree:true});});
+    chips();counts();whyBox();
+    var s=$("#searchBox");if(s)s.addEventListener("input",function(){var m=$("#mSearch");if(m&&m.value!==s.value)m.value=s.value;});
+  });
+  if(mq.addEventListener)mq.addEventListener("change",whyBox);
 })();
 </script>
 </body>
