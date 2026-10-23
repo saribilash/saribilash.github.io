@@ -1597,7 +1597,6 @@ html.dtm .m-row .m-ref-ic{font-size:12px}
 html.dtm .m-brand{min-width:0}
 html.dtm .m-brand b{font-size:19px}
 html.dtm .m-brand small{font-size:10px}
-@media(max-width:430px){.m-brand small{display:none}}
 @media(max-width:768px){
 .m-row2{display:flex;align-items:center;gap:6px;margin-top:6px}
 .m-row2 .m-search{flex:1;min-width:0;margin-top:0}
@@ -1618,6 +1617,70 @@ html.dtm .m-row .m-ref-ic{font-size:11px}
 html.dtm .m-brand b{font-size:18px}
 html.dtm .m-brand img{width:28px;height:28px}
 html.dtm .m-brand{gap:6px}
+@media(max-width:768px){
+.m-head .m-search{margin-top:6px}
+.m-head>.m-acts{display:flex;align-items:center;gap:8px;margin-top:6px}
+.m-head>.m-acts .m-ref,.m-head>.m-acts .m-ord{padding:3px 12px;font-size:12px;gap:5px;line-height:1.5}
+.m-head>.m-acts .m-ref-ic{font-size:13px}
+.m-brand b{font-size:20px}
+.m-brand img{width:32px;height:32px}
+}
+html.dtm .m-head .m-search{margin-top:6px}
+html.dtm .m-head>.m-acts{display:flex;align-items:center;gap:8px;margin-top:6px}
+html.dtm .m-head>.m-acts .m-ref,.m-head>.m-acts .m-ord{padding:3px 12px;font-size:12px;gap:5px;line-height:1.5}
+html.dtm .m-head>.m-acts .m-ref-ic{font-size:13px}
+html.dtm .m-brand b{font-size:20px}
+html.dtm .m-brand img{width:32px;height:32px}
+@media(max-width:768px){
+.m-row .m-ic{width:36px;height:36px}
+.m-brand b{font-size:20px}
+.m-brand img{width:32px;height:32px}
+.m-acts{display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;gap:8px;margin-top:6px}
+.m-acts .m-ref,.m-acts .m-ord{padding:2px 11px;font-size:12px;line-height:1.6;white-space:nowrap}
+}
+html.dtm .m-row .m-ic{width:36px;height:36px}
+html.dtm .m-brand b{font-size:20px}
+html.dtm .m-brand img{width:32px;height:32px}
+html.dtm .m-acts{display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;gap:8px;margin-top:6px}
+html.dtm .m-acts .m-ref,.m-acts .m-ord{padding:2px 11px;font-size:12px;line-height:1.6;white-space:nowrap}
+@media(max-width:768px){
+.m-nav{flex-wrap:wrap}
+.m-strip{flex:0 0 100%;display:flex;gap:8px;padding:0 8px 6px}
+.m-strip .m-ref,.m-strip .m-ord{flex:1;justify-content:center;width:auto;margin:0;padding:5px 4px;font-size:12px;line-height:1.5;white-space:nowrap;min-width:0}
+body{padding-bottom:calc(108px + env(safe-area-inset-bottom,0px))}
+#threePiecePage{padding-bottom:calc(116px + env(safe-area-inset-bottom,0px))}
+.care-fab,body:has(.install-bar.show) .care-fab{bottom:calc(120px + env(safe-area-inset-bottom,0px))}
+.install-bar{bottom:calc(114px + env(safe-area-inset-bottom,0px))}
+#toast{bottom:124px}
+}
+html.dtm .m-nav{flex-wrap:wrap}
+html.dtm .m-strip{flex:0 0 100%;display:flex;gap:8px;padding:0 8px 6px}
+html.dtm .m-strip .m-ref,.m-strip .m-ord{flex:1;justify-content:center;width:auto;margin:0;padding:5px 4px;font-size:12px;line-height:1.5;white-space:nowrap;min-width:0}
+html.dtm body{padding-bottom:calc(108px + env(safe-area-inset-bottom,0px))}
+html.dtm #threePiecePage{padding-bottom:calc(116px + env(safe-area-inset-bottom,0px))}
+html.dtm .care-fab,body:has(.install-bar.show) .care-fab{bottom:calc(120px + env(safe-area-inset-bottom,0px))}
+html.dtm .install-bar{bottom:calc(114px + env(safe-area-inset-bottom,0px))}
+html.dtm #toast{bottom:124px}
+@media(max-width:768px){
+.m-strip{display:none}
+.m-nav{flex-wrap:nowrap}
+.m-tab{font-size:11px}
+.m-tab-ref{color:var(--gold)}
+body{padding-bottom:calc(70px + env(safe-area-inset-bottom,0px))}
+#threePiecePage{padding-bottom:calc(78px + env(safe-area-inset-bottom,0px))}
+.care-fab,body:has(.install-bar.show) .care-fab{bottom:calc(82px + env(safe-area-inset-bottom,0px))}
+.install-bar{bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+#toast{bottom:90px}
+}
+html.dtm .m-strip{display:none}
+html.dtm .m-nav{flex-wrap:nowrap}
+html.dtm .m-tab{font-size:11px}
+html.dtm .m-tab-ref{color:var(--gold)}
+html.dtm body{padding-bottom:calc(70px + env(safe-area-inset-bottom,0px))}
+html.dtm #threePiecePage{padding-bottom:calc(78px + env(safe-area-inset-bottom,0px))}
+html.dtm .care-fab,body:has(.install-bar.show) .care-fab{bottom:calc(82px + env(safe-area-inset-bottom,0px))}
+html.dtm .install-bar{bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+html.dtm #toast{bottom:90px}
 </style>
 </head>
 <body>
@@ -1645,10 +1708,10 @@ html.dtm .m-brand{gap:6px}
 
   <div class="m-head m-ui">
     <div class="m-row">
+      <button class="m-ic" onclick="mMenu(true)" aria-label="মেনু"><svg class="si" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
       <div class="m-brand" onclick="window.scrollTo({top:0,behavior:'smooth'})"><img src="logo-mark.png" alt=""><div><b>শাড়ি বিলাশ</b><small>শাড়ির রাজকীয় আভিজাত্য</small></div></div>
-      <div class="m-acts"><button type="button" class="m-ref" onclick="openRef()"><span class="m-ref-ic">💰</span><b>রেফার করে ইনকাম করুন</b></button><button type="button" class="m-ord" onclick="openTrack()"><span class="m-ref-ic">📦</span><b>আমার অর্ডার</b></button></div>
     </div>
-    <div class="m-row2"><button class="m-ic" onclick="mMenu(true)" aria-label="মেনু"><svg class="si" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button><label class="m-search"><svg class="si" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4.5 4.5"/></svg><input id="mSearch" type="search" placeholder="সার্চ করুন..." oninput="mSearch(this.value)" onkeydown="if(event.key==='Enter')this.blur()"></label></div>
+    <label class="m-search"><svg class="si" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4.5 4.5"/></svg><input id="mSearch" type="search" placeholder="সার্চ করুন..." oninput="mSearch(this.value)" onkeydown="if(event.key==='Enter')this.blur()"></label>
   </div>
   <div class="m-chips m-ui" id="mChips"></div>
 
@@ -1679,7 +1742,8 @@ html.dtm .m-brand{gap:6px}
     <button class="m-tab" onclick="mCats()"><svg class="si" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>ক্যাটাগরি</button>
     <button class="m-tab" onclick="openWishlistDialog()"><svg class="si" viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.5-9.5A5.3 5.3 0 0 1 12 6.200a5.3 5.3 0 0 1 9.5 5.3C19.5 16.4 12 21 12 21z"/></svg>আমার পছন্দ<i class="m-wc z">0</i></button>
     <button class="m-tab" onclick="openCart()"><svg class="si" viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.5 12h11l2-8H6"/></svg>কার্ট<i class="m-cc z">0</i></button>
-    <button class="m-tab" onclick="mMenu(true)"><svg class="si" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg>অ্যাকাউন্ট</button>
+    <button class="m-tab m-tab-ref" onclick="openRef()"><svg class="si" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 6.5v11M9 9.5c0-1.7 6-1.7 6 0s-6 2-6 3.5 6 1.7 6 0"/></svg>রেফার</button>
+    <button class="m-tab" onclick="openTrack()"><svg class="si" viewBox="0 0 24 24"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/></svg>আমার অর্ডার</button>
   </nav>
 
   <header>
@@ -1788,10 +1852,10 @@ html.dtm .m-brand{gap:6px}
     <div id="tpSlotAnn"></div>
     <div class="m-head m-ui">
       <div class="m-row">
-        <div class="m-brand" onclick="closeThreePiece()"><img src="logo-mark.png" alt=""><div><b>শাড়ি বিলাশ</b><small>শাড়ির রাজকীয় আভিজাত্য</small></div></div>
-        <div class="m-acts"><button type="button" class="m-ref" onclick="openRef()"><span class="m-ref-ic">💰</span><b>রেফার করে ইনকাম করুন</b></button><button type="button" class="m-ord" onclick="openTrack()"><span class="m-ref-ic">📦</span><b>আমার অর্ডার</b></button></div>
+      <button class="m-ic" onclick="mMenu(true)" aria-label="মেনু"><svg class="si" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+      <div class="m-brand" onclick="closeThreePiece()"><img src="logo-mark.png" alt=""><div><b>শাড়ি বিলাশ</b><small>শাড়ির রাজকীয় আভিজাত্য</small></div></div>
       </div>
-      <div class="m-row2"><button class="m-ic" onclick="mMenu(true)" aria-label="মেনু"><svg class="si" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button><label class="m-search"><svg class="si" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4.5 4.5"/></svg><input id="mTpSearch" type="search" placeholder="থ্রি পিস খুঁজুন..." oninput="mTpSearch(this.value)" onkeydown="if(event.key==='Enter')this.blur()"></label></div>
+    <label class="m-search"><svg class="si" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4.5 4.5"/></svg><input id="mTpSearch" type="search" placeholder="থ্রি পিস খুঁজুন..." oninput="mTpSearch(this.value)" onkeydown="if(event.key==='Enter')this.blur()"></label>
     </div>
     <div class="m-tpbar m-ui"><button type="button" onclick="closeThreePiece()">← শাড়ি কালেকশন</button><b><svg class="si" style="width:20px;height:20px"><use href="#ic-three"/></svg>থ্রি পিস</b></div>
     <div class="m-chips m-ui" id="mTpChips"></div>
@@ -2202,14 +2266,6 @@ html.dtm .m-brand{gap:6px}
     }
 
     // ---------- রিভিউ ----------
-    const allReviewsPool = [
-      { name: "নুসরাত জাহান", text: "শাড়িটি হাতে পেয়েছি আজ। কাপড়ের কোয়ালিটি এবং কালার একদম ছবির মতোই সুন্দর!" },
-      { name: "ফারজানা আক্তার", text: "খুব কম দামে এত প্রিমিয়াম কোয়ালিটির শাড়ি পাবো ভাবিনি। ধন্যবাদ শাড়ি বিলাশ!" },
-      { name: "সুমাইয়া ইসলাম", text: "ডেলিভারি খুব দ্রুত পেয়েছি। সার্ভিস এবং পেকিং দারুণ ছিল।" },
-      { name: "তানিয়া চৌধুরী", text: "জামদানি শাড়িটার কালার কম্বিনেশন অসাধারণ। পরে অনেক প্রশংসা পেয়েছি।" },
-      { name: "সাদিয়া আফরিন", text: "অরিজিনাল সুতার কাজ পেয়েছি। যেমন চেয়েছিলাম ঠিক তেমনই সুন্দর।" },
-      { name: "মেহজাবিন হক", text: "অনলাইন থেকে প্রথমবার শাড়ি নিলাম, কোয়ালিটি দেখে মুগ্ধ হয়ে গেলাম। সবাইকে সাজেস্ট করব।" }
-    ];
     let approvedReviews = [], reviewTimer = null;
     // প্রতি ৪ সেকেন্ডে: মোবাইলে পরের রিভিউতে স্লাইড, কম্পিউটারে রিভিউ বদল। কেউ আঙুল দিয়ে ধরলে ৮ সেকেন্ড থেমে থাকে
     let rvPauseUntil = 0;
@@ -2232,8 +2288,9 @@ html.dtm .m-brand{gap:6px}
       if (mob && force !== true && container.dataset.mob === "1" && container.children.length) return;
       container.dataset.mob = mob ? "1" : "0";
       const real = [...approvedReviews].sort(() => 0.5 - Math.random());
-      const fill = real.length >= 3 ? [] : [...allReviewsPool].sort(() => 0.5 - Math.random());
+      const fill = []; // শুধু আসল (অনুমোদিত) রিভিউ দেখানো হয়
       const picked = [...real.map(r => ({ ...r, real: true })), ...fill].slice(0, mob ? 8 : 3);
+      if (!picked.length) { container.innerHTML = '<p class="small" style="text-align:center;width:100%;opacity:.85;padding:10px 0;">এখনো কোনো রিভিউ নেই। আপনার মতামত দিয়ে শুরু করুন!</p>'; return; }
       container.innerHTML = picked.map(r => r.real
         ? `<div class="review-card rv-real">${parseRv(r.text).stars ? `<div class="stars">${starsHtml(parseRv(r.text).stars)}</div>` : '<div class="rv-q">“</div>'}<p>${esc(parseRv(r.text).text)}</p><p style="margin-top:8px;"><b>— ${esc(r.name)}</b></p></div>`
         : `<div class="review-card"><div class="stars">⭐⭐⭐⭐⭐</div><p><b>${esc(r.name)}:</b> "${esc(r.text)}"</p></div>`).join("");
