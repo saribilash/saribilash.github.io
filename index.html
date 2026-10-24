@@ -2122,6 +2122,11 @@ html.dtm #toast{bottom:90px}
     @keyframes opSwap{0%{opacity:.15;transform:scale(.94)}100%{opacity:1;transform:none}}
     #cartDialog .op-colors .cq-row>img{cursor:pointer}
     #cartDialog .op-colors .cq-row.view:not(.on){border-color:#d4af37;box-shadow:0 0 0 2px rgba(212,175,55,.28)}
+    /* সাথে সাথে সাড়া: ট্যাপে ৩০০ms দেরি বন্ধ */
+    *{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+    #cartDialog .variant-thumbs{touch-action:pan-x}
+    #cartDialog .op-colors .cq-row:active,#cartDialog .pay-opt:active,#cartDialog .op-mini:active{transform:scale(.97);transition:transform .06s}
+    #cartDialog .op-submit:active,#cartDialog .order-btn:active{transform:scale(.98)}
     html[data-theme="dark"] #cartDialog{background:#0f1722}
     html[data-theme="dark"] #cartDialog .op-card,html[data-theme="dark"] #cartDialog .op-prod,html[data-theme="dark"] #cartDialog .op-colors .cq-row{background:#17202e;border-color:#33415c}
     html[data-theme="dark"] #cartDialog .op-colors .cq-row.on{background:#312813;border-color:#d4af37}
@@ -3511,8 +3516,15 @@ html.dtm #toast{bottom:90px}
       const code = $("#couponInput").value.trim().toUpperCase().replace(/\s+/g, "");
       const cm = $("#couponMsg"); $("#couponCard").open = true;
       if (!code) { appliedCoupon = null; cm.textContent = ""; renderCartSummary(); return; }
-      cm.className = "small"; cm.textContent = "যাচাই হচ্ছে...";
+      const _cached = couponInfo[code];
+      let _instant = false;
+      if (_cached && ((_cached.pct || 0) > 0 || (_cached.amt || 0) > 0)) {
+        _instant = true; // আগে থেকে আনা ছাড়ের তথ্য দিয়ে সাথে সাথে প্রয়োগ, পরে সার্ভারে মিলিয়ে নেওয়া হয়
+        appliedCoupon = { code, percent: Number(_cached.pct) || 0, amount: Number(_cached.amt) || 0 };
+        renderCartSummary();
+      } else { cm.className = "small"; cm.textContent = "যাচাই হচ্ছে..."; }
       const { data, error } = await db.rpc("get_coupon", { p_code: code });
+      if (error && _instant) return;
       if (error) { appliedCoupon = null; cm.className = "small msg-err"; cm.textContent = isMissingFn(error) ? "কুপন সিস্টেম এখনো চালু হয়নি (অ্যাডমিন supabase-upgrade-5.sql চালান)।" : "কুপন যাচাই করা যায়নি: " + errText(error); renderCartSummary(); return; }
       const c = Array.isArray(data) ? data[0] : data;
       if (!c || !c.code) { appliedCoupon = null; cm.className = "small msg-err"; cm.textContent = "কুপন কোডটি সঠিক নয়, বন্ধ আছে বা সীমা শেষ হয়ে গেছে।"; renderCartSummary(); return; }
@@ -5675,7 +5687,7 @@ html.dtm #toast{bottom:90px}
     }
     $("#mDrawer").classList.toggle("on",on);$("#mOv").classList.toggle("on",on);
   };
-  window.mGo=function(fn){mMenu(false);setTimeout(function(){if(typeof window[fn]==="function")window[fn]();},200);};
+  window.mGo=function(fn){mMenu(false);setTimeout(function(){if(typeof window[fn]==="function")window[fn]();},40);};
   window.mSearch=function(v){$("#searchBox").value=v;onFilterChange();};
   window.mBud=function(clr){
     if(clr){$("#mMin").value="";$("#mMax").value="";}
