@@ -797,12 +797,8 @@
 
     /* ===== মোবাইলে পণ্য ডান থেকে বামে স্লাইড করে দেখা (নিচে স্ক্রল না করে) ===== */
     @media(max-width:550px){
-      #products.grid,#tpProducts.grid{display:flex;flex-wrap:nowrap;gap:10px;overflow-x:auto;overflow-y:hidden;
-        scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;
-        padding:2px 12px 14px;margin:0 -12px;align-items:flex-start;scrollbar-width:none}
-      #products.grid::-webkit-scrollbar,#tpProducts.grid::-webkit-scrollbar{display:none}
-      #products.grid>.card,#tpProducts.grid>.card{flex:0 0 46%;max-width:46%;scroll-snap-align:start}
-      #products.grid>:not(.card),#tpProducts.grid>:not(.card){flex:0 0 calc(100% - 24px)}
+      #products.grid,#tpProducts.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;overflow:visible;padding:2px 0 14px;margin:0;align-items:stretch}
+      #products.grid>:not(.card),#tpProducts.grid>:not(.card){grid-column:1/-1}
     }
     /* ===== বিস্তারিত পপআপ: ছোট ছবি + আশেপাশে নড়াচড়া বন্ধ ===== */
     #productDialog{overflow-x:hidden;touch-action:pan-y;overscroll-behavior:contain}
@@ -925,6 +921,24 @@
     .card-compact .card-head{display:flex;flex-direction:column}
     .card-compact .card-offers{flex:1 1 auto}
     .card-compact .co{flex:1 1 auto;display:flex;align-items:center}
+    .img-perks{position:absolute;left:0;right:0;bottom:0;z-index:5;display:flex;flex-wrap:wrap;gap:4px;padding:26px 8px 8px;background:linear-gradient(to top,rgba(0,0,0,.55),rgba(0,0,0,0));pointer-events:none}
+    .img-perks .perk{font-size:12.5px;font-weight:800;line-height:1.25;padding:4px 9px;border-radius:999px;color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+    .img-perks .perk{display:inline-flex;align-items:center;gap:4px}
+    .img-perks .perk svg{width:1.15em;height:1.15em;flex:none;fill:none;stroke:#fff;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round}
+    .img-perks .perk-free{background:linear-gradient(135deg,#047857,#10b981)}
+    .img-perks .perk-blouse{background:linear-gradient(135deg,#be185d,#ec4899)}
+    @media(max-width:550px){.img-perks{gap:3px;padding:20px 5px 5px}.img-perks .perk{font-size:10.5px;padding:3px 7px}}
+    .img-perks .perk{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.55);letter-spacing:.2px;animation:perkPop .6s cubic-bezier(.34,1.56,.64,1) both}
+    .img-perks .perk-blouse{animation-delay:.12s}
+    .img-perks .perk::after{content:"";position:absolute;top:0;left:-70%;width:45%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.65),transparent);transform:skewX(-20deg);animation:perkShine 3.2s ease-in-out infinite}
+    .img-perks .perk-blouse::after{animation-delay:1.1s}
+    .img-perks .perk-free svg{animation:truckDrive 1.8s ease-in-out infinite}
+    .img-perks .perk-blouse svg{fill:#fde68a;stroke:#fde68a;animation:starSpin 3s ease-in-out infinite}
+    @keyframes perkPop{0%{opacity:0;transform:translateY(8px) scale(.7)}100%{opacity:1;transform:none}}
+    @keyframes perkShine{0%,55%{left:-70%}100%{left:130%}}
+    @keyframes truckDrive{0%,100%{transform:translateX(-1.5px)}50%{transform:translateX(2.5px)}}
+    @keyframes starSpin{0%,60%,100%{transform:rotate(0) scale(1)}80%{transform:rotate(180deg) scale(1.25)}}
+    @media(prefers-reduced-motion:reduce){.img-perks .perk,.img-perks .perk::after,.img-perks .perk svg{animation:none}}
     .co-info{background:linear-gradient(135deg,#0f1c2e,#182e4a);color:#f3e5ad;border:1px solid rgba(212,175,55,.45)}
     /* হেডারে ডেক্সটপ মোড বাটন */
     .dt-nav-btn{white-space:nowrap}
@@ -2751,7 +2765,7 @@ html.dtm #toast{bottom:90px}
     function cardOfferHtml(p) {
       const out = [];
       const fm = numOrNull(p.free_min);
-      if (p.free_delivery) out.push('<div class="co co-free"><span>🚚 ফ্রি ডেলিভারি</span></div>');
+      if (p.free_delivery) { /* ফ্রি ডেলিভারি এখন ছবির উপরে ব্যাজে দেখায় */ }
       else if (fm > 0) out.push(`<div class="co co-free"><span>🚚 ${taka(fm)}/- বা বেশি নিলে ফ্রি ডেলিভারি</span></div>`);
       productCoupons(p).forEach(code => {
         const ci = couponInfo[code];
@@ -2763,7 +2777,7 @@ html.dtm #toast{bottom:90px}
         out.push(`<div class="cp-ticket" onclick="event.stopPropagation();copyCoupon('${c}')" title="কোড কপি করতে ট্যাপ করুন"><div class="cp-l"><small>🎟️ কুপন কোড · ট্যাপে কপি</small><b>${c}</b></div><div class="cp-r"><b>${taka(amt)}/-</b><small>ছাড়</small></div></div>`);
       });
       // ফাঁকা জায়গা ভরাতে: ফ্রি ডেলিভারি না থাকলে হোম ডেলিভারি, কুপন না থাকলে ক্যাশ অন ডেলিভারি লাইন
-      if (!out.some(x => x.includes("co-free"))) out.unshift('<div class="co co-info"><span>🏠 সারা দেশে হোম ডেলিভারি সেবা</span></div>');
+      if (!p.free_delivery && !out.some(x => x.includes("co-free"))) out.unshift('<div class="co co-info"><span>🏠 সারা দেশে হোম ডেলিভারি সেবা</span></div>');
       if (!out.some(x => x.includes("co-cp") || x.includes("cp-ticket"))) out.push('<div class="co co-info"><span>📦 ক্যাশ অন ডেলিভারি · ১০০% প্রিমিয়াম কোয়ালিটি</span></div>');
       return `<div class="card-offers">${out.join("")}</div>`;
     }
@@ -2782,6 +2796,7 @@ html.dtm #toast{bottom:90px}
           </div>
           <div class="image-container" onclick="openProduct('${id}')">
             ${badgesHtml(p)}
+            ${(p.free_delivery || p.blouse_free) ? `<div class="img-perks">${p.free_delivery ? '<span class="perk perk-free"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v9H3zM14 9h4l3 3v3h-7zM7 18.5a1.8 1.8 0 1 0 0-.01M17 18.5a1.8 1.8 0 1 0 0-.01"/></svg>ফ্রি ডেলিভারি</span>' : ""}${p.blouse_free ? '<span class="perk perk-blouse"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L3.4 9.3l6-.8z"/></svg>ব্লাউজ পিস ফ্রি</span>' : ""}</div>` : ""}
             <button class="wishlist-btn ${isW ? "active" : ""}" data-card-wish-btn="${id}" onclick="event.stopPropagation();toggleWishlist('${id}')" title="উইশলিস্টে রাখুন" aria-label="উইশলিস্টে রাখুন">${wishInner(isW)}</button>
             ${sold ? '<div class="sold-overlay">স্টক শেষ</div>' : ""}
             <img class="product-main-image" id="mainimg-${id}" src="${esc(images[sel] || images[0] || "")}" alt="${esc(p.name)}" ${ix < 4 ? 'loading="eager"' : 'loading="lazy"'} ${ix < 2 ? 'fetchpriority="high"' : ""} decoding="async">
@@ -5803,6 +5818,23 @@ html.dtm #toast{bottom:90px}
   autoHide(window,document.querySelector(".m-head"));
   var tp=document.getElementById("threePiecePage");
   if(tp)autoHide(tp,tp.querySelector(".m-head"));
+})();
+</script>
+<script>
+/* লেখার সময় লাল দাগ ও "Add to dictionary / Delete" পপআপ বন্ধ (সব ঘরে, পরে তৈরি হওয়া ঘরেও) */
+(function(){
+  var SEL="input,textarea,[contenteditable='true']";
+  function fix(el){
+    if(!el||el.nodeType!==1)return;
+    if(el.matches&&el.matches(SEL)){
+      if(el.tagName==="INPUT"){var t=(el.type||"text").toLowerCase();if(["checkbox","radio","file","range","color","date","button","submit"].indexOf(t)>-1)return;}
+      el.setAttribute("spellcheck","false");el.setAttribute("autocorrect","off");el.setAttribute("autocomplete",el.getAttribute("autocomplete")||"off");
+    }
+    if(el.querySelectorAll){var l=el.querySelectorAll(SEL);for(var i=0;i<l.length;i++)fix(l[i]);}
+  }
+  fix(document.documentElement);
+  new MutationObserver(function(ms){for(var i=0;i<ms.length;i++){var a=ms[i].addedNodes;for(var j=0;j<a.length;j++)fix(a[j]);}}).observe(document.documentElement,{childList:true,subtree:true});
+  document.addEventListener("focusin",function(e){fix(e.target);},true);
 })();
 </script>
 </body>
