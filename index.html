@@ -1364,6 +1364,7 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
 
 /* ===== মোবাইল অ্যাপ-স্টাইল ইন্টারফেস (≤768px) ===== */
 .m-ui,.m-only{display:none}
+.m-drawer,.m-ov{display:none}
 @media(max-width:768px){
   body{padding-bottom:calc(70px + env(safe-area-inset-bottom,0px))}
   header:not(.tp-head):not(.adm-top){display:none!important}
@@ -1427,7 +1428,7 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
   .care-fab,body:has(.install-bar.show) .care-fab{bottom:calc(82px + env(safe-area-inset-bottom,0px))}
   .install-bar{bottom:calc(76px + env(safe-area-inset-bottom,0px))}
   #toast{bottom:90px}
-  .m-ov{position:fixed;inset:0;z-index:2000;background:rgba(5,10,18,.6);opacity:0;pointer-events:none;transition:opacity .25s}
+  .m-ov{display:block;position:fixed;inset:0;z-index:2000;background:rgba(5,10,18,.6);opacity:0;pointer-events:none;transition:opacity .25s}
   .m-ov.on{opacity:1;pointer-events:auto}
   .m-drawer{position:fixed;top:0;bottom:0;left:0;width:min(84vw,330px);z-index:2001;background:linear-gradient(180deg,#09121f,#0f1c2e 60%,#0b1829);color:#e8edf5;transform:translateX(-102%);transition:transform .28s ease;overflow-y:auto;padding:0 0 24px;border-right:1px solid rgba(212,175,55,.3);display:block}
   .m-drawer.on{transform:none}
@@ -1567,8 +1568,10 @@ html.dtm .m-bud button{background:none;border:0;color:var(--gold);font:inherit;f
   .m-drawer .m-bud button{display:inline-flex;align-items:center;gap:4px;color:#e0bd5c;font-size:14px;padding:0 0 0 8px;border-left:1px solid rgba(212,175,55,.4);height:30px}
   .m-drawer .m-bud button .mi{width:20px;height:20px}
   .m-drawer .m-row{padding:12px 18px;border-bottom:1px solid rgba(212,175,55,.3);margin:0 0;width:calc(100% - 36px);margin-left:18px;margin-right:18px;padding-left:2px;padding-right:2px}
-  .m-drawer .m-sw{flex:none;position:relative;width:52px;height:30px;border-radius:15px;background:#e0bd5c;transition:background .25s}
-  .m-drawer .m-sw::after{content:"";position:absolute;top:3px;right:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.4);transition:transform .25s}
+  .m-drawer .m-sw{flex:none;position:relative;width:52px;height:30px;border-radius:15px;background:#3b4659;transition:background .25s}
+  .m-drawer .m-sw.on{background:#e0bd5c}
+  .m-drawer .m-sw::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.4);transition:transform .25s}
+  .m-drawer .m-sw.on::after{transform:translateX(22px)}
   .m-drawer .m-admin{display:flex;align-items:center;gap:12px;width:calc(100% - 36px);margin:16px 18px 6px;padding:12px 18px;border-radius:999px;border:1.5px solid #e0bd5c;background:none;color:#f3e5ad;font:inherit;font-size:18px;font-weight:800}
   .m-drawer .m-admin span{flex:1;text-align:center}
   .m-drawer .m-admin .mi{width:30px;height:30px;fill:#e0bd5c}
@@ -1811,9 +1814,9 @@ html.dtm #toast{bottom:90px}
     <div class="m-bud"><label><svg class="mi" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 7v8a2 2 0 0 0 4 0M8.5 11h6"/></svg><input id="mMin" type="number" inputmode="numeric" placeholder="থেকে" oninput="mBud()"></label><label><svg class="mi" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 7v8a2 2 0 0 0 4 0M8.5 11h6"/></svg><input id="mMax" type="number" inputmode="numeric" placeholder="পর্যন্ত" oninput="mBud()"></label><button type="button" onclick="mBud()"><svg class="mi" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4.5 4.5"/></svg>সার্চ</button></div>
     <div class="m-sec"><svg class="mi" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg><span>সেটিংস</span></div>
     <button class="m-it m-row" id="mInstall" style="display:none" onclick="mGo('installApp')"><svg class="mi" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 20h14"/></svg><span class="t">অ্যাপ ইনস্টল</span></button>
-    <button class="m-it m-row" onclick="toggleTheme()"><svg class="mi" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></svg><span class="t">ডার্ক / লাইট মোড</span><i class="m-sw"></i></button>
-    <button class="m-it m-row" onclick="toggleLang()"><svg class="mi" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg><span class="t">ভাষা &nbsp;বাংলা / EN</span><i class="m-sw"></i></button>
-    <button class="m-it m-row" onclick="mGo('toggleDesktopMode')"><svg class="mi" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg><span class="t">ডেক্সটপ মোড</span><i class="m-sw"></i></button>
+    <button class="m-it m-row" onclick="toggleTheme();mSync()"><svg class="mi" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></svg><span class="t">ডার্ক / লাইট মোড</span><i class="m-sw" id="swTheme"></i></button>
+    <button class="m-it m-row" onclick="toggleLang();setTimeout(mSync,120)"><svg class="mi" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg><span class="t">ভাষা &nbsp;বাংলা / EN</span><i class="m-sw" id="swLang"></i></button>
+    <button class="m-it m-row" onclick="mGo('toggleDesktopMode')"><svg class="mi" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg><span class="t">ডেক্সটপ মোড</span><i class="m-sw" id="swDesk"></i></button>
     <button class="m-admin" id="mAdmin" style="display:none" onclick="mGo('openAdminPanelDirectly')"><svg class="mi" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"/></svg><span>অ্যাডমিন লগইন</span><svg class="mc" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
     <div class="m-contact">
     <a class="m-it m-ct" href="tel:01628182808"><svg class="mi" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg><span class="t">01628182808</span></a>
@@ -5744,7 +5747,7 @@ html.dtm #toast{bottom:90px}
 (function(){
   var $=function(s){return document.querySelector(s)};
   var mq=window.matchMedia("(max-width:768px)");
-  window.mMenu=function(on){
+  window.mMenu=function(on){try{window.mSync&&window.mSync();}catch(e){}
     if(on){
       var a=$("#headerAdminBtn"),i=$("#installNavBtn");
       $("#mAdmin").style.display=(a&&getComputedStyle(a).display!=="none")?"flex":"none";
@@ -5753,6 +5756,13 @@ html.dtm #toast{bottom:90px}
     }
     $("#mDrawer").classList.toggle("on",on);$("#mOv").classList.toggle("on",on);
   };
+  window.mSync=function(){
+    var r=document.documentElement,on=function(id,v){var e=document.getElementById(id);if(e)e.classList.toggle("on",!!v);};
+    on("swTheme",r.getAttribute("data-theme")==="dark");
+    on("swLang",r.lang==="en");
+    var d=false;try{d=localStorage.getItem("sari_desktop_mode")==="1";}catch(e){}on("swDesk",d);
+  };
+  window.addEventListener("DOMContentLoaded",function(){setTimeout(window.mSync,300);});
   window.mGo=function(fn){mMenu(false);setTimeout(function(){if(typeof window[fn]==="function")window[fn]();},40);};
   window.mSearch=function(v){$("#searchBox").value=v;onFilterChange();};
   window.mBud=function(clr){
