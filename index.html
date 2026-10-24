@@ -458,6 +458,167 @@
       #adminFullPage .row{flex-direction:column;gap:0}
     }
 
+
+    /* ===== অ্যাডমিন: নতুন মোবাইল ডিজাইন (শাড়ি / থ্রি পিস আপলোড, ৩ ধাপ) ===== */
+    .adm-crown{width:30px;height:30px;vertical-align:-6px;margin-right:8px;fill:#e0bd5c;filter:drop-shadow(0 2px 4px rgba(0,0,0,.35))}
+    .adm-tag{color:#e0bd5c;font-size:13.5px;font-weight:600;padding-left:10px;border-left:1px solid rgba(255,255,255,.3)}
+    .adm-top .live-dot{background:transparent!important;color:#34d399;padding:0;font-weight:800;letter-spacing:.6px}
+    .adm-top .live-dot:not(.on){color:#fca5a5}
+    .pf-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+    .pf-stat{display:flex;align-items:center;gap:8px;text-align:left;border-radius:16px;padding:12px 10px;border:1.5px solid;font:inherit;cursor:pointer;min-width:0;box-shadow:0 3px 10px rgba(15,28,46,.05)}
+    .pf-stat .pf-si{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none;color:#fff}
+    .pf-stat .pf-si svg{width:22px;height:22px}
+    .pf-stat .t{flex:1;min-width:0;display:block}
+    .pf-stat small{display:block;font-size:13px;font-weight:700;line-height:1.25}
+    .pf-stat b{display:block;font-size:27px;line-height:1.15}
+    .pf-stat i{font-style:normal;font-size:22px;opacity:.65;flex:none}
+    .pf-stat.blue{background:#f1f6fc;border-color:#c9daf0;color:#0f1c2e}.pf-stat.blue .pf-si{background:#0f1c2e;color:#e0bd5c}
+    .pf-stat.green{background:#f0fbf5;border-color:#bfe8d1;color:#0b5a3a}.pf-stat.green .pf-si{background:#047857}
+    .pf-stat.red{background:#fff3f3;border-color:#f4c4c4;color:#9f1c1c}.pf-stat.red .pf-si{background:#c62828}
+    #adminFullPage .pf-card{padding:18px 14px}
+    #adminFullPage .pf-card>h3::before{display:none}
+    #adminFullPage .pf-title{font-size:22px;margin:0 0 14px;gap:10px}
+    .pf-plus{width:34px;height:34px;border-radius:50%;background:var(--gold-gradient);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;line-height:1;flex:none;box-shadow:0 3px 8px rgba(152,113,33,.35)}
+    .pf-steps{display:flex;align-items:flex-start;margin:0 0 14px}
+    .pf-step{flex:1;background:none;border:0;border-bottom:3px solid transparent;padding:0 4px 8px;font:inherit;display:flex;flex-direction:column;align-items:center;gap:6px;color:#64748b;font-weight:700;font-size:14.5px;cursor:pointer;position:relative}
+    .pf-step i{font-style:normal;width:40px;height:40px;border-radius:50%;background:#94a3b8;color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;position:relative;z-index:1}
+    .pf-step:not(:last-child)::after{content:"";position:absolute;top:20px;left:calc(50% + 26px);width:calc(100% - 52px);height:2px;background:#cfd6e2}
+    .pf-step.on{color:#0f1c2e;border-bottom-color:#c8a04b}
+    .pf-step.on i{background:var(--gold-gradient);text-shadow:0 1px 2px rgba(0,0,0,.25);box-shadow:0 3px 8px rgba(152,113,33,.35)}
+    .pf-wrap{border:1.5px solid #e6dcc3;border-radius:16px;padding:14px;background:#fff}
+    .pf-panel{display:none}
+    .pf-panel.on{display:block}
+    .pf-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+    .pf-f{padding:10px 0 12px;border-bottom:1px solid #efe8d6;min-width:0}
+    .pf-full{grid-column:1/-1}
+    .pf-l{display:flex;align-items:center;gap:8px;font-weight:700;color:#0f1c2e;font-size:15px;margin:0 0 7px}
+    .pf-l svg{width:22px;height:22px;color:#0f1c2e;flex:none}
+    .pf-l em{color:#e11d48;font-style:normal}
+    #adminFullPage .pf-card input:not([type=checkbox]):not([type=file]),#adminFullPage .pf-card textarea{margin:0;padding:12px;border-radius:12px;font-size:15px;width:100%}
+    #adminFullPage .pf-card textarea{min-height:104px;resize:vertical}
+    #adminFullPage .pf-card input.pf-sel{padding-right:36px;background:#fbfcfe url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 11px center/16px}
+    .pf-sel::-webkit-calendar-picker-indicator{opacity:0;position:absolute;right:0;width:36px;height:100%}
+    .pf-hint{display:block;font-size:12px;color:#64748b;margin-top:5px;line-height:1.4}
+    .pf-count{text-align:right;font-size:13px;color:#64748b;margin-top:4px}
+    .pf-more{margin-top:14px;border:1.5px solid #bfe3d4;background:#f1faf6;border-radius:16px;overflow:hidden}
+    .pf-more-h{width:100%;display:flex;align-items:center;gap:10px;padding:12px 14px;background:none;border:0;font:inherit;font-weight:800;font-size:17px;color:#0f1c2e;cursor:pointer;text-align:left}
+    .pf-more-h svg{width:22px;height:22px;flex:none}
+    .pf-more-h .chev{margin-left:auto;transition:transform .2s}
+    .pf-more.closed .chev{transform:rotate(180deg)}
+    .pf-more.closed .pf-more-b{display:none}
+    .pf-more-b{padding:0 10px 12px}
+    .pf-tg-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .pf-tg{display:block;background:#fff;border:1.5px solid #d5eadf;border-radius:12px;padding:10px;cursor:pointer;min-width:0}
+    .pf-tg .top{display:flex;align-items:center;gap:5px}
+    .pf-tg .top>svg{width:22px;height:22px;flex:none;color:#047857}
+    .pf-tg b{flex:1;min-width:0;font-size:13.5px;color:#0f1c2e;line-height:1.25}
+    .pf-tg small{display:block;font-size:12px;color:#64748b;line-height:1.35;margin-top:4px}
+    .pf-tgrow{margin-top:12px}
+    #adminFullPage input[type=checkbox].pf-sw{appearance:none;-webkit-appearance:none;width:38px;height:22px;border-radius:99px;background:#cbd5e1;border:0;position:relative;flex:none;cursor:pointer;transition:background .2s;margin:0;padding:0}
+    #adminFullPage input[type=checkbox].pf-sw::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.3);transition:transform .2s}
+    #adminFullPage input[type=checkbox].pf-sw:checked{background:#059669}
+    #adminFullPage input[type=checkbox].pf-sw:checked::after{transform:translateX(16px)}
+    #adminFullPage .pf-card .stock-ctl input:not([type=checkbox]):not([type=file]),#adminFullPage .pf-card input[data-cs]:not([type=checkbox]):not([type=file]){width:auto;max-width:140px;padding:8px}
+    .pf-sub{margin-top:10px;background:#fff;border:1.5px dashed #bfe3d4;border-radius:12px;padding:10px}
+    .pf-sublabel{font-weight:700;color:#0f1c2e;font-size:14px;margin-bottom:6px}
+    .pf-nav{display:flex;justify-content:space-between;gap:10px;margin-top:14px}
+    .pf-nav button{background:#fff;border:1.5px solid #e6d9b3;color:#0f1c2e;border-radius:12px;padding:9px 16px;font:inherit;font-weight:700;font-size:14.5px;cursor:pointer}
+    .pf-nav button.nx{background:var(--gold-gradient);border-color:#c8a04b}
+    .pf-actions{display:grid;grid-template-columns:1.15fr 1fr;gap:12px;margin-top:14px}
+    .pf-btn{display:flex;align-items:center;justify-content:center;gap:10px;border-radius:12px;padding:14px 8px;font:inherit;font-size:17px;font-weight:800;cursor:pointer;border:1.5px solid #0f1c2e;min-width:0}
+    .pf-btn svg{width:24px;height:24px;flex:none}
+    .pf-btn.save{background:#0f1c2e;color:#f3e5ad;box-shadow:0 6px 16px rgba(15,28,46,.25)}.pf-btn.save svg{color:#e0bd5c}
+    .pf-btn.prev{background:#fff;color:#0f1c2e}
+    .pf-btn:disabled{opacity:.6}
+    .pf-reset{background:none;border:0;color:#64748b;font:inherit;font-weight:600;font-size:14px;cursor:pointer;text-decoration:underline}
+    .pf-drop{display:flex;flex-direction:column;align-items:center;gap:6px;border:2px dashed #d4af37;background:#fffaf0;border-radius:16px;padding:22px 12px;text-align:center;cursor:pointer;color:#0f1c2e;margin-top:10px}
+    .pf-drop svg{width:38px;height:38px;color:#b8902f}
+    .pf-drop b{font-size:16px}.pf-drop small{color:#64748b;font-size:13px}
+    #adminFullPage input[type=file].pf-file{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;padding:0;margin:0;border:0}
+    .pf-thumbs{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 0}
+    .pf-th{position:relative;border:1.5px solid #e6d9b3;border-radius:10px;padding:3px;background:#fff}
+    .pf-th img{width:70px;height:85px;object-fit:cover;border-radius:7px;display:block}
+    .pf-th .tag{position:absolute;left:5px;bottom:5px;background:#0f1c2e;color:#f3e5ad;font-size:10px;padding:1px 7px;border-radius:99px}
+    .pf-pub{display:flex;align-items:center;gap:10px;padding:12px;border-radius:14px;margin-top:14px;font-weight:700;border:1.5px solid}
+    .pf-pub>svg{width:28px;height:28px;flex:none}
+    .pf-pub>div{flex:1;min-width:0}
+    .pf-pub small{display:block;font-weight:500;font-size:12.5px;opacity:.85;line-height:1.4}
+    .pf-pub.on{background:#ecfdf5;border-color:#a7f3d0;color:#065f46}
+    .pf-pub.off{background:#fef2f2;border-color:#fecaca;color:#991b1b}
+    .pf-pubbtn{background:#fff;border:1.5px solid currentColor;color:inherit;border-radius:10px;padding:7px 12px;font:inherit;font-weight:700;font-size:13px;cursor:pointer;flex:none}
+    .pf-lh{display:flex;align-items:center;gap:10px;margin:0 0 12px}
+    .pf-lh .ic{width:28px;height:28px;color:#987121;flex:none}
+    .pf-lh b{font-size:18px;color:#0f1c2e;flex:1;min-width:0}
+    .pf-all{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1.5px solid #d4af37;color:#8a6414;border-radius:99px;padding:6px 12px;font:inherit;font-weight:700;font-size:13px;cursor:pointer;flex:none}
+    .pf-all svg{width:16px;height:16px}
+    .pf-note{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#fff7e6;border:1.5px solid #f2e2b8;color:#92400e;border-radius:12px;padding:8px 12px;font-size:13.5px;font-weight:600;margin-bottom:10px}
+    .pf-note button{background:#fff;border:1.5px solid #d4af37;border-radius:99px;padding:4px 10px;font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;color:#8a6414}
+    .pf-item{display:flex;gap:12px;background:#fff;border:1.5px solid #ece4d0;border-radius:14px;padding:10px;margin-bottom:10px}
+    .pf-thumb{width:80px;height:100px;border-radius:10px;object-fit:cover;flex:none;background:#eee;display:flex;align-items:center;justify-content:center;font-size:11px;color:#888;text-align:center}
+    .pf-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+    .pf-name{font-size:17px;font-weight:800;color:#0f1c2e;line-height:1.3;word-break:break-word}
+    .pf-price{font-size:20px;font-weight:800;color:#a8791c}
+    .pf-price s{font-size:13px;color:#94a3b8;font-weight:600;margin-left:6px}
+    .pf-row2{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:auto}
+    .pf-tags{display:flex;gap:6px;flex-wrap:wrap}
+    .pf-pill{display:inline-flex;align-items:center;gap:5px;border-radius:99px;padding:4px 10px;font-size:13px;font-weight:700;background:#eef2f7;color:#334155}
+    .pf-pill.on{background:#e6f7ee;color:#047857}.pf-pill.on::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor}
+    .pf-pill.hid{background:#fee2e2;color:#b91c1c}
+    .pf-pill.low{background:#fff1d6;color:#b45309}
+    .pf-pill.out{background:#fee2e2;color:#b91c1c}
+    .pf-btns{display:flex;gap:6px;margin-left:auto}
+    .pf-ib{width:38px;height:38px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;background:#fff;cursor:pointer;padding:0}
+    .pf-ib svg{width:19px;height:19px}
+    .pf-ib.edit{border:1.5px solid #d4af37;color:#987121}
+    .pf-ib.link{border:1.5px solid #99d5cd;color:#0f766e}
+    .pf-ib.del{border:1.5px solid #fca5a5;color:#dc2626;background:#fff5f5}
+    .pf-sitelink{width:100%;margin-top:2px;background:#fff;border:1.5px solid #99d5cd;color:#0f766e;border-radius:12px;padding:10px;font:inherit;font-weight:700;cursor:pointer}
+    #pfPreviewDialog{border:0;border-radius:20px;padding:0;max-width:420px;width:calc(100% - 24px);max-height:90vh;overflow:auto;background:#fff;color:#0f1c2e}
+    #pfPreviewDialog::backdrop{background:rgba(6,12,22,.6)}
+    .pfp-imgs{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;background:#f1ece0}
+    .pfp-imgs img{flex:none;width:100%;max-height:420px;object-fit:cover;scroll-snap-align:center}
+    .pfp-noimg{padding:60px 0;text-align:center;color:#94a3b8;width:100%}
+    .pfp-body{padding:16px}
+    .pfp-body h4{margin:0 0 6px;font-size:21px}
+    .pfp-price{font-size:24px;font-weight:800;color:#a8791c}.pfp-price s{font-size:14px;color:#94a3b8;margin-left:8px;font-weight:600}
+    .pfp-badges{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
+    .pfp-tbl{width:100%;border-collapse:collapse;margin:8px 0;font-size:14.5px}.pfp-tbl td{padding:6px 0;border-bottom:1px solid #efe8d6}.pfp-tbl td:first-child{color:#64748b;width:38%}
+    .pfp-desc{white-space:pre-wrap;line-height:1.7;font-size:15px;margin:8px 0}
+    .pfp-note{background:#fff7e6;border:1.5px solid #f2e2b8;color:#92400e;border-radius:12px;padding:8px 12px;font-size:13px;margin-top:12px;font-weight:600}
+    @media(min-width:760px){.pf-tg-grid{grid-template-columns:repeat(4,1fr)}}
+    @media(max-width:480px){.pf-stat i{display:none}.pf-stat .pf-si{width:36px;height:36px}.pf-stat .pf-si svg{width:19px;height:19px}.pf-stat b{font-size:24px}.pf-stat small{font-size:12.5px}.pf-stat{padding:10px 8px;gap:7px}}
+    @media(max-width:340px){.pf-grid{grid-template-columns:1fr}}
+    @media(max-width:900px){
+      .adm-top{margin:-12px -12px 16px;border-radius:0 0 26px 26px;padding:16px 14px;flex-wrap:nowrap;gap:12px}
+      .adm-top h2{font-size:20px}
+      .adm-crown{width:26px;height:26px;margin-right:6px}
+      #admTitle{display:none}
+      .adm-burger{border-color:rgba(255,255,255,.35);border-radius:12px;width:44px;height:44px}
+      .adm-home{background:transparent;border:1.5px solid #d4af37;color:#e0bd5c;box-shadow:none;border-radius:12px;width:44px;height:44px;padding:0;justify-content:center}
+    }
+    @media(max-width:480px){.adm-tag{font-size:12.5px}}
+    html[data-theme="dark"] .pf-stat.blue{background:#13202f;border-color:#33415c;color:#f1e6c3}
+    html[data-theme="dark"] .pf-stat.green{background:#10261d;border-color:#1f5a41;color:#b6ebca}
+    html[data-theme="dark"] .pf-stat.red{background:#2b1414;border-color:#6b2a2a;color:#f0b4b4}
+    html[data-theme="dark"] .pf-wrap,html[data-theme="dark"] .pf-item,html[data-theme="dark"] .pf-tg,html[data-theme="dark"] .pf-sub,html[data-theme="dark"] .pf-th{background:#171717;border-color:#33415c}
+    html[data-theme="dark"] .pf-more{background:#10261d;border-color:#1f5a41}
+    html[data-theme="dark"] .pf-f{border-bottom-color:#2a3446}
+    html[data-theme="dark"] .pf-l,html[data-theme="dark"] .pf-l svg,html[data-theme="dark"] .pf-name,html[data-theme="dark"] .pf-tg b,html[data-theme="dark"] .pf-more-h,html[data-theme="dark"] .pf-lh b,html[data-theme="dark"] .pf-sublabel,html[data-theme="dark"] .pf-step.on{color:#f1e6c3}
+    html[data-theme="dark"] .pf-step{color:#93a3ba}
+    html[data-theme="dark"] .pf-btn.prev,html[data-theme="dark"] .pf-nav button,html[data-theme="dark"] .pf-all,html[data-theme="dark"] .pf-ib,html[data-theme="dark"] .pf-sitelink,html[data-theme="dark"] .pf-pubbtn{background:#171717;color:#f1e6c3}
+    html[data-theme="dark"] .pf-btn.prev{border-color:#d4af37}
+    html[data-theme="dark"] .pf-drop{background:#1d1a12;color:#f1e6c3}
+    html[data-theme="dark"] .pf-pill{background:#262b33;color:#cbd5e1}
+    html[data-theme="dark"] .pf-pill.on{background:#193723;color:#b6ebca}
+    html[data-theme="dark"] .pf-pill.hid,html[data-theme="dark"] .pf-pill.out{background:#341515;color:#e59a9a}
+    html[data-theme="dark"] .pf-pill.low{background:#33280f;color:#f3c77a}
+    html[data-theme="dark"] .pf-pub.on{background:#10261d;border-color:#1f5a41;color:#b6ebca}
+    html[data-theme="dark"] .pf-pub.off{background:#2b1414;border-color:#6b2a2a;color:#f0b4b4}
+    html[data-theme="dark"] .pf-note,html[data-theme="dark"] .pfp-note{background:#2a2312;border-color:#5a4a1f;color:#f3c77a}
+    html[data-theme="dark"] #pfPreviewDialog{background:#171717;color:#f1e6c3}
+    html[data-theme="dark"] .pfp-tbl td{border-bottom-color:#2a3446}
+    html[data-theme="dark"] #adminFullPage .pf-card input.pf-sel{background-color:#121720}
+
     /* আমার অর্ডার (ট্র্যাকিং) */
     #trackDialog{padding:20px 16px 22px;background:var(--cream)}
     #trackDialog .close-modal-btn{width:36px;height:36px;font-size:26px;top:12px;right:12px;z-index:3}
@@ -2017,8 +2178,8 @@ html.dtm #toast{bottom:90px}
       <header class="adm-top">
         <button type="button" class="adm-burger" onclick="admToggleNav()" aria-label="মেনু"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
         <div class="adm-top-txt">
-          <h2>👑 শাড়ি বিলাশ — অ্যাডমিন</h2>
-          <div class="adm-top-sub"><span id="admTitle">ড্যাশবোর্ড</span><span id="liveStatus" class="live-dot">Live সংযোগ হচ্ছে...</span></div>
+          <h2><svg class="adm-crown" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"/></svg>শাড়ি বিলাশ — অ্যাডমিন</h2>
+          <div class="adm-top-sub"><span id="admTitle">ড্যাশবোর্ড</span><span id="liveStatus" class="live-dot">LIVE</span><span class="adm-tag">শাড়ির রাজকীয় আভিজাত্য</span></div>
         </div>
         <button type="button" class="adm-home" onclick="goToHomeSite()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg><span>মূল সাইটে ফিরে যান</span></button>
       </header>
@@ -3951,6 +4112,144 @@ html.dtm #toast{bottom:90px}
       } catch {}
     }
 
+    // ---------- অ্যাডমিন: শাড়ি / থ্রি পিস ফর্ম (৩ ধাপ) ----------
+    const PF_ICO = {
+      cloth: '<path d="M5 4c2.5 2 4.5-1.5 7 0s4.5 2 7 0v16c-2.5 2-4.5-1.5-7 0s-4.5 2-7 0z"/><path d="M9 8v10M13 7v10M17 8v10" opacity=".5"/>',
+      grid: '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
+      layers: '<path d="M12 3 2 8l10 5 10-5z"/><path d="M2 12.5l10 5 10-5M2 17l10 5 10-5"/>',
+      ruler: '<path d="M3 17 17 3l4 4L7 21z"/><path d="M7 13l2 2M10 10l2 2M13 7l2 2"/>',
+      palette: '<path d="M12 3a9 9 0 1 0 0 18c1.2 0 2-.8 2-1.8 0-.5-.2-.9-.5-1.2-.3-.3-.5-.7-.5-1.2 0-1 .8-1.8 1.8-1.8H17a4 4 0 0 0 4-4C21 6.5 17 3 12 3z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7" r="1"/><circle cx="15" cy="7" r="1"/>',
+      doc: '<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/>',
+      gear: '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>',
+      up: '<path d="m6 15 6-6 6 6"/>',
+      truck: '<path d="M2 6h11v10H2zM13 9h4l4 4v3h-8z"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/>',
+      ticket: '<path d="M3 9V6a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v3a3 3 0 0 0 0 6v3a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-3a3 3 0 0 0 0-6z"/><path d="M14 6v12" stroke-dasharray="2 3"/>',
+      eyeoff: '<path d="M3 3l18 18"/><path d="M10.6 6.1A9.8 9.8 0 0 1 12 6c6 0 10 6 10 6a17 17 0 0 1-3.2 3.8M6.5 7.5A17 17 0 0 0 2 12s4 6 10 6a9.7 9.7 0 0 0 3.5-.7"/><path d="M9.9 10a3 3 0 0 0 4.1 4.1"/>',
+      eye: '<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+      box: '<path d="M12 2 3 7v10l9 5 9-5V7z"/><path d="M3 7l9 5 9-5M12 12v10"/>',
+      shirt: '<path d="M8 3 3 6l2 4 3-1v12h8V9l3 1 2-4-5-3a4 4 0 0 1-8 0z"/>',
+      save: '<path d="M5 3h11l4 4v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M8 3v5h8V3M8 21v-7h8v7"/>',
+      upload: '<path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/>',
+      pencil: '<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/>',
+      trash: '<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/>',
+      link: '<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
+      cart: '<circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.7 12.4a1 1 0 0 0 1 .8h8.8a1 1 0 0 0 1-.8L20 7H6"/>',
+      warn: '<path d="M12 3 2 20h20z"/><path d="M12 10v5M12 18v.5"/>',
+      list: '<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>'
+    };
+    function pfI(n, cls) { return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"${cls ? ` class="${cls}"` : ""}>${PF_ICO[n] || ""}</svg>`; }
+    let pfListAll = false, pfListMode = "all";
+
+    function pfGo(n) {
+      document.querySelectorAll("#pfSteps .pf-step").forEach(b => b.classList.toggle("on", Number(b.dataset.s) === n));
+      document.querySelectorAll(".pf-panel").forEach(p => p.classList.toggle("on", Number(p.dataset.p) === n));
+      pfPubUpdate();
+    }
+    function pfCount() { const t = $("#pdesc"), n = $("#pdescN"); if (t && n) n.textContent = taka(t.value.length); }
+    function pfMoreToggle() { const m = $("#pfMore"); if (m) m.classList.toggle("closed"); }
+    function pfTgCoupon() {
+      const on = $("#ptgCoupon").checked;
+      $("#pfCouponBox").style.display = on ? "block" : "none";
+      if (!on) { document.querySelectorAll(".cchk").forEach(x => { x.checked = false; }); couponSel = []; }
+    }
+    function pfTgHide() { $("#pactive").checked = !$("#ptgHide").checked; pfPubUpdate(); }
+    function pfTogglePub() { const t = $("#ptgHide"); if (!t) return; t.checked = !t.checked; pfTgHide(); }
+    function pfTgStock() {
+      const on = $("#ptgStock").checked;
+      $("#pfStockBox").style.display = on ? "block" : "none";
+      if (!on) {
+        $("#pstock").value = "";
+        document.querySelectorAll("[data-cs]").forEach(el => { el.value = ""; });
+        toast("স্টক সীমা তুলে দেওয়া হলো — সেভ করলে সীমাহীন থাকবে");
+      }
+    }
+    // সম্পাদনায় গেলে (বা দ্রুত স্টক বদলালে) টগলগুলো ডাটার সাথে মিলিয়ে দেয়
+    function pfSyncStockToggle() {
+      const t = $("#ptgStock"); if (!t || !editingProductId) return;
+      const p = getProduct(editingProductId); if (!p) return;
+      const unlimited = (p.stock === null || p.stock === undefined) && !colorStockMap(p);
+      t.checked = !unlimited;
+      $("#pfStockBox").style.display = t.checked ? "block" : "none";
+    }
+    function pfSyncToggles() {
+      if (!$("#ptgHide")) return;
+      $("#ptgHide").checked = !$("#pactive").checked;
+      const hasCoupon = Array.isArray(couponSel) && couponSel.length > 0;
+      $("#ptgCoupon").checked = hasCoupon;
+      $("#pfCouponBox").style.display = hasCoupon ? "block" : "none";
+      pfSyncStockToggle();
+      const pl = document.querySelector(".pf-plus"); if (pl) pl.textContent = editingProductId ? "✎" : "+";
+      pfFilesChosen(); pfCount(); pfPubUpdate();
+    }
+    function pfPubUpdate() {
+      const box = $("#pfPubState"); if (!box) return;
+      const hide = !!($("#ptgHide") && $("#ptgHide").checked);
+      box.className = "pf-pub " + (hide ? "off" : "on");
+      box.innerHTML = hide
+        ? `${pfI("eyeoff")}<div>গোপন করা আছে<small>সেভ করলে কাস্টমার সাইটে এটা দেখতে পাবে না (মুছে যাবে না)</small></div><button type="button" class="pf-pubbtn" onclick="pfTogglePub()">দেখান</button>`
+        : `${pfI("eye")}<div>সাইটে দেখা যাবে<small>সেভ করলেই সব ফোনে এখনই দেখাবে</small></div><button type="button" class="pf-pubbtn" onclick="pfTogglePub()">গোপন করুন</button>`;
+    }
+    function pfFilesChosen() {
+      const box = $("#pfNewPrev"), inp = $("#pimages"); if (!box || !inp) return;
+      box.innerHTML = [...inp.files].map(f => `<div class="pf-th"><img src="${URL.createObjectURL(f)}" alt=""><span class="tag">নতুন</span></div>`).join("");
+    }
+
+    // প্রিভিউ — সাইটে কেমন দেখাবে (এখনো সেভ হয়নি)
+    function pfPreview() {
+      const v = id => ($(id) ? $(id).value.trim() : "");
+      const name = v("#pname") || "(নাম দেওয়া হয়নি)";
+      const price = Number(v("#pprice")) || 0, reg = Number(v("#pregularprice")) || 0;
+      const colors = v("#pcolors").split(",").map(x => x.trim()).filter(Boolean);
+      const cat = adminTpMode ? ("থ্রি পিস" + (v("#ptpcat") ? " - " + v("#ptpcat") : "")) : v("#pcategory");
+      const cs = collectColorStock(v("#pstock"));
+      const files = [...(($("#pimages") && $("#pimages").files) || [])];
+      const imgs = [...currentImageUrlList, ...files.map(f => URL.createObjectURL(f))];
+      let stockTxt = "স্টক: সীমা নেই";
+      if (cs.stock !== null && cs.stock !== undefined) stockTxt = Number(cs.stock) <= 0 ? "স্টক শেষ" : "স্টক: " + taka(cs.stock);
+      else if (cs.color_stock) stockTxt = "রং অনুযায়ী স্টক";
+      const hide = !$("#pactive").checked;
+      const rows = [["ক্যাটাগরি", cat], ["কাপড়", v("#pfabric")], [adminTpMode ? "সাইজ / সেট" : "দৈর্ঘ্য", v("#plength")], ["রং", colors.join(", ")]].filter(r => r[1]);
+      let dlg = $("#pfPreviewDialog");
+      if (!dlg) { dlg = document.createElement("dialog"); dlg.id = "pfPreviewDialog"; document.body.appendChild(dlg); }
+      dlg.innerHTML = `
+        <button class="close-modal-btn" onclick="this.closest('dialog').close()" aria-label="বন্ধ করুন">&times;</button>
+        <div class="pfp-imgs">${imgs.length ? imgs.map(u => `<img src="${esc(u)}" alt="">`).join("") : '<div class="pfp-noimg">ছবি নেই</div>'}</div>
+        <div class="pfp-body">
+          <h4>${esc(name)}</h4>
+          <div class="pfp-price">৳${taka(price)}${reg > price ? `<s>৳${taka(reg)}</s>` : ""}</div>
+          <div class="pfp-badges">
+            <span class="pf-pill ${hide ? "hid" : "on"}">${hide ? "গোপন" : "সক্রিয়"}</span>
+            <span class="pf-pill">${stockTxt}</span>
+            ${$("#pfreedelivery").checked ? '<span class="pf-pill on">ফ্রি ডেলিভারি</span>' : ""}
+            ${$("#pblouse").checked && !adminTpMode ? '<span class="pf-pill">👚 ব্লাউজ পিস ফ্রি</span>' : ""}
+          </div>
+          ${rows.length ? `<table class="pfp-tbl">${rows.map(r => `<tr><td>${esc(r[0])}</td><td><b>${esc(r[1])}</b></td></tr>`).join("")}</table>` : ""}
+          ${v("#pdesc") ? `<div class="pfp-desc">${esc(v("#pdesc"))}</div>` : ""}
+          <div class="pfp-note">ℹ️ এটা শুধু প্রিভিউ — "সেভ করুন" না চাপা পর্যন্ত সাইটে যাবে না।</div>
+        </div>`;
+      dlg.showModal();
+    }
+
+    // স্ট্যাটাস কার্ড + তালিকা
+    const pfIsLow = p => p.stock !== null && p.stock !== undefined && p.stock !== "" && Number(p.stock) <= 5;
+    function pfStockText(p) {
+      if (p.stock !== null && p.stock !== undefined && p.stock !== "") return Number(p.stock) <= 0 ? "স্টক শেষ" : "স্টক: " + taka(p.stock);
+      if (colorStockMap(p)) return "রং অনুযায়ী স্টক";
+      return "স্টক: সীমা নেই";
+    }
+    function pfListFilter(mode) {
+      pfListMode = mode; if (mode === "low") pfListAll = true;
+      listAdminProducts();
+      const el = $("#pfList"); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    function pfToggleAll() { pfListAll = !pfListAll; listAdminProducts(); }
+    async function pfLoadOrderCount() {
+      try {
+        const { count, error } = await db.from("orders").select("id", { count: "exact", head: true }).ilike("status", "%Pending%");
+        const el = $("#pfStOrders"); if (el && !error) el.textContent = taka(count || 0);
+      } catch {}
+    }
+
     // ---------- অ্যাডমিন ----------
     async function showAdminTab(tab) {
       if (!isAdmin) return;
@@ -3971,6 +4270,8 @@ html.dtm #toast{bottom:90px}
         const hasLocal = getLegacyLocalProducts().length > 0;
         const cats = [...new Set(products.filter(p => !isThreePiece(p)).map(p => (p.category || "").trim()).filter(Boolean))];
         const tpSubs = [...new Set(products.filter(isThreePiece).map(tpSubOf).filter(Boolean))];
+        const fabrics = [...new Set(products.filter(p => isThreePiece(p) === tpMode).map(p => (p.fabric || "").trim()).filter(Boolean))];
+        pfListAll = false; pfListMode = "all";
         box.innerHTML = `
           ${hasLocal ? `<div class="admin-card" style="background:#fff8e7;border-color:#f2e2b8;">
             <b>⚠️ এই ফোনে ${taka(getLegacyLocalProducts().length)}টি পুরোনো শাড়ি শুধু লোকালি সেভ আছে (অন্য ফোনে দেখা যায় না)।</b>
@@ -3978,60 +4279,92 @@ html.dtm #toast{bottom:90px}
             <button type="button" class="btn order-btn" style="padding:8px 16px;font-size:14px;" id="migrateBtn" onclick="migrateLocalProducts()">⬆️ ডাটাবেসে আপলোড করুন</button>
             <div id="migrateMsg" class="small" style="margin-top:8px;"></div>
           </div>` : ""}
-          <div class="admin-card">
-            <h3 id="formTitle">${tpMode ? "👗 নতুন থ্রি পিস যোগ করুন" : "নতুন শাড়ি যোগ করুন"}</h3>
-            <label class="field-label" for="pname">${tpMode ? "থ্রি পিসের নাম" : "শাড়ির নাম"}</label><input id="pname" required>
-            <label class="field-label" for="pdesc">বিবরণ</label><input id="pdesc" placeholder="${tpMode ? 'যেমন: কামিজ + সালোয়ার + ওড়না, প্রিন্টেড ডিজাইন' : 'শাড়ির সংক্ষিপ্ত বিবরণ'}">
-            <div class="row">
-              <div${tpMode ? ' style="display:none"' : ""}><label class="field-label" for="pcategory">ক্যাটাগরি</label><input id="pcategory" list="catList" placeholder="যেমন: জামদানি, কাতান"></div>
-              <div><label class="field-label" for="pfabric">${tpMode ? "কাপড়ের ধরন" : "ধরন / কাপড়"}</label><input id="pfabric" placeholder="${tpMode ? 'যেমন: কটন, জর্জেট, লিনেন' : 'যেমন: সুতি, সিল্ক, কটন'}"></div>
-              <div${tpMode ? "" : ' style="display:none"'}><label class="field-label" for="ptpcat">👗 থ্রি পিসের ক্যাটাগরি (ফাঁকা রাখলে শুধু "থ্রি পিস" হবে)</label><input id="ptpcat" list="tpCatList" placeholder="যেমন: কটন, জর্জেট, পার্টি"></div>
-            </div>
-            <datalist id="tpCatList">${tpSubs.map(c => `<option value="${esc(c)}">`).join("")}</datalist>
-            <datalist id="catList">${cats.map(c => `<option value="${esc(c)}">`).join("")}</datalist>
-            <div class="row">
-              <div><label class="field-label" for="plength">${tpMode ? "সাইজ / সেট (ফাঁকা রাখলে সাইটে দেখাবে না)" : "দৈর্ঘ্য (ফাঁকা রাখলে সাইটে দেখাবে না)"}</label><input id="plength" placeholder="${tpMode ? 'যেমন: ফ্রি সাইজ, আনস্টিচড' : 'যেমন: ১২ হাত'}"></div>
-              <div><label class="field-label" for="pfreemin">${tpMode ? "এই থ্রি পিসে" : "এই শাড়িতে"} এত টাকা বা বেশি নিলে ফ্রি ডেলিভারি (ফাঁকা = নেই)</label><input id="pfreemin" type="number" min="0" placeholder="যেমন: 3000"></div>
-            </div>
-            <div style="margin:12px 0;display:${tpMode ? "none" : "flex"};align-items:center;gap:8px;">
-              <input type="checkbox" id="pblouse" style="width:20px;height:20px;margin:0;cursor:pointer;">
-              <label for="pblouse" style="font-weight:bold;color:var(--navy);cursor:pointer;">👚 ব্লাউজ পিস ফ্রি (টিক দিলে সাইটে দেখাবে)</label>
-            </div>
-            <div class="row">
-              <div><label class="field-label" for="pregularprice">কাটা দাম</label><input id="pregularprice" type="number" min="0"></div>
-              <div><label class="field-label" for="pprice">বিক্রয় মূল্য</label><input id="pprice" type="number" min="1" required></div>
-              <div><label class="field-label" for="pstock">স্টক মোট (ফাঁকা = সীমা নেই; নিচে রং অনুযায়ী দিলে এটা লাগবে না)</label><input id="pstock" type="number" min="0" placeholder="যেমন: 10"></div>
-            </div>
-            <div style="margin:12px 0;display:flex;align-items:center;gap:8px;">
-              <input type="checkbox" id="pfreedelivery" style="width:20px;height:20px;margin:0;cursor:pointer;">
-              <label for="pfreedelivery" style="font-weight:bold;color:var(--green);cursor:pointer;">🚚 ফ্রি ডেলিভারি (Free Delivery)</label>
-            </div>
-            <div style="margin:12px 0;display:flex;align-items:center;gap:8px;">
-              <input type="checkbox" id="pactive" checked style="width:20px;height:20px;margin:0;cursor:pointer;">
-              <label for="pactive" style="font-weight:bold;color:var(--navy);cursor:pointer;">👁️ সাইটে দেখাবে (বন্ধ করলে কাস্টমারের কাছে লুকানো থাকবে, মুছে যাবে না)</label>
-            </div>
-            <div class="field-label">🎟️ কুপন চলবে (এতে যে কুপন দিতে চান তাতে টিক দিন)</div>
-            <div id="couponChecks" class="small" style="margin:8px 0 12px;">লোড হচ্ছে...</div>
-            <label class="field-label" for="pcolors">রঙের নাম (কমা দিয়ে, ছবির ক্রম অনুযায়ী)</label><input id="pcolors" placeholder="লাল, নীল" oninput="renderColorStockInputs()">
-            <div id="colorStockBox" style="margin:6px 0 12px;"></div>
-            <div id="quickStock"></div>
-            <label class="field-label">বর্তমান ছবি (ডিলিট করতে ✕ চাপুন)</label>
-            <div id="imagePreviewContainer" style="display:flex;gap:10px;flex-wrap:wrap;margin:10px 0;"></div>
-            <label class="field-label" for="pimages">নতুন ছবি আপলোড করুন</label><input id="pimages" type="file" multiple accept="image/*">
-            <div style="display:flex;gap:10px;flex-wrap:wrap;">
-              <button type="button" id="saveBtn" class="btn order-btn" style="margin-top:10px;" onclick="saveProduct()">সেভ করুন</button>
-              <button type="button" class="btn" style="margin-top:10px;background:#e2e8f0;box-shadow:none;" onclick="showAdminTab(adminTpMode ? 'threepiece' : 'products')">নতুন / বাতিল</button>
-            </div>
-            <div id="pmsg" class="small" style="margin-top:10px;"></div>
+          <div class="pf-stats">
+            <button type="button" class="pf-stat blue" onclick="pfListFilter('all')"><span class="pf-si">${pfI("cloth")}</span><span class="t"><small>${tpMode ? "মোট থ্রি পিস" : "মোট শাড়ি"}</small><b id="pfStTotal">০</b></span><i>›</i></button>
+            <button type="button" class="pf-stat green" onclick="showAdminTab('orders');admScrollTop()"><span class="pf-si">${pfI("cart")}</span><span class="t"><small>নতুন অর্ডার</small><b id="pfStOrders">০</b></span><i>›</i></button>
+            <button type="button" class="pf-stat red" onclick="pfListFilter('low')"><span class="pf-si">${pfI("warn")}</span><span class="t"><small>স্টক কম</small><b id="pfStLow">০</b></span><i>›</i></button>
           </div>
-          <div class="admin-card" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
-            <b style="color:var(--navy);">${tpMode ? "📋 আপলোড করা থ্রি পিস" : "📋 আপলোড করা শাড়ি"}</b>
-            <button type="button" class="edit-btn" style="background:#0f766e;margin:0;" onclick="copySiteLink()">🔗 সাইটের মূল লিংক কপি</button>
+          <div class="admin-card pf-card">
+            <h3 class="pf-title"><span class="pf-plus">+</span><span id="formTitle">${tpMode ? "নতুন থ্রি পিস যোগ করুন" : "নতুন শাড়ি যোগ করুন"}</span></h3>
+            <div class="pf-steps" id="pfSteps">
+              <button type="button" class="pf-step on" data-s="1" onclick="pfGo(1)"><i>১</i><span>${tpMode ? "থ্রি পিসের তথ্য" : "শাড়ির তথ্য"}</span></button>
+              <button type="button" class="pf-step" data-s="2" onclick="pfGo(2)"><i>২</i><span>দাম ও স্টক</span></button>
+              <button type="button" class="pf-step" data-s="3" onclick="pfGo(3)"><i>৩</i><span>ছবি ও প্রকাশ</span></button>
+            </div>
+            <div class="pf-wrap">
+              <div class="pf-panel on" data-p="1">
+                <div class="pf-grid">
+                  <div class="pf-f"><label class="pf-l" for="pname">${pfI("cloth")}<span>${tpMode ? "থ্রি পিসের নাম" : "শাড়ির নাম"} <em>*</em></span></label><input id="pname" required placeholder="${tpMode ? "যেমন: কটন থ্রি পিস" : "যেমন: ডিজিটাল প্রিন্ট শাড়ি"}"></div>
+                  <div class="pf-f"${tpMode ? ' style="display:none"' : ""}><label class="pf-l" for="pcategory">${pfI("grid")}<span>ক্যাটাগরি</span></label><input id="pcategory" class="pf-sel" list="catList" placeholder="যেমন: জামদানি, কাতান"></div>
+                  <div class="pf-f"${tpMode ? "" : ' style="display:none"'}><label class="pf-l" for="ptpcat">${pfI("grid")}<span>থ্রি পিসের ক্যাটাগরি</span></label><input id="ptpcat" class="pf-sel" list="tpCatList" placeholder="যেমন: কটন, জর্জেট, পার্টি"><span class="pf-hint">ফাঁকা রাখলে শুধু "থ্রি পিস" হবে</span></div>
+                  <div class="pf-f"><label class="pf-l" for="pfabric">${pfI("layers")}<span>${tpMode ? "কাপড়ের ধরন" : "কাপড়"}</span></label><input id="pfabric" class="pf-sel" list="fabricList" placeholder="${tpMode ? "যেমন: কটন, জর্জেট, লিনেন" : "যেমন: সুতি, সিল্ক, কটন"}"></div>
+                  <div class="pf-f"><label class="pf-l" for="plength">${pfI("ruler")}<span>${tpMode ? "সাইজ / সেট" : "দৈর্ঘ্য (কাপড়)"}</span></label><input id="plength" placeholder="${tpMode ? "যেমন: ফ্রি সাইজ, আনস্টিচড" : "যেমন: ৬.৫ হাত"}"><span class="pf-hint">ফাঁকা রাখলে সাইটে দেখাবে না</span></div>
+                  <div class="pf-f"><label class="pf-l" for="pcolors">${pfI("palette")}<span>রঙের নাম</span></label><input id="pcolors" placeholder="যেমন: বেগুনি, লাল" oninput="renderColorStockInputs()"><span class="pf-hint">একাধিক রং হলে কমা (,) দিয়ে — ছবির ক্রম অনুযায়ী</span></div>
+                  <div class="pf-f"><label class="pf-l" for="pdesc">${pfI("doc")}<span>বিবরণ</span></label><textarea id="pdesc" rows="3" maxlength="500" placeholder="${tpMode ? "যেমন: কামিজ + সালোয়ার + ওড়না, প্রিন্টেড ডিজাইন" : "শাড়ির বিস্তারিত বর্ণনা লিখুন..."}" oninput="pfCount()"></textarea><div class="pf-count"><span id="pdescN">০</span>/৫০০</div></div>
+                </div>
+                <datalist id="tpCatList">${tpSubs.map(c => `<option value="${esc(c)}">`).join("")}</datalist>
+                <datalist id="catList">${cats.map(c => `<option value="${esc(c)}">`).join("")}</datalist>
+                <datalist id="fabricList">${fabrics.map(c => `<option value="${esc(c)}">`).join("")}</datalist>
+                <div class="pf-more" id="pfMore">
+                  <button type="button" class="pf-more-h" onclick="pfMoreToggle()">${pfI("gear")}<span>আরও সেটিংস</span>${pfI("up", "chev")}</button>
+                  <div class="pf-more-b">
+                    <div class="pf-tg-grid">
+                      <label class="pf-tg"><span class="top">${pfI("truck")}<b>ফ্রি ডেলিভারি</b><input type="checkbox" id="pfreedelivery" class="pf-sw"></span><small>সক্রিয় করলে ফ্রি ডেলিভারি দেখাবে</small></label>
+                      <label class="pf-tg"><span class="top">${pfI("ticket")}<b>কুপন ডিসকাউন্ট</b><input type="checkbox" id="ptgCoupon" class="pf-sw" onchange="pfTgCoupon()"></span><small>বিশেষ ছাড়ের জন্য কুপন দিন</small></label>
+                      <label class="pf-tg"><span class="top">${pfI("eyeoff")}<b>গোপন প্রোডাক্ট</b><input type="checkbox" id="ptgHide" class="pf-sw" onchange="pfTgHide()"></span><small>সবার জন্য দেখা যাবে না (মুছে যাবে না)</small></label>
+                      <label class="pf-tg"><span class="top">${pfI("box")}<b>স্টক অপশন</b><input type="checkbox" id="ptgStock" class="pf-sw" checked onchange="pfTgStock()"></span><small>স্টক ম্যানেজমেন্ট চালু করুন</small></label>
+                    </div>
+                    <div class="pf-sub" id="pfCouponBox" style="display:none"><div class="pf-sublabel">🎟️ কুপন চলবে (যে কুপন দিতে চান তাতে টিক দিন)</div><div id="couponChecks" class="small">লোড হচ্ছে...</div></div>
+                  </div>
+                </div>
+                <input type="checkbox" id="pactive" checked style="display:none">
+                <div class="pf-nav"><span></span><button type="button" class="nx" onclick="pfGo(2)">পরের ধাপ ›</button></div>
+              </div>
+
+              <div class="pf-panel" data-p="2">
+                <div class="pf-grid">
+                  <div class="pf-f"><label class="pf-l" for="pregularprice"><span>কাটা দাম (৳)</span></label><input id="pregularprice" type="number" min="0" inputmode="numeric" placeholder="যেমন: 2000"><span class="pf-hint">ঐচ্ছিক</span></div>
+                  <div class="pf-f"><label class="pf-l" for="pprice"><span>বিক্রয় মূল্য (৳) <em>*</em></span></label><input id="pprice" type="number" min="1" inputmode="numeric" required placeholder="যেমন: 1500"></div>
+                  <div class="pf-f pf-full"><label class="pf-l" for="pfreemin">${pfI("truck")}<span>ফ্রি ডেলিভারির ন্যূনতম টাকা</span></label><input id="pfreemin" type="number" min="0" inputmode="numeric" placeholder="যেমন: 3000"><span class="pf-hint">${tpMode ? "এই থ্রি পিসে" : "এই শাড়িতে"} এত টাকা বা বেশি নিলে ফ্রি ডেলিভারি (ফাঁকা = নেই)</span></div>
+                </div>
+                <div id="pfStockBox">
+                  <div class="pf-f"><label class="pf-l" for="pstock">${pfI("box")}<span>মোট স্টক</span></label><input id="pstock" type="number" min="0" inputmode="numeric" placeholder="যেমন: 10"><span class="pf-hint">ফাঁকা = সীমা নেই; নিচে রং অনুযায়ী দিলে এটা লাগবে না</span></div>
+                  <div id="colorStockBox" style="margin:10px 0 4px;"></div>
+                  <div id="quickStock"></div>
+                </div>
+                <label class="pf-tg pf-tgrow"${tpMode ? ' style="display:none"' : ""}><span class="top">${pfI("shirt")}<b>ব্লাউজ পিস ফ্রি</b><input type="checkbox" id="pblouse" class="pf-sw"></span><small>চালু করলে সাইটে "ব্লাউজ পিস ফ্রি" দেখাবে</small></label>
+                <div class="pf-nav"><button type="button" onclick="pfGo(1)">‹ আগের ধাপ</button><button type="button" class="nx" onclick="pfGo(3)">পরের ধাপ ›</button></div>
+              </div>
+
+              <div class="pf-panel" data-p="3">
+                <div class="pf-l"><span>বর্তমান ছবি</span></div>
+                <span class="pf-hint" style="margin:-4px 0 8px;">ডিলিট করতে ✕ চাপুন</span>
+                <div id="imagePreviewContainer" style="display:flex;gap:10px;flex-wrap:wrap;margin:10px 0;"></div>
+                <label class="pf-drop" for="pimages">${pfI("upload")}<b>নতুন ছবি আপলোড করুন</b><small>একসাথে একাধিক ছবি বাছাই করা যায়</small></label>
+                <input id="pimages" type="file" multiple accept="image/*" class="pf-file" onchange="pfFilesChosen()">
+                <div class="pf-thumbs" id="pfNewPrev"></div>
+                <div class="pf-pub on" id="pfPubState"></div>
+                <div class="pf-nav"><button type="button" onclick="pfGo(2)">‹ আগের ধাপ</button><span></span></div>
+              </div>
+
+              <div class="pf-actions">
+                <button type="button" id="saveBtn" class="pf-btn save" onclick="saveProduct()">${pfI("save")}<span>${tpMode ? "থ্রি পিস সেভ করুন" : "শাড়ি সেভ করুন"}</span></button>
+                <button type="button" class="pf-btn prev" onclick="pfPreview()">${pfI("eye")}<span>প্রিভিউ</span></button>
+              </div>
+              <div style="text-align:center;margin-top:10px;"><button type="button" class="pf-reset" onclick="showAdminTab(adminTpMode ? 'threepiece' : 'products')">↺ নতুন / বাতিল</button></div>
+              <div id="pmsg" class="small" style="margin-top:10px;"></div>
+            </div>
           </div>
-          <div id="adminProductsList"></div>`;
+          <div class="admin-card pf-listcard" id="pfList">
+            <div class="pf-lh">${pfI("box", "ic")}<b>${tpMode ? "আপলোড করা থ্রি পিস" : "আপলোড করা শাড়ি"}</b><button type="button" class="pf-all" id="pfAllBtn" onclick="pfToggleAll()">${pfI("list")}<span>সবগুলো দেখুন</span> ›</button></div>
+            <div id="pfFilterNote"></div>
+            <div id="adminProductsList"></div>
+            <button type="button" class="pf-sitelink" onclick="copySiteLink()">🔗 সাইটের মূল লিংক কপি</button>
+          </div>`;
         renderImagePreviewControl();
         listAdminProducts();
         couponSel = []; fillCouponChecks();
+        pfGo(1); pfCount();
       } else if (tab === "orders") {
         listOrders();
       } else if (tab === "banners") {
@@ -4556,6 +4889,7 @@ html.dtm #toast{bottom:90px}
       renderQuickStock();
       $("#pmsg").textContent = "";
       renderImagePreviewControl();
+      pfSyncToggles(); pfGo(1);
       $("#adminFullPage").scrollTo({ top: 0, behavior: "smooth" });
     }
 
@@ -4563,16 +4897,41 @@ html.dtm #toast{bottom:90px}
       const box = $("#adminProductsList");
       if (!box) return;
       const plist = products.filter(p => adminTpMode ? isThreePiece(p) : !isThreePiece(p));
-      if (!plist.length) { box.innerHTML = adminTpMode ? "<p class='small'>এখনো কোনো থ্রি পিস আপলোড করা হয়নি।</p>" : "<p class='small'>ডাটাবেসে এখনো কোনো শাড়ি নেই।</p>"; return; }
-      box.innerHTML = plist.map(p => {
+      const setN = (id, v) => { const e = $(id); if (e) e.textContent = taka(v); };
+      setN("#pfStTotal", plist.length); setN("#pfStLow", plist.filter(pfIsLow).length);
+      pfLoadOrderCount();
+      const note = $("#pfFilterNote"), ab = $("#pfAllBtn");
+      if (!plist.length) {
+        if (note) note.innerHTML = ""; if (ab) ab.style.display = "none";
+        box.innerHTML = adminTpMode ? "<p class='small'>এখনো কোনো থ্রি পিস আপলোড করা হয়নি।</p>" : "<p class='small'>ডাটাবেসে এখনো কোনো শাড়ি নেই।</p>";
+        return;
+      }
+      let shown = pfListMode === "low" ? plist.filter(pfIsLow) : plist;
+      const total = shown.length;
+      if (!pfListAll) shown = shown.slice(0, 5);
+      if (note) note.innerHTML = pfListMode === "low" ? `<div class="pf-note"><span>⚠️ শুধু স্টক কম/শেষ — ${taka(total)}টি</span><button type="button" onclick="pfListFilter('all')">সব দেখান</button></div>` : "";
+      if (ab) { ab.style.display = total > 5 ? "" : "none"; const sp = ab.querySelector("span"); if (sp) sp.textContent = pfListAll ? "কম দেখুন" : "সবগুলো দেখুন"; }
+      if (!shown.length) { box.innerHTML = "<p class='small'>কোনো শাড়ির স্টক কম নেই।</p>"; return; }
+      box.innerHTML = shown.map(p => {
         const id = esc(p.id), img = productImages(p)[0];
-        return `<div class="admin-card admin-row">
-          ${img ? `<img class="admin-thumb" src="${esc(img)}" alt="${esc(p.name)}" loading="lazy">` : `<div class="admin-thumb">ছবি নেই</div>`}
-          <div class="admin-row-name"><b>${esc(p.name)}</b>${p.active === false ? ' <span class="hidden-tag">(লুকানো)</span>' : ""}</div>
-          <div>
-            <button type="button" class="edit-btn" onclick="editProduct('${id}')">সম্পাদনা</button>
-            <button type="button" class="edit-btn" style="background:#0f766e;" onclick="copyProductLink('${id}')">🔗 লিংক কপি</button>
-            <button type="button" class="danger" onclick="deleteProduct('${id}')">মুছুন</button>
+        const out = p.stock !== null && p.stock !== undefined && p.stock !== "" && Number(p.stock) <= 0;
+        const stCls = out ? "out" : (pfIsLow(p) ? "low" : "");
+        return `<div class="pf-item">
+          ${img ? `<img class="pf-thumb" src="${esc(img)}" alt="${esc(p.name)}" loading="lazy">` : `<div class="pf-thumb">ছবি নেই</div>`}
+          <div class="pf-info">
+            <div class="pf-name">${esc(p.name)}</div>
+            <div class="pf-price">৳${taka(p.price)}${Number(p.regular_price) > Number(p.price) ? `<s>৳${taka(p.regular_price)}</s>` : ""}</div>
+            <div class="pf-row2">
+              <div class="pf-tags">
+                ${p.active === false ? '<span class="pf-pill hid">লুকানো</span>' : '<span class="pf-pill on">সক্রিয়</span>'}
+                <span class="pf-pill ${stCls}">${pfStockText(p)}</span>
+              </div>
+              <div class="pf-btns">
+                <button type="button" class="pf-ib edit" onclick="editProduct('${id}')" aria-label="সম্পাদনা" title="সম্পাদনা">${pfI("pencil")}</button>
+                <button type="button" class="pf-ib link" onclick="copyProductLink('${id}')" aria-label="লিংক কপি" title="লিংক কপি">${pfI("link")}</button>
+                <button type="button" class="pf-ib del" onclick="deleteProduct('${id}')" aria-label="মুছুন" title="মুছুন">${pfI("trash")}</button>
+              </div>
+            </div>
           </div>
         </div>`;
       }).join("");
@@ -4613,6 +4972,7 @@ html.dtm #toast{bottom:90px}
       document.querySelectorAll("[data-cs]").forEach(el => { el.value = ""; });
       renderColorStockInputs(colorStockMap(p));
       renderQuickStock();
+      pfSyncStockToggle();
     }
 
     async function writeColorStock(id, k, val) {
@@ -5049,7 +5409,8 @@ html.dtm #toast{bottom:90px}
     function setLiveStatus(on) {
       const el = $("#liveStatus");
       el.classList.toggle("on", on);
-      el.textContent = on ? "Live — সব ফোনে সাথে সাথে আপডেট" : "Live সংযোগ নেই (পেজ রিফ্রেশে আপডেট হবে)";
+      el.textContent = on ? "LIVE" : "Live নেই";
+      el.title = on ? "Live — সব ফোনে সাথে সাথে আপডেট" : "Live সংযোগ নেই (পেজ রিফ্রেশে আপডেট হবে)";
     }
     try { db.channel("sari-live")
       .on("postgres_changes", { event: "*", schema: "public", table: "products" }, scheduleReload)
