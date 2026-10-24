@@ -2763,18 +2763,22 @@ html.dtm #toast{bottom:90px}
       }
     });
 
-    $("#brand").addEventListener("click", () => {
+    function openAdminLogin() {
+      if (isAdmin) { openAdminPanelDirectly(); return; }
+      $("#loginForm").reset();
+      $("#loginMessage").textContent = "";
+      if (!$("#adminDialog").open) $("#adminDialog").showModal();
+    }
+    function adminTap() {
       if (isAdmin) { openAdminPanelDirectly(); return; }
       brandClicks++;
       clearTimeout(brandClickTimer);
       brandClickTimer = setTimeout(() => brandClicks = 0, 1800);
-      if (brandClicks >= 5) {
-        brandClicks = 0;
-        $("#loginForm").reset();
-        $("#loginMessage").textContent = "";
-        $("#adminDialog").showModal();
-      }
-    });
+      if (brandClicks >= 5) { brandClicks = 0; openAdminLogin(); }
+    }
+    $("#brand").addEventListener("click", adminTap);
+    // ফোনে উপরের হেডার লুকানো থাকে, তাই নিচের ফুটারের নামে ৫ বার ট্যাপ করলেও লগইন খুলবে
+    document.querySelectorAll(".f-title").forEach(el => el.addEventListener("click", adminTap));
 
     $("#loginForm").addEventListener("submit", async e => {
       e.preventDefault();
@@ -3021,7 +3025,7 @@ html.dtm #toast{bottom:90px}
         const amt = cpAmtFor(p, code, ci);
         if (!(amt > 0)) return "";
         const c = esc(code);
-        return `<div class="cp-note" onclick="event.stopPropagation();copyCoupon('${c}')" title="কোড কপি করতে ট্যাপ করুন"><span class="cpn-txt">কোড <b>${c}</b> দিলে <em>${taka(amt)}/- ছাড়</em></span></div>`;
+        return `<div class="cp-note" onclick="event.stopPropagation();copyCoupon('${c}')" title="কোড কপি করতে ট্যাপ করুন"><span class="cpn-txt">অর্ডারের সময় এই কোড <b>${c}</b> ব্যবহার করলে প্রতি পিস শাড়িতে <em>${taka(amt)}/- টাকা ছাড়</em></span></div>`;
       }).join("");
     }
     function cardHtml(p, wl, ix) {
@@ -3742,7 +3746,7 @@ html.dtm #toast{bottom:90px}
           <div class="cb-top">🎟️ এক্সক্লুসিভ কুপন অফার</div>
           <div class="cb-row">
             <button type="button" class="cb-code" onclick="copyCoupon('${c}')" title="কোড কপি করতে ট্যাপ করুন"><span>কুপন কোড</span><b>${c}</b></button>
-            <div class="cb-text">এই কোড ব্যবহার করলেই পাচ্ছেন <b>${taka(amt)}/- টাকা</b> বিশেষ ছাড়! ✨</div>
+            <div class="cb-text">এই কোড ব্যবহার করলেই প্রতি পিস শাড়িতে পাচ্ছেন <b>${taka(amt)}/- টাকা</b> বিশেষ ছাড়! ✨</div>
           </div>
           <div class="cb-hint">👆 কোডে ট্যাপ করলে কপি হবে — অর্ডারের সময় কুপন ঘরে বসিয়ে দিন</div>
         </div>`;
@@ -6315,6 +6319,47 @@ html.dtm #toast{bottom:90px}
   fix(document.documentElement);
   new MutationObserver(function(ms){for(var i=0;i<ms.length;i++){var a=ms[i].addedNodes;for(var j=0;j<a.length;j++)fix(a[j]);}}).observe(document.documentElement,{childList:true,subtree:true});
   document.addEventListener("focusin",function(e){fix(e.target);},true);
+})();
+</script>
+<script>
+/* ডেক্সটপ মোডেও ফোনের মতো মেনুবার (উপরের বার, নিচের বার, সাইড মেনু) — শুধু ফোনে */
+(function () {
+  var KEY = "sari_desktop_mode", built = false;
+  function on() { try { return localStorage.getItem(KEY) === "1"; } catch (e) { return false; } }
+  function isPhone() { return Math.min(screen.width || 0, screen.height || 0) < 768; }
+  function build() {
+    if (built) return; built = true;
+    var NAV = /^\.(m-(?!why|only)|si\b|mi\b|mc\b)/, css = "";
+    for (var i = 0; i < document.styleSheets.length; i++) {
+      var rules; try { rules = document.styleSheets[i].cssRules; } catch (e) { continue; }
+      for (var j = 0; j < rules.length; j++) {
+        var r = rules[j]; if (r.type !== 4) continue;
+        var c = (r.conditionText || r.media.mediaText || ""), m = c.match(/max-width:\s*(\d+)px/);
+        if (!m || +m[1] < 550 || +m[1] > 768 || /reduced/.test(c)) continue;
+        for (var k = 0; k < r.cssRules.length; k++) {
+          var x = r.cssRules[k]; if (x.type !== 1 || !x.selectorText) continue;
+          var sels = x.selectorText.split(",").map(function (t) { return t.trim(); }).filter(function (t) { return NAV.test(t); });
+          if (sels.length) css += "html.dtn " + sels.join(",html.dtn ") + x.cssText.slice(x.cssText.indexOf("{")) + "\n";
+        }
+      }
+    }
+    css += "html.dtn header:not(.tp-head):not(.adm-top){display:none!important}\n" +
+      "html.dtn .m-ui{display:block}\n" +
+      "html.dtn .m-brand b,html.dtn .m-dh b{background:var(--gold-gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}\n" +
+      "html.dtn .m-nav{display:flex!important}\n" +
+      "html.dtn .m-head,html.dtn .m-chips,html.dtn .m-nav{zoom:var(--dz,1)}\n" +
+      "html.dtn .m-drawer{zoom:var(--dz,1);width:min(calc(84vw / var(--dz,1)),330px)}\n" +
+      "html.dtn body{padding-bottom:calc(72px * var(--dz,1))}\n";
+    var st = document.createElement("style"); st.id = "dtnCss"; st.textContent = css; document.head.appendChild(st);
+  }
+  function apply() {
+    var h = document.documentElement, o = on() && isPhone();
+    h.classList.toggle("dtn", o);
+    if (o) { var w = screen.width || 390; h.style.setProperty("--dz", (1200 / (w < 450 ? 450 : w)).toFixed(3)); build(); }
+  }
+  var orig = window.toggleDesktopMode;
+  window.toggleDesktopMode = function () { if (orig) orig.apply(this, arguments); apply(); };
+  apply();
 })();
 </script>
 </body>
