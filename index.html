@@ -22,11 +22,11 @@
         if (el) el.textContent = on ? "মোবাইল মোড" : "ডেক্সটপ মোড";
         if (sub) sub.textContent = on ? "ফোনের উপযোগী লেআউটে ফিরে যান" : "কম্পিউটারের মতো বড় পেজে দেখুন";
       }
-      vp.setAttribute("content", isOn() ? DESK : MOBILE); document.documentElement.classList.toggle("dtm", isOn());
+      vp.setAttribute("content", isOn() ? DESK : MOBILE); document.documentElement.classList.remove("dtm");
       window.toggleDesktopMode = function () {
         var on = !isOn();
         try { localStorage.setItem(KEY, on ? "1" : "0"); } catch (e) {}
-        vp.setAttribute("content", on ? DESK : MOBILE); document.documentElement.classList.toggle("dtm", on); label(); if (window.mWhy) setTimeout(window.mWhy, 80);
+        vp.setAttribute("content", on ? DESK : MOBILE); document.documentElement.classList.remove("dtm"); label(); if (window.mWhy) setTimeout(window.mWhy, 80);
         setTimeout(function () { window.scrollTo(0, 0); }, 50);
       };
       document.addEventListener("DOMContentLoaded", function () {
@@ -2040,45 +2040,150 @@ html.dtm #toast{bottom:90px}
     .rel-card b{display:block;font-size:13px;padding:6px 8px 0;line-height:1.3;max-height:2.7em;overflow:hidden}
     .rel-card span{display:block;font-size:13.5px;font-weight:800;color:#b8860b;padding:2px 8px 8px}
   </style>
+  <style id="orderPageCss">
+    #cartDialog{padding:0;max-width:min(1040px,calc(100vw - 12px));width:calc(100% - 12px);border:1px solid rgba(212,175,55,.55);background:#fffaf0;overflow-x:hidden}
+    #cartDialog .op-top{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 12px;background:linear-gradient(180deg,#09121f,#0f1c2e);border-bottom:2px solid #d4af37}
+    #cartDialog .op-back{width:40px;height:40px;border-radius:50%;border:0;background:rgba(212,175,55,.16);color:#f3e5ad;font-size:24px;line-height:1;display:grid;place-items:center;cursor:pointer}
+    #cartDialog .op-sp{width:40px;flex:none}
+    #cartDialog .op-brand{display:flex;align-items:center;gap:8px;min-width:0}
+    #cartDialog .op-brand img{width:34px;height:34px;border-radius:9px}
+    #cartDialog .op-brand b{display:block;font-size:22px;line-height:1.1;background:linear-gradient(135deg,#d4af37,#f3e5ad 55%,#d4af37);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+    #cartDialog .op-brand small{display:block;font-size:10.5px;color:#cbd5e1}
+    #cartDialog .op-body{padding:12px 12px 4px}
+    #cartDialog.is-buy h3#cartTitle{display:none}
+    #cartDialog h3#cartTitle{padding-right:0;color:#0f1c2e}
+    #cartDialog .op-body #freeBar .fb{background:linear-gradient(135deg,#0f1c2e,#1b2f4d);color:#f3e5ad;border:2px solid #d4af37;border-radius:18px;padding:12px 16px;font-size:16px;font-weight:700;line-height:1.45;margin:0 0 12px;box-shadow:0 6px 16px rgba(15,28,46,.22)}
+    #cartDialog .op-body #freeBar .fb .fb-track{background:rgba(255,255,255,.2)}
+    #cartDialog .op-card{background:#fff;border:1px solid #eadfc2;border-radius:16px;padding:12px 14px;margin:0 0 12px;box-shadow:0 3px 12px rgba(15,28,46,.05)}
+    #cartDialog .op-card .ck-step,#cartDialog .op-card .ck-step:first-child{border-top:0;margin:0 0 8px;padding:0}
+    #cartDialog .op-card .ck-n{width:34px;height:34px;font-size:16px;background:#0f1c2e;color:#f3e5ad;border:2px solid #d4af37}
+    #cartDialog .op-card .ck-step h4{font-size:17px;color:#0f1c2e}
+    #cartDialog .op-grid{display:grid;grid-template-columns:1fr;gap:0 12px}
+    @media(min-width:760px){#cartDialog .op-grid{grid-template-columns:1fr 1fr;align-items:start}#cartDialog .op-card .two-col{grid-template-columns:1fr 1fr}}
+    #cartDialog .op-card .field-label{font-size:12.5px;color:#6b7280;margin:2px 0 0}
+    #cartDialog .op-card input,#cartDialog .op-card textarea{width:100%;box-sizing:border-box;border:1.5px solid #e5dcc3;background:#fffdf7;border-radius:12px;padding:11px 12px;margin:3px 0 6px}
+    #cartDialog .fld-w{position:relative}
+    #cartDialog .fld-ok{display:none;position:absolute;right:10px;top:calc(50% - 2px);transform:translateY(-50%);width:24px;height:24px;border-radius:50%;background:#16a34a;color:#fff;font-size:14px;align-items:center;justify-content:center}
+    #cartDialog .fld-w.ok .fld-ok{display:flex}
+    #cartDialog .fld-w.ok input{padding-right:42px}
+    #cartDialog .pay-opt{position:relative;border-radius:14px;padding:12px 30px 12px 12px;border:1.5px solid #e5dcc3;background:#fff}
+    #cartDialog .pay-opt::after{content:"";position:absolute;top:10px;right:10px;width:18px;height:18px;border-radius:50%;border:2px solid #cbd5e1;box-sizing:border-box}
+    #cartDialog .pay-opt.on{background:#fff6dc;border-color:#d4af37}
+    #cartDialog .pay-opt.on::after{content:"✓";background:#d4af37;border-color:#d4af37;color:#fff;font-size:11px;line-height:14px;text-align:center;font-weight:800}
+    #cartDialog .op-card.ck-disc{margin:0 0 12px;border:1px solid #eadfc2;border-radius:16px;padding:12px 14px}
+    #cartDialog .op-card #cartSummary{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;margin:0!important}
+    #cartDialog .op-trust{background:#fbf3df;border-color:#e8d9a8}
+    #cartDialog .op-tr{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px dashed #e0cf9b}
+    #cartDialog .op-tr:last-child{border-bottom:0}
+    #cartDialog .op-tr>span{font-size:27px;flex:none;width:34px;text-align:center}
+    #cartDialog .op-tr b{display:block;font-size:14.5px;color:#0f1c2e}
+    #cartDialog .op-tr small{display:block;font-size:12.5px;color:#6b7280}
+    #cartDialog .op-submit{display:block;width:100%;margin-top:6px;padding:16px;border-radius:40px;background:linear-gradient(180deg,#14284a,#0b1628);color:#f3e5ad;border:2px solid #d4af37;font-size:20px;font-weight:800;box-shadow:0 8px 20px rgba(15,28,46,.35)}
+    #cartDialog .op-submit::after{content:"  →"}
+    #cartDialog .op-foot{display:flex;flex-wrap:wrap;justify-content:space-around;gap:6px 14px;margin-top:14px;padding:13px 10px calc(13px + env(safe-area-inset-bottom,0px));background:linear-gradient(180deg,#0f1c2e,#09121f);border-top:2px solid #d4af37;color:#f3e5ad;font-size:12.5px;font-weight:600}
+    /* পণ্যের কার্ড (সরাসরি অর্ডার) */
+    #cartDialog .op-prod{display:grid;grid-template-columns:132px 1fr;gap:12px;background:#fff;border:1px solid #eadfc2;border-radius:16px;padding:12px;margin:0 0 12px;box-shadow:0 3px 12px rgba(15,28,46,.05)}
+    @media(min-width:760px){#cartDialog .op-prod{grid-template-columns:230px 1fr;gap:18px}}
+    #cartDialog .op-img{position:relative;align-self:start}
+    #cartDialog .op-img img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:12px;cursor:zoom-in}
+    #cartDialog .op-zoom{position:absolute;right:6px;bottom:6px;width:34px;height:34px;border-radius:50%;border:0;background:#0f1c2e;color:#f3e5ad;font-size:15px;display:grid;place-items:center;box-shadow:0 2px 8px rgba(0,0,0,.35)}
+    #cartDialog .op-info{min-width:0}
+    #cartDialog .op-info h2{margin:0;font-size:22px;line-height:1.25;color:#0f1c2e}
+    #cartDialog .op-code{font-size:13.5px;color:#6b7280;margin:2px 0}
+    #cartDialog .op-info .price-container{margin:4px 0;gap:8px;align-items:baseline;flex-wrap:wrap}
+    #cartDialog .op-info .price{font-size:25px;font-weight:800;color:#b8860b;margin:0}
+    #cartDialog .op-off{display:inline-block;background:linear-gradient(135deg,#d4af37,#f3e5ad);color:#0f1c2e;font-weight:800;font-size:14px;border-radius:9px;padding:3px 11px;margin:2px 0}
+    #cartDialog .op-desc{font-size:13.5px;line-height:1.6;color:#374151;margin:8px 0;white-space:pre-line}
+    #cartDialog .op-acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+    #cartDialog .op-mini{border:1.5px solid #d4af37;background:#fffaf0;border-radius:20px;padding:6px 12px;font:inherit;font-size:13px;font-weight:700;color:#0f1c2e;cursor:pointer}
+    #cartDialog .op-sec-t{font-size:18px;font-weight:800;color:#0f1c2e;margin:14px 2px 8px}
+    #cartDialog .op-colors{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:10px;margin:0}
+    #cartDialog .op-colors .cq-row{position:relative;display:grid;grid-template-columns:46px 1fr;grid-template-areas:"img t" "q q";align-items:center;gap:6px 8px;padding:8px;border-radius:14px;border:1.5px solid #e5dcc3;background:#fff}
+    #cartDialog .op-colors .cq-row>img,#cartDialog .op-colors .cq-row>.color-dot{grid-area:img;margin:0}
+    #cartDialog .op-colors .cq-row>.cq-t{grid-area:t}
+    #cartDialog .op-colors .cq-row>.qty-box,#cartDialog .op-colors .cq-row>span{grid-area:q}
+    #cartDialog .op-colors .cq-row:not(:has(img)):not(:has(.color-dot)) .cq-t{grid-column:1/-1}
+    #cartDialog .op-colors .cq-row img,#cartDialog .op-colors .cq-row.on img{width:44px;height:54px;border-radius:8px;border:1px solid #eadfc2}
+    #cartDialog .op-colors .cq-row.on{border:2px solid #d4af37;background:#fff8e7;padding:7px}
+    #cartDialog .op-colors .cq-row.on::after{content:"✓";position:absolute;top:6px;right:8px;width:22px;height:22px;border-radius:50%;background:#d4af37;color:#fff;font-size:13px;font-weight:800;display:grid;place-items:center}
+    #cartDialog .op-colors .cq-t b{font-size:15px;padding:0}
+    #cartDialog .op-colors .qty-box{display:flex;align-items:center;justify-content:space-between;gap:4px;background:#f3ead0;border-radius:22px;padding:3px}
+    #cartDialog .op-colors .qty-box button{width:34px;height:34px;border-radius:50%;border:0;background:#fff;color:#0f1c2e;font-size:19px;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+    #cartDialog .op-colors .qty-box b{min-width:30px!important;text-align:center;font-size:16px}
+    #cartDialog .op-prod+.op-sec-t+.op-colors+.cl-total{margin:10px 2px 12px}
+    #cartDialog.is-buy .cart-head{display:none}
+    #cartDialog .op-colors .cq-t{text-align:left}
+    #cartDialog .op-colors .cq-row{cursor:pointer;transition:box-shadow .3s,border-color .3s,background .3s}
+    #cartDialog .op-colors .cq-row.on{box-shadow:0 0 0 3px rgba(212,175,55,.3),0 6px 18px rgba(212,175,55,.45)}
+    #cartDialog .op-colors .cq-row.glow-pop{animation:cqPop .85s ease-out}
+    @keyframes cqPop{0%{transform:scale(.95);box-shadow:0 0 0 0 rgba(212,175,55,.9)}45%{transform:scale(1.05);box-shadow:0 0 0 10px rgba(212,175,55,.18),0 0 30px rgba(212,175,55,.95)}100%{transform:scale(1);box-shadow:0 0 0 3px rgba(212,175,55,.3),0 6px 18px rgba(212,175,55,.45)}}
+    @media(prefers-reduced-motion:reduce){#cartDialog .op-colors .cq-row.glow-pop{animation:none}}
+    #cartDialog .op-img img.op-swap{animation:opSwap .5s ease}
+    @keyframes opSwap{0%{opacity:.15;transform:scale(.94)}100%{opacity:1;transform:none}}
+    #cartDialog .op-colors .cq-row>img{cursor:pointer}
+    #cartDialog .op-colors .cq-row.view:not(.on){border-color:#d4af37;box-shadow:0 0 0 2px rgba(212,175,55,.28)}
+    html[data-theme="dark"] #cartDialog{background:#0f1722}
+    html[data-theme="dark"] #cartDialog .op-card,html[data-theme="dark"] #cartDialog .op-prod,html[data-theme="dark"] #cartDialog .op-colors .cq-row{background:#17202e;border-color:#33415c}
+    html[data-theme="dark"] #cartDialog .op-colors .cq-row.on{background:#312813;border-color:#d4af37}
+    html[data-theme="dark"] #cartDialog .op-trust{background:#1d2535}
+    html[data-theme="dark"] #cartDialog .op-info h2,html[data-theme="dark"] #cartDialog .op-sec-t,html[data-theme="dark"] #cartDialog .op-card .ck-step h4,html[data-theme="dark"] #cartDialog .op-tr b,html[data-theme="dark"] #cartDialog h3#cartTitle{color:#f1e6c3}
+    html[data-theme="dark"] #cartDialog .op-desc,html[data-theme="dark"] #cartDialog .op-tr small,html[data-theme="dark"] #cartDialog .op-code{color:#aeb9cb}
+    html[data-theme="dark"] #cartDialog .op-card input,html[data-theme="dark"] #cartDialog .op-card textarea{background:#101826;border-color:#33415c;color:#e6eaf2}
+    html[data-theme="dark"] #cartDialog .pay-opt{background:#17202e;border-color:#33415c}
+    html[data-theme="dark"] #cartDialog .pay-opt.on{background:#312813;border-color:#d4af37}
+    html[data-theme="dark"] #cartDialog .op-mini{background:#1b2740;color:#e6eaf2}
+    html[data-theme="dark"] #cartDialog .op-colors .qty-box{background:#101826}
+    html[data-theme="dark"] #cartDialog .op-colors .qty-box button{background:#26334d;color:#f1e6c3}
+    @media(max-width:420px){#cartDialog .op-prod{grid-template-columns:118px 1fr}#cartDialog .op-info h2{font-size:19px}#cartDialog .op-info .price{font-size:22px}}
+  </style>
   <!-- কার্ট ও চেকআউট -->
   <dialog id="cartDialog">
-    <button class="close-modal-btn" onclick="document.querySelector('#cartDialog').close()" aria-label="বন্ধ করুন">&times;</button>
-    <h3 id="cartTitle">🛒 আপনার কার্ট</h3>
-    <div id="buyNote" class="buy-note" style="display:none;"></div>
-    <div id="freeBar"></div>
-    <div id="cartItems"></div>
-    <div id="cartCheckout" style="display:none;">
-      <form id="checkoutForm">
-        <div class="ck-step"><span class="ck-n">১</span><h4>আপনার তথ্য</h4></div>
-        <div class="two-col">
-          <div><label class="field-label" for="orderName">আপনার নাম</label>
-          <input id="orderName" name="name" placeholder="সম্পূর্ণ নাম" required maxlength="100" autocomplete="name"></div>
-          <div><label class="field-label" for="orderPhone">ফোন নম্বর</label>
-          <input id="orderPhone" name="phone" type="tel" placeholder="01XXXXXXXXX" required pattern="01[0-9]{9}" title="১১ সংখ্যার মোবাইল নম্বর দিন (যেমন: 01XXXXXXXXX)" autocomplete="tel" inputmode="numeric"><div id="phoneHint" class="ph-hint"></div></div>
-        </div>
-        <label class="field-label" for="orderAddress">সম্পূর্ণ ঠিকানা</label>
-        <textarea id="orderAddress" name="address" placeholder="গ্রাম/মহল্লা, থানা, জেলাসহ সম্পূর্ণ ঠিকানা লিখুন" required minlength="5" maxlength="500" autocomplete="street-address"></textarea>
+    <div class="op-top">
+      <button type="button" class="op-back" onclick="document.querySelector('#cartDialog').close()" aria-label="পেছনে যান">&#8592;</button>
+      <div class="op-brand"><img src="logo-mark.png" alt="" width="34" height="34"><div><b>শাড়ি বিলাশ</b><small>শাড়ির রাজকীয় আভিজাত্য</small></div></div>
+      <span class="op-sp"></span>
+    </div>
+    <div class="op-body">
+      <h3 id="cartTitle">🛒 আপনার কার্ট</h3>
+      <div id="buyNote" class="buy-note" style="display:none;"></div>
+      <div id="freeBar"></div>
+      <div id="cartItems"></div>
+      <div id="cartCheckout" style="display:none;">
+        <form id="checkoutForm">
+          <section class="op-card">
+            <div class="ck-step"><span class="ck-n">👤</span><h4>গ্রাহকের তথ্য</h4></div>
+            <div class="two-col">
+              <div class="op-fld"><label class="field-label" for="orderName">আপনার নাম</label>
+              <input id="orderName" name="name" placeholder="সম্পূর্ণ নাম" required maxlength="100" autocomplete="name"></div>
+              <div class="op-fld"><label class="field-label" for="orderPhone">মোবাইল নম্বর</label>
+              <div class="fld-w" id="phoneWrap"><input id="orderPhone" name="phone" type="tel" placeholder="01XXXXXXXXX" required pattern="01[0-9]{9}" title="১১ সংখ্যার মোবাইল নম্বর দিন (যেমন: 01XXXXXXXXX)" autocomplete="tel" inputmode="numeric"><span class="fld-ok" aria-hidden="true">✓</span></div><div id="phoneHint" class="ph-hint"></div></div>
+            </div>
+            <div class="op-fld"><label class="field-label" for="orderAddress">📍 সম্পূর্ণ ঠিকানা</label>
+            <textarea id="orderAddress" name="address" placeholder="গ্রাম/মহল্লা, থানা, জেলাসহ সম্পূর্ণ ঠিকানা লিখুন" required minlength="5" maxlength="500" autocomplete="street-address"></textarea></div>
+          </section>
 
-        <div class="ck-step"><span class="ck-n">২</span><h4>পেমেন্ট</h4></div>
-        <label class="field-label" for="paymentMethod" style="display:none">পেমেন্ট পদ্ধতি</label>
-        <select name="payment_method" id="paymentMethod" onchange="togglePaymentFields()" style="display:none">
-          <option value="cod">Cash on Delivery — শাড়ি হাতে পেয়ে টাকা দেব</option>
-          <option value="bkash">bKash — আগে টাকা পাঠাব</option>
-        </select>
-        <div class="pay-opts" id="payOpts">
-          <button type="button" class="pay-opt on" data-v="cod"><b>💵 ক্যাশ অন ডেলিভারি</b><small>হাতে পেয়ে টাকা দিন</small></button>
-          <button type="button" class="pay-opt" data-v="bkash"><b>📲 bKash</b><small>আগে টাকা পাঠান</small></button>
-        </div>
-        <div id="bkashFields" class="ck-box" style="display:none;">
+          <div class="op-grid">
+            <section class="op-card">
+              <div class="ck-step"><span class="ck-n">💳</span><h4>পেমেন্ট পদ্ধতি</h4></div>
+              <label class="field-label" for="paymentMethod" style="display:none">পেমেন্ট পদ্ধতি</label>
+              <select name="payment_method" id="paymentMethod" onchange="togglePaymentFields()" style="display:none">
+                <option value="cod">Cash on Delivery — শাড়ি হাতে পেয়ে টাকা দেব</option>
+                <option value="bkash">bKash — আগে টাকা পাঠাব</option>
+              </select>
+              <div class="pay-opts" id="payOpts">
+                <button type="button" class="pay-opt on" data-v="cod"><b>💵 ক্যাশ অন ডেলিভারি</b><small>হাতে পেয়ে টাকা দিন</small></button>
+                <button type="button" class="pay-opt" data-v="bkash"><b>📲 bKash</b><small>অ্যাপে টাকা পাঠান</small></button>
+              </div>
+              <div id="bkashFields" class="ck-box" style="display:none;">
           <b style="color:var(--green);">bKash পেমেন্ট নির্দেশিকা</b>
           <p style="margin:6px 0;">যে নম্বরে টাকা পাঠাবেন: <strong id="bkashNumberDisplay"></strong> <button type="button" class="copy-mini" onclick="copyBkash()">📋 কপি</button></p>
           <p style="margin:6px 0;">মোট টাকা: <strong id="bkashAmountDisplay" style="color:#b8860b;">0/-</strong></p>
           <label class="field-label" for="transactionId">Transaction ID</label>
           <input name="transaction_id" id="transactionId" placeholder="যেমন: ABC123XYZ" maxlength="40">
         </div>
-
-        <div class="ck-disc" id="discBox">
-          <div class="ck-disc-t">🎁 ছাড়ের কোড আছে?</div>
+            </section>
+            <section class="op-card ck-disc" id="discBox">
+              <div class="ck-step"><span class="ck-n">🎟️</span><h4>কুপন কোড / রেফারেল</h4></div>
           <div id="couponCard">
             <div id="couponChips"></div>
             <label class="field-label" for="couponInput">🎟️ কুপন কোড (থাকলে)</label>
@@ -2090,18 +2195,30 @@ html.dtm #toast{bottom:90px}
             <div class="row"><input id="refOrderCode" placeholder="যেমন: SBAB12CD" maxlength="12" autocomplete="off" style="margin:0;text-transform:uppercase;"><button type="button" class="btn order-btn" style="padding:10px 14px;font-size:14px;" onclick="refCheckCode()">প্রয়োগ</button></div>
             <div id="refOrderMsg" class="small" style="margin-top:4px;"></div>
           </div>
-        </div>
+            </section>
+          </div>
 
-        <div class="ck-step"><span class="ck-n">৩</span><h4>অর্ডারের হিসাব</h4></div>
-        <div id="freeLive"></div>
-        <div id="cartSummary" class="admin-card"></div>
+          <div class="op-grid">
+            <section class="op-card">
+              <div class="ck-step"><span class="ck-n">🧾</span><h4>অর্ডার সারাংশ</h4></div>
+              <div id="freeLive"></div>
+              <div id="cartSummary" class="admin-card"></div>
+            </section>
+            <section class="op-card op-trust">
+              <div class="op-tr"><span>🛡️</span><div><b>নিরাপদ লেনদেন ও গোপনীয়তা</b><small>আপনার তথ্য সুরক্ষিত থাকে</small></div></div>
+              <div class="op-tr"><span>💵</span><div><b>ক্যাশ অন ডেলিভারি</b><small>শাড়ি হাতে পেয়ে টাকা দিন</small></div></div>
+              <div class="op-tr"><span>🎧</span><div><b>গ্রাহক সহায়তা</b><small>যেকোনো সমস্যায় আমরা আছি</small></div></div>
+            </section>
+          </div>
 
-        <button class="btn order-btn" id="submitOrderBtn" type="submit" style="margin-top:8px;width:100%;">অর্ডার নিশ্চিত করুন</button>
-        <div class="ck-or"><span>অথবা</span></div>
-        <button class="whatsapp-order-btn wa-order wa-full" type="button" onclick="whatsappCart()"><span class="wa-ic"><svg><use href="#ic-wa"/></svg></span><span class="wa-txt">WhatsApp-এ পাঠিয়ে অর্ডার করুন</span></button>
-        <div id="orderMsg" class="small" style="margin-top:10px;"></div>
-      </form>
+          <button class="btn order-btn op-submit" id="submitOrderBtn" type="submit">অর্ডার নিশ্চিত করুন</button>
+          <div class="ck-or"><span>অথবা</span></div>
+          <button class="whatsapp-order-btn wa-order wa-full" type="button" onclick="whatsappCart()"><span class="wa-ic"><svg><use href="#ic-wa"/></svg></span><span class="wa-txt">WhatsApp-এ পাঠিয়ে অর্ডার করুন</span></button>
+          <div id="orderMsg" class="small" style="margin-top:10px;"></div>
+        </form>
+      </div>
     </div>
+    <div class="op-foot"><span>🚚 সারা বাংলাদেশে ডেলিভারি</span><span>🛡️ নিরাপদ অর্ডার</span><span>💵 ক্যাশ অন ডেলিভারি</span><span>💛 শাড়ি বিলাশ</span></div>
   </dialog>
 
   <dialog id="reviewDialog">
@@ -2831,9 +2948,34 @@ html.dtm #toast{bottom:90px}
     }
 
     // ---------- বিস্তারিত পেজ ----------
+    function buyToCart() {
+      if (checkoutMode !== "buy") return;
+      const items = cart.filter(i => i.qty > 0);
+      if (!items.length) { toast("কমপক্ষে ১ পিস বাছুন — রংয়ের পাশে + চাপুন"); return; }
+      const real = (stashedCart || []).slice();
+      for (const it of items) {
+        const p = getProduct(it.pid); if (!p) continue;
+        const have = real.filter(o => String(o.pid) === String(it.pid)).reduce((a, o) => a + o.qty, 0);
+        const ex = real.find(o => String(o.pid) === String(it.pid) && o.color === it.color);
+        const room = Math.max(0, Math.min(maxQty(p) - have, colorMax(p, it.color) - (ex ? ex.qty : 0)));
+        const add = Math.min(it.qty, room); if (add <= 0) continue;
+        if (ex) ex.qty += add; else real.push({ pid: String(it.pid), color: it.color, qty: add });
+      }
+      stashedCart = real;
+      try { localStorage.setItem("sari_cart", JSON.stringify(real)); } catch {}
+      const n = items.reduce((a, x) => a + x.qty, 0);
+      $("#cartDialog").close();
+      toast(`🛒 ${taka(n)} পিস কার্টে রাখা হয়েছে`);
+    }
     function openProduct(id) {
       const p = getProduct(id);
       if (!p) return;
+      if (checkoutMode === "buy") return;
+      if (p.active !== false) {
+        // ছবিতে ট্যাপ করলে সরাসরি অর্ডার পেজ (পুরনো বিস্তারিত পপআপ আর খোলে না)
+        if (startBuyNowEmpty(p.id)) { $("#cartDialog").scrollTop = 0; }
+        return;
+      }
       det = { id: p.id, idx: Math.min(cardSel[p.id] || 0, Math.max(0, productColors(p).length - 1)), qty: 1, q: {} };
       det.q[productColors(p)[det.idx] || NO_COLOR] = 1;
       renderDetail();
@@ -3118,6 +3260,7 @@ html.dtm #toast{bottom:90px}
       if (!p || p.active === false || isSoldOut(p)) { toast("দুঃখিত, এই শাড়ির স্টক শেষ"); return false; }
       if (checkoutMode === "buy") return false;
       checkoutMode = "buy"; stashedCart = cart; cart = []; buyPid = String(pid);
+      window._cqView = {}; window._imgSwap = 0;
       openCart();
       return true;
     }
@@ -3166,12 +3309,12 @@ html.dtm #toast{bottom:90px}
       if ($("#cartDialog").open) renderCart();
     }
 
-    function openCart() { $("#couponCard").open = true; pruneCart(); renderCart(); prefillCustomer(); togglePaymentFields(); $("#orderMsg").textContent = ""; if (!$("#cartDialog").open) $("#cartDialog").showModal(); }
+    function openCart() { $("#couponCard").open = true; pruneCart(); renderCart(); prefillCustomer(); window.phoneTick && window.phoneTick(); togglePaymentFields(); $("#orderMsg").textContent = ""; if (!$("#cartDialog").open) $("#cartDialog").showModal(); }
 
     function renderCart() {
       const box = $("#cartItems");
       const buyMode = checkoutMode === "buy";
-      $("#cartTitle").textContent = buyMode ? "🛍️ অর্ডার করুন" : "🛒 আপনার কার্ট";
+      $("#cartTitle").textContent = buyMode ? "🛍️ অর্ডার করুন" : "🛒 আপনার কার্ট"; $("#cartDialog").classList.toggle("is-buy", buyMode);
       const bn = $("#buyNote"), realN = (stashedCart || []).length;
       bn.style.display = buyMode && realN ? "block" : "none";
       if (buyMode && realN) bn.textContent = "ℹ️ এটা শুধু এই শাড়িটির অর্ডার। কার্টে রাখা অন্য শাড়ি এর সাথে যুক্ত হয়নি — সেগুলো উপরের \"🛒 কার্ট\" থেকে আলাদাভাবে অর্ডার করতে পারবেন।";
@@ -3191,14 +3334,38 @@ html.dtm #toast{bottom:90px}
         const list = colors.length ? colors : [NO_COLOR];
         const pcs = qtyInCart(pid);
         const sel = list.findIndex(c => cartQty(pid, c) > 0);
-        const img = images[Math.max(0, sel)] || images[0] || "";
+        const vi = (window._cqView || {})[String(pid)];
+        const shown = (vi !== undefined && vi < list.length) ? vi : Math.max(0, sel);
+        const img = images[shown] || images[0] || "";
         const rows = list.map((c, k) => {
           const q = cartQty(pid, c), out = colorMax(p, c) <= 0, named = c !== NO_COLOR;
-          const th = named ? (images[k] ? `<img src="${esc(images[k])}" alt="" onclick="openZoomModal(this.src)">` : colorDot(c)) : "";
+          const th = named ? (images[k] ? `<img src="${esc(images[k])}" alt="" onclick="${buyMode ? `cqPreview(${gi},${k})` : "openZoomModal(this.src)"}">` : colorDot(c)) : "";
           const ctl = out ? `<span class="small" style="font-weight:700;color:#b91c1c;">স্টক শেষ</span>`
             : `<div class="qty-box"><button type="button" onclick="setColorQty(${gi},${k},-1)" aria-label="কমান">−</button><b>${taka(q)}</b><button type="button" onclick="setColorQty(${gi},${k},1)" aria-label="বাড়ান">+</button></div>`;
-          return `<div class="cq-row ${q > 0 ? "on" : ""} ${out ? "out" : ""}">${th}<div class="cq-t"><b>${named ? esc(c) : "কত পিস নিবেন"}</b>${named ? `<small>${stockShort(p, c)}</small>` : ""}</div>${ctl}</div>`;
+          return `<div class="cq-row ${q > 0 ? "on" : ""} ${k === shown ? "view" : ""} ${out ? "out" : ""}">${th}<div class="cq-t"><b>${named ? esc(c) : "কত পিস নিবেন"}</b>${named ? `<small>${stockShort(p, c)}</small>` : ""}</div>${ctl}</div>`;
         }).join("");
+        if (buyMode) {
+          const reg = Number(p.regular_price || 0), sale = Number(p.price || 0), off = reg > sale ? Math.round((reg - sale) / reg * 100) : 0;
+          const isW = getWishlist().includes(String(p.id)), sid = esc(p.id);
+          return `<div class="op-prod">
+            <div class="op-img">${img ? `<img src="${esc(img)}" alt="${esc(p.name)}" onclick="openZoomModal(this.src)">` : `<div class="cl-ph"></div>`}<button type="button" class="op-zoom" onclick="openZoomModal('${esc(img)}')" aria-label="বড় করে দেখুন">🔍</button></div>
+            <div class="op-info">
+              <h2>${esc(p.name)}</h2>
+              <div class="op-code">কোড: ${esc(productCode(p.id))}</div>
+              ${priceHtml(p)}
+              ${off > 0 ? `<span class="op-off">✨ ${taka(off)}% ছাড়</span>` : ""}
+              ${p.description ? `<p class="op-desc">${esc(p.description)}</p>` : ""}
+              <div class="op-acts">
+                <button type="button" class="op-mini" data-card-wish-btn="${sid}" onclick="toggleWishlist('${sid}')">${isW ? "❤️ উইশলিস্টে আছে" : "🤍 উইশলিস্ট"}</button>
+                <button type="button" class="op-mini" onclick="shareProduct('${sid}')">🔗 শেয়ার</button>
+                <button type="button" class="op-mini" onclick="buyToCart()">🛒 কার্টে রাখুন</button>
+              </div>
+            </div>
+          </div>
+          <div class="op-sec-t">🎨 রং ও পরিমাণ নির্বাচন করুন</div>
+          <div class="cq-list op-colors">${rows}</div>
+          <div class="cl-total"><span>${taka(pcs)} পিস × ${taka(p.price)}/-</span><b>${taka(p.price * pcs)}/-</b></div>`;
+        }
         return `<div class="cl-card">
           <div class="cl-top">
             ${img ? `<img src="${esc(img)}" alt="${esc(p.name)}">` : `<div class="cl-ph"></div>`}
@@ -3210,7 +3377,26 @@ html.dtm #toast{bottom:90px}
           <div class="cl-total"><span>${taka(pcs)} পিস × ${taka(p.price)}/-</span><b>${taka(p.price * pcs)}/-</b></div>
         </div>`;
       }).join("");
+      if (window._cqGlow) {
+        const gk = String(window._cqGlow).split(":"); window._cqGlow = null;
+        const grp = box.querySelectorAll(".op-colors");
+        const row = grp[Number(gk[0])] && grp[Number(gk[0])].children[Number(gk[1])];
+        if (row) { row.classList.add("glow-pop"); setTimeout(() => row.classList.remove("glow-pop"), 900); }
+      }
+      if (window._imgSwap) {
+        window._imgSwap = 0;
+        const im = box.querySelector(".op-img img");
+        if (im) { im.classList.add("op-swap"); setTimeout(() => im.classList.remove("op-swap"), 600); }
+      }
       renderCartSummary();
+    }
+    function cqPreview(gi, k) {
+      const g = cartGroups()[gi]; if (!g) return;
+      const vw = window._cqView = window._cqView || {};
+      if (vw[String(g.pid)] !== k) { vw[String(g.pid)] = k; window._imgSwap = 1; }
+      const c = (productColors(g.p).length ? productColors(g.p) : [NO_COLOR])[k];
+      window._cqGlow = gi + ":" + k;
+      renderCart();
     }
 
     function cartQty(pid, color) { return cart.filter(o => String(o.pid) === String(pid) && o.color === color).reduce((a, o) => a + o.qty, 0); }
@@ -3222,6 +3408,11 @@ html.dtm #toast{bottom:90px}
     function couponLines() { const l = cart.map(i => ({ i, p: getProduct(i.pid) })).filter(x => x.p); return l.length ? l : cartGroups().map(g => ({ i: { pid: g.pid, color: NO_COLOR, qty: 0 }, p: g.p })); }
     function setColorQty(gi, k, d) {
       const g = cartGroups()[gi]; if (!g) return;
+      if (d > 0) {
+        window._cqGlow = gi + ":" + k;
+        const vw = window._cqView = window._cqView || {};
+        if (vw[String(g.pid)] !== k) { vw[String(g.pid)] = k; window._imgSwap = 1; }
+      }
       const colors = productColors(g.p), c = (colors.length ? colors : [NO_COLOR])[k]; if (c === undefined) return;
       const idx = cart.findIndex(o => String(o.pid) === String(g.pid) && o.color === c);
       if (idx < 0) { if (d > 0) addToCart(g.pid, c, 1); return; }
@@ -3450,6 +3641,19 @@ html.dtm #toast{bottom:90px}
       } catch {}
     }
 
+    $("#cartItems").addEventListener("click", e => {
+      const row = e.target.closest(".op-colors .cq-row");
+      if (!row || e.target.closest("button") || e.target.closest("img")) return;
+      const list = row.parentNode, k = Array.prototype.indexOf.call(list.children, row);
+      const gi = Array.prototype.indexOf.call(document.querySelectorAll("#cartItems .op-colors"), list);
+      if (gi < 0) return;
+      cqPreview(gi, k); // শুধু বড় ছবিতে ওই রং দেখায়, পিস বদলায় না
+    });
+    window.phoneTick=function(){
+      var ph=document.getElementById("orderPhone"),w=document.getElementById("phoneWrap");
+      if(ph&&w)w.classList.toggle("ok",/^01[0-9]{9}$/.test(ph.value.trim()));
+    };
+    document.getElementById("orderPhone").addEventListener("input",window.phoneTick);
     $("#checkoutForm").addEventListener("submit", async e => {
       e.preventDefault();
       const btn = $("#submitOrderBtn"), msg = $("#orderMsg");
