@@ -1100,6 +1100,25 @@
     @keyframes truckDrive{0%,100%{transform:translateX(-1.5px)}50%{transform:translateX(2.5px)}}
     @keyframes starSpin{0%,60%,100%{transform:rotate(0) scale(1)}80%{transform:rotate(180deg) scale(1.25)}}
     @media(prefers-reduced-motion:reduce){.img-perks .perk,.img-perks .perk::after,.img-perks .perk svg{animation:none}}
+    /* ===== কুপন নোট (ছোট, ইমোজি ছাড়া, চলমান ডটেড বর্ডার + স্ট্যাম্প) ===== */
+    .cp-note{--cn:#c9971c;display:flex;align-items:center;justify-content:center;margin:0 0 6px;padding:3px 8px;border-radius:7px;cursor:pointer;font-size:10.5px;font-weight:700;line-height:1.3;text-align:center;color:#5b3a05;
+      background:linear-gradient(90deg,var(--cn) 50%,transparent 0) 0 0/8px 1.5px repeat-x,linear-gradient(90deg,var(--cn) 50%,transparent 0) 0 100%/8px 1.5px repeat-x,linear-gradient(0deg,var(--cn) 50%,transparent 0) 0 0/1.5px 8px repeat-y,linear-gradient(0deg,var(--cn) 50%,transparent 0) 100% 0/1.5px 8px repeat-y,#fff8e1;
+      animation:cpnMarch 1s linear infinite}
+    .cp-note .cpn-txt b{display:inline-block;background:#0f1c2e;color:#f3e5ad;padding:0 5px;border-radius:4px;letter-spacing:.5px;font-size:10px;font-family:system-ui,sans-serif}
+    .cp-note .cpn-txt em{font-style:normal;color:#b91c1c;font-weight:800;display:inline-block;animation:cpnStamp 3s ease-in-out infinite}
+    @keyframes cpnMarch{to{background-position:8px 0,-8px 100%,0 -8px,100% 8px,0 0}}
+    @keyframes cpnStamp{0%,78%,100%{transform:scale(1) rotate(0)}86%{transform:scale(1.3) rotate(-4deg)}93%{transform:scale(.95) rotate(1deg)}}
+    @media(max-width:550px){.cp-note{font-size:9px;padding:2px 5px;margin:0 0 4px}.cp-note .cpn-txt b{font-size:8.5px;padding:0 3px}}
+    html[data-theme="dark"] .cp-note{--cn:#d4af37;color:#f3e5ad;background-color:#3a3217}
+    html[data-theme="dark"] .cp-note .cpn-txt em{color:#fca5a5}
+    .cp-brk{font-size:12px;color:#047857;margin:-2px 0 2px 14px;line-height:1.4}
+    /* বিস্তারিত পেজের কুপন বক্স অ্যানিমেশন */
+    .coupon-box .cb-code{animation:cpnBtn 1.6s ease-in-out infinite}
+    .coupon-box .cb-text b{display:inline-block;animation:cpnPulse 1.4s ease-in-out infinite}
+    .coupon-box .cb-hint{animation:cpnHint 1.6s ease-in-out infinite}
+    @keyframes cpnBtn{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+    @keyframes cpnHint{0%,100%{opacity:.7}50%{opacity:1}}
+    @media(prefers-reduced-motion:reduce){.cp-note,.cp-note .cpn-txt em,.coupon-box .cb-code,.coupon-box .cb-text b,.coupon-box .cb-hint{animation:none}}
     .no-adv{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;gap:6px;margin:3px 0 7px;padding:5px 8px;border-radius:999px;background:linear-gradient(135deg,#0f1c2e,#1b2f4d);color:#f3e5ad;border:1px solid rgba(212,175,55,.7);font-size:11.5px;font-weight:800;line-height:1.3;text-align:center;white-space:nowrap;pointer-events:none;box-shadow:0 2px 8px rgba(15,28,46,.25);animation:advBreath 2.6s ease-in-out infinite}
     .no-adv i{flex:none;width:1.1em;height:1.1em;position:relative;animation:advSpark 2s ease-in-out infinite}
     .no-adv i::before{content:"";position:absolute;inset:0;background:#fcd34d;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%)}
@@ -2985,7 +3004,7 @@ html.dtm #toast{bottom:90px}
         const ci = couponInfo[code];
         if (ci === undefined) { out.push('<div class="co co-cp"><span>🎟️ কুপন চলবে</span></div>'); return; }
         if (!ci) return;
-        const amt = couponAmt(p.price, ci);
+        const amt = cpAmtFor(p, code, ci);
         if (!(amt > 0)) return;
         const c = esc(code);
         out.push(`<div class="cp-ticket" onclick="event.stopPropagation();copyCoupon('${c}')" title="কোড কপি করতে ট্যাপ করুন"><div class="cp-l"><small>🎟️ কুপন কোড · ট্যাপে কপি</small><b>${c}</b></div><div class="cp-r"><b>${taka(amt)}/-</b><small>ছাড়</small></div></div>`);
@@ -2994,6 +3013,16 @@ html.dtm #toast{bottom:90px}
       if (!p.free_delivery && !out.some(x => x.includes("co-free"))) out.unshift('<div class="co co-info"><span>🏠 সারা দেশে হোম ডেলিভারি সেবা</span></div>');
       if (!out.some(x => x.includes("co-cp") || x.includes("cp-ticket"))) out.push('<div class="co co-info"><span>📦 ক্যাশ অন ডেলিভারি · ১০০% প্রিমিয়াম কোয়ালিটি</span></div>');
       return `<div class="card-offers">${out.join("")}</div>`;
+    }
+    function cardCouponNote(p) {
+      return productCoupons(p).map(code => {
+        const ci = couponInfo[code];
+        if (!ci) return "";
+        const amt = cpAmtFor(p, code, ci);
+        if (!(amt > 0)) return "";
+        const c = esc(code);
+        return `<div class="cp-note" onclick="event.stopPropagation();copyCoupon('${c}')" title="কোড কপি করতে ট্যাপ করুন"><span class="cpn-txt">কোড <b>${c}</b> দিলে <em>${taka(amt)}/- ছাড়</em></span></div>`;
+      }).join("");
     }
     function cardHtml(p, wl, ix) {
         const id = esc(p.id), images = productImages(p), colors = productColors(p);
@@ -3007,7 +3036,8 @@ html.dtm #toast{bottom:90px}
             <h3>${esc(p.name)}</h3>
             ${priceHtml(p)}
             <div class="no-adv"><i></i><span>অগ্রিম কোনো টাকা ছাড়াই অর্ডার করুন</span></div>
-            ${cardOfferHtml(p)}
+            ${cardCouponNote(p)}
+             ${cardOfferHtml(p)}
           </div>
           <div class="image-container" onclick="openProduct('${id}')">
             ${badgesHtml(p)}
@@ -3674,7 +3704,7 @@ html.dtm #toast{bottom:90px}
     function renderCouponChips(lines) {
       const box = $("#couponChips"); if (!box) return;
       const codes = [...new Set(lines.flatMap(({ p }) => productCoupons(p)))].filter(c => couponInfo[c] && (!appliedCoupon || appliedCoupon.code !== c));
-      const save = c => lines.reduce((t, { i, p }) => t + (productCoupons(p).includes(c) ? couponAmt(p.price, couponInfo[c]) * Math.max(1, Number(i && i.qty) || 0) : 0), 0);
+      const save = c => lines.reduce((t, { i, p }) => t + (productCoupons(p).includes(c) ? cpAmtFor(p, c, couponInfo[c]) * Math.max(1, Number(i && i.qty) || 0) : 0), 0);
       box.innerHTML = codes.length ? `<div class="cp-save-t">এই কার্টে কুপন ব্যবহার করলে সাশ্রয়:</div>` + codes.map(c => { const sv = save(c); return `<button type="button" class="chip-btn" onclick="quickCoupon('${esc(c)}')">🎟️ ${esc(c)} — এই কোড ব্যবহার করলে ${sv > 0 ? taka(sv) + " টাকা সাশ্রয়" : "ছাড় পাবেন"}</button>`; }).join("") : "";
     }
     function quickCoupon(code) { $("#couponInput").value = code; applyCoupon(); }
@@ -3705,7 +3735,7 @@ html.dtm #toast{bottom:90px}
       return productCoupons(p).map(code => {
         const ci = couponInfo[code];
         if (!ci) return "";
-        const amt = couponAmt(p.price, ci);
+        const amt = cpAmtFor(p, code, ci);
         if (!(amt > 0)) return "";
         const c = esc(code);
         return `<div class="coupon-box">
@@ -3741,6 +3771,9 @@ html.dtm #toast{bottom:90px}
         try { renderProductsUI(); if (det.id && $("#productDialog").open) renderDetail(); } catch (e) { console.warn(e); }
       }
     }
+    // প্রতি শাড়িতে আলাদা ছাড়ের টাকা (products.coupon_amounts = {"কোড": টাকা}); না থাকলে কুপনের নিজের ছাড়
+    const productCouponOv = (p, code) => { let m = p && p.coupon_amounts; if (typeof m === "string") { try { m = JSON.parse(m); } catch { m = null; } } const v = m ? Number(m[code]) : 0; return v > 0 ? v : 0; };
+    const cpAmtFor = (p, code, ci) => { const ov = productCouponOv(p, code); return ov > 0 ? Math.min(Math.round(ov), Number(p.price) || 0) : couponAmt(p.price, ci); };
     const productCoupons = p => String(p.coupon_codes || "").split(",").map(x => x.trim().toUpperCase()).filter(Boolean);
     async function applyCoupon() {
       const code = $("#couponInput").value.trim().toUpperCase().replace(/\s+/g, "");
@@ -3776,6 +3809,7 @@ html.dtm #toast{bottom:90px}
     function lineDiscountOf(p, qty) {
       if (!appliedCoupon || !productCoupons(p).includes(appliedCoupon.code)) return 0;
       const ci = { pct: appliedCoupon.percent, amt: appliedCoupon.amount };
+      const ov = productCouponOv(p, appliedCoupon.code); if (ov > 0) return Math.min(Math.round(ov), Number(p.price) || 0) * qty;
       return ci.amt > 0 ? couponAmt(p.price, ci) * qty : Math.round(Number(p.price) * qty * ci.pct / 100);
     }
     // ফ্রি ডেলিভারি নিয়ম: প্রতিটি শাড়ির লিমিট শুধু সেই শাড়ির নিজের টাকায় মেলে।
@@ -3803,8 +3837,9 @@ html.dtm #toast{bottom:90px}
       let discount = 0;
       if (appliedCoupon) {
         const ci = { pct: appliedCoupon.percent, amt: appliedCoupon.amount };
-        cart.forEach(i => { const p = getProduct(i.pid); if (p && productCoupons(p).includes(appliedCoupon.code)) discount += ci.amt > 0 ? couponAmt(p.price, ci) * i.qty : Number(p.price) * i.qty; });
-        if (!(ci.amt > 0)) discount = Math.round(discount * ci.pct / 100);
+        let fixed = 0, pbase = 0;
+        cart.forEach(i => { const p = getProduct(i.pid); if (p && productCoupons(p).includes(appliedCoupon.code)) { const ov = productCouponOv(p, appliedCoupon.code); if (ov > 0) fixed += Math.min(Math.round(ov), Number(p.price) || 0) * i.qty; else if (ci.amt > 0) fixed += couponAmt(p.price, ci) * i.qty; else pbase += Number(p.price) * i.qty; } });
+        discount = fixed + Math.round(pbase * ci.pct / 100);
       }
       const net = subtotal - discount;
       const base = settings.dhaka_charge;
@@ -3816,6 +3851,13 @@ html.dtm #toast{bottom:90px}
       return { subtotal, discount, charge, total: net + charge - refDisc, refDisc, free, unknown, net, freeBy, nearest };
     }
 
+    // অর্ডারের সময় কোন শাড়িতে কুপনে কত টাকা ছাড় — শাড়ি অনুযায়ী
+    function cpBreakdown() {
+      if (!appliedCoupon) return [];
+      const m = {};
+      cart.forEach(i => { const p = getProduct(i.pid); if (!p || !productCoupons(p).includes(appliedCoupon.code)) return; (m[p.id] = m[p.id] || { p, qty: 0 }).qty += i.qty; });
+      return Object.values(m).map(({ p, qty }) => ({ p, qty, per: lineDiscountOf(p, 1), total: lineDiscountOf(p, qty) })).filter(x => x.total > 0);
+    }
     function renderCartSummary() {
       const t = calcTotals();
       let note = "";
@@ -3823,9 +3865,9 @@ html.dtm #toast{bottom:90px}
       else if (t.nearest) note = `<div class="need-note">“${esc(t.nearest.name)}” শাড়িতে আরও ${taka(t.nearest.need)}/- টাকার নিলে ডেলিভারি ফ্রি!</div>`;
       const cm = $("#couponMsg");
       if (cm && appliedCoupon) {
-        if (t.discount > 0) { cm.className = "small msg-ok"; cm.textContent = `✅ কুপন চালু: ${couponLabel(appliedCoupon)} (শুধু কুপন চলা শাড়িতে)`; }
+        if (t.discount > 0) { cm.className = "small msg-ok"; cm.textContent = "✅ কুপন চালু — " + cpBreakdown().map(x => `${x.p.name}: ${taka(x.per)}/- ছাড়`).join(" • "); }
         else if (!cart.length && couponLines().some(({ p }) => productCoupons(p).includes(appliedCoupon.code))) {
-          const sv = couponLines().reduce((a, { p }) => a + (productCoupons(p).includes(appliedCoupon.code) ? couponAmt(p.price, { pct: appliedCoupon.percent, amt: appliedCoupon.amount }) : 0), 0);
+          const sv = couponLines().reduce((a, { p }) => a + (productCoupons(p).includes(appliedCoupon.code) ? cpAmtFor(p, appliedCoupon.code, { pct: appliedCoupon.percent, amt: appliedCoupon.amount }) : 0), 0);
           cm.className = "small msg-ok"; cm.textContent = `✅ কুপন চালু: ${couponLabel(appliedCoupon)} — রং ও পিস বেছে নিলে প্রতি পিসে ${taka(sv)} টাকা সাশ্রয় হবে`;
         }
         else { cm.className = "small msg-err"; cm.textContent = "এই কুপন আপনার কার্টের কোনো শাড়িতে প্রযোজ্য নয়।"; }
@@ -3837,7 +3879,7 @@ html.dtm #toast{bottom:90px}
       const delRow = t.unknown ? "" : `<div class="sum-row"><span>ডেলিভারি চার্জ</span><b>${t.free ? "ফ্রি" : taka(t.charge) + "/-"}</b></div>`;
       $("#cartSummary").innerHTML = `
         <div class="sum-row"><span>শাড়ির দাম</span><b>${taka(t.subtotal)}/-</b></div>
-        ${t.discount > 0 ? `<div class="sum-row" style="color:#047857;"><span>🎟️ কুপন (${esc(appliedCoupon.code)} — ${couponLabel(appliedCoupon)})</span><b>− ${taka(t.discount)}/-</b></div>` : ""}
+        ${t.discount > 0 ? `<div class="sum-row" style="color:#047857;"><span>কুপন (${esc(appliedCoupon.code)})</span><b>− ${taka(t.discount)}/-</b></div>` + cpBreakdown().map(x => `<div class="cp-brk">• ${esc(x.p.name)}: ${taka(x.per)}/- × ${taka(x.qty)} পিস = ${taka(x.total)}/-</div>`).join("") : ""}
         ${delRow}
         ${t.refDisc > 0 ? `<div class="sum-row" style="color:#047857;"><span>🎁 রেফারেল ছাড়</span><b>− ${taka(t.refDisc)}/-</b></div>` : ""}
         <div class="sum-row sum-total"><span>${t.unknown ? "সর্বমোট (ডেলিভারি চার্জ ছাড়া)" : "সর্বমোট"}</span><span>${taka(t.total)}/-</span></div>
@@ -3864,7 +3906,7 @@ html.dtm #toast{bottom:90px}
       const delTxt = t.free ? `ফ্রি (“${t.freeBy}” শাড়ির জন্য)` : (t.unknown ? "কনফার্মের সময় জানানো হবে" : taka(t.charge) + "/-");
       const txt = `হ্যালো শাড়ি বিলাশ! 👋\nআমি নিচের শাড়িগুলো অর্ডার করতে চাই:\n\n` +
         lines.map(({ i, p }, n) => `${n + 1}. 🛍️ ${p.name}\n   🔖 কোড: ${productCode(p.id)}\n   🎨 রং: ${i.color === NO_COLOR ? "সাধারণ" : i.color}\n   📦 ${taka(i.qty)} টি × ${taka(p.price)}/- = ${taka(p.price * i.qty)}/-`).join("\n\n") +
-        `\n\n🧮 শাড়ির দাম: ${taka(t.subtotal)}/-${t.discount > 0 ? `\n🎟️ কুপন (${appliedCoupon.code}): -${taka(t.discount)}/-` : ""}\n🚚 ডেলিভারি: ${delTxt}\n💵 সর্বমোট: ${taka(t.total)}/-\n💳 পেমেন্ট: ${pay}` +
+        `\n\n🧮 শাড়ির দাম: ${taka(t.subtotal)}/-${t.discount > 0 ? `\n🎟️ কুপন (${appliedCoupon.code}): -${taka(t.discount)}/-` + cpBreakdown().map(x => `\n   • ${x.p.name}: ${taka(x.per)}/- × ${taka(x.qty)} = ${taka(x.total)}/-`).join("") : ""}\n🚚 ডেলিভারি: ${delTxt}\n💵 সর্বমোট: ${taka(t.total)}/-\n💳 পেমেন্ট: ${pay}` +
         (nm || ph || ad ? `\n\n👤 নাম: ${nm || "—"}\n📞 ফোন: ${ph || "—"}\n📍 ঠিকানা: ${ad || "—"}` : "");
       openExternal(`https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(txt)}`);
     }
@@ -4150,7 +4192,7 @@ html.dtm #toast{bottom:90px}
     function pfTgCoupon() {
       const on = $("#ptgCoupon").checked;
       $("#pfCouponBox").style.display = on ? "block" : "none";
-      if (!on) { document.querySelectorAll(".cchk").forEach(x => { x.checked = false; }); couponSel = []; }
+      if (!on) { document.querySelectorAll(".cchk").forEach(x => { x.checked = false; }); couponSel = []; couponAmtSel = {}; renderCouponAmtInputs(); }
     }
     function pfTgHide() { $("#pactive").checked = !$("#ptgHide").checked; pfPubUpdate(); }
     function pfTogglePub() { const t = $("#ptgHide"); if (!t) return; t.checked = !t.checked; pfTgHide(); }
@@ -4314,7 +4356,7 @@ html.dtm #toast{bottom:90px}
                       <label class="pf-tg"><span class="top">${pfI("eyeoff")}<b>গোপন প্রোডাক্ট</b><input type="checkbox" id="ptgHide" class="pf-sw" onchange="pfTgHide()"></span><small>সবার জন্য দেখা যাবে না (মুছে যাবে না)</small></label>
                       <label class="pf-tg"><span class="top">${pfI("box")}<b>স্টক অপশন</b><input type="checkbox" id="ptgStock" class="pf-sw" checked onchange="pfTgStock()"></span><small>স্টক ম্যানেজমেন্ট চালু করুন</small></label>
                     </div>
-                    <div class="pf-sub" id="pfCouponBox" style="display:none"><div class="pf-sublabel">🎟️ কুপন চলবে (যে কুপন দিতে চান তাতে টিক দিন)</div><div id="couponChecks" class="small">লোড হচ্ছে...</div></div>
+                    <div class="pf-sub" id="pfCouponBox" style="display:none"><div class="pf-sublabel">🎟️ কুপন চলবে (যে কুপন দিতে চান তাতে টিক দিন)</div><div id="couponChecks" class="small">লোড হচ্ছে...</div><div id="couponAmtBox"></div></div>
                   </div>
                 </div>
                 <input type="checkbox" id="pactive" checked style="display:none">
@@ -4363,7 +4405,7 @@ html.dtm #toast{bottom:90px}
           </div>`;
         renderImagePreviewControl();
         listAdminProducts();
-        couponSel = []; fillCouponChecks();
+        couponSel = []; couponAmtSel = {}; fillCouponChecks();
         pfGo(1); pfCount();
       } else if (tab === "orders") {
         listOrders();
@@ -4570,8 +4612,21 @@ html.dtm #toast{bottom:90px}
       if (!error) adminCoupons = data || [];
       return error;
     }
+    let couponAmtSel = {};
+    function renderCouponAmtInputs() {
+      const box = $("#couponAmtBox"); if (!box) return;
+      box.querySelectorAll(".camt").forEach(el => { couponAmtSel[el.dataset.code] = el.value; });
+      const codes = [...document.querySelectorAll(".cchk:checked")].map(x => x.value);
+      if (!codes.length) { box.innerHTML = ""; return; }
+      box.innerHTML = '<div class="small" style="margin:10px 0 4px;">💰 <b>এই শাড়িতে</b> কুপনে কত টাকা ছাড় দিতে চান? (ফাঁকা রাখলে কুপনের নিজের ছাড়ই যাবে)</div>' + codes.map(c => {
+        const ci = adminCoupons.find(x => x.code === c);
+        const v = couponAmtSel[c];
+        return `<div style="display:flex;align-items:center;gap:8px;margin:4px 0;"><b style="min-width:90px;">${esc(c)}</b><input type="number" min="1" inputmode="numeric" class="camt" data-code="${esc(c)}" value="${(v === undefined || v === null) ? "" : esc(String(v))}" placeholder="ডিফল্ট: ${ci ? esc(couponLabel(ci)) : ""}" style="margin:0;flex:1;"><span>টাকা</span></div>`;
+      }).join("");
+    }
     function applyCouponChecks() {
       document.querySelectorAll(".cchk").forEach(c => { c.checked = couponSel.includes(c.value); });
+      renderCouponAmtInputs();
     }
     async function fillCouponChecks() {
       const box = $("#couponChecks"); if (!box) return;
@@ -4579,7 +4634,7 @@ html.dtm #toast{bottom:90px}
       if (!$("#couponChecks")) return;
       if (err) { box.innerHTML = "কুপন লোড করা যায়নি (supabase-upgrade-5.sql চালিয়েছেন কি?)"; return; }
       if (!adminCoupons.length) { box.innerHTML = "এখনো কোনো কুপন নেই — আগে উপরের \"🎟️ কুপন\" ট্যাব থেকে কুপন বানান।"; return; }
-      box.innerHTML = adminCoupons.map(c => `<label style="display:inline-flex;gap:6px;align-items:center;margin:4px 14px 4px 0;font-size:14px;cursor:pointer;"><input type="checkbox" class="cchk" value="${esc(c.code)}" style="width:18px;height:18px;margin:0;"> <b>${esc(c.code)}</b> (${couponLabel(c)}${c.active ? "" : ", বন্ধ"})</label>`).join("");
+      box.innerHTML = adminCoupons.map(c => `<label style="display:inline-flex;gap:6px;align-items:center;margin:4px 14px 4px 0;font-size:14px;cursor:pointer;"><input type="checkbox" class="cchk" value="${esc(c.code)}" onchange="renderCouponAmtInputs()" style="width:18px;height:18px;margin:0;"> <b>${esc(c.code)}</b> (${couponLabel(c)}${c.active ? "" : ", বন্ধ"})</label>`).join("");
       applyCouponChecks();
     }
     async function renderCouponsTab() {
@@ -4635,7 +4690,7 @@ html.dtm #toast{bottom:90px}
       const code = String(c.code).toUpperCase();
       const list = products.filter(p => productCoupons(p).includes(code));
       if (!list.length) return "";
-      const rows = list.slice(0, 6).map(p => `${esc(p.name)}: <b>${taka(couponAmt(p.price, { pct: Number(c.percent) || 0, amt: Number(c.amount) || 0 }))}/- টাকা</b>`).join(" • ");
+      const rows = list.slice(0, 6).map(p => `${esc(p.name)}: <b>${taka(cpAmtFor(p, code, { pct: Number(c.percent) || 0, amt: Number(c.amount) || 0 }))}/- টাকা</b>`).join(" • ");
       return `<br><span class="small" style="color:#047857;">💰 প্রতি পিসে ছাড়: ${rows}${list.length > 6 ? " …" : ""}</span>`;
     }
     function editCoupon(code) {
@@ -4821,6 +4876,9 @@ html.dtm #toast{bottom:90px}
           colors: $("#pcolors").value.split(",").map(s => s.trim()).filter(Boolean),
           image_urls: [...currentImageUrlList, ...uploaded]
         };
+        { const camt = {}; document.querySelectorAll("#couponAmtBox .camt").forEach(el => { const v = Math.round(Number(el.value)); if (v > 0) camt[el.dataset.code] = v; });
+          const had = editingProductId && getProduct(editingProductId) && getProduct(editingProductId).coupon_amounts;
+          if (Object.keys(camt).length || had) productData.coupon_amounts = Object.keys(camt).length ? camt : null; }
         const query = editingProductId
           ? db.from("products").update(productData).eq("id", editingProductId)
           : db.from("products").insert([{ ...productData, id: "p-" + Date.now(), created_at: new Date().toISOString() }]);
@@ -4836,7 +4894,7 @@ html.dtm #toast{bottom:90px}
       } catch (err) {
         console.error("Product save error:", err);
         msg.className = "small msg-err";
-        msg.textContent = "❌ সেভ হয়নি: " + explainError(err);
+        msg.textContent = "❌ সেভ হয়নি: " + explainError(err) + (/coupon_amounts/.test(String((err && err.message) || "")) ? " (শাড়ি-ভিত্তিক ছাড়ের জন্য Supabase-এ coupon_amounts কলাম যোগ করতে হবে)" : "");
       } finally {
         const b = $("#saveBtn"); if (b) b.disabled = false;
       }
@@ -4878,7 +4936,7 @@ html.dtm #toast{bottom:90px}
       $("#plength").value = p.length_text || "";
       $("#pfreemin").value = (p.free_min === null || p.free_min === undefined) ? "" : p.free_min;
       $("#pblouse").checked = !!p.blouse_free;
-      couponSel = productCoupons(p); applyCouponChecks();
+      couponSel = productCoupons(p); couponAmtSel = {}; { let m = p.coupon_amounts; if (typeof m === "string") { try { m = JSON.parse(m); } catch { m = null; } } if (m && typeof m === "object") couponAmtSel = { ...m }; } applyCouponChecks();
       $("#pprice").value = p.price || "";
       $("#pregularprice").value = p.regular_price || "";
       $("#pstock").value = (p.stock === null || p.stock === undefined || colorStockMap(p)) ? "" : p.stock;
