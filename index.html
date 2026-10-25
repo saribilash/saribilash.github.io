@@ -5552,9 +5552,22 @@ html.dtm #toast{bottom:90px}
   const rpcErr = er => missing(er) ? "রেফারেল সিস্টেম এখনো চালু হয়নি (অ্যাডমিন supabase-upgrade-13-referral.sql Run করেননি)।" : clean(er.message) || "কিছু একটা সমস্যা হয়েছে";
   let ME = null, mode = "signup";
 
+  // ---------- অ্যাডমিন সেটিং থেকে লাইভ বোনাস/ছাড় (সব জায়গায় একই সোর্স) ----------
+  window.REF_PUB = window.REF_PUB || null;
+  async function loadRefPub() {
+    try {
+      const r = await db.rpc("ref_public_info");
+      if (r && r.data && !r.error) window.REF_PUB = r.data;
+    } catch {}
+    return window.REF_PUB;
+  }
+  window.loadRefPub = loadRefPub;
+  const pubOf = d => Object.assign({}, window.REF_PUB || {}, d && d.bonus_amount != null ? { bonus_amount: d.bonus_amount } : {}, d && d.friend_discount != null ? { friend_discount: d.friend_discount } : {}, d && d.first_order_only != null ? { first_order_only: d.first_order_only } : {});
+
   // ---------- নিয়ম ও শর্ত ----------
-  function termsHtml(d) {
-    const b = bn((d && d.bonus_amount) || 20), fd = bn((d && d.friend_discount) || 20);
+  function termsHtml(d0) {
+    const d = pubOf(d0);
+    const b = bn(d.bonus_amount != null ? d.bonus_amount : 20), fd = bn(d.friend_discount != null ? d.friend_discount : 20);
     const per = d && d.first_order_only ? "সেই ফোন নম্বরের প্রথম ডেলিভারি হওয়া অর্ডারের জন্য" : "প্রতিটি ডেলিভারি হওয়া অর্ডারের জন্য";
     return `<ol class="ref-terms">
       <li>অর্ডার করার সময় ফর্মে আপনার <b>রেফারেল কোড</b> লিখলে ঐ অর্ডারে <b>${fd} টাকা ছাড়</b> পাওয়া যাবে। কোড না লিখলে ঐ অর্ডারে ছাড় ও বোনাস কোনোটাই নেই। বন্ধুর অ্যাকাউন্ট খুলতে হবে না।</li>
@@ -5570,9 +5583,10 @@ html.dtm #toast{bottom:90px}
   }
 
   // ---------- খোলা / লগইন-সাইনআপ ----------
-  window.openRef = function (m) {
+  window.openRef = async function (m) {
     const dlg = R("#refDialog"); if (!dlg) return;
     if (!dlg.open) dlg.showModal();
+    await loadRefPub(); // প্রতিবার খোলার সময় অ্যাডমিনের সর্বশেষ বোনাস আনা হয়
     if (getTok()) { loadAccount(); return; }
     renderAuth(m || "signup");
   };
@@ -5582,7 +5596,7 @@ html.dtm #toast{bottom:90px}
     const su = m === "signup";
     R("#refBody").innerHTML = `
       <h2 class="ref-h">🎁 রেফার করুন, বোনাস জিতুন</h2>
-      <p class="ref-sub">অ্যাকাউন্ট খুলে বন্ধুদের রেফার করুন। বন্ধুর অর্ডার ডেলিভারি হলেই আপনি পাবেন <b>২০ টাকা</b> বোনাস! (OTP লাগে না — শুধু ফোন নম্বর ও পাসওয়ার্ড)</p>
+      <p class="ref-sub">অ্যাকাউন্ট খুলে বন্ধুদের রেফার করুন। বন্ধুর অর্ডার ডেলিভারি হলেই আপনি পাবেন <b>${bn(pubOf(null).bonus_amount != null ? pubOf(null).bonus_amount : 20)} টাকা</b> বোনাস! (OTP লাগে না — শুধু ফোন নম্বর ও পাসওয়ার্ড)</p>
       <div class="ref-tabs">
         <button type="button" class="${su ? "on" : ""}" onclick="refMode('signup')">✨ সাইন আপ</button>
         <button type="button" class="${su ? "" : "on"}" onclick="refMode('login')">🔑 লগইন</button>
@@ -5634,6 +5648,7 @@ html.dtm #toast{bottom:90px}
   async function loadAccount(silent) {
     const body = R("#refBody");
     if (!silent) body.innerHTML = `<div style="text-align:center;padding:40px 0;color:var(--muted);">লোড হচ্ছে...</div>`;
+    await loadRefPub();
     const { data, error } = await db.rpc("ref_me", { p_token: getTok() });
     if (error) {
       if (isExpired(error)) { setTok(""); renderAuth("login", "সেশন শেষ হয়েছে — আবার লগইন করুন"); return; }
@@ -5647,7 +5662,7 @@ html.dtm #toast{bottom:90px}
 
   function renderAccount(d) {
     const link = location.origin + location.pathname + "?ref=" + d.ref_code;
-    const msg = `শাড়ি বিলাশ থেকে সুন্দর শাড়ি কিনুন! অর্ডারের সময় আমার রেফারেল কোড দিলে ${bn(d.friend_discount || 20)} টাকা ছাড় পাবেন: ${d.ref_code}\n${link}`;
+    const msg = `শাড়ি বিলাশ থেকে সুন্দর শাড়ি কিনুন! অর্ডারের সময় আমার রেফারেল কোড দিলে ${bn(pubOf(d).friend_discount != null ? pubOf(d).friend_discount : 20)} টাকা ছাড় পাবেন: ${d.ref_code}\n${link}`;
     const refs = (d.referrals || []).map(r => `<div class="ref-row"><div><b>${e(r.name)}</b><small>${e(r.phone)} · ${dt(r.joined)}</small></div>
       <div style="text-align:right;"><small>কোড দিয়ে ${bn(r.orders_with_code || 0)}টি অর্ডার</small>${r.delivered_orders > 0 ? `<span class="ref-pill ok">✅ ${bn(r.delivered_orders)}টি ডেলিভারি · +${bn(r.bonus)}/-</span>` : `<span class="ref-pill wait">⏳ ডেলিভারির অপেক্ষায়</span>`}</div></div>`).join("");
     const wds = (d.withdrawals || []).map(w => { const l = wdLabel[w.status] || [w.status, "wait"]; return `<div class="ref-row"><div><b>${bn(w.amount)}/-</b> · ${w.method === "bkash" ? "বিকাশ" : "মোবাইল রিচার্জ"}<small>${e(w.number)} · ${dt(w.created_at)}${w.note ? " · " + e(w.note) : ""}</small></div><span class="ref-pill ${l[1]}">${l[0]}</span></div>`; }).join("");
@@ -5817,6 +5832,7 @@ html.dtm #toast{bottom:90px}
     const { error } = await db.rpc("admin_ref_save_settings", { p_amount: amt, p_first_only: first, p_friend_discount: parseInt(R("#admRefDisc").value, 10) });
     if (error) { alert("সেভ হয়নি: " + rpcErr(error)); return; }
     if (typeof toast === "function") toast("✅ সেটিং সেভ হয়েছে");
+    window.REF_PUB = null; try { refInfoTxt = null; } catch {} loadRefPub(); // সব জায়গায় নতুন টাকা দেখাবে
   };
 
   // ---------- অর্ডার ফর্মে রেফারেল কোড ----------
@@ -5899,12 +5915,13 @@ html.dtm #toast{bottom:90px}
   var refInfoTxt = null;
   function showRefInfo() {
     var el = document.getElementById("refInfo"); if (!el) return;
-    if (refInfoTxt !== null) { el.textContent = "🎁 " + refInfoTxt; return; }
+    if (refInfoTxt !== null) el.textContent = "🎁 " + refInfoTxt;
     var fallback = "রেফারেল কোড ব্যবহার করলে আপনি ছাড় পাবেন, আর যার কোড তিনি ডেলিভারি কনফার্মের পর টাকা পাবেন";
-    el.textContent = "🎁 " + fallback;
+    if (refInfoTxt === null) el.textContent = "🎁 " + fallback;
     try {
       db.rpc("ref_public_info").then(function (r) {
-        var d = r && r.data; if (!d || r.error || !(Number(d.friend_discount) > 0)) { refInfoTxt = fallback; return; }
+        var d = r && r.data; if (!d || r.error || !(Number(d.friend_discount) > 0)) { if (refInfoTxt === null) refInfoTxt = fallback; return; }
+        window.REF_PUB = d;
         refInfoTxt = "রেফারেল কোড ব্যবহার করলে আপনি " + bn(d.friend_discount) + " টাকা ছাড় পাবেন, আর যার কোড তিনি ডেলিভারি কনফার্মের পর " + (Number(d.bonus_amount) > 0 ? bn(d.bonus_amount) + " টাকা " : "") + "বোনাস পাবেন";
         el.textContent = "🎁 " + refInfoTxt;
       }, function () { refInfoTxt = fallback; });
