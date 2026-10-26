@@ -1228,6 +1228,43 @@
     .ref-nav-btn{color:#f3e5ad!important;font-weight:700!important}
     .ref-foot-btn{display:inline-block;margin:10px auto 4px;padding:12px 26px;border:0;border-radius:30px;background:linear-gradient(135deg,#987121 0%,#e6c46a 100%);color:#1b1405;font:inherit;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.28)}
     .ref-foot-btn:active{transform:scale(.97)}
+
+
+    /* কেন শাড়ি বিলাশ — ছবির মতো ৬টা এক সারিতে */
+    #featuresBox{display:block!important;max-width:1100px;margin:6px auto 22px!important;padding:0 10px!important;background:none!important;border-radius:0!important}
+    #featuresBox .m-why{display:block!important;text-align:center;color:var(--navy);font-weight:800;font-size:clamp(18px,5vw,30px);margin:0 0 10px;line-height:1.2}
+    #featuresBox .m-why::before,#featuresBox .m-why::after{content:"";display:block;height:1px;width:min(62%,300px);margin:6px auto;background:linear-gradient(90deg,transparent,#d4af37,transparent)}
+    #featuresBox .why-card{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr));background:linear-gradient(180deg,#fffbf1,#fdf3dc);border:1px solid #e6c97a;border-radius:18px;padding:12px 2px 10px;box-shadow:0 8px 22px rgba(152,113,33,.14)}
+    #featuresBox .feature-box{position:relative;background:none!important;border:0!important;box-shadow:none!important;border-radius:0!important;padding:2px 3px!important;display:flex;flex-direction:column;align-items:center;text-align:center}
+    #featuresBox .feature-box+.feature-box::before{content:"";position:absolute;left:0;top:6%;bottom:6%;width:1px;background:rgba(212,175,55,.55)}
+    #featuresBox .feature-box+.feature-box::after{content:"";position:absolute;left:-2.5px;top:50%;width:5px;height:5px;background:#d4af37;transform:rotate(45deg)}
+    #featuresBox .feature-box span.why-ic{display:flex!important;align-items:center;justify-content:center;width:clamp(34px,11vw,68px);height:clamp(34px,11vw,68px);margin:0 auto 6px!important;border-radius:50%;border:1.5px solid #e6c97a;background:radial-gradient(circle at 50% 35%,#fffdf7,#fbf0d4);color:#987121;font-size:0}
+    #featuresBox .why-ic svg{width:58%;height:58%}
+    #featuresBox .feature-box h4{margin:0!important;color:var(--navy)!important;font-weight:800;font-size:clamp(7.5px,2.2vw,15px)!important;line-height:1.3!important}
+    #featuresBox .feature-box p{display:none!important}
+    html[data-theme="dark"] #featuresBox .m-why,html[data-theme="dark"] #featuresBox .feature-box h4{color:#f1e6c3!important}
+    html[data-theme="dark"] #featuresBox .why-card{background:linear-gradient(180deg,#16233a,#111b2d);border-color:#4a3f1f}
+    html[data-theme="dark"] #featuresBox .feature-box span.why-ic{background:#0f1c2e;border-color:#8a6d1f;color:#e6c46a}
+    /* কেন শাড়ি বিলাশ — ট্যাপ করলে বিস্তারিত */
+    .feature-box{cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .15s}
+    .feature-box:active{transform:scale(.96)}
+    .feature-box:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+    #whyDialog{padding:22px 18px 22px;background:var(--cream);max-width:520px}
+    #whyDialog .close-modal-btn{width:36px;height:36px;font-size:26px;top:12px;right:12px}
+    #whyDialog .wd-ic{width:64px;height:64px;border-radius:50%;background:#0f1c2e;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto 10px}
+    #whyDialog h2{margin:0 0 4px;text-align:center;color:var(--navy);font-size:21px}
+    #whyDialog .wd-sub{text-align:center;color:var(--muted);font-size:13.5px;margin:0 0 14px}
+    #whyDialog ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+    #whyDialog li{background:#fff;border:1px solid #f2e2b8;border-radius:12px;padding:10px 12px 10px 38px;position:relative;font-size:14px;line-height:1.55;color:#334155}
+    #whyDialog li::before{content:"✔";position:absolute;left:12px;top:10px;color:#987121;font-weight:800}
+    #whyDialog li b{color:var(--navy)}
+    #whyDialog .wd-act{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:14px}
+    #whyDialog .wd-act button{border:0;border-radius:12px;padding:11px 18px;font:inherit;font-weight:800;font-size:14.5px;background:var(--gold-gradient);color:var(--navy);cursor:pointer}
+    #whyDialog .wd-nav{display:flex;justify-content:space-between;gap:8px;margin-top:12px}
+    #whyDialog .wd-nav button{border:1px solid #e6d6a2;background:transparent;border-radius:10px;padding:7px 12px;font:inherit;font-size:13px;color:var(--navy);cursor:pointer}
+    html[data-theme="dark"] #whyDialog{background:#101722}
+    html[data-theme="dark"] #whyDialog h2,html[data-theme="dark"] #whyDialog li b,html[data-theme="dark"] #whyDialog .wd-nav button{color:#f1e6c3}
+    html[data-theme="dark"] #whyDialog li{background:#171717;border-color:#33415c;color:#cfd6df}
     #refDialog{padding:20px 16px 22px;background:var(--cream);max-width:560px}
     #refDialog .close-modal-btn{width:36px;height:36px;font-size:26px;top:12px;right:12px;z-index:3}
     .ref-h{font-size:21px;font-weight:800;color:var(--navy);margin:0 40px 4px 0}
@@ -1592,10 +1629,10 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
   .card .card-view-btn{flex:1;min-width:0;background:#0f1c2e;color:#fff;border:0;border-radius:9px;padding:10px 2px;font-size:12.5px}
   .card .card-cart-btn{flex:none;width:38px;font-size:0;padding:0;background:none;border:1.5px solid var(--gold);border-radius:9px}
   .card .card-cart-btn::before{content:"🛒";font-size:16px}
-  .features-container{display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:0!important;margin:8px 12px 20px!important;padding:12px 4px 10px!important;background:#f6eedb;border-radius:16px}
+  .features-container{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:0!important;row-gap:12px!important;margin:8px 12px 20px!important;padding:12px 4px 10px!important;background:#f6eedb;border-radius:16px}
   .features-container .m-why{grid-column:1/-1;text-align:center;margin:0 0 8px;font-size:16px;color:var(--navy)}
   .feature-box{background:none;border:0;box-shadow:none;padding:2px 4px;border-left:1px solid rgba(212,175,55,.4)}
-  .feature-box:nth-child(2){border-left:0}
+  .feature-box:nth-child(2),.feature-box:nth-child(5){border-left:0}
   .feature-box span{font-size:22px;margin-bottom:2px}
   .feature-box h4{font-size:11px;line-height:1.3}
   .feature-box p{font-size:9px;line-height:1.3}
@@ -1690,10 +1727,10 @@ html.dtm .card .wishlist-btn .wl-ic{font-size:22px;filter:drop-shadow(0 1px 3px 
 html.dtm .card .card-view-btn{flex:1;min-width:0;background:#0f1c2e;color:#fff;border:0;border-radius:9px;padding:10px 2px;font-size:12.5px}
 html.dtm .card .card-cart-btn{flex:none;width:38px;font-size:0;padding:0;background:none;border:1.5px solid var(--gold);border-radius:9px}
 html.dtm .card .card-cart-btn::before{content:"🛒";font-size:16px}
-html.dtm .features-container{display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:0!important;margin:8px 12px 20px!important;padding:12px 4px 10px!important;background:#f6eedb;border-radius:16px}
+html.dtm .features-container{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:0!important;row-gap:12px!important;margin:8px 12px 20px!important;padding:12px 4px 10px!important;background:#f6eedb;border-radius:16px}
 html.dtm .features-container .m-why{grid-column:1/-1;text-align:center;margin:0 0 8px;font-size:16px;color:var(--navy)}
 html.dtm .feature-box{background:none;border:0;box-shadow:none;padding:2px 4px;border-left:1px solid rgba(212,175,55,.4)}
-html.dtm .feature-box:nth-child(2){border-left:0}
+html.dtm .feature-box:nth-child(2),html.dtm .feature-box:nth-child(5){border-left:0}
 html.dtm .feature-box span{font-size:22px;margin-bottom:2px}
 html.dtm .feature-box h4{font-size:11px;line-height:1.3}
 html.dtm .feature-box p{font-size:9px;line-height:1.3}
@@ -2057,11 +2094,15 @@ html.dtm #toast{bottom:90px}
   </div>
 
   <div class="features-container" id="featuresBox">
-    <h3 class="m-why m-only">কেন শাড়ি বিলাশ?</h3>
-    <div class="feature-box"><span>✨</span><h4>১০০% প্রিমিয়াম কোয়ালিটি</h4><p>সেরা সুতা ও সুনিপুণ কারুকাজে তৈরি এক্সক্লুসিভ কালেকশন</p></div>
-    <div class="feature-box"><span>📦</span><h4>ক্যাশ অন ডেলিভারি</h4><p>পণ্য হাতে পেয়ে দেখে শুনে টাকা পরিশোধের সুব্যবস্থা</p></div>
-    <div class="feature-box"><span>🚚</span><h4>হোম ডেলিভারি সেবা</h4><p id="deliveryInfo">সারা বাংলাদেশে নিরাপদ হোম ডেলিভারি সুবিধা</p></div>
-    <div class="feature-box m-only"><span>🎧</span><h4>বিশ্বস্ত সাপোর্ট</h4><p>সর্বদা আপনার পাশে</p></div>
+    <h3 class="m-why">কেন শাড়ি বিলাশ?</h3>
+    <div class="why-card">
+      <div class="feature-box" role="button" tabindex="0" data-why="0"><span class="why-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="5.5"/><path d="M9 13.8L7.6 21 12 18.5 16.4 21 15 13.8"/><path d="M9.6 10.6l-.5-3.1 2 1.4.9-2 .9 2 2-1.4-.5 3.1z"/></svg></span><h4>১০০% প্রিমিয়াম কোয়ালিটি</h4><p>সেরা সুতা ও সুনিপুণ কারুকাজ</p></div>
+      <div class="feature-box" role="button" tabindex="0" data-why="1"><span class="why-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="3.5" width="14" height="9" rx="1.5"/><circle cx="13" cy="8" r="2"/><path d="M2.5 16h4l3 1.5h4a1.3 1.3 0 010 2.6H10"/><path d="M6.5 16v5H2.5"/><path d="M13.8 18.7l4.7-2.4a1.4 1.4 0 011.5 2.3L14 21.6l-4 .4"/></svg></span><h4>ক্যাশ অন ডেলিভারি</h4><p>হাতে পেয়ে দেখে টাকা দিন</p></div>
+      <div class="feature-box" role="button" tabindex="0" data-why="2"><span class="why-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 7h11v9H2z"/><path d="M13 10h4l3.5 3.2V16H13"/><circle cx="6" cy="17.6" r="1.8"/><circle cx="16.8" cy="17.6" r="1.8"/><path d="M5 11.6l2.5-2 2.5 2V14H5z"/></svg></span><h4>হোম ডেলিভারি সেবা</h4><p id="deliveryInfo">সারা বাংলাদেশে নিরাপদ হোম ডেলিভারি সুবিধা</p></div>
+      <div class="feature-box" role="button" tabindex="0" data-why="3"><span class="why-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 11l6-3 6 3v7l-6 3-6-3z"/><path d="M3.5 11l6 3 6-3M9.5 14v7"/><path d="M13 4.8C17.2 3.6 21 6.2 21 10.6"/><path d="M18.4 10.2l2.6 1.3 1-2.7"/></svg></span><h4>সহজ রিটার্ন সুবিধা</h4><p>সমস্যা হলেই পাশে আছি</p></div>
+      <div class="feature-box" role="button" tabindex="0" data-why="4"><span class="why-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.8l7 3v5.4c0 4.4-3 8-7 10-4-2-7-5.6-7-10V5.8z"/><rect x="9" y="11" width="6" height="5" rx="1"/><path d="M10.3 11V9.6a1.7 1.7 0 013.4 0V11"/></svg></span><h4>বিশ্বস্ত ও নিরাপদ কেনাকাটা</h4><p>নিশ্চিন্তে অর্ডার করুন</p></div>
+      <div class="feature-box" role="button" tabindex="0" data-why="5"><span class="why-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 13v-2a8 8 0 0116 0v2"/><rect x="3" y="12" width="3.4" height="6" rx="1.6"/><rect x="17.6" y="12" width="3.4" height="6" rx="1.6"/><path d="M19.3 18c0 2-2 3-5 3"/><path d="M8.6 9.2h6.8v4.2h-4l-1.5 1.5v-1.5H8.6z"/></svg></span><h4>দ্রুত কাস্টমার সাপোর্ট</h4><p>সর্বদা আপনার পাশে</p></div>
+    </div>
   </div>
 
   <section id="productsSection">
@@ -2515,6 +2556,66 @@ html.dtm #toast{bottom:90px}
   </dialog>
 
   <!-- রেফারেল / সাইন আপ / লগইন (নতুন) -->
+  <dialog id="whyDialog">
+    <button class="close-modal-btn" onclick="document.querySelector('#whyDialog').close()" aria-label="বন্ধ করুন">&times;</button>
+    <div id="whyBody"></div>
+  </dialog>
+  <script>
+  (function () {
+    var W = [
+      { i: "✨", t: "১০০% প্রিমিয়াম কোয়ালিটি", s: "আপনার পছন্দের প্রতিটি শাড়িতে সেরা মান", l: [
+        "<b>সেরা সুতা ও কাপড়</b> — বেছে নেওয়া মানসম্মত কাপড়ে তৈরি এক্সক্লুসিভ কালেকশন।",
+        "<b>সুনিপুণ কারুকাজ</b> — নকশা, সেলাই ও ফিনিশিংয়ে বাড়তি যত্ন।",
+        "<b>রংয়ের গ্যারান্টি</b> — ছবির রংয়েই শাড়ি পাঠানো হয়।",
+        "পাঠানোর আগে প্রতিটি পণ্য দেখে গুছিয়ে প্যাক করা হয়।" ] },
+      { i: "💵", t: "ক্যাশ অন ডেলিভারি", s: "পণ্য হাতে পেয়ে দেখে শুনে টাকা দিন", l: [
+        "<b>আগে টাকা দিতে হবে না</b> — পণ্য হাতে পেয়ে ডেলিভারি ম্যানকে টাকা দিন।",
+        "চাইলে <b>bKash</b>-এও পেমেন্ট করতে পারবেন।",
+        "অর্ডার ফর্মে পেমেন্ট মাধ্যম বেছে নেওয়ার সুবিধা আছে।",
+        "অর্ডার কনফার্মের আগে চাইলে নিজেই বাতিল করা যায়।" ] },
+      { i: "🚚", t: "হোম ডেলিভারি সেবা", s: "সারা বাংলাদেশে আপনার দরজায়", l: [
+        "<b>সারা বাংলাদেশে</b> নিরাপদ হোম ডেলিভারি।",
+        "অর্ডার কনফার্মের পর সাধারণত <b>২-৩ দিনের মধ্যে</b> ডেলিভারি।",
+        "<b>নির্বাচিত শাড়িতে ফ্রি ডেলিভারি</b> — পণ্যের পাতায় ও কার্টে দেখানো হয়।",
+        "“📦 আমার অর্ডার” থেকে ফোন নম্বর দিয়ে <b>লাইভ অবস্থা</b> দেখা যায়।" ] },
+      { i: "🔄", t: "সহজ রিটার্ন সুবিধা", s: "পণ্যে সমস্যা হলে সমাধানে পাশে আছি", l: [
+        "ডেলিভারির সময়ই পণ্য দেখে নিন — <b>ভুল বা ক্ষতিগ্রস্ত</b> পণ্য হলে সঙ্গে সঙ্গে জানান।",
+        "WhatsApp বা ফেসবুকে মেসেজ করলে আমরা দ্রুত <b>রিটার্ন/পরিবর্তনের</b> ব্যবস্থা নেব।",
+        "জানানোর সময় অর্ডার নম্বর ও পণ্যের ছবি দিলে দ্রুত সমাধান হয়।",
+        "অর্ডার কনফার্মের আগে নিজেই বাতিলের সুযোগ আছে।" ] },
+      { i: "🛡️", t: "বিশ্বস্ত ও নিরাপদ কেনাকাটা", s: "নিশ্চিন্তে অর্ডার করুন", l: [
+        "ক্যাশ অন ডেলিভারি — <b>আগাম টাকা না দিয়েই</b> অর্ডার।",
+        "আপনার নাম, ফোন ও ঠিকানা শুধু অর্ডার পৌঁছানোর কাজে ব্যবহার হয়।",
+        "অর্ডারের প্রতিটি ধাপ ফোন নম্বর দিয়ে নিজে দেখতে পারবেন।",
+        "যেকোনো প্রশ্নে সরাসরি আমাদের সঙ্গে কথা বলার সুযোগ আছে।" ] },
+      { i: "🎧", t: "দ্রুত কাস্টমার সাপোর্ট", s: "প্রশ্ন বা সমস্যায় সর্বদা আপনার পাশে", l: [
+        "<b>WhatsApp</b> ও <b>ফেসবুক</b>-এ সরাসরি মেসেজ করুন।",
+        "অর্ডার, ডেলিভারি, রং বা সাইজ নিয়ে যেকোনো জিজ্ঞাসার উত্তর পাবেন।",
+        "অর্ডার করার আগেও পণ্য সম্পর্কে জেনে নিতে পারবেন।" ], wa: true }
+    ];
+    var cur = 0;
+    function show(n) {
+      cur = (n + W.length) % W.length; var w = W[cur];
+      document.getElementById("whyBody").innerHTML =
+        '<div class="wd-ic">' + w.i + '</div><h2>' + w.t + '</h2><p class="wd-sub">' + w.s + '</p>' +
+        '<ul>' + w.l.map(function (x) { return '<li>' + x + '</li>'; }).join("") + '</ul>' +
+        (w.wa ? '<div class="wd-act"><button type="button" onclick="whyWhatsApp()">💬 WhatsApp-এ মেসেজ করুন</button></div>' : '') +
+        '<div class="wd-nav"><button type="button" onclick="whyGo(-1)">‹ আগেরটা</button><button type="button" onclick="whyGo(1)">পরেরটা ›</button></div>';
+      var d = document.getElementById("whyDialog"); if (!d.open) d.showModal(); d.scrollTop = 0;
+    }
+    window.whyGo = function (k) { show(cur + k); };
+    window.whyWhatsApp = function () {
+      try { openExternal("https://api.whatsapp.com/send?phone=" + WHATSAPP_NUMBER); } catch (e) { }
+    };
+    document.addEventListener("click", function (e) {
+      var b = e.target.closest && e.target.closest(".feature-box[data-why]"); if (b) show(+b.dataset.why);
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key !== "Enter" && e.key !== " ") return;
+      var b = e.target.closest && e.target.closest(".feature-box[data-why]"); if (b) { e.preventDefault(); show(+b.dataset.why); }
+    });
+  })();
+  </script>
   <dialog id="refDialog">
     <button class="close-modal-btn" onclick="document.querySelector('#refDialog').close()" aria-label="বন্ধ করুন">&times;</button>
     <div id="refBody"></div>
@@ -6306,7 +6407,7 @@ html.dtm #toast{bottom:90px}
   }
   function whyBox(){
     var f=$("#featuresBox"),p=$("#productsSection");
-    if(f&&p&&(mq.matches||document.documentElement.classList.contains("dtm"))&&f.parentNode===p.parentNode&&p.nextElementSibling!==f)p.after(f);
+    if(f&&p&&f.parentNode===p.parentNode&&f.nextElementSibling!==p)p.before(f); /* কেন শাড়ি বিলাশ সবসময় কালেকশনের উপরে */
   }
   window.addEventListener("DOMContentLoaded",function(){
     var sel=$("#categoryFilter");
