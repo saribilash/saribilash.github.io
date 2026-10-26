@@ -3826,7 +3826,7 @@ html.dtm #toast{bottom:90px}
       return { free: false, need: 0, min: 0, net };
     }
     function calcTotals() {
-      let subtotal = 0, n = 0, freeBy = null, nearest = null;
+      let subtotal = 0, n = 0, freeBy = null, nearest = null, freeTP = false;
       const perProd = {};
       cart.forEach(i => {
         const p = getProduct(i.pid); if (!p) return;
@@ -3835,8 +3835,8 @@ html.dtm #toast{bottom:90px}
       });
       Object.values(perProd).forEach(({ p, qty }) => {
         const f = freeInfoFor(p, qty);
-        if (f.free) { if (!freeBy) freeBy = p.name; }
-        else if (f.min > 0 && (!nearest || f.need < nearest.need)) nearest = { need: f.need, name: p.name, min: f.min, net: f.net };
+        if (f.free) { if (!freeBy) { freeBy = p.name; freeTP = isThreePiece(p); } }
+        else if (f.min > 0 && (!nearest || f.need < nearest.need)) nearest = { need: f.need, name: p.name, min: f.min, net: f.net, tp: isThreePiece(p) };
       });
       let discount = 0;
       if (appliedCoupon) {
@@ -3847,12 +3847,12 @@ html.dtm #toast{bottom:90px}
       }
       const net = subtotal - discount;
       const base = settings.dhaka_charge;
-      if (!n && checkoutMode === "buy" && buyPid) { const bp = getProduct(buyPid); if (bp && bp.free_delivery) freeBy = bp.name; }
+      if (!n && checkoutMode === "buy" && buyPid) { const bp = getProduct(buyPid); if (bp && bp.free_delivery) { freeBy = bp.name; freeTP = isThreePiece(bp); } }
       const free = (n > 0 || (checkoutMode === "buy" && !!buyPid)) && !!freeBy;
       let charge = 0, unknown = false;
       if (n && !free) { if (base === null) unknown = true; else charge = base; }
       const refDisc = Math.min(window.refDiscAmt || 0, Math.max(0, net + charge));
-      return { subtotal, discount, charge, total: net + charge - refDisc, refDisc, free, unknown, net, freeBy, nearest };
+      return { subtotal, discount, charge, total: net + charge - refDisc, refDisc, free, unknown, net, freeBy, freeTP, nearest };
     }
 
     // অর্ডারের সময় কোন শাড়িতে কুপনে কত টাকা ছাড় — শাড়ি অনুযায়ী
@@ -3865,8 +3865,8 @@ html.dtm #toast{bottom:90px}
     function renderCartSummary() {
       const t = calcTotals();
       let note = "";
-      if (t.free) note = `<div class="free-note">🎉 “${esc(t.freeBy)}” শাড়ির জন্য আপনার অর্ডারে ডেলিভারি ফ্রি!</div>`;
-      else if (t.nearest) note = `<div class="need-note">“${esc(t.nearest.name)}” শাড়িতে আরও ${taka(t.nearest.need)}/- টাকার নিলে ডেলিভারি ফ্রি!</div>`;
+      if (t.free) note = `<div class="free-note">🎉 “${esc(t.freeBy)}” ${t.freeTP ? "এর" : "শাড়ির"} জন্য আপনার অর্ডারে ডেলিভারি ফ্রি!</div>`;
+      else if (t.nearest) note = `<div class="need-note">“${esc(t.nearest.name)}” ${t.nearest.tp ? "এ" : "শাড়িতে"} আরও ${taka(t.nearest.need)}/- টাকার নিলে ডেলিভারি ফ্রি!</div>`;
       const cm = $("#couponMsg");
       if (cm && appliedCoupon) {
         if (t.discount > 0) { cm.className = "small msg-ok"; cm.textContent = "✅ কুপন চালু — " + cpBreakdown().map(x => `${x.p.name}: ${taka(x.per)}/- ছাড়`).join(" • "); }
@@ -3878,8 +3878,8 @@ html.dtm #toast{bottom:90px}
       }
       renderCouponChips(couponLines());
       const fb = $("#freeBar");
-      if (fb) fb.innerHTML = t.free ? `<div class="fb ok">🎉 অভিনন্দন! “${esc(t.freeBy)}” শাড়ির জন্য আপনার ডেলিভারি ফ্রি</div>`
-        : (t.nearest ? `<div class="fb go">🚚 “${esc(t.nearest.name)}” শাড়িতে আরও ${taka(t.nearest.need)}/- টাকার নিলে ডেলিভারি ফ্রি!<div class="fb-track"><div class="fb-fill" style="width:${Math.max(6, Math.min(100, Math.round(t.nearest.net / t.nearest.min * 100)))}%"></div></div></div>` : "");
+      if (fb) fb.innerHTML = t.free ? `<div class="fb ok">🎉 অভিনন্দন! “${esc(t.freeBy)}” ${t.freeTP ? "এর" : "শাড়ির"} জন্য আপনার ডেলিভারি ফ্রি</div>`
+        : (t.nearest ? `<div class="fb go">🚚 “${esc(t.nearest.name)}” ${t.nearest.tp ? "এ" : "শাড়িতে"} আরও ${taka(t.nearest.need)}/- টাকার নিলে ডেলিভারি ফ্রি!<div class="fb-track"><div class="fb-fill" style="width:${Math.max(6, Math.min(100, Math.round(t.nearest.net / t.nearest.min * 100)))}%"></div></div></div>` : "");
       const delRow = t.unknown ? "" : `<div class="sum-row"><span>ডেলিভারি চার্জ</span><b>${t.free ? "ফ্রি" : taka(t.charge) + "/-"}</b></div>`;
       $("#cartSummary").innerHTML = `
         <div class="sum-row"><span>শাড়ির দাম</span><b>${taka(t.subtotal)}/-</b></div>
@@ -3907,7 +3907,7 @@ html.dtm #toast{bottom:90px}
       const val = id => { const el = document.getElementById(id); return el ? String(el.value || "").trim() : ""; };
       const nm = val("orderName"), ph = val("orderPhone"), ad = val("orderAddress");
       const pay = val("paymentMethod") === "bkash" ? "bKash" : "Cash on Delivery";
-      const delTxt = t.free ? `ফ্রি (“${t.freeBy}” শাড়ির জন্য)` : (t.unknown ? "কনফার্মের সময় জানানো হবে" : taka(t.charge) + "/-");
+      const delTxt = t.free ? `ফ্রি (“${t.freeBy}” ${t.freeTP ? "এর" : "শাড়ির"} জন্য)` : (t.unknown ? "কনফার্মের সময় জানানো হবে" : taka(t.charge) + "/-");
       const txt = `হ্যালো শাড়ি বিলাশ! 👋\nআমি নিচের শাড়িগুলো অর্ডার করতে চাই:\n\n` +
         lines.map(({ i, p }, n) => `${n + 1}. 🛍️ ${p.name}\n   🔖 কোড: ${productCode(p.id)}\n   🎨 রং: ${i.color === NO_COLOR ? "সাধারণ" : i.color}\n   📦 ${taka(i.qty)} টি × ${taka(p.price)}/- = ${taka(p.price * i.qty)}/-`).join("\n\n") +
         `\n\n🧮 শাড়ির দাম: ${taka(t.subtotal)}/-${t.discount > 0 ? `\n🎟️ কুপন (${appliedCoupon.code}): -${taka(t.discount)}/-` + cpBreakdown().map(x => `\n   • ${x.p.name}: ${taka(x.per)}/- × ${taka(x.qty)} = ${taka(x.total)}/-`).join("") : ""}\n🚚 ডেলিভারি: ${delTxt}\n💵 সর্বমোট: ${taka(t.total)}/-\n💳 পেমেন্ট: ${pay}` +
@@ -5567,7 +5567,7 @@ html.dtm #toast{bottom:90px}
   // ---------- নিয়ম ও শর্ত ----------
   function termsHtml(d0) {
     const d = pubOf(d0);
-    const b = bn(d.bonus_amount != null ? d.bonus_amount : 20), fd = bn(d.friend_discount != null ? d.friend_discount : 20);
+    const b = d.bonus_amount != null ? bn(d.bonus_amount) : "নির্ধারিত", fd = d.friend_discount != null ? bn(d.friend_discount) : "নির্ধারিত";
     const per = d && d.first_order_only ? "সেই ফোন নম্বরের প্রথম ডেলিভারি হওয়া অর্ডারের জন্য" : "প্রতিটি ডেলিভারি হওয়া অর্ডারের জন্য";
     return `<ol class="ref-terms">
       <li>অর্ডার করার সময় ফর্মে আপনার <b>রেফারেল কোড</b> লিখলে ঐ অর্ডারে <b>${fd} টাকা ছাড়</b> পাওয়া যাবে। কোড না লিখলে ঐ অর্ডারে ছাড় ও বোনাস কোনোটাই নেই। বন্ধুর অ্যাকাউন্ট খুলতে হবে না।</li>
@@ -5596,7 +5596,7 @@ html.dtm #toast{bottom:90px}
     const su = m === "signup";
     R("#refBody").innerHTML = `
       <h2 class="ref-h">🎁 রেফার করুন, বোনাস জিতুন</h2>
-      <p class="ref-sub">অ্যাকাউন্ট খুলে বন্ধুদের রেফার করুন। বন্ধুর অর্ডার ডেলিভারি হলেই আপনি পাবেন <b>${bn(pubOf(null).bonus_amount != null ? pubOf(null).bonus_amount : 20)} টাকা</b> বোনাস! (OTP লাগে না — শুধু ফোন নম্বর ও পাসওয়ার্ড)</p>
+      <p class="ref-sub">অ্যাকাউন্ট খুলে বন্ধুদের রেফার করুন। বন্ধুর অর্ডার ডেলিভারি হলেই আপনি পাবেন <b>${pubOf(null).bonus_amount != null ? bn(pubOf(null).bonus_amount) : "নির্ধারিত"} টাকা</b> বোনাস! (OTP লাগে না — শুধু ফোন নম্বর ও পাসওয়ার্ড)</p>
       <div class="ref-tabs">
         <button type="button" class="${su ? "on" : ""}" onclick="refMode('signup')">✨ সাইন আপ</button>
         <button type="button" class="${su ? "" : "on"}" onclick="refMode('login')">🔑 লগইন</button>
@@ -5662,7 +5662,7 @@ html.dtm #toast{bottom:90px}
 
   function renderAccount(d) {
     const link = location.origin + location.pathname + "?ref=" + d.ref_code;
-    const msg = `শাড়ি বিলাশ থেকে সুন্দর শাড়ি কিনুন! অর্ডারের সময় আমার রেফারেল কোড দিলে ${bn(pubOf(d).friend_discount != null ? pubOf(d).friend_discount : 20)} টাকা ছাড় পাবেন: ${d.ref_code}\n${link}`;
+    const msg = `শাড়ি বিলাশ থেকে সুন্দর শাড়ি কিনুন! অর্ডারের সময় আমার রেফারেল কোড দিলে ${pubOf(d).friend_discount != null ? bn(pubOf(d).friend_discount) : "নির্ধারিত"} টাকা ছাড় পাবেন: ${d.ref_code}\n${link}`;
     const refs = (d.referrals || []).map(r => `<div class="ref-row"><div><b>${e(r.name)}</b><small>${e(r.phone)} · ${dt(r.joined)}</small></div>
       <div style="text-align:right;"><small>কোড দিয়ে ${bn(r.orders_with_code || 0)}টি অর্ডার</small>${r.delivered_orders > 0 ? `<span class="ref-pill ok">✅ ${bn(r.delivered_orders)}টি ডেলিভারি · +${bn(r.bonus)}/-</span>` : `<span class="ref-pill wait">⏳ ডেলিভারির অপেক্ষায়</span>`}</div></div>`).join("");
     const wds = (d.withdrawals || []).map(w => { const l = wdLabel[w.status] || [w.status, "wait"]; return `<div class="ref-row"><div><b>${bn(w.amount)}/-</b> · ${w.method === "bkash" ? "বিকাশ" : "মোবাইল রিচার্জ"}<small>${e(w.number)} · ${dt(w.created_at)}${w.note ? " · " + e(w.note) : ""}</small></div><span class="ref-pill ${l[1]}">${l[0]}</span></div>`; }).join("");
@@ -5806,7 +5806,7 @@ html.dtm #toast{bottom:90px}
           <button class="btn" style="padding:6px 14px;font-size:13.5px;" onclick="adminRefSave()">সেভ</button>
         </div>
         <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:8px;"><label style="font-weight:700;">প্রতি অর্ডারে ছাড় (টাকা):</label><input id="admRefDisc" type="number" min="0" value="${st.friend_discount ?? 20}" style="width:100px;margin:0;"></div>
-        <div class="small" style="margin-top:6px;">ডিফল্ট: ২০ টাকা, কোড ব্যবহারকারী বন্ধুর প্রতিটি ডেলিভারি হওয়া অর্ডারে একবার করে। ডেলিভারি সম্পন্ন করলে বোনাস নিজে নিজেই যোগ হয়।</div>
+        <div class="small" style="margin-top:6px;">কোড ব্যবহারকারী বন্ধুর প্রতিটি ডেলিভারি হওয়া অর্ডারে একবার করে। ডেলিভারি সম্পন্ন করলে বোনাস নিজে নিজেই যোগ হয়।</div>
       </div>
       <div class="admin-card"><h3 style="margin:0 0 8px;">💸 টাকা তোলার অনুরোধ (${bn((data.withdrawals || []).length)})</h3>
         <div class="ref-tbl-wrap"><table class="ref-tbl"><thead><tr><th>আইডি</th><th>কাস্টমার</th><th>পরিমাণ</th><th>পাঠানোর নম্বর</th><th>অবস্থা</th><th>অ্যাকশন</th></tr></thead><tbody>${wd || `<tr><td colspan="6">কোনো অনুরোধ নেই</td></tr>`}</tbody></table></div></div>
@@ -5905,7 +5905,7 @@ html.dtm #toast{bottom:90px}
     if (!el) return r;
     try {
       var t = calcTotals();
-      if (t.free) el.innerHTML = '<div class="fl ok"><span class="fl-truck">🚚</span><span class="fl-txt">🎉 <em>ফ্রি ডেলিভারি!</em> “' + esc(t.freeBy) + '” শাড়ির জন্য আপনার ডেলিভারি চার্জ লাগবে না</span></div>';
+      if (t.free) el.innerHTML = '<div class="fl ok"><span class="fl-truck">🚚</span><span class="fl-txt">🎉 <em>ফ্রি ডেলিভারি!</em> “' + esc(t.freeBy) + '” ' + (t.freeTP ? 'এর' : 'শাড়ির') + ' জন্য আপনার ডেলিভারি চার্জ লাগবে না</span></div>';
       else if (t.nearest) el.innerHTML = '<div class="fl go"><span class="fl-truck">🚚</span><span class="fl-txt">আর মাত্র <em>' + taka(t.nearest.need) + '/-</em> টাকার “' + esc(t.nearest.name) + '” নিলেই ডেলিভারি <b>ফ্রি!</b><div class="fl-track"><div class="fl-fill" style="width:' + Math.max(6, Math.min(100, Math.round(t.nearest.net / t.nearest.min * 100))) + '%"></div></div></span></div>';
       else el.innerHTML = "";
     } catch (e) { el.innerHTML = ""; }
