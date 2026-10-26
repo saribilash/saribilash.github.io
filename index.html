@@ -103,6 +103,60 @@
 .ann-track span b{-webkit-text-fill-color:initial;font-weight:400;margin-right:6px}
 .ann-track span::after{content:"◆";margin-left:44px;font-size:.6em;vertical-align:middle;-webkit-text-fill-color:#c8a04b;opacity:.9}
 .announcement-bar:hover .ann-track{animation-play-state:paused}
+/* মেনু আইকন এনিমেশন */
+.m-burger{border-radius:12px;background:rgba(243,229,173,.12);box-shadow:inset 0 0 0 1.5px rgba(243,229,173,.55);animation:burgerNudge 3s ease-in-out infinite}
+.m-burger::before,.m-burger::after{content:"";position:absolute;inset:0;border-radius:12px;border:2px solid #f3e5ad;opacity:0;pointer-events:none;animation:burgerRing 2.4s ease-out infinite}
+.m-burger::after{animation-delay:1.2s}
+.m-burger:active{transform:scale(.92)}
+@keyframes burgerRing{0%{transform:scale(.9);opacity:.9}100%{transform:scale(1.7);opacity:0}}
+@keyframes burgerNudge{0%,70%,100%{transform:scale(1)}78%{transform:scale(1.14)}86%{transform:scale(.96)}94%{transform:scale(1.06)}}
+@media(prefers-reduced-motion:reduce){.m-burger,.m-burger::before,.m-burger::after{animation:none}}
+/* মেনু ড্রয়ারের ভেতরের এনিমেশন */
+.m-drawer.on .m-list .m-it,.m-drawer.on>.m-it,.m-drawer.on>.m-sec,.m-drawer.on>.m-bud,.m-drawer.on>.m-admin,.m-drawer.on>.m-contact{animation:mIn .5s cubic-bezier(.2,.8,.2,1) backwards}
+.m-drawer.on .m-list .m-it:nth-child(1){animation-delay:.10s}
+.m-drawer.on .m-list .m-it:nth-child(2){animation-delay:.16s}
+.m-drawer.on .m-list .m-it:nth-child(3){animation-delay:.22s}
+.m-drawer.on .m-list .m-it:nth-child(4){animation-delay:.28s}
+.m-drawer.on .m-list .m-it:nth-child(5){animation-delay:.34s}
+.m-drawer.on .m-list .m-it:nth-child(6){animation-delay:.40s}
+.m-drawer.on>.m-sec{animation-delay:.46s}
+.m-drawer.on>.m-bud{animation-delay:.52s}
+.m-drawer.on>.m-it{animation-delay:.58s}
+.m-drawer.on>.m-admin{animation-delay:.68s}
+.m-drawer.on>.m-contact{animation-delay:.74s}
+@keyframes mIn{from{opacity:0;transform:translateX(-26px)}to{opacity:1;transform:none}}
+.m-drawer.on .m-it .mc{animation:mChev 1.6s ease-in-out infinite}
+.m-drawer.on .m-list .m-it:nth-child(1) .mi{transform-origin:50% 8%;animation:mSway 2.6s ease-in-out infinite}
+.m-drawer.on .m-list .m-it:nth-child(2) .mi{transform-origin:50% 8%;animation:mSwing 2.2s ease-in-out infinite .3s}
+.m-drawer.on .m-list .m-it:nth-child(3) .mi{animation:mBounce 1.8s ease-in-out infinite}
+.m-drawer.on .m-list .m-it:nth-child(4) .mi{animation:mWobble 2.8s ease-in-out infinite}
+.m-drawer.on .m-list .m-it:nth-child(5) .mi{animation:mBeat 1.4s ease-in-out infinite;stroke:#ff7a8a}
+.m-drawer.on .m-list .m-it:nth-child(6) .mi{animation:mRoll 1.8s ease-in-out infinite}
+.m-drawer.on>.m-list+.m-sec .mi{animation:mRoll 2s ease-in-out infinite}
+.m-drawer.on>.m-bud+.m-sec .mi{animation:mSpin 6s linear infinite}
+.m-drawer.on #mInstall .mi{animation:mDown 1.2s ease-in-out infinite}
+.m-drawer.on .m-it:has(#swTheme) .mi{animation:mMoon 3s ease-in-out infinite}
+.m-drawer.on .m-it:has(#swLang) .mi{animation:mGlobe 4s linear infinite}
+.m-drawer.on .m-it:has(#swDesk) .mi{animation:mPulse 1.8s ease-in-out infinite}
+.m-drawer.on .m-admin .mi{animation:mCrown 2s ease-in-out infinite}
+.m-drawer.on .m-ct .mi{animation:mRing 2.6s ease-in-out infinite}
+.m-drawer.on .m-soc a .mi{animation:mPulse 1.6s ease-in-out infinite}
+.m-drawer.on .m-soc a:nth-of-type(2) .mi{animation-delay:.4s}
+@keyframes mChev{0%,100%{transform:translateX(0)}50%{transform:translateX(5px)}}
+@keyframes mSway{0%,100%{transform:rotate(-9deg)}50%{transform:rotate(9deg)}}
+@keyframes mSwing{0%,100%{transform:rotate(7deg)}50%{transform:rotate(-7deg)}}
+@keyframes mBounce{0%,100%{transform:translateY(0) scale(1,1)}30%{transform:translateY(-6px) scale(.95,1.05)}55%{transform:translateY(0) scale(1.08,.92)}}
+@keyframes mWobble{0%,60%,100%{transform:rotate(0)}10%{transform:rotate(-14deg)}20%{transform:rotate(12deg)}30%{transform:rotate(-8deg)}40%{transform:rotate(6deg)}}
+@keyframes mBeat{0%,100%{transform:scale(1)}15%{transform:scale(1.28)}30%{transform:scale(1)}45%{transform:scale(1.18)}60%{transform:scale(1)}}
+@keyframes mRoll{0%,100%{transform:translateX(-3px)}50%{transform:translateX(3px)}}
+@keyframes mSpin{to{transform:rotate(360deg)}}
+@keyframes mDown{0%,100%{transform:translateY(-3px)}50%{transform:translateY(4px)}}
+@keyframes mMoon{0%,100%{transform:rotate(-14deg);filter:drop-shadow(0 0 0 rgba(224,189,92,0))}50%{transform:rotate(14deg);filter:drop-shadow(0 0 5px rgba(224,189,92,.9))}}
+@keyframes mGlobe{to{transform:perspective(160px) rotateY(360deg)}}
+@keyframes mPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+@keyframes mCrown{0%,100%{transform:translateY(0);filter:drop-shadow(0 0 0 rgba(243,229,173,0))}50%{transform:translateY(-3px);filter:drop-shadow(0 0 6px rgba(243,229,173,.95))}}
+@keyframes mRing{0%,55%,100%{transform:rotate(0)}5%{transform:rotate(-18deg)}10%{transform:rotate(16deg)}15%{transform:rotate(-14deg)}20%{transform:rotate(12deg)}25%{transform:rotate(-8deg)}30%{transform:rotate(0)}}
+@media(prefers-reduced-motion:reduce){.m-drawer.on *,.m-drawer.on{animation:none!important}}
 @keyframes annScroll{0%{transform:translateX(0)}96.49%,100%{transform:translateX(-100%)}}@keyframes annScrollM{0%{transform:translateX(0)}95.45%,100%{transform:translateX(-100%)}}
 @keyframes annSheen{0%,100%{background-position:120% 0}50%{background-position:-20% 0}}
 @keyframes annPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
@@ -1983,6 +2037,137 @@ html.dtm #toast{bottom:90px}
 @keyframes mChipShine{to{left:130%}}
 @media(prefers-reduced-motion:reduce){.m-chip.lit::after{animation:none}}
 </style>
+<style id="heroWhyFx">
+/* ===== হিরো বাটন + "কেন শাড়ি বিলাশ?" — ইউনিক অ্যানিমেশন ===== */
+@keyframes fxBtnIn{from{opacity:0;transform:translateY(26px) scale(.86)}to{opacity:1;transform:none}}
+@keyframes fxBtnGlow{0%,100%{box-shadow:0 6px 20px var(--gold-glow)}50%{box-shadow:0 6px 30px rgba(243,229,173,.75),0 0 0 3px rgba(243,229,173,.18)}}
+@keyframes fxShine{0%{left:-70%}38%,100%{left:140%}}
+@keyframes fxIcRing{0%{box-shadow:0 0 0 0 rgba(15,28,46,.38)}70%,100%{box-shadow:0 0 0 10px rgba(15,28,46,0)}}
+@keyframes fxSway{0%,100%{transform:rotate(-9deg)}50%{transform:rotate(9deg)}}
+@keyframes fxHang{0%,100%{transform:rotate(7deg) translateY(0)}50%{transform:rotate(-7deg) translateY(-2px)}}
+
+.hero-btns .btn{position:relative;overflow:hidden;isolation:isolate;-webkit-tap-highlight-color:transparent;
+  animation:fxBtnIn .75s cubic-bezier(.34,1.56,.64,1) backwards,fxBtnGlow 3.2s ease-in-out 1s infinite}
+.hero-btns .btn:nth-child(2){animation-delay:.18s,1.6s}
+.hero-btns .btn::after{content:"";position:absolute;top:-10%;bottom:-10%;left:-70%;width:38%;z-index:-1;pointer-events:none;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.75),transparent);transform:skewX(-20deg);
+  animation:fxShine 4.6s ease-in-out 1.2s infinite}
+.hero-btns .btn:nth-child(2)::after{animation-delay:3.5s}
+.hero-btns .btn:active{transform:scale(.95)!important}
+.hero-btns .btn .ic{animation:fxIcRing 2.4s ease-out infinite,fxSway 3s ease-in-out infinite;transform-origin:50% 15%}
+.hero-btns .btn:nth-child(2) .ic{animation:fxIcRing 2.4s ease-out 1.2s infinite,fxHang 2.6s ease-in-out infinite;transform-origin:50% 0}
+
+/* শিরোনাম */
+@keyframes fxHeadIn{from{opacity:0;transform:translateY(16px) scale(.88);filter:blur(7px)}to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes fxHeadShine{0%{background-position:100% 0}55%,100%{background-position:0% 0}}
+@keyframes fxLine{from{transform:scaleX(0);opacity:0}to{transform:scaleX(1);opacity:1}}
+#featuresBox .m-why{background-image:linear-gradient(100deg,var(--navy) 36%,#c9971c 46%,#fff0b0 50%,#c9971c 54%,var(--navy) 64%);
+  background-size:300% 100%;background-position:100% 0;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+html[data-theme="dark"] #featuresBox .m-why{background-image:linear-gradient(100deg,#f1e6c3 36%,#e6c46a 46%,#fff 50%,#e6c46a 54%,#f1e6c3 64%)}
+
+/* লুকানো অবস্থা — শুধু JS চালু থাকলে */
+#featuresBox.fx:not(.seen) .m-why,#featuresBox.fx:not(.seen) .why-card,#featuresBox.fx:not(.seen) .feature-box{opacity:0}
+#featuresBox.seen .m-why{animation:fxHeadIn .9s cubic-bezier(.2,.8,.2,1) backwards}
+#featuresBox.seen .m-why::before,#featuresBox.seen .m-why::after{animation:fxLine .9s cubic-bezier(.2,.8,.2,1) .45s backwards}
+#featuresBox.live .m-why{animation:fxHeadShine 4.8s ease-in-out 1s infinite}
+
+/* কার্ড */
+@keyframes fxCardIn{from{opacity:0;transform:translateY(30px) scale(.94)}to{opacity:1;transform:none}}
+@keyframes fxCardShine{0%{left:-45%}30%,100%{left:130%}}
+@keyframes fxBorderGlow{0%,100%{box-shadow:0 8px 22px rgba(152,113,33,.14)}50%{box-shadow:0 10px 30px rgba(212,175,55,.38)}}
+#featuresBox .why-card{position:relative;overflow:hidden}
+#featuresBox .why-card::after{content:"";position:absolute;top:0;bottom:0;left:-45%;width:30%;pointer-events:none;z-index:2;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-18deg);opacity:0}
+#featuresBox.seen .why-card{animation:fxCardIn .85s cubic-bezier(.2,.9,.25,1) .2s backwards}
+#featuresBox.live .why-card{animation:fxBorderGlow 3.6s ease-in-out 1.2s infinite}
+#featuresBox.live .why-card::after{opacity:1;animation:fxCardShine 5.5s ease-in-out 1.6s infinite}
+
+/* প্রতিটি আইটেম — একে একে ভেসে ওঠে */
+@keyframes fxItemIn{0%{opacity:0;transform:translateY(24px) scale(.55)}100%{opacity:1;transform:none}}
+#featuresBox.seen .feature-box{animation:fxItemIn .7s cubic-bezier(.34,1.7,.5,1) backwards}
+#featuresBox.seen .feature-box:nth-child(1){animation-delay:.45s}
+#featuresBox.seen .feature-box:nth-child(2){animation-delay:.57s}
+#featuresBox.seen .feature-box:nth-child(3){animation-delay:.69s}
+#featuresBox.seen .feature-box:nth-child(4){animation-delay:.81s}
+#featuresBox.seen .feature-box:nth-child(5){animation-delay:.93s}
+#featuresBox.seen .feature-box:nth-child(6){animation-delay:1.05s}
+
+/* আইকনের ঘুরন্ত সোনালি রিং + ঢেউ */
+@keyframes fxSpin{to{transform:rotate(360deg)}}
+@keyframes fxRipple{0%{transform:scale(1);opacity:.85}100%{transform:scale(1.6);opacity:0}}
+#featuresBox .feature-box span.why-ic{position:relative;transition:box-shadow .25s,transform .25s}
+#featuresBox .why-ic::before,#featuresBox .why-ic::after{content:"";position:absolute;border-radius:50%;pointer-events:none}
+#featuresBox .why-ic::before{inset:-4px;opacity:0;
+  background:conic-gradient(from 0deg,transparent 0 62%,rgba(212,175,55,.2) 72%,#e6c46a 92%,#fff3c4 100%);
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 2.2px),#000 calc(100% - 2px));
+  mask:radial-gradient(farthest-side,transparent calc(100% - 2.2px),#000 calc(100% - 2px))}
+#featuresBox .why-ic::after{inset:0;border:1.5px solid rgba(212,175,55,.8);opacity:0}
+#featuresBox.live .why-ic::before{opacity:1;animation:fxSpin 3.4s linear infinite}
+#featuresBox.live .why-ic::after{animation:fxRipple 2.6s ease-out infinite}
+#featuresBox.live .feature-box:nth-child(even) .why-ic::before{animation-duration:4.4s;animation-direction:reverse}
+#featuresBox.live .feature-box:nth-child(2) .why-ic::after{animation-delay:.4s}
+#featuresBox.live .feature-box:nth-child(3) .why-ic::after{animation-delay:.8s}
+#featuresBox.live .feature-box:nth-child(4) .why-ic::after{animation-delay:1.2s}
+#featuresBox.live .feature-box:nth-child(5) .why-ic::after{animation-delay:1.6s}
+#featuresBox.live .feature-box:nth-child(6) .why-ic::after{animation-delay:2s}
+
+/* ৬টা আইকন — ৬ রকম নিজস্ব অ্যানিমেশন */
+@keyframes fxMedal{0%,100%{transform:rotate(-11deg)}50%{transform:rotate(11deg)}}
+@keyframes fxCoin{0%,100%{transform:translateY(0) scale(1,1)}30%{transform:translateY(-4px) scale(.94,1.08)}55%{transform:translateY(0) scale(1.08,.92)}75%{transform:translateY(-1px) scale(1,1)}}
+@keyframes fxTruck{0%,100%{transform:translateX(-3px)}50%{transform:translateX(3px)}}
+@keyframes fxTruckBump{0%,100%{transform:translateY(0)}25%{transform:translateY(-.8px)}75%{transform:translateY(.6px)}}
+@keyframes fxFlip{0%,55%{transform:perspective(160px) rotateY(0)}80%,100%{transform:perspective(160px) rotateY(360deg)}}
+@keyframes fxBeat{0%,100%{transform:scale(1)}14%{transform:scale(1.2)}28%{transform:scale(1)}42%{transform:scale(1.13)}56%{transform:scale(1)}}
+@keyframes fxRing{0%,52%,100%{transform:rotate(0)}6%{transform:rotate(-16deg)}12%{transform:rotate(14deg)}18%{transform:rotate(-12deg)}24%{transform:rotate(10deg)}30%{transform:rotate(-6deg)}36%{transform:rotate(4deg)}42%{transform:rotate(0)}}
+#featuresBox .why-ic svg{transform-origin:50% 50%}
+#featuresBox.live .feature-box:nth-child(1) .why-ic svg{transform-origin:50% 5%;animation:fxMedal 2.8s ease-in-out infinite}
+#featuresBox.live .feature-box:nth-child(2) .why-ic svg{animation:fxCoin 2.2s ease-in-out infinite}
+#featuresBox.live .feature-box:nth-child(3) .why-ic svg{animation:fxTruck 2.4s ease-in-out infinite,fxTruckBump .32s linear infinite}
+#featuresBox.live .feature-box:nth-child(4) .why-ic svg{animation:fxFlip 4.2s ease-in-out infinite}
+#featuresBox.live .feature-box:nth-child(5) .why-ic svg{animation:fxBeat 2.4s ease-in-out infinite}
+#featuresBox.live .feature-box:nth-child(6) .why-ic svg{transform-origin:50% 80%;animation:fxRing 3.4s ease-in-out infinite}
+
+/* সাজানো ডায়মন্ড বিভাজক ঝিকমিক */
+@keyframes fxDiamond{0%,100%{transform:rotate(45deg) scale(1);opacity:1}50%{transform:rotate(225deg) scale(1.9);opacity:.55}}
+#featuresBox.live .feature-box+.feature-box::after{animation:fxDiamond 2.8s ease-in-out infinite}
+#featuresBox.live .feature-box:nth-child(3)::after{animation-delay:.4s}
+#featuresBox.live .feature-box:nth-child(4)::after{animation-delay:.8s}
+#featuresBox.live .feature-box:nth-child(5)::after{animation-delay:1.2s}
+#featuresBox.live .feature-box:nth-child(6)::after{animation-delay:1.6s}
+
+/* ট্যাপ করলে আইকন জ্বলে ওঠে */
+#featuresBox .feature-box:active span.why-ic{box-shadow:0 0 0 7px rgba(212,175,55,.32),0 0 18px rgba(212,175,55,.65);transform:scale(1.1)}
+
+@media(prefers-reduced-motion:reduce){
+  .hero-btns .btn,.hero-btns .btn::after,.hero-btns .btn .ic,
+  #featuresBox *,#featuresBox *::before,#featuresBox *::after{animation:none!important}
+  #featuresBox.fx:not(.seen) .m-why,#featuresBox.fx:not(.seen) .why-card,#featuresBox.fx:not(.seen) .feature-box{opacity:1}
+  #featuresBox .why-ic::before,#featuresBox .why-ic::after{display:none}
+}
+</style>
+<style id="chipFx">
+/* ===== উপরের ক্যাটাগরি চিপ — হালকা অ্যানিমেশন ===== */
+@keyframes fxChipsIn{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:none}}
+@keyframes fxChipBreath{0%,100%{border-color:rgba(212,175,55,.45);box-shadow:0 0 0 0 rgba(212,175,55,0)}50%{border-color:rgba(212,175,55,.95);box-shadow:0 0 9px 1px rgba(212,175,55,.28)}}
+@keyframes fxChipOn{0%,100%{box-shadow:0 3px 10px rgba(15,28,46,.3),0 0 0 0 rgba(212,175,55,.5)}50%{box-shadow:0 3px 12px rgba(15,28,46,.3),0 0 0 5px rgba(212,175,55,0)}}
+@keyframes fxChipText{0%,100%{text-shadow:0 0 0 rgba(243,229,173,0)}50%{text-shadow:0 0 9px rgba(243,229,173,.85)}}
+@keyframes fxChipSweep{0%{left:-60%}35%,100%{left:140%}}
+@keyframes fxChipIc{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg) translateY(-1px)}}
+.m-chips{animation:fxChipsIn .7s cubic-bezier(.2,.9,.25,1) backwards}
+.m-chip{-webkit-tap-highlight-color:transparent}
+.m-chip:active{transform:scale(.93)}
+.m-chip:not(.on):not(.lit){animation:fxChipBreath 4.2s ease-in-out infinite}
+.m-chip:not(.on):not(.lit):nth-child(2){animation-delay:.5s}
+.m-chip:not(.on):not(.lit):nth-child(3){animation-delay:1s}
+.m-chip:not(.on):not(.lit):nth-child(4){animation-delay:1.5s}
+.m-chip:not(.on):not(.lit):nth-child(5){animation-delay:2s}
+.m-chip:not(.on):not(.lit):nth-child(n+6){animation-delay:2.5s}
+.m-chip.on:not(.lit){position:relative;overflow:hidden;animation:fxChipOn 2.6s ease-in-out infinite,fxChipText 2.6s ease-in-out infinite}
+.m-chip.on:not(.lit)::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;pointer-events:none;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);transform:skewX(-20deg);animation:fxChipSweep 4.5s ease-in-out 1s infinite}
+.m-chip .si{animation:fxChipIc 3s ease-in-out infinite;transform-origin:50% 20%}
+@media(prefers-reduced-motion:reduce){.m-chips,.m-chip,.m-chip .si,.m-chip::after{animation:none!important}}
+</style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
@@ -2009,7 +2194,7 @@ html.dtm #toast{bottom:90px}
 
   <div class="m-head m-ui">
     <div class="m-row">
-      <button class="m-ic" onclick="mMenu(true)" aria-label="মেনু"><svg class="si" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+      <button class="m-ic m-burger" onclick="mMenu(true)" aria-label="মেনু"><svg class="si" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M3 12h18"/><path d="M3 18h18"/></svg></button>
       <div class="m-brand" onclick="window.scrollTo({top:0,behavior:'smooth'})"><img src="logo-mark.png" alt=""><div><b>শাড়ি বিলাশ</b><small>শাড়ির রাজকীয় আভিজাত্য</small></div></div>
     </div>
     <label class="m-search"><svg class="si" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4.5 4.5"/></svg><input id="mSearch" type="search" placeholder="সার্চ করুন..." oninput="mSearch(this.value)" onkeydown="if(event.key==='Enter')this.blur()"></label>
@@ -2160,7 +2345,7 @@ html.dtm #toast{bottom:90px}
     <div id="tpSlotAnn"></div>
     <div class="m-head m-ui">
       <div class="m-row">
-      <button class="m-ic" onclick="mMenu(true)" aria-label="মেনু"><svg class="si" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+      <button class="m-ic m-burger" onclick="mMenu(true)" aria-label="মেনু"><svg class="si" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M3 12h18"/><path d="M3 18h18"/></svg></button>
       <div class="m-brand" onclick="closeThreePiece()"><img src="logo-mark.png" alt=""><div><b>শাড়ি বিলাশ</b><small>শাড়ির রাজকীয় আভিজাত্য</small></div></div>
       </div>
     <label class="m-search"><svg class="si" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4.5 4.5"/></svg><input id="mTpSearch" type="search" placeholder="থ্রি পিস খুঁজুন..." oninput="mTpSearch(this.value)" onkeydown="if(event.key==='Enter')this.blur()"></label>
@@ -6497,6 +6682,20 @@ html.dtm #toast{bottom:90px}
   var orig = window.toggleDesktopMode;
   window.toggleDesktopMode = function () { if (orig) orig.apply(this, arguments); apply(); };
   apply();
+})();
+</script>
+<script>
+/* "কেন শাড়ি বিলাশ" — স্ক্রলে এলে অ্যানিমেশন চালু, বাইরে গেলে বন্ধ (ব্যাটারি বাঁচাতে) */
+(function(){
+  var b=document.getElementById("featuresBox"); if(!b) return;
+  if(!("IntersectionObserver" in window)){ b.classList.add("seen","live"); return; }
+  b.classList.add("fx");
+  new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting){ b.classList.add("seen","live"); }
+      else { b.classList.remove("live"); }
+    });
+  },{threshold:.15}).observe(b);
 })();
 </script>
 </body>
