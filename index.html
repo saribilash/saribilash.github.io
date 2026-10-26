@@ -98,12 +98,12 @@
 .announcement-bar::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(100deg,transparent 35%,rgba(243,229,173,.16) 50%,transparent 65%);background-size:250% 100%;animation:annSheen 6s ease-in-out infinite}
 .ann-badge{position:absolute;left:0;top:0;bottom:0;z-index:3;display:flex;align-items:center;gap:6px;padding:0 22px 0 12px;font-size:.88em;font-weight:800;color:#0f1c2e;background:linear-gradient(135deg,#987121 0%,#f3e5ad 50%,#c8a04b 100%);clip-path:polygon(0 0,100% 0,calc(100% - 12px) 100%,0 100%);box-shadow:4px 0 14px rgba(0,0,0,.35)}
 .ann-badge i{font-style:normal;display:inline-block;animation:annPulse 1.6s ease-in-out infinite}
-.ann-track{display:inline-flex;width:max-content;padding:10px 0;animation:annScroll 55s linear infinite;will-change:transform}
+.ann-track{display:inline-flex;width:max-content;padding:10px 0 10px 100%;animation:annScroll 57s linear 2s infinite;will-change:transform}
 .ann-track span{padding:0 22px;display:inline-block;background:linear-gradient(90deg,#f3e5ad,#fff7d6 50%,#e6c46a);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .ann-track span b{-webkit-text-fill-color:initial;font-weight:400;margin-right:6px}
 .ann-track span::after{content:"◆";margin-left:44px;font-size:.6em;vertical-align:middle;-webkit-text-fill-color:#c8a04b;opacity:.9}
 .announcement-bar:hover .ann-track{animation-play-state:paused}
-@keyframes annScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes annScroll{0%{transform:translateX(0)}96.49%,100%{transform:translateX(-100%)}}@keyframes annScrollM{0%{transform:translateX(0)}95.45%,100%{transform:translateX(-100%)}}
 @keyframes annSheen{0%,100%{background-position:120% 0}50%{background-position:-20% 0}}
 @keyframes annPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
 @media(prefers-reduced-motion:reduce){.ann-track{animation-duration:160s}.announcement-bar::before,.ann-badge i{animation:none}}
@@ -888,7 +888,7 @@
 
     /* ===== মোবাইলে সব ছোট ও কমপ্যাক্ট (২ কলাম) ===== */
     @media(max-width:550px){
-      .announcement-bar{font-size:12px}.ann-track{padding:6px 0;animation-duration:42s}.ann-badge{padding:0 18px 0 9px;font-size:.9em}
+      .announcement-bar{font-size:12px}.ann-track{padding:6px 0 6px 100%;animation-name:annScrollM;animation-duration:44s;animation-delay:2s}.ann-badge{padding:0 18px 0 9px;font-size:.9em}
       header{padding:7px 3%}
       .header-top{gap:5px}
       .brand{font-size:18px}
@@ -1566,7 +1566,7 @@ html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3
     .hf-search input{font-size:16px}
     @media(max-width:850px){.nav>a:not(.admin-nav-btn),.nav>button:not(.admin-nav-btn){font-size:14.5px}}
     @media(max-width:550px){
-      .announcement-bar{font-size:14px}.ann-track{padding:7px 0}
+      .announcement-bar{font-size:14px}.ann-track{padding:7px 0 7px 100%}
       .brand{font-size:23px}
       .brand-logo{width:32px;height:32px}
       .nav{gap:6px}
@@ -2004,7 +2004,7 @@ html.dtm #toast{bottom:90px}
   </defs>
 </svg>
 
-  <div class="announcement-bar" id="annBar"><div class="ann-track"><span><b>✅</b>অগ্রিম কোন টাকা ছাড়াই অর্ডার করুন</span><span><b>🔥</b>শাড়ি বিলাশ কালেকশনে চলছে এক্সক্লুসিভ ছাড় ও বিশেষ অফার!</span><span><b>🚚</b>নির্বাচিত শাড়িতে ফ্রি ডেলিভারি</span><span><b>🎟️</b>কুপন কোড ব্যবহার করে পান অতিরিক্ত ছাড়</span><span><b>🎁</b>বন্ধুকে রেফার করুন — আপনি পাবেন বোনাস, বন্ধু পাবে ছাড়<span class="ref-fill" data-k="ann" hidden></span></span><span><b>👗</b>নতুন থ্রি পিস কালেকশন এসেছে — দেখে নিন</span><span><b>📦</b>ক্যাশ অন ডেলিভারি — পণ্য হাতে পেয়ে টাকা দিন</span><span><b>💳</b>bKash-এ পেমেন্টের সুবিধা</span><span><b>🔍</b>“আমার অর্ডার” থেকে ঘরে বসেই অর্ডারের লাইভ অবস্থা দেখুন</span><span><b>📲</b>ওয়েবসাইটটি অ্যাপের মতো মোবাইলে ইনস্টল করে নিন</span><span><b>🏠</b>সারা বাংলাদেশে হোম ডেলিভারি</span><span><b>💬</b>WhatsApp-এ সরাসরি অর্ডার ও জিজ্ঞাসার সুযোগ</span><span aria-hidden="true"><b>✅</b>অগ্রিম কোন টাকা ছাড়াই অর্ডার করুন</span><span aria-hidden="true"><b>🔥</b>শাড়ি বিলাশ কালেকশনে চলছে এক্সক্লুসিভ ছাড় ও বিশেষ অফার!</span><span aria-hidden="true"><b>🚚</b>নির্বাচিত শাড়িতে ফ্রি ডেলিভারি</span><span aria-hidden="true"><b>🎟️</b>কুপন কোড ব্যবহার করে পান অতিরিক্ত ছাড়</span><span aria-hidden="true"><b>🎁</b>বন্ধুকে রেফার করুন — আপনি পাবেন বোনাস, বন্ধু পাবে ছাড়<span class="ref-fill" data-k="ann" hidden></span></span><span aria-hidden="true"><b>👗</b>নতুন থ্রি পিস কালেকশন এসেছে — দেখে নিন</span><span aria-hidden="true"><b>📦</b>ক্যাশ অন ডেলিভারি — পণ্য হাতে পেয়ে টাকা দিন</span><span aria-hidden="true"><b>💳</b>bKash-এ পেমেন্টের সুবিধা</span><span aria-hidden="true"><b>🔍</b>“আমার অর্ডার” থেকে ঘরে বসেই অর্ডারের লাইভ অবস্থা দেখুন</span><span aria-hidden="true"><b>📲</b>ওয়েবসাইটটি অ্যাপের মতো মোবাইলে ইনস্টল করে নিন</span><span aria-hidden="true"><b>🏠</b>সারা বাংলাদেশে হোম ডেলিভারি</span><span aria-hidden="true"><b>💬</b>WhatsApp-এ সরাসরি অর্ডার ও জিজ্ঞাসার সুযোগ</span></div></div>
+  <div class="announcement-bar" id="annBar"><div class="ann-track"><span><b>✅</b>অগ্রিম কোন টাকা ছাড়াই অর্ডার করুন</span><span><b>🔥</b>শাড়ি বিলাশ কালেকশনে চলছে এক্সক্লুসিভ ছাড় ও বিশেষ অফার!</span><span><b>🚚</b>নির্বাচিত শাড়িতে ফ্রি ডেলিভারি</span><span><b>🎟️</b>কুপন কোড ব্যবহার করে পান অতিরিক্ত ছাড়</span><span><b>🎁</b>বন্ধুকে রেফার করুন — আপনি পাবেন বোনাস, বন্ধু পাবে ছাড়<span class="ref-fill" data-k="ann" hidden></span></span><span><b>👗</b>নতুন থ্রি পিস কালেকশন এসেছে — দেখে নিন</span><span><b>📦</b>ক্যাশ অন ডেলিভারি — পণ্য হাতে পেয়ে টাকা দিন</span><span><b>💳</b>bKash-এ পেমেন্টের সুবিধা</span><span><b>🔍</b>“আমার অর্ডার” থেকে ঘরে বসেই অর্ডারের লাইভ অবস্থা দেখুন</span><span><b>📲</b>ওয়েবসাইটটি অ্যাপের মতো মোবাইলে ইনস্টল করে নিন</span><span><b>🏠</b>সারা বাংলাদেশে হোম ডেলিভারি</span><span><b>💬</b>WhatsApp-এ সরাসরি অর্ডার ও জিজ্ঞাসার সুযোগ</span></div></div>
 
 
   <div class="m-head m-ui">
