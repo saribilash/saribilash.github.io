@@ -63,6 +63,7 @@
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta name="keywords" content="শাড়ি বিলাশ, Shari Bilash, Sari Bilash, শাড়ি, জামদানি শাড়ি, কাতান শাড়ি, থ্রি পিস, অনলাইন শাড়ি, ক্যাশ অন ডেলিভারি, বাংলাদেশ">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"OnlineStore","name":"শাড়ি বিলাশ","alternateName":["Shari Bilash","Sari Bilash"],"url":"https://saribilash.github.io/","logo":"https://saribilash.github.io/icon-192.png","description":"জামদানি, কাতান ও আরও অনেক এক্সক্লুসিভ শাড়ি ও থ্রি পিসের অনলাইন শপ। সারা বাংলাদেশে ক্যাশ অন ডেলিভারি।","telephone":"+8801628182808","areaServed":"BD","sameAs":["https://www.facebook.com/SariBilash02"]}</script>
+  <link rel="dns-prefetch" href="//gc.zgo.at">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://oahfxjoauyvbkrfgbuqi.supabase.co" crossorigin>
@@ -3036,7 +3037,9 @@ html[data-theme="dark"] #featuresBox .m-why{background-image:linear-gradient(100
     }
 
     // ---------- Auth ----------
-    function sessionIsAdmin(session) { return (session?.user?.email || "").toLowerCase() === ADMIN_EMAIL; }
+    function markOwnerDevice() { try { localStorage.setItem("sari_owner", "1"); localStorage.setItem("skipgc", "t"); } catch (e) {} }
+    function isOwnerDevice() { try { return localStorage.getItem("sari_owner") === "1"; } catch (e) { return false; } }
+    function sessionIsAdmin(session) { const ok = (session?.user?.email || "").toLowerCase() === ADMIN_EMAIL; if (ok) markOwnerDevice(); return ok; }
     function checkLoginStatus() { $("#headerAdminBtn").style.display = isAdmin ? "inline-block" : "none"; const b2 = $("#headerAdminBtn2"); if (b2) b2.style.display = isAdmin ? "inline-block" : "none"; }
 
     db.auth.onAuthStateChange((_event, session) => {
@@ -3156,9 +3159,13 @@ html[data-theme="dark"] #featuresBox .m-why{background-image:linear-gradient(100
         $("#products").innerHTML = `<p style="text-align:center;grid-column:1/-1;color:var(--red);">শাড়ি লোড করা যায়নি। ইন্টারনেট সংযোগ দেখে আবার চেষ্টা করুন।<br><span style="font-size:12px;font-weight:400;direction:ltr;display:block;">${esc(error.message || "")} ${esc(error.code || "")}</span></p>`;
         return;
       }
-      products = data || [];
-      try { localStorage.setItem("sari_products_cache", JSON.stringify(products)); } catch (e) {}
-      try { renderProductsUI(); } catch (e) { console.error(e); $("#products").innerHTML = `<p style="text-align:center;grid-column:1/-1;color:var(--red);">শাড়ি দেখাতে সমস্যা: ${esc(e.message)}</p>`; }
+      const __newList = data || [];
+      let __same = false;
+      try { __same = !!products.length && !!$("#products") && $("#products").children.length > 0 && JSON.stringify(__newList) === JSON.stringify(products); } catch (e) { __same = false; }
+      window.__lastProdLoad = Date.now();
+      products = __newList;
+      if (!__same) { try { localStorage.setItem("sari_products_cache", JSON.stringify(products)); } catch (e) {} }
+      if (!__same) try { renderProductsUI(); } catch (e) { console.error(e); $("#products").innerHTML = `<p style="text-align:center;grid-column:1/-1;color:var(--red);">শাড়ি দেখাতে সমস্যা: ${esc(e.message)}</p>`; }
       pruneCart();
       loadCouponInfo();
       if (isAdmin && $("#adminProductsList")) listAdminProducts();
@@ -5775,13 +5782,14 @@ html[data-theme="dark"] #featuresBox .m-why{background-image:linear-gradient(100
       })
       .subscribe(status => setLiveStatus(status === "SUBSCRIBED")); } catch (e) { console.warn("realtime চালু হয়নি", e); }
 
-    document.addEventListener("visibilitychange", () => { if (!document.hidden) scheduleReload(); });
-    window.addEventListener("focus", scheduleReload);
+    function scheduleReloadSoft() { if (Date.now() - (window.__lastProdLoad || 0) < 20000) return; scheduleReload(); }
+    document.addEventListener("visibilitychange", () => { if (!document.hidden) scheduleReloadSoft(); });
+    window.addEventListener("focus", scheduleReloadSoft);
 
     // ---------- ভিজিটর গণনা (প্রতি ব্রাউজার সেশনে একবার; অ্যাডমিন গোনা হয় না) ----------
     async function logSiteVisit() {
       try {
-        if (isAdmin) return;
+        if (isAdmin || isOwnerDevice()) return;
         if (sessionStorage.getItem("sari_visit_logged")) return;
         let vid = localStorage.getItem("sari_vid");
         if (!vid) {
@@ -5806,7 +5814,7 @@ html[data-theme="dark"] #featuresBox .m-why{background-image:linear-gradient(100
       updateCartBadge();
       applyDeliveryInfo();
       // Realtime বন্ধ থাকলেও প্রতি ১ মিনিটে নিজে নতুন ডাটা আনবে
-      setInterval(() => { if (!document.hidden) { loadProducts(); loadSettings(); loadBanners(); } }, 60000);
+      setInterval(() => { if (!document.hidden) { loadProducts(); loadSettings(); loadBanners(); } }, 120000);
       loadBanners();
       loadSettings();
       try {
@@ -6320,6 +6328,7 @@ html[data-theme="dark"] #featuresBox .m-why{background-image:linear-gradient(100
 })();
 </script>
 
+<script>try{if(localStorage.getItem("sari_owner")==="1")localStorage.setItem("skipgc","t");}catch(e){}</script>
 <script data-goatcounter="https://saribilash.goatcounter.com/count"
         async src="//gc.zgo.at/count.js"></script>
 
