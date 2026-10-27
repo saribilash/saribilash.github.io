@@ -2169,6 +2169,15 @@ html[data-theme="dark"] #featuresBox .m-why{background-image:linear-gradient(100
 .m-chip .si{animation:fxChipIc 3s ease-in-out infinite;transform-origin:50% 20%}
 @media(prefers-reduced-motion:reduce){.m-chips,.m-chip,.m-chip .si,.m-chip::after{animation:none!important}}
 </style>
+<script>
+/* কম শক্তির ফোনে (কম র‍্যাম/কোর) সাজসজ্জার অ্যানিমেশন একবার চলে থেমে যায় — সাইট হালকা চলে */
+(function(){try{var n=navigator,d=document.documentElement;if((n.deviceMemory&&n.deviceMemory<=4)||(n.hardwareConcurrency&&n.hardwareConcurrency<=4)||(n.connection&&n.connection.saveData)||(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches))d.classList.add("lite");}catch(e){}})();
+</script>
+<style>
+html.lite *,html.lite *::before,html.lite *::after{animation-iteration-count:1!important}
+html.lite .ann-track{animation-iteration-count:infinite!important}
+html.lite .card,html.lite .why-card,html.lite .op-prod{box-shadow:0 2px 8px rgba(15,28,46,.12)!important}
+</style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
@@ -2567,6 +2576,18 @@ html[data-theme="dark"] #featuresBox .m-why{background-image:linear-gradient(100
     #cartDialog .op-info .price-container{margin:4px 0;gap:8px;align-items:baseline;flex-wrap:wrap}
     #cartDialog .op-info .price{font-size:25px;font-weight:800;color:#b8860b;margin:0}
     #cartDialog .op-off{display:inline-block;background:linear-gradient(135deg,#d4af37,#f3e5ad);color:#0f1c2e;font-weight:800;font-size:14px;border-radius:9px;padding:3px 11px;margin:2px 0}
+    #cartDialog .op-det{margin:8px 0 4px;border:1px solid #e6d9b3;border-radius:12px;background:#fffaf0;overflow:hidden}
+    #cartDialog .op-det>div{display:flex;gap:8px;justify-content:space-between;padding:6px 10px;font-size:13px;border-bottom:1px dashed #eadfc2}
+    #cartDialog .op-det>div:last-child{border-bottom:0}
+    #cartDialog .op-det span{color:#6b7280;flex:none}
+    #cartDialog .op-det b{color:#0f1c2e;text-align:right;min-width:0;overflow-wrap:anywhere}
+    html[data-theme="dark"] #cartDialog .op-det{background:#1b2740;border-color:#33415c}
+    html[data-theme="dark"] #cartDialog .op-det b{color:#f1e6c3}
+    #cartDialog .op-tags{margin:8px 0 4px;gap:6px}
+    #cartDialog .op-tags .spec-tag{background:#fffaf0;border:1px solid #e6d9b3;font-size:12.5px;padding:3px 9px}
+    #cartDialog .op-pills{margin-top:6px;display:flex;flex-wrap:wrap}
+    #cartDialog .op-pills .pill{font-size:12px;padding:4px 10px;margin:0 5px 6px 0;line-height:1.35;width:auto;max-width:100%}
+    html[data-theme="dark"] #cartDialog .op-tags .spec-tag{background:#1b2740;color:#e6eaf2;border-color:#33415c}
     #cartDialog .op-desc{font-size:13.5px;line-height:1.6;color:#374151;margin:8px 0;white-space:pre-line}
     #cartDialog .op-acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
     #cartDialog .op-mini{border:1.5px solid #d4af37;background:#fffaf0;border-radius:20px;padding:6px 12px;font:inherit;font-size:13px;font-weight:700;color:#0f1c2e;cursor:pointer}
@@ -3173,10 +3194,55 @@ html[data-theme="dark"] #featuresBox .m-why{background-image:linear-gradient(100
     }
     function scheduleReload() { clearTimeout(reloadTimer); reloadTimer = setTimeout(loadProducts, 300); }
 
+    // ---- গুগল SEO: শাড়ি/থ্রি পিস খুললে টাইটেল, বিবরণ ও Product স্কিমা বসে ----
+    const SEO_BASE = { title: document.title, desc: (document.querySelector('meta[name="description"]') || {}).content || "", canon: (document.querySelector('link[rel="canonical"]') || {}).href || "" };
+    function seoSet(sel, attr, val, mk) {
+      let el = document.querySelector(sel);
+      if (!el && mk) { el = document.createElement(mk.t); Object.keys(mk.a).forEach(k => el.setAttribute(k, mk.a[k])); document.head.appendChild(el); }
+      if (el) el.setAttribute(attr, val);
+    }
+    function applyProductSeo(p) {
+      try {
+        if (!p) return;
+        const code = productCode(p.id), imgs = productImages(p), price = Number(p.price) || 0;
+        const tail = [p.category, p.fabric].filter(Boolean).join(" · ");
+        const title = (p.seo_title && p.seo_title.trim()) || (p.name + " | শাড়ি বিলাশ");
+        const desc = (p.seo_desc && p.seo_desc.trim()) || ((p.description ? String(p.description).replace(/\s+/g, " ").slice(0, 110) + " " : "") + (tail ? tail + "। " : "") + "মূল্য " + taka(price) + " টাকা। সারা বাংলাদেশে হোম ডেলিভারি।");
+        const url = location.origin + location.pathname + "?p=" + encodeURIComponent(p.id);
+        document.title = title;
+        seoSet('meta[name="description"]', "content", desc);
+        if (p.seo_keywords) seoSet('meta[name="keywords"]', "content", p.seo_keywords, { t: "meta", a: { name: "keywords" } });
+        seoSet('meta[property="og:title"]', "content", title);
+        seoSet('meta[property="og:description"]', "content", desc);
+        seoSet('meta[property="og:url"]', "content", url);
+        if (imgs[0]) seoSet('meta[property="og:image"]', "content", imgs[0]);
+        seoSet('link[rel="canonical"]', "href", url);
+        let ld = document.getElementById("productLd");
+        if (!ld) { ld = document.createElement("script"); ld.type = "application/ld+json"; ld.id = "productLd"; document.head.appendChild(ld); }
+        const sold = isSoldOut(p);
+        ld.textContent = JSON.stringify({
+          "@context": "https://schema.org", "@type": "Product", name: p.name, sku: code, mpn: code, image: imgs, description: desc,
+          category: p.category || undefined, material: p.fabric || undefined, color: productColors(p).join(", ") || undefined,
+          brand: { "@type": "Brand", name: "শাড়ি বিলাশ" },
+          offers: { "@type": "Offer", url, priceCurrency: "BDT", price: String(price), availability: sold ? "https://schema.org/OutOfStock" : "https://schema.org/InStock", itemCondition: "https://schema.org/NewCondition" }
+        });
+        if (!window._seoCloseBound) {
+          window._seoCloseBound = true;
+          ["#cartDialog", "#productDialog"].forEach(q => { const d = $(q); if (d) d.addEventListener("close", resetProductSeo); });
+        }
+      } catch (e) { /* SEO ত্রুটি সাইট থামাবে না */ }
+    }
+    function resetProductSeo() {
+      document.title = SEO_BASE.title;
+      seoSet('meta[name="description"]', "content", SEO_BASE.desc);
+      if (SEO_BASE.canon) { seoSet('link[rel="canonical"]', "href", SEO_BASE.canon); seoSet('meta[property="og:url"]', "content", SEO_BASE.canon); }
+      const ld = document.getElementById("productLd"); if (ld) ld.remove();
+    }
+
     function handleDeepLinks() {
       const pid = new URLSearchParams(location.search).get("p");
       const dp = pid ? getProduct(pid) : null;
-      if (dp && (isAdmin || dp.active !== false)) openProduct(pid);
+      if (dp && (isAdmin || dp.active !== false)) { applyProductSeo(dp); openProduct(pid); }
       if (wishlistImported) { wishlistImported = false; openWishlistDialog(); }
     }
 
@@ -3533,6 +3599,7 @@ html[data-theme="dark"] #featuresBox .m-why{background-image:linear-gradient(100
       const p = getProduct(id);
       if (!p) return;
       if (checkoutMode === "buy") return;
+      applyProductSeo(p);
       if (p.active !== false) {
         // ছবিতে ট্যাপ করলে সরাসরি অর্ডার পেজ (পুরনো বিস্তারিত পপআপ আর খোলে না)
         if (startBuyNowEmpty(p.id)) { $("#cartDialog").scrollTop = 0; }
@@ -3916,6 +3983,8 @@ html[data-theme="dark"] #featuresBox .m-why{background-image:linear-gradient(100
               <div class="op-code">কোড: ${esc(productCode(p.id))}</div>
               ${priceHtml(p)}
               ${off > 0 ? `<span class="op-off">✨ ${taka(off)}% ছাড়</span>` : ""}
+              ${opDetailsHtml(p)}
+              <div class="op-pills">${pillsHtml(p)}</div>
               ${p.description ? `<p class="op-desc">${esc(p.description)}</p>` : ""}
               <div class="op-acts">
                 <button type="button" class="op-mini" data-card-wish-btn="${sid}" onclick="toggleWishlist('${sid}')">${isW ? "❤️ উইশলিস্টে আছে" : "🤍 উইশলিস্ট"}</button>
@@ -3951,6 +4020,16 @@ html[data-theme="dark"] #featuresBox .m-why{background-image:linear-gradient(100
         if (im) { im.classList.add("op-swap"); setTimeout(() => im.classList.remove("op-swap"), 600); }
       }
       renderCartSummary();
+    }
+    function opDetailsHtml(p) {
+      const tp = isThreePiece(p), rows = [], v = x => (x === null || x === undefined) ? "" : String(x).trim();
+      if (v(p.category)) rows.push(["📂 ক্যাটাগরি", v(p.category)]);
+      if (v(p.fabric)) rows.push([tp ? "🧵 কাপড়ের ধরন" : "🧵 কাপড়", v(p.fabric)]);
+      if (v(p.length_text)) rows.push([tp ? "📏 সাইজ / সেট" : "📏 দৈর্ঘ্য", v(p.length_text)]);
+      const cols = productColors(p); if (cols.length) rows.push(["🎨 রং", cols.join(", ")]);
+      if (p.blouse_free) rows.push(["👚 ব্লাউজ পিস", "ফ্রি"]);
+      if (!rows.length) return "";
+      return `<div class="op-det">${rows.map(r => `<div><span>${r[0]}</span><b>${esc(r[1])}</b></div>`).join("")}</div>`;
     }
     function cqPreview(gi, k) {
       const g = cartGroups()[gi]; if (!g) return;
@@ -4644,6 +4723,13 @@ html[data-theme="dark"] #featuresBox .m-why{background-image:linear-gradient(100
                 <datalist id="tpCatList">${tpSubs.map(c => `<option value="${esc(c)}">`).join("")}</datalist>
                 <datalist id="catList">${cats.map(c => `<option value="${esc(c)}">`).join("")}</datalist>
                 <datalist id="fabricList">${fabrics.map(c => `<option value="${esc(c)}">`).join("")}</datalist>
+                <div class="pf-sub pf-seo" style="margin:12px 0;border:1.5px solid #e6d9b3;border-radius:14px;padding:12px;background:#fffaf0;">
+                  <div class="pf-sublabel">🔎 গুগল সার্চে দেখানোর তথ্য (SEO)</div>
+                  <span class="pf-hint" style="margin:-2px 0 8px;">ঐচ্ছিক — ফাঁকা রাখলে নাম, বিবরণ ও দাম থেকে নিজে নিজে তৈরি হবে</span>
+                  <div class="pf-f"><label class="pf-l" for="pseotitle"><span>গুগলের টাইটেল</span></label><input id="pseotitle" maxlength="70" placeholder="যেমন: মাইক্রো স্টিচ ডিজিটাল প্রিন্ট থ্রি পিস — শাড়ি বিলাশ" oninput="$('#pseotc').textContent=this.value.length"><div class="pf-count"><span id="pseotc">0</span>/60 (৬০ এর মধ্যে রাখলে ভালো)</div></div>
+                  <div class="pf-f"><label class="pf-l" for="pseodesc"><span>গুগলের বিবরণ</span></label><textarea id="pseodesc" rows="2" maxlength="180" placeholder="১-২ লাইনে লিখুন: কাপড়, ডিজাইন, দাম, ডেলিভারি" oninput="$('#pseodc').textContent=this.value.length"></textarea><div class="pf-count"><span id="pseodc">0</span>/160 (১৬০ এর মধ্যে রাখলে ভালো)</div></div>
+                  <div class="pf-f"><label class="pf-l" for="pseokeys"><span>সার্চ শব্দ (কমা দিয়ে)</span></label><input id="pseokeys" placeholder="যেমন: থ্রি পিস, ডিজিটাল প্রিন্ট থ্রি পিস, অনলাইন থ্রি পিস"></div>
+                </div>
                 <div class="pf-more" id="pfMore">
                   <button type="button" class="pf-more-h" onclick="pfMoreToggle()">${pfI("gear")}<span>আরও সেটিংস</span>${pfI("up", "chev")}</button>
                   <div class="pf-more-b">
@@ -5171,23 +5257,33 @@ html[data-theme="dark"] #featuresBox .m-why{background-image:linear-gradient(100
           free_delivery: $("#pfreedelivery").checked,
           active: $("#pactive").checked,
           colors: $("#pcolors").value.split(",").map(s => s.trim()).filter(Boolean),
-          image_urls: [...currentImageUrlList, ...uploaded]
+          image_urls: [...currentImageUrlList, ...uploaded],
+          seo_title: ($("#pseotitle") && $("#pseotitle").value.trim()) || null,
+          seo_desc: ($("#pseodesc") && $("#pseodesc").value.trim()) || null,
+          seo_keywords: ($("#pseokeys") && $("#pseokeys").value.trim()) || null
         };
         { const camt = {}; document.querySelectorAll("#couponAmtBox .camt").forEach(el => { const v = Math.round(Number(el.value)); if (v > 0) camt[el.dataset.code] = v; });
           const had = editingProductId && getProduct(editingProductId) && getProduct(editingProductId).coupon_amounts;
           if (Object.keys(camt).length || had) productData.coupon_amounts = Object.keys(camt).length ? camt : null; }
-        const query = editingProductId
-          ? db.from("products").update(productData).eq("id", editingProductId)
-          : db.from("products").insert([{ ...productData, id: "p-" + Date.now(), created_at: new Date().toISOString() }]);
-        const { data, error } = await query.select();
+        const newId = "p-" + Date.now(), newAt = new Date().toISOString();
+        const runSave = d => editingProductId
+          ? db.from("products").update(d).eq("id", editingProductId).select()
+          : db.from("products").insert([{ ...d, id: newId, created_at: newAt }]).select();
+        let { data, error } = await runSave(productData);
+        let seoSkipped = false;
+        if (error && /seo_(title|desc|keywords)/i.test(String(error.message || "") + String(error.details || ""))) {
+          const d2 = { ...productData }; delete d2.seo_title; delete d2.seo_desc; delete d2.seo_keywords;
+          ({ data, error } = await runSave(d2)); seoSkipped = true;
+        }
         if (error) throw error;
+        window._seoSkipped = seoSkipped;
         if (!data || !data.length) throw new Error("permission denied — কোনো রো সেভ হয়নি");
         toast("✅ সেভ হয়েছে — সব ফোনে আপডেট দেখাবে");
         await loadProducts();
         await showAdminTab(adminTpMode ? "threepiece" : "products");
         const m = $("#pmsg");
         m.className = "small msg-ok";
-        m.textContent = "✅ সফলভাবে সেভ হয়েছে! সব ফোনে এখনই দেখা যাবে।";
+        m.textContent = "✅ সফলভাবে সেভ হয়েছে! সব ফোনে এখনই দেখা যাবে।" + (window._seoSkipped ? " ⚠️ কিন্তু গুগল (SEO) তথ্য সেভ হয়নি — Supabase-এ SEO কলাম যোগ করতে হবে।" : "");
       } catch (err) {
         console.error("Product save error:", err);
         msg.className = "small msg-err";
@@ -5231,6 +5327,10 @@ html[data-theme="dark"] #featuresBox .m-why{background-image:linear-gradient(100
       $("#ptpcat").value = isThreePiece(p) ? (tpSubOf(p) || "থ্রি পিস") : "";
       $("#pfabric").value = p.fabric || "";
       $("#plength").value = p.length_text || "";
+      { const st = $("#pseotitle"), sd = $("#pseodesc"), sk = $("#pseokeys");
+        if (st) { st.value = p.seo_title || ""; $("#pseotc").textContent = st.value.length; }
+        if (sd) { sd.value = p.seo_desc || ""; $("#pseodc").textContent = sd.value.length; }
+        if (sk) sk.value = p.seo_keywords || ""; }
       $("#pfreemin").value = (p.free_min === null || p.free_min === undefined) ? "" : p.free_min;
       $("#pblouse").checked = !!p.blouse_free;
       couponSel = productCoupons(p); couponAmtSel = {}; { let m = p.coupon_amounts; if (typeof m === "string") { try { m = JSON.parse(m); } catch { m = null; } } if (m && typeof m === "object") couponAmtSel = { ...m }; } applyCouponChecks();
