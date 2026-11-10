@@ -2171,12 +2171,46 @@ html[data-theme="dark"] #featuresBox .m-why{background-image:linear-gradient(100
 </style>
 <script>
 /* কম শক্তির ফোনে (কম র‍্যাম/কোর) সাজসজ্জার অ্যানিমেশন একবার চলে থেমে যায় — সাইট হালকা চলে */
-(function(){try{var n=navigator,d=document.documentElement;/* lite মোড বন্ধ: সব ফোনে অ্যানিমেশন চলবে */}catch(e){}})();
+(function(){try{
+  var n=navigator,d=document.documentElement,c=n.connection||{},W=window;
+  var q=(W.location.search.match(/[?&]lite=([01])/)||[])[1];
+  if(q){try{localStorage.setItem("sb_lite",q)}catch(e){}}
+  var saved=null;try{saved=localStorage.getItem("sb_lite")}catch(e){}
+  var low=(n.deviceMemory&&n.deviceMemory<=4)||(n.hardwareConcurrency&&n.hardwareConcurrency<=4)||c.saveData||/(^|-)(2g|3g)$/.test(c.effectiveType||"")||(W.matchMedia&&W.matchMedia("(prefers-reduced-motion:reduce)").matches);
+  if(saved==="1"||(saved!=="0"&&low)){d.classList.add("lite");return;}
+  if(saved==="0")return;
+  /* ফোন ভালো মনে হলেও আসল গতি মেপে দেখা: ফ্রেম ধীর হলে নিজে থেকে হালকা মোড চালু হবে */
+  W.addEventListener("load",function(){setTimeout(function(){
+    var t=[],last=0,n2=0;
+    function f(ts){
+      if(last){t.push(ts-last);}
+      last=ts;n2++;
+      if(document.hidden){return;}
+      if(n2<50){requestAnimationFrame(f);return;}
+      t=t.slice(5).sort(function(a,b){return a-b});
+      var med=t[Math.floor(t.length/2)]||0;
+      if(med>30){d.classList.add("lite");try{localStorage.setItem("sb_lite","1")}catch(e){}}
+    }
+    requestAnimationFrame(f);
+  },1200);});
+}catch(e){}})();
 </script>
 <style>
-html.lite *,html.lite *::before,html.lite *::after{animation-iteration-count:1!important}
-html.lite .ann-track{animation-iteration-count:infinite!important}
-html.lite .card,html.lite .why-card,html.lite .op-prod{box-shadow:0 2px 8px rgba(15,28,46,.12)!important}
+html.lite *,html.lite *::before,html.lite *::after{animation-iteration-count:1!important;will-change:auto!important;scroll-behavior:auto!important}
+html.lite .ann-track{animation-iteration-count:infinite!important;will-change:transform!important}
+html.lite .card,html.lite .why-card,html.lite .op-prod{box-shadow:0 2px 8px rgba(15,28,46,.12)!important;transition:none!important}
+html.lite .announcement-bar::before,html.lite .buy-btn::after,html.lite .perk::after,html.lite .no-adv::after,html.lite .m-ref::after,html.lite .m-hb-ref::after,html.lite .m-chip::after,html.lite .why-card::after,html.lite .fl::after,html.lite .waShine,html.lite .m-burger::before,html.lite .m-burger::after{animation:none!important;display:none!important}
+html.lite #featuresBox.seen .m-why,html.lite #featuresBox.live .m-why{animation:none!important;filter:none!important}
+html.lite .why-ic::before,html.lite .why-ic::after{display:none!important}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important}}
+.pvid{margin:10px 0}
+.pvid-play{position:relative;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:56px;padding:12px;border:1.5px solid var(--gold);border-radius:14px;background:linear-gradient(135deg,#0f1c2e,#1b2f4d);color:#f3e5ad;font-weight:800;font-size:15px;cursor:pointer;overflow:hidden;font-family:inherit}
+.pvid-play img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5}
+.pvid-play .pvid-ic,.pvid-play b{position:relative}
+.pvid-ic{width:30px;height:30px;border-radius:50%;background:#f3e5ad;color:#0f1c2e;display:inline-flex;align-items:center;justify-content:center;font-size:14px;padding-left:2px}
+.pvid-frame{display:block;width:100%;height:min(72vh,480px);border:0;border-radius:14px;background:#000}
+.pvid-link{display:block;text-align:center;font-size:12px;margin-top:6px;color:inherit;opacity:.8}
+
 </style>
 </head>
 <body>
@@ -3612,6 +3646,29 @@ html.lite .card,html.lite .why-card,html.lite .op-prod{box-shadow:0 2px 8px rgba
       if (!d.open) d.showModal();
       d.scrollTop = 0;
     }
+    function videoInfo(u) {
+      u = String(u || "").trim(); if (!/^https?:\/\//i.test(u)) return null;
+      const m = u.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?(?:.*&)?v=|shorts\/|embed\/|live\/))([A-Za-z0-9_-]{11})/);
+      if (m) return { t: "yt", id: m[1], url: u };
+      if (/^https?:\/\/(?:[a-z0-9-]+\.)?(facebook\.com|fb\.watch|fb\.com)\//i.test(u)) return { t: "fb", url: u };
+      return null;
+    }
+    function videoBoxHtml(p) {
+      const v = videoInfo(p && p.video_url); if (!v) return "";
+      const thumb = v.t === "yt" ? '<img src="https://i.ytimg.com/vi/' + v.id + '/hqdefault.jpg" alt="" loading="lazy" decoding="async">' : "";
+      return '<div class="pvid" data-vurl="' + esc(v.url) + '" data-vt="' + v.t + '" data-vid="' + (v.id || "") + '">'
+        + '<button type="button" class="pvid-play" onclick="playProdVideo(this)">' + thumb + '<span class="pvid-ic">▶</span><b>ভিডিওতে দেখুন</b></button>'
+        + '<a class="pvid-link" href="' + esc(v.url) + '" target="_blank" rel="noopener">ফেসবুক/ইউটিউবে খুলুন</a></div>';
+    }
+    function playProdVideo(btn) {
+      const box = btn.closest(".pvid"); if (!box) return;
+      const t = box.dataset.vt, u = box.dataset.vurl;
+      const src = t === "yt" ? "https://www.youtube-nocookie.com/embed/" + box.dataset.vid + "?autoplay=1&rel=0&playsinline=1"
+        : "https://www.facebook.com/plugins/video.php?href=" + encodeURIComponent(u) + "&show_text=false&autoplay=true&width=560";
+      const f = document.createElement("iframe");
+      f.src = src; f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen"; f.allowFullscreen = true; f.className = "pvid-frame"; f.title = "শাড়ির ভিডিও";
+      btn.replaceWith(f);
+    }
     function renderDetail() {
       const p = getProduct(det.id);
       if (!p) return;
@@ -3643,6 +3700,7 @@ html.lite .card,html.lite .why-card,html.lite .op-prod{box-shadow:0 2px 8px rgba
             ${badgesHtml(p)}
             <img class="detail-img" src="${esc(img)}" alt="${esc(p.name)}" onclick="openZoomModal(this.src)">
           </div>
+          ${videoBoxHtml(p)}
           <div class="small" style="margin-top:6px;">🔍 ছবিতে ট্যাপ করে বড় করে জুম করুন</div>
         </div>
         <div>
@@ -4718,6 +4776,7 @@ html.lite .card,html.lite .why-card,html.lite .op-prod{box-shadow:0 2px 8px rgba
                   <div class="pf-f"><label class="pf-l" for="pfabric">${pfI("layers")}<span>${tpMode ? "কাপড়ের ধরন" : "কাপড়"}</span></label><input id="pfabric" class="pf-sel" list="fabricList" placeholder="${tpMode ? "যেমন: কটন, জর্জেট, লিনেন" : "যেমন: সুতি, সিল্ক, কটন"}"></div>
                   <div class="pf-f"><label class="pf-l" for="plength">${pfI("ruler")}<span>${tpMode ? "সাইজ / সেট" : "দৈর্ঘ্য (কাপড়)"}</span></label><input id="plength" placeholder="${tpMode ? "যেমন: ফ্রি সাইজ, আনস্টিচড" : "যেমন: ৬.৫ হাত"}"><span class="pf-hint">ফাঁকা রাখলে সাইটে দেখাবে না</span></div>
                   <div class="pf-f"><label class="pf-l" for="pcolors">${pfI("palette")}<span>রঙের নাম</span></label><input id="pcolors" placeholder="যেমন: বেগুনি, লাল" oninput="renderColorStockInputs()"><span class="pf-hint">একাধিক রং হলে কমা (,) দিয়ে — ছবির ক্রম অনুযায়ী</span></div>
+                  <div class="pf-f"><label class="pf-l" for="pvideo"><span>🎬 ভিডিও লিংক (ঐচ্ছিক)</span></label><input id="pvideo" inputmode="url" placeholder="ফেসবুক বা ইউটিউব ভিডিওর লিংক বসান"><span class="pf-hint">ফেসবুক পেজের Public ভিডিওর লিংক দিন। খালি রাখলে ভিডিও দেখাবে না</span></div>
                   <div class="pf-f"><label class="pf-l" for="pdesc">${pfI("doc")}<span>বিবরণ</span></label><textarea id="pdesc" rows="3" maxlength="500" placeholder="${tpMode ? "যেমন: কামিজ + সালোয়ার + ওড়না, প্রিন্টেড ডিজাইন" : "শাড়ির বিস্তারিত বর্ণনা লিখুন..."}" oninput="pfCount()"></textarea><div class="pf-count"><span id="pdescN">০</span>/৫০০</div></div>
                 </div>
                 <datalist id="tpCatList">${tpSubs.map(c => `<option value="${esc(c)}">`).join("")}</datalist>
@@ -5247,6 +5306,7 @@ html.lite .card,html.lite .why-card,html.lite .op-prod{box-shadow:0 2px 8px rgba
           category: adminTpMode ? ("থ্রি পিস" + ($("#ptpcat").value.trim() ? " - " + $("#ptpcat").value.trim() : "")) : ($("#pcategory").value.trim() || null),
           fabric: $("#pfabric").value.trim() || null,
           length_text: $("#plength").value.trim() || null,
+          video_url: ($("#pvideo") && $("#pvideo").value.trim()) || null,
           free_min: numOrNull($("#pfreemin").value),
           blouse_free: $("#pblouse").checked,
           coupon_codes: (document.querySelectorAll(".cchk").length ? [...document.querySelectorAll(".cchk:checked")].map(x => x.value) : couponSel).join(",") || null,
@@ -5275,7 +5335,14 @@ html.lite .card,html.lite .why-card,html.lite .op-prod{box-shadow:0 2px 8px rgba
           const d2 = { ...productData }; delete d2.seo_title; delete d2.seo_desc; delete d2.seo_keywords;
           ({ data, error } = await runSave(d2)); seoSkipped = true;
         }
+        let videoSkipped = false;
+        if (error && /video_url/i.test(String(error.message || "") + String(error.details || ""))) {
+          const d3 = { ...productData }; delete d3.video_url;
+          if (seoSkipped) { delete d3.seo_title; delete d3.seo_desc; delete d3.seo_keywords; }
+          ({ data, error } = await runSave(d3)); videoSkipped = !!productData.video_url;
+        }
         if (error) throw error;
+        if (videoSkipped) toast("ভিডিও সেভ হয়নি: Supabase-এ video_url কলাম যোগ করুন");
         window._seoSkipped = seoSkipped;
         if (!data || !data.length) throw new Error("permission denied — কোনো রো সেভ হয়নি");
         toast("✅ সেভ হয়েছে — সব ফোনে আপডেট দেখাবে");
@@ -5327,6 +5394,7 @@ html.lite .card,html.lite .why-card,html.lite .op-prod{box-shadow:0 2px 8px rgba
       $("#ptpcat").value = isThreePiece(p) ? (tpSubOf(p) || "থ্রি পিস") : "";
       $("#pfabric").value = p.fabric || "";
       $("#plength").value = p.length_text || "";
+      if ($("#pvideo")) $("#pvideo").value = p.video_url || "";
       { const st = $("#pseotitle"), sd = $("#pseodesc"), sk = $("#pseokeys");
         if (st) { st.value = p.seo_title || ""; $("#pseotc").textContent = st.value.length; }
         if (sd) { sd.value = p.seo_desc || ""; $("#pseodc").textContent = sd.value.length; }
