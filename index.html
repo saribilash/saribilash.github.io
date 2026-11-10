@@ -2203,6 +2203,13 @@ html.lite .announcement-bar::before,html.lite .buy-btn::after,html.lite .perk::a
 html.lite #featuresBox.seen .m-why,html.lite #featuresBox.live .m-why{animation:none!important;filter:none!important}
 html.lite .why-ic::before,html.lite .why-ic::after{display:none!important}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important}}
+.vid-chip{position:absolute;left:8px;bottom:8px;z-index:4;display:inline-flex;align-items:center;gap:4px;padding:6px 10px;border:1px solid rgba(243,229,173,.7);border-radius:999px;background:rgba(15,28,46,.9);color:#f3e5ad;font-family:inherit;font-weight:800;font-size:12px;line-height:1;cursor:pointer}
+#videoDialog{border:0;padding:0;border-radius:16px;width:min(94vw,520px);background:#0f1c2e;color:#f3e5ad;overflow:hidden}
+#videoDialog::backdrop{background:rgba(0,0,0,.72)}
+#videoDialog .vd-top{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;font-weight:800}
+#videoDialog .vd-x{border:0;background:transparent;color:#f3e5ad;font-size:26px;line-height:1;cursor:pointer;padding:0 4px}
+#videoDialog iframe{display:block;width:100%;height:min(72vh,500px);border:0;background:#000}
+#videoDialog .vd-link{display:block;text-align:center;padding:10px;color:#f3e5ad;font-size:13px}
 .pvid{margin:10px 0}
 .pvid-play{position:relative;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:56px;padding:12px;border:1.5px solid var(--gold);border-radius:14px;background:linear-gradient(135deg,#0f1c2e,#1b2f4d);color:#f3e5ad;font-weight:800;font-size:15px;cursor:pointer;overflow:hidden;font-family:inherit}
 .pvid-play img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5}
@@ -3441,6 +3448,7 @@ html.lite .why-ic::before,html.lite .why-ic::after{display:none!important}
             ${(p.free_delivery || p.blouse_free) ? `<div class="img-perks">${p.free_delivery ? '<span class="perk perk-free"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v9H3zM14 9h4l3 3v3h-7zM7 18.5a1.8 1.8 0 1 0 0-.01M17 18.5a1.8 1.8 0 1 0 0-.01"/></svg>ফ্রি ডেলিভারি</span>' : ""}${p.blouse_free ? '<span class="perk perk-blouse"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L3.4 9.3l6-.8z"/></svg>ব্লাউজ পিস ফ্রি</span>' : ""}</div>` : ""}
             <button class="wishlist-btn ${isW ? "active" : ""}" data-card-wish-btn="${id}" onclick="event.stopPropagation();toggleWishlist('${id}')" title="উইশলিস্টে রাখুন" aria-label="উইশলিস্টে রাখুন">${wishInner(isW)}</button>
             ${sold ? '<div class="sold-overlay">স্টক শেষ</div>' : ""}
+            ${videoChipHtml(p)}
             <img class="product-main-image" id="mainimg-${id}" src="${esc(images[sel] || images[0] || "")}" alt="${esc(p.name)}" ${ix < 4 ? 'loading="eager"' : 'loading="lazy"'} ${ix < 2 ? 'fetchpriority="high"' : ""} decoding="async">
           </div>
           <div class="card-body">
@@ -3646,6 +3654,29 @@ html.lite .why-ic::before,html.lite .why-ic::after{display:none!important}
       if (!d.open) d.showModal();
       d.scrollTop = 0;
     }
+    function videoSrc(v) {
+      return v.t === "yt" ? "https://www.youtube-nocookie.com/embed/" + v.id + "?autoplay=1&rel=0&playsinline=1"
+        : "https://www.facebook.com/plugins/video.php?href=" + encodeURIComponent(v.url) + "&show_text=false&autoplay=true&width=560";
+    }
+    function videoChipHtml(p) {
+      if (!videoInfo(p && p.video_url)) return "";
+      return '<button type="button" class="vid-chip" data-id="' + esc(String(p.id)) + '" onclick="event.stopPropagation();openVideo(this.dataset.id)" aria-label="ভিডিও দেখুন">▶ ভিডিও</button>';
+    }
+    function openVideo(id) {
+      const p = getProduct(id), v = videoInfo(p && p.video_url); if (!v) return;
+      let d = document.getElementById("videoDialog");
+      if (!d) {
+        d = document.createElement("dialog"); d.id = "videoDialog";
+        d.innerHTML = '<div class="vd-top"><span>🎬 শাড়ির ভিডিও</span><button type="button" class="vd-x" aria-label="বন্ধ" onclick="closeVideo()">×</button></div><div class="vd-body"></div><a class="vd-link" target="_blank" rel="noopener">ফেসবুক/ইউটিউবে খুলুন</a>';
+        d.addEventListener("close", function () { d.querySelector(".vd-body").innerHTML = ""; });
+        d.addEventListener("click", function (e) { if (e.target === d) closeVideo(); });
+        document.body.appendChild(d);
+      }
+      d.querySelector(".vd-body").innerHTML = '<iframe src="' + esc(videoSrc(v)) + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen title="শাড়ির ভিডিও"></iframe>';
+      d.querySelector(".vd-link").href = v.url;
+      if (!d.open) d.showModal();
+    }
+    function closeVideo() { const d = document.getElementById("videoDialog"); if (d && d.open) d.close(); }
     function videoInfo(u) {
       u = String(u || "").trim(); if (!/^https?:\/\//i.test(u)) return null;
       const m = u.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?(?:.*&)?v=|shorts\/|embed\/|live\/))([A-Za-z0-9_-]{11})/);
