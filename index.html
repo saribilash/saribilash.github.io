@@ -2203,14 +2203,17 @@ html.lite .announcement-bar::before,html.lite .buy-btn::after,html.lite .perk::a
 html.lite #featuresBox.seen .m-why,html.lite #featuresBox.live .m-why{animation:none!important;filter:none!important}
 html.lite .why-ic::before,html.lite .why-ic::after{display:none!important}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important}}
-.vid-chip{position:absolute;left:8px;bottom:8px;z-index:4;display:inline-flex;align-items:center;gap:4px;padding:6px 10px;border:1px solid rgba(243,229,173,.7);border-radius:999px;background:rgba(15,28,46,.9);color:#f3e5ad;font-family:inherit;font-weight:800;font-size:12px;line-height:1;cursor:pointer}
+.vid-chip{position:absolute;left:8px;bottom:8px;z-index:4;display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border:2px solid #fff;border-radius:999px;background:linear-gradient(135deg,#d4af37,#f3e5ad);color:#0f1c2e;font-family:inherit;font-weight:900;font-size:14px;line-height:1;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.4)}
 #videoDialog{border:0;padding:0;border-radius:16px;width:min(94vw,520px);background:#0f1c2e;color:#f3e5ad;overflow:hidden}
 #videoDialog::backdrop{background:rgba(0,0,0,.72)}
 #videoDialog .vd-top{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;font-weight:800}
 #videoDialog .vd-x{border:0;background:transparent;color:#f3e5ad;font-size:26px;line-height:1;cursor:pointer;padding:0 4px}
 #videoDialog iframe{display:block;width:100%;height:min(72vh,500px);border:0;background:#000}
+#videoDialog .vd-open{padding:30px 16px 34px;text-align:center}
+#videoDialog .vd-open p{margin:0 0 16px;font-size:15px}
+#videoDialog .vd-big{display:inline-block;padding:14px 22px;border-radius:14px;background:#f3e5ad;color:#0f1c2e;font-weight:800;font-size:16px;text-decoration:none}
 #videoDialog .vd-link{display:block;text-align:center;padding:10px;color:#f3e5ad;font-size:13px}
-.op-vbtn{display:flex;align-items:center;justify-content:center;gap:5px;width:100%;margin-top:8px;padding:9px 4px;border:1.5px solid #d4af37;border-radius:12px;background:#0f1c2e;color:#f3e5ad;font-family:inherit;font-weight:800;font-size:13px;line-height:1.2;cursor:pointer}
+.op-vbtn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:10px;padding:13px 6px;border:2px solid #fff;border-radius:14px;background:linear-gradient(135deg,#d4af37,#f3e5ad);color:#0f1c2e;font-family:inherit;font-weight:900;font-size:16px;line-height:1.25;cursor:pointer;box-shadow:0 3px 10px rgba(15,28,46,.35)}
 .pvid{margin:10px 0}
 .pvid-play{position:relative;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:56px;padding:12px;border:1.5px solid var(--gold);border-radius:14px;background:linear-gradient(135deg,#0f1c2e,#1b2f4d);color:#f3e5ad;font-weight:800;font-size:15px;cursor:pointer;overflow:hidden;font-family:inherit}
 .pvid-play img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5}
@@ -3655,16 +3658,39 @@ html.lite .why-ic::before,html.lite .why-ic::after{display:none!important}
       if (!d.open) d.showModal();
       d.scrollTop = 0;
     }
+    function fbCanon(u) {
+      try {
+        const x = new URL(u); x.hostname = x.hostname.replace(/^(m|web|mbasic|touch)\./, "www.");
+        if (/^facebook\.com$/.test(x.hostname)) x.hostname = "www.facebook.com";
+        const keep = x.searchParams.get("v"); x.search = ""; x.hash = "";
+        if (keep && /watch/.test(x.pathname)) x.search = "?v=" + keep;
+        return x.toString();
+      } catch (e) { return u; }
+    }
+    function pvidCheck() {
+      const el = document.getElementById("pvideo"), box = document.getElementById("pvidwarn"); if (!el || !box) return;
+      const u = el.value.trim();
+      if (!u) { box.textContent = ""; return; }
+      const v = videoInfo(u);
+      if (!v) { box.style.color = "#b91c1c"; box.textContent = "⚠️ ফেসবুক বা ইউটিউবের লিংক দিন (https:// দিয়ে শুরু)"; return; }
+      if (v.t === "fb" && /facebook\.com\/share\/|fb\.watch\//i.test(u)) { box.style.color = "#b45309"; box.textContent = "⚠️ এটা ছোট শেয়ার-লিংক, সাইটের ভেতরে চলবে না (কাস্টমার ফেসবুকে গিয়ে দেখবে)। ভেতরে চালাতে Chrome-এর ঠিকানার ঘর থেকে লিংক কপি করুন।"; return; }
+      box.style.color = "#047857"; box.textContent = "✅ লিংক ঠিক আছে, সাইটের ভেতরে চলবে";
+    }
     function videoSrc(v) {
       return v.t === "yt" ? "https://www.youtube-nocookie.com/embed/" + v.id + "?autoplay=1&rel=0&playsinline=1"
-        : "https://www.facebook.com/plugins/video.php?href=" + encodeURIComponent(v.url) + "&show_text=false&autoplay=true&width=560";
+        : "https://www.facebook.com/plugins/video.php?href=" + encodeURIComponent(fbCanon(v.url)) + "&show_text=false&autoplay=true&width=560";
     }
     function videoChipHtml(p) {
       if (!videoInfo(p && p.video_url)) return "";
-      return '<button type="button" class="vid-chip" data-id="' + esc(String(p.id)) + '" onclick="event.stopPropagation();openVideo(this.dataset.id)" aria-label="ভিডিও দেখুন">▶ ভিডিও</button>';
+      return '<button type="button" class="vid-chip" data-id="' + esc(String(p.id)) + '" onclick="event.stopPropagation();openVideo(this.dataset.id)" aria-label="ভিডিও দেখুন">▶ ভিডিও দেখুন</button>';
     }
     function openVideo(id) {
       const p = getProduct(id), v = videoInfo(p && p.video_url); if (!v) return;
+      /* ফেসবুকের শেয়ার-লিংক সাইটের ভেতরে চলে না: এক চাপেই সরাসরি ফেসবুকে ভিডিও খুলবে */
+      if (v.t === "fb" && /facebook\.com\/share\/|fb\.watch\//i.test(v.url)) {
+        const w = window.open(v.url, "_blank");
+        if (w) { try { w.opener = null; } catch (e) {} return; }
+      }
       let d = document.getElementById("videoDialog");
       if (!d) {
         d = document.createElement("dialog"); d.id = "videoDialog";
@@ -3673,8 +3699,12 @@ html.lite .why-ic::before,html.lite .why-ic::after{display:none!important}
         d.addEventListener("click", function (e) { if (e.target === d) closeVideo(); });
         document.body.appendChild(d);
       }
-      d.querySelector(".vd-body").innerHTML = '<iframe src="' + esc(videoSrc(v)) + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen title="শাড়ির ভিডিও"></iframe>';
+      const direct = v.t === "fb" && /facebook\.com\/share\/|fb\.watch\//i.test(v.url);
+      d.querySelector(".vd-body").innerHTML = direct
+        ? '<div class="vd-open"><p>এই ভিডিওটি ফেসবুকে চলবে</p><a class="vd-big" href="' + esc(v.url) + '" target="_blank" rel="noopener">▶ ফেসবুকে ভিডিও দেখুন</a></div>'
+        : '<iframe src="' + esc(videoSrc(v)) + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen title="শাড়ির ভিডিও"></iframe>';
       d.querySelector(".vd-link").href = v.url;
+      d.querySelector(".vd-link").style.display = direct ? "none" : "";
       if (!d.open) d.showModal();
     }
     function closeVideo() { const d = document.getElementById("videoDialog"); if (d && d.open) d.close(); }
@@ -4808,7 +4838,7 @@ html.lite .why-ic::before,html.lite .why-ic::after{display:none!important}
                   <div class="pf-f"><label class="pf-l" for="pfabric">${pfI("layers")}<span>${tpMode ? "কাপড়ের ধরন" : "কাপড়"}</span></label><input id="pfabric" class="pf-sel" list="fabricList" placeholder="${tpMode ? "যেমন: কটন, জর্জেট, লিনেন" : "যেমন: সুতি, সিল্ক, কটন"}"></div>
                   <div class="pf-f"><label class="pf-l" for="plength">${pfI("ruler")}<span>${tpMode ? "সাইজ / সেট" : "দৈর্ঘ্য (কাপড়)"}</span></label><input id="plength" placeholder="${tpMode ? "যেমন: ফ্রি সাইজ, আনস্টিচড" : "যেমন: ৬.৫ হাত"}"><span class="pf-hint">ফাঁকা রাখলে সাইটে দেখাবে না</span></div>
                   <div class="pf-f"><label class="pf-l" for="pcolors">${pfI("palette")}<span>রঙের নাম</span></label><input id="pcolors" placeholder="যেমন: বেগুনি, লাল" oninput="renderColorStockInputs()"><span class="pf-hint">একাধিক রং হলে কমা (,) দিয়ে — ছবির ক্রম অনুযায়ী</span></div>
-                  <div class="pf-f"><label class="pf-l" for="pvideo"><span>🎬 ভিডিও লিংক (ঐচ্ছিক)</span></label><input id="pvideo" inputmode="url" placeholder="ফেসবুক বা ইউটিউব ভিডিওর লিংক বসান"><span class="pf-hint">ফেসবুক পেজের Public ভিডিওর লিংক দিন। খালি রাখলে ভিডিও দেখাবে না</span></div>
+                  <div class="pf-f"><label class="pf-l" for="pvideo"><span>🎬 ভিডিও লিংক (ঐচ্ছিক)</span></label><input id="pvideo" inputmode="url" placeholder="Chrome থেকে কপি করা ভিডিওর লিংক বসান" oninput="pvidCheck()"><span id="pvidwarn" class="pf-hint" style="font-weight:700"></span><span class="pf-hint">Chrome-এ ভিডিও খুলে ঠিকানার ঘর থেকে লিংক কপি করুন (ভিডিও Public হতে হবে)। খালি রাখলে ভিডিও দেখাবে না</span></div>
                   <div class="pf-f"><label class="pf-l" for="pdesc">${pfI("doc")}<span>বিবরণ</span></label><textarea id="pdesc" rows="3" maxlength="500" placeholder="${tpMode ? "যেমন: কামিজ + সালোয়ার + ওড়না, প্রিন্টেড ডিজাইন" : "শাড়ির বিস্তারিত বর্ণনা লিখুন..."}" oninput="pfCount()"></textarea><div class="pf-count"><span id="pdescN">০</span>/৫০০</div></div>
                 </div>
                 <datalist id="tpCatList">${tpSubs.map(c => `<option value="${esc(c)}">`).join("")}</datalist>
@@ -5426,7 +5456,7 @@ html.lite .why-ic::before,html.lite .why-ic::after{display:none!important}
       $("#ptpcat").value = isThreePiece(p) ? (tpSubOf(p) || "থ্রি পিস") : "";
       $("#pfabric").value = p.fabric || "";
       $("#plength").value = p.length_text || "";
-      if ($("#pvideo")) $("#pvideo").value = p.video_url || "";
+      if ($("#pvideo")) { $("#pvideo").value = p.video_url || ""; pvidCheck(); }
       { const st = $("#pseotitle"), sd = $("#pseodesc"), sk = $("#pseokeys");
         if (st) { st.value = p.seo_title || ""; $("#pseotc").textContent = st.value.length; }
         if (sd) { sd.value = p.seo_desc || ""; $("#pseodc").textContent = sd.value.length; }
