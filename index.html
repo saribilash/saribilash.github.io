@@ -831,6 +831,7 @@
     @media(max-width:550px){.grid,.reviews-grid{grid-template-columns:1fr}.brand{font-size:22px}.hero{margin:15px;padding:35px 22px;min-height:300px}.social-buttons{right:12px}.social-button{width:48px;height:48px}header{padding:12px 4%}.nav{gap:10px}.nav a,.nav button{font-size:13.5px}dialog{padding:20px 16px}.product-main-image{max-height:340px}.image-container{min-height:180px}.detail-img{max-height:46vh}}
   
     /* ===== অ্যাপ লুক ===== */
+    .fb-follow{flex:none;margin-left:6px;padding:7px 12px;border-radius:999px;background:#1877f2;color:#fff;font-weight:800;font-size:14px;line-height:1;text-decoration:none;white-space:nowrap;-webkit-text-fill-color:#fff}
     .brand-wrap{display:flex;align-items:center;gap:10px;min-width:0}
     .brand-logo{width:40px;height:40px;flex:none;border-radius:11px;border:1px solid rgba(212,175,55,.55);box-shadow:0 2px 10px rgba(212,175,55,.25);cursor:pointer}
     @media(max-width:550px){.brand-logo{width:34px;height:34px;border-radius:9px}}
@@ -2207,20 +2208,21 @@ html.lite #featuresBox.seen .m-why,html.lite #featuresBox.live .m-why{animation:
 html.lite .why-ic::before,html.lite .why-ic::after{display:none!important}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important}}
 .vid-chip{position:absolute;left:8px;bottom:8px;z-index:4;display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border:2px solid #fff;border-radius:999px;background:linear-gradient(135deg,#d4af37,#f3e5ad);color:#0f1c2e;font-family:inherit;font-weight:900;font-size:14px;line-height:1;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.4)}
-#videoDialog{border:0;padding:0;border-radius:16px;width:min(98vw,640px);max-height:98dvh;background:#0f1c2e;color:#f3e5ad;overflow:hidden}
+#videoDialog[open]{display:flex;flex-direction:column}
+#videoDialog{border:0;padding:0;border-radius:16px;width:min(98vw,640px);max-height:96dvh;background:#0f1c2e;color:#f3e5ad;overflow:hidden}
 #videoDialog::backdrop{background:rgba(0,0,0,.72)}
-#videoDialog .vd-top{display:flex;justify-content:space-between;align-items:center;padding:6px 10px 6px 14px;font-weight:800}
+#videoDialog .vd-top{flex:none;display:flex;justify-content:space-between;align-items:center;padding:6px 10px 6px 14px;font-weight:800}
 #videoDialog .vd-x{border:0;background:#f3e5ad;color:#0f1c2e;font-size:34px;font-weight:700;line-height:1;cursor:pointer;width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;padding:0 0 4px}
-#videoDialog .vd-body{position:relative;background:#000;min-height:min(80dvh,860px)}
+#videoDialog .vd-body{position:relative;background:#000;flex:1 1 auto;min-height:0;height:min(calc(96dvh - 150px),800px)}
 #videoDialog .vd-load{z-index:2;position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#f3e5ad;font-weight:700;font-size:15px;pointer-events:none}
 #videoDialog .vd-load i{width:44px;height:44px;border:4px solid rgba(243,229,173,.3);border-top-color:#f3e5ad;border-radius:50%;animation:vdspin .8s linear infinite}
 @keyframes vdspin{to{transform:rotate(360deg)}}
-#videoDialog iframe{position:relative;z-index:1;display:block;width:100%;height:min(80dvh,860px);border:0;background:transparent}
+#videoDialog iframe{position:relative;z-index:1;display:block;width:100%;height:100%;border:0;background:transparent}
 #videoDialog .vd-open{padding:30px 16px 34px;text-align:center}
 #videoDialog .vd-open p{margin:0 0 16px;font-size:15px}
 #videoDialog .vd-big{display:inline-block;padding:14px 22px;border-radius:14px;background:#f3e5ad;color:#0f1c2e;font-weight:800;font-size:16px;text-decoration:none}
-#videoDialog .vd-link{display:block;text-align:center;padding:10px;color:#f3e5ad;font-size:13px}
-.op-vbtn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:10px;padding:13px 6px;border:2px solid #fff;border-radius:14px;background:linear-gradient(135deg,#d4af37,#f3e5ad);color:#0f1c2e;font-family:inherit;font-weight:900;font-size:16px;line-height:1.25;cursor:pointer;box-shadow:0 3px 10px rgba(15,28,46,.35)}
+#videoDialog .vd-link{flex:none;display:block;text-align:center;margin:10px 12px 12px;padding:14px;border-radius:12px;background:#f3e5ad;color:#0f1c2e;font-size:18px;font-weight:800;text-decoration:none}
+.op-vbtn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:10px;padding:11px 6px;border:2px solid #fff;border-radius:14px;background:linear-gradient(135deg,#d4af37,#f3e5ad);color:#0f1c2e;font-family:inherit;font-weight:900;font-size:15px;white-space:normal;text-align:center;overflow:visible;word-break:keep-all;line-height:1.25;cursor:pointer;box-shadow:0 3px 10px rgba(15,28,46,.35)}
 .pvid{margin:10px 0}
 .pvid-play{position:relative;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:56px;padding:12px;border:1.5px solid var(--gold);border-radius:14px;background:linear-gradient(135deg,#0f1c2e,#1b2f4d);color:#f3e5ad;font-weight:800;font-size:15px;cursor:pointer;overflow:hidden;font-family:inherit}
 .pvid-play img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5}
@@ -2299,7 +2301,7 @@ html.lite .why-ic::before,html.lite .why-ic::after{display:none!important}
 
   <header>
     <div class="header-top">
-      <div class="brand-wrap"><img class="brand-logo" src="logo-mark.png" alt="শাড়ি বিলাশ লোগো" width="38" height="38" onclick="document.getElementById('brand').click()"><div class="brand" id="brand">শাড়ি বিলাশ</div></div>
+      <div class="brand-wrap"><img class="brand-logo" src="logo-mark.png" alt="শাড়ি বিলাশ লোগো" width="38" height="38" onclick="document.getElementById('brand').click()"><div class="brand" id="brand">শাড়ি বিলাশ</div><a class="fb-follow" href="https://www.facebook.com/SariBilash02" target="_blank" rel="noopener" aria-label="ফেসবুক পেজ ফলো করুন">ফেসবুকে ফলো করুন</a></div>
       <nav class="nav">
         <button class="install-nav-btn" id="installNavBtn" onclick="installApp()">📲 অ্যাপ ইনস্টল</button>
         <a href="#productsSection">শাড়ির কালেকশন</a>
@@ -2416,7 +2418,7 @@ html.lite .why-ic::before,html.lite .why-ic::after{display:none!important}
     <div class="m-chips m-ui" id="mTpChips"></div>
     <header class="tp-head">
       <div class="header-top">
-        <div class="brand-wrap"><img class="brand-logo" src="logo-mark.png" alt="শাড়ি বিলাশ লোগো" width="38" height="38" onclick="closeThreePiece()"><div class="brand" onclick="closeThreePiece()">শাড়ি বিলাশ</div></div>
+        <div class="brand-wrap"><img class="brand-logo" src="logo-mark.png" alt="শাড়ি বিলাশ লোগো" width="38" height="38" onclick="closeThreePiece()"><div class="brand" onclick="closeThreePiece()">শাড়ি বিলাশ</div><a class="fb-follow" href="https://www.facebook.com/SariBilash02" target="_blank" rel="noopener" aria-label="ফেসবুক পেজ ফলো করুন">ফেসবুকে ফলো করুন</a></div>
         <nav class="nav">
           <a href="#productsSection" onclick="closeThreePiece(true);return false;">← শাড়ির কালেকশন</a>
           <a href="#three-piece" class="tp-nav"><svg class="ic" aria-hidden="true"><use href="#ic-three"/></svg><span>থ্রি পিস</span></a>
@@ -3701,7 +3703,7 @@ html.lite .why-ic::before,html.lite .why-ic::after{display:none!important}
       let d = document.getElementById("videoDialog");
       if (!d) {
         d = document.createElement("dialog"); d.id = "videoDialog";
-        d.innerHTML = '<div class="vd-top"><span>🎬 শাড়ির ভিডিও</span><button type="button" class="vd-x" aria-label="বন্ধ" onclick="closeVideo()">×</button></div><div class="vd-body"></div><a class="vd-link" target="_blank" rel="noopener">ফেসবুক/ইউটিউবে খুলুন</a>';
+        d.innerHTML = '<div class="vd-top"><span>🎬 শাড়ির ভিডিও</span><button type="button" class="vd-x" aria-label="বন্ধ" onclick="closeVideo()">×</button></div><div class="vd-body"></div><a class="vd-link" target="_blank" rel="noopener">ফেসবুকে দেখুন</a>';
         d.addEventListener("close", function () { d.querySelector(".vd-body").innerHTML = ""; });
         d.addEventListener("click", function (e) { if (e.target === d) closeVideo(); });
         document.body.appendChild(d);
